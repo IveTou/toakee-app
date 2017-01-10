@@ -17,7 +17,6 @@ npm run < run mode you want >
 
 TODO: 
 
-
 ## Contributing
 
 1. Fork it!
