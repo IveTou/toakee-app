@@ -1,3 +1,5 @@
+/* Home component */
+
 import React from 'react';
 
 
