@@ -9,7 +9,10 @@
     ],
     "plugins": [
       "transform-runtime",
-      "transform-class-properties"
+      "transform-class-properties",
+      ["module-alias", [
+        { "src": "./src/components", "expose": "components" }
+      ]]
     ]
   },
   "description": "Node Express React Simplest Application",
@@ -37,9 +40,11 @@
     "react-router": "^3.0.0"
   },
   "devDependencies": {
+    "babel": "^6.5.2",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
+    "babel-plugin-module-alias": "^1.6.0",
     "babel-plugin-transform-class-properties": "^6.19.0",
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-polyfill": "^6.20.0",
