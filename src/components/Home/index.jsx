@@ -1,6 +1,9 @@
 import React from 'react';
 
 import Welcome from 'components/Welcome/';
+import TestCards from 'components/TestCards/';
+
+
 
 //if (process.env.BROWSER) {
   require('./style.scss');
@@ -17,6 +20,9 @@ const Home = () =>
       	<Welcome name="Sara" />
       	<Welcome name="Cahal" />
       	<Welcome name="Edite" />
+      </div>
+      <div>
+      	<TestCards />
       </div>
     </div>;
 

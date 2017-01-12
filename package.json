@@ -10,9 +10,13 @@
     "plugins": [
       "transform-runtime",
       "transform-class-properties",
-      ["module-alias", [
-        { "src": "./src/components", "expose": "components" }
-      ]]
+      [
+        "module-alias",
+        [
+          { "src": "./src/components", "expose": "components"},
+          { "src": "./node_modules/react-toolbox/lib", "expose": "react-toolbox" }
+        ]
+      ]
     ]
   },
   "description": "Node Express React Simplest Application",
@@ -55,6 +59,7 @@
     "css-loader": "^0.26.1",
     "google-map-react": "^0.22.3",
     "node-sass": "^4.2.0",
+    "react-toolbox": "^1.3.4",
     "sass-loader": "^4.1.1",
     "style-loader": "^0.13.1",
     "webpack": "^1.14.0"
