@@ -1,5 +1,5 @@
 {
-  "name": "hello-world-express-react",
+  "name": "toakee-web-app",
   "version": "1.0.0",
   "babel": {
     "presets": [
@@ -41,6 +41,18 @@
     "node"
   ],
   "author": "Degrish Team",
+  "contributors": [
+    {
+      "name": "Erik Vinicius de Almeida",
+      "email": "erikvinicius5@gmail.com",
+      "url": "http://"
+    },
+    {
+      "name": "Ive Tourinho",
+      "email": "ivetourinho@gmail.com",
+      "url": "http://"
+    }
+  ],
   "license": "ISC",
   "dependencies": {
     "concurrently": "^3.1.0",
