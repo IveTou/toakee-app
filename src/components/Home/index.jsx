@@ -12,7 +12,8 @@ import TestCards from 'components/TestCards/';
 /*
 *Components must return a single root element. This is why we added a <div> to contain all the <Welcome /> elements.
 */
-const Home = () => 
+const Home = () =>
+	 
 	<div className="Home">
       <h1>Hello, worlds!</h1>
       <h2>It is {new Date().toLocaleTimeString()}.</h2>
