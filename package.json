@@ -18,7 +18,7 @@
             "expose": "components"
           },
           {
-          	"src": "./node_modules/react-toolbox/lib",
+            "src": "./node_modules/react-toolbox/lib",
             "expose": "react-toolbox"
           }
         ]
@@ -28,7 +28,7 @@
   "description": "Node Express React Simplest Application",
   "main": "index.js",
   "scripts": {
-  	"build-css": "node-sass src/scss/main.scss public/css/bundle.css",
+    "build-css": "node-sass src/scss/main.scss public/css/bundle.css",
     "watch-css": "npm run build-css && node-sass -w src/scss/main.scss public/css/bundle.css",
     "webpack-watch": "webpack -w",
     "express-server": "node ./app/server",
