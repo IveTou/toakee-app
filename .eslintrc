@@ -1,0 +1,18 @@
+{
+    "extends": "eslint-config-airbnb",
+    "parser": "babel-eslint",
+    "ecmaFeatures": {
+        "jsx": true,
+        "modules": true,
+		"arrowFunctions":true,
+	    "destructuring": true
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+    	"no-console": [2, { "allow": ["warn", "error"] }],
+	    "no-underscore-dangle": 0,
+	    "no-unused-vars": [2, { "argsIgnorePattern": "^_$", "varsIgnorePattern": "^_$" }]
+    }
+}
