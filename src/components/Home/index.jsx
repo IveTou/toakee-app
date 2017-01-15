@@ -1,11 +1,11 @@
 import React from 'react';
-// import 'react-toolbox/commons.scss';           // Import common styles
-import ToakeeAppBar from 'components/ToakeeAppBar';      // AppBar with simple overrides
-import { Button } from 'react-toolbox/button'; // Bundled component import
+//import 'react-toolbox/commons.scss';           // Import common styles
+import TopBar from 'components/TopBar';
+import { Button } from 'react-toolbox/button';
 
 const Home = () => (
   <div>
-    <ToakeeAppBar />
+  	<TopBar />
     <section style={{ padding: 20 }}>
       <Button label='Primary Button' primary />
     </section>
