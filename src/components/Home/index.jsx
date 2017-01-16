@@ -1,7 +1,6 @@
 import React from 'react';
-//import 'react-toolbox/commons.scss';// Import common styles
-import TopBar from 'components/TopBar';
-import { Button } from 'react-toolbox/button';
+import { Button } from 'react-toolbox/lib/button';
+import TopBar from '~/src/components/TopBar';
 
 const Home = () => (
   <div>

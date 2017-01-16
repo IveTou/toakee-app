@@ -1,39 +1,13 @@
 {
   "name": "toakee-web-app",
   "version": "1.0.0",
-  "babel": {
-    "presets": [
-      "es2015",
-      "stage-0",
-      "react"
-    ],
-    "plugins": [
-      "transform-runtime",
-      "transform-class-properties",
-      [
-        "module-alias",
-        [
-          {
-            "src": "./src/components",
-            "expose": "components"
-          },
-          {
-            "src": "./node_modules/react-toolbox/lib",
-            "expose": "react-toolbox"
-          }
-        ]
-      ]
-    ]
-  },
   "description": "Node Express React Simplest Application",
   "main": "index.js",
   "scripts": {
-    "build-css": "node-sass src/scss/main.scss public/css/bundle.css",
-    "watch-css": "npm run build-css && node-sass -w src/scss/main.scss public/css/bundle.css",
     "webpack-watch": "webpack -w",
     "express-server": "node ./app/server",
     "dev": "concurrently --kill-others  \"npm run webpack-watch\" \"npm run express-server\"",
-    "lint": "eslint \"./src/**\""
+    "lint": "eslint src/**"
   },
   "keywords": [
     "express",
@@ -67,6 +41,7 @@
     "babel-core": "^6.21.0",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.10",
+    "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-module-alias": "^1.6.0",
     "babel-plugin-transform-class-properties": "^6.19.0",
     "babel-plugin-transform-runtime": "^6.15.0",
@@ -75,9 +50,13 @@
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
+    "babel-root-import": "^4.1.5",
     "css-loader": "^0.26.1",
     "eslint": "^3.13.1",
     "eslint-config-airbnb": "^14.0.0",
+    "eslint-import-resolver-babel-module": "^2.2.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^3.0.2",
     "eslint-plugin-react": "^6.9.0",
     "google-map-react": "^0.22.3",
     "node-sass": "^4.2.0",
@@ -86,6 +65,7 @@
     "react-toolbox": "^1.3.4",
     "sass-loader": "^4.1.1",
     "style-loader": "^0.13.1",
-    "webpack": "^1.14.0"
+    "webpack": "^1.14.0",
+    "webpack-combine-loaders": "^2.0.3"
   }
 }

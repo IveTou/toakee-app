@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
-import Home from 'components/Home/';
+import Home from '~/src/components/Home';
 
 const routes = (
   <Router history={browserHistory}>

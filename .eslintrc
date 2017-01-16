@@ -1,18 +1,24 @@
 {
-    "extends": "eslint-config-airbnb",
-    "parser": "babel-eslint",
-    "ecmaFeatures": {
-        "jsx": true,
-        "modules": true,
-		"arrowFunctions":true,
-	    "destructuring": true
-    },
-    "plugins": [
-        "react"
-    ],
-    "rules": {
-    	"no-console": [2, { "allow": ["warn", "error"] }],
-	    "no-underscore-dangle": 0,
-	    "no-unused-vars": [2, { "argsIgnorePattern": "^_$", "varsIgnorePattern": "^_$" }]
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "ecmaFeatures": {
+    "modules": true,
+    "arrowFunctions":true,
+    "destructuring": true
+  },
+  "rules": {
+    "import/no-named-as-default": 0,
+    "import/no-unresolved": [2, { "ignore": ["^[~]"] }],
+    "import/prefer-default-export": 0,
+    "import/extensions": 0,
+    "no-console": [2, { "allow": ["warn", "error"] }],
+    "no-underscore-dangle": 0,
+    "no-unused-vars": [2, { "argsIgnorePattern": "^_$", "varsIgnorePattern": "^_$" }],
+  },
+  "settings": {
+    "import/resolver": {
+      "babel-module-alias": {}
     }
+  }
 }
+
