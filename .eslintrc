@@ -6,6 +6,10 @@
     "arrowFunctions":true,
     "destructuring": true
   },
+  "globals": {
+    "document": true,
+    "localStorage": true
+  },
   "rules": {
     "import/no-named-as-default": 0,
     "import/no-unresolved": [2, { "ignore": ["^[~]"] }],
