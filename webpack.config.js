@@ -8,11 +8,11 @@ module.exports = {
   },
   module: {
     loaders: [
+      { test: /\.json$/, loader: 'json' },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: { presets: ['es2015', 'stage-0', 'react'] }
+        loader: 'babel'
       },
       {
         test: /\.scss$/,
@@ -27,7 +27,6 @@ module.exports = {
       }
     ]
   },
-
   resolve: {
     extensions: ['', '.js', '.jsx', '.json']
   }

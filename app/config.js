@@ -1,8 +1,11 @@
-const defaults = {
-  PORT: 3000,
-  GOOGLE_MAPS_KEY: '',
-};
+import { reduce } from 'lodash';
 
-export function fromEnv(attribute) {
-  return process.env[attribute] || defaults[attribute];
-}
+const env = (key, miss) => process.env[key] || miss;
+const reducer = (obj, miss, key) => ({ ...obj, [key]: env(key, miss) });
+
+const config = reduce({
+  GRAPHQL_URI: 'http://localhost:4000/graphql',
+  PORT: 3000,
+}, reducer, {});
+
+export default config;

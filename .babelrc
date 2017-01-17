@@ -1,8 +1,10 @@
 {
-  "presets": ["es2015", "stage-2", "react"],
+  "presets": ["es2015", "stage-0", "react"],
+  "sourceMaps": "inline",
   "plugins": [
     "add-module-exports",
     "babel-root-import",
-    "transform-class-properties"
+    "transform-class-properties",
+    "babel-relay-plugin-loader"
   ]
 }
