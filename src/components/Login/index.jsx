@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 import Relay from 'react-relay';
-import { withRouter } from 'react-router';
+import { Link, withRouter } from 'react-router';
+import autoBind from 'auto-bind';
 import Input from 'react-toolbox/lib/input';
 import { Button } from 'react-toolbox/lib/button';
-import autoBind from 'auto-bind';
 
 import LoginMutation from '~/src/mutations/login';
 import { setToken } from '~/src/utils/session';
@@ -83,6 +83,9 @@ class Login extends React.Component {
             className="Login-form-password"
           />
           <Button label="Entrar" onClick={this.submit} raised primary />
+          <Link to="/signUp">
+            Criar nova conta
+          </Link>
         </div>
       </div>
     );

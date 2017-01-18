@@ -4,8 +4,6 @@ import Navigation from 'react-toolbox/lib/navigation';
 import Button from 'react-toolbox/lib/button';
 import { Link as RouterLink } from 'react-router';
 
-require('./style.scss');
-
 const TopBar = () => (
   <AppBar title="Toakee" className="TopBar">
     <Navigation type="horizontal">
