@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import TopBar from '~/src/components/TopBar';
 
 const Unlogged = ({ children }) => (
@@ -7,5 +7,13 @@ const Unlogged = ({ children }) => (
     {children}
   </div>
 );
+
+Unlogged.propTypes = {
+  children: PropTypes.node,
+};
+
+Unlogged.defaultProps = {
+  children: null,
+};
 
 export default Unlogged;

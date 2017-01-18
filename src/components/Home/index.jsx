@@ -6,7 +6,7 @@ const Home = () => (
   <div>
     <TopBar />
     <section style={{ padding: 20 }}>
-      <Button label='Primary Button' primary />
+      <Button label="Primary Button" primary />
     </section>
   </div>
 );

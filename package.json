@@ -7,7 +7,7 @@
     "webpack-watch": "webpack -w",
     "express-server": "node ./app/server",
     "dev": "concurrently --kill-others  \"npm run webpack-watch\" \"npm run express-server\"",
-    "lint": "eslint src/**"
+    "lint": "eslint --ext .js,.jsx src/**"
   },
   "keywords": [
     "express",
@@ -29,16 +29,19 @@
   ],
   "license": "ISC",
   "dependencies": {
+    "auto-bind": "1.0.0",
     "babel-relay-plugin": "0.10.0",
     "babel-relay-plugin-loader": "0.10.0",
     "concurrently": "^3.1.0",
     "express": "^4.14.0",
     "lodash": "4.17.4",
+    "nunjucks": "^3.0.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-relay": "0.10.0",
     "react-router": "^3.0.0",
-    "react-router-relay": "^0.13.5"
+    "react-router-relay": "^0.13.5",
+    "react-toolbox": "^1.3.4"
   },
   "devDependencies": {
     "babel": "^6.5.2",
@@ -66,9 +69,6 @@
     "eslint-plugin-react": "^6.9.0",
     "google-map-react": "^0.22.3",
     "node-sass": "^4.2.0",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "react-toolbox": "^1.3.4",
     "sass-loader": "^4.1.1",
     "style-loader": "^0.13.1",
     "webpack": "^1.14.0",

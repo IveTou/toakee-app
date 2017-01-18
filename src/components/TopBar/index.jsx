@@ -1,17 +1,19 @@
-import React, { PropTypes } from 'react';
-import { AppBar } from 'react-toolbox/lib/app_bar';
+import React from 'react';
+import AppBar from 'react-toolbox/lib/app_bar';
+import Navigation from 'react-toolbox/lib/navigation';
+import Button from 'react-toolbox/lib/button';
+import { Link as RouterLink } from 'react-router';
 
 require('./style.scss');
 
-const TopBar = ({ children, ...props }) => (
-  <AppBar {...props} className="TopBar">
-    Toakee
-    {children}
+const TopBar = () => (
+  <AppBar title="Toakee" className="TopBar">
+    <Navigation type="horizontal">
+      <RouterLink to={{ pathname: '/login' }}>
+        <Button label="Login" flat accent />
+      </RouterLink>
+    </Navigation>
   </AppBar>
 );
-
-TopBar.propTypes = {
-  children: PropTypes.node
-};
 
 export default TopBar;

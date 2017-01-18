@@ -1,15 +1,4 @@
-import React from 'react'
-import { Button } from 'react-toolbox/lib/button';
-import TopBar from '~/src/components/TopBar';
+import React from 'react';
 
-export default class Landing extends React.Component {
-  render() {
-    return (
-      <div>
-        <section style={{ padding: 20 }}>
-          <Button label='Primary Button' primary />
-        </section>
-      </div>
-    );
-  }
-}
+const Landing = () => <div />;
+export default Landing;
