@@ -1,14 +1,17 @@
 import React, { PropTypes } from 'react';
 import Relay from 'react-relay';
 import { Link, withRouter } from 'react-router';
+import { partial } from 'lodash';
 import autoBind from 'auto-bind';
 import Input from 'react-toolbox/lib/input';
 import { Button } from 'react-toolbox/lib/button';
 
 import LoginMutation from '~/src/mutations/login';
+import FacebookLoginMutation from '~/src/mutations/facebook-login';
 import { setToken } from '~/src/utils/session';
 import { stateSetter, errorFromKey } from '~/src/utils/form';
 import { extractError } from '~/src/utils/relay';
+import FacebookLoginButton from '~/src/components/facebook-login-button';
 
 const propTypes = {
   router: PropTypes.object,
@@ -31,6 +34,15 @@ class Login extends React.Component {
     autoBind(this);
   }
 
+  onSuccess(mutation, response) {
+    setToken(response[mutation].token);
+    this.props.router.push('/redirect');
+  }
+
+  onFailure(transaction) {
+    this.setState({ errorMessage: errorFromKey(extractError(transaction)) });
+  }
+
   submit() {
     const { username, password } = this.state;
 
@@ -39,19 +51,18 @@ class Login extends React.Component {
       return;
     }
 
-    const onFailure = transaction => (
-      this.setState({ errorMessage: errorFromKey(extractError(transaction)) })
-    );
-
-    const onSuccess = ({ login }) => {
-      setToken(login.token);
-      this.props.router.push('/redirect');
-    };
-
     this.setState({ errorMessage: '' });
     Relay.Store.commitUpdate(
       new LoginMutation({ username, password }),
-      { onFailure, onSuccess },
+      { onFailure: this.onFailure, onSuccess: partial(this.onSuccess, 'login') },
+    );
+  }
+
+  facebookSubmit(token) {
+    this.setState({ errorMessage: '' });
+    Relay.Store.commitUpdate(
+      new FacebookLoginMutation({ token }),
+      { onFailure: this.onFailure, onSuccess: partial(this.onSuccess, 'facebookLogin') },
     );
   }
 
@@ -65,6 +76,7 @@ class Login extends React.Component {
       <div className="Login">
         <div className="Login-form">
           <hr className="Login-form-separator" />
+          <FacebookLoginButton onReceiveToken={this.facebookSubmit} />
           {this.renderErrorMessage()}
           <Input
             type="email"

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'react-toolbox/lib/button';
-import TopBar from '~/src/components/TopBar';
+import TopBar from '~/src/components/top-bar';
 
 const Home = () => (
   <div>

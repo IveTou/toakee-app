@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const combineLoaders = require('webpack-combine-loaders');
 
 module.exports = {
@@ -27,6 +28,13 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        'FACEBOOK_APP_ID': JSON.stringify('1848071472114729'),
+      },
+    }),
+  ],
   resolve: {
     extensions: ['', '.js', '.jsx', '.json']
   }

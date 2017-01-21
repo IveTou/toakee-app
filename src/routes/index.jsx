@@ -3,10 +3,10 @@ import { Route, IndexRoute } from 'react-router';
 
 import { getToken } from '~/src/utils/session';
 
-import Unlogged from '~/src/pages/Unlogged';
-import Landing from '~/src/components/Landing';
-import Login from '~/src/components/Login';
-import SignUp from '~/src/components/SignUp';
+import Unlogged from '~/src/pages/unlogged';
+import Landing from '~/src/components/landing';
+import Login from '~/src/components/login';
+import SignUp from '~/src/components/sign-up';
 
 const loggedRoutes = null;
 

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import TopBar from '~/src/components/TopBar';
+import TopBar from '~/src/components/top-bar';
 
 require('./style.scss');
 

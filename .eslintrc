@@ -9,7 +9,8 @@
   "globals": {
     "document": true,
     "localStorage": true,
-    "window": true
+    "window": true,
+    "FB": true
   },
   "rules": {
     "import/no-named-as-default": 0,
