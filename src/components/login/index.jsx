@@ -8,7 +8,7 @@ import { Button } from 'react-toolbox/lib/button';
 
 import LoginMutation from '~/src/mutations/login';
 import FacebookLoginMutation from '~/src/mutations/facebook-login';
-import { setToken } from '~/src/utils/session';
+import { setToken, setFacebookToken } from '~/src/utils/session';
 import { stateSetter, errorFromKey } from '~/src/utils/form';
 import { extractError } from '~/src/utils/relay';
 import FacebookLoginButton from '~/src/components/facebook-login-button';
@@ -60,6 +60,7 @@ class Login extends React.Component {
 
   facebookSubmit(token) {
     this.setState({ errorMessage: '' });
+    setFacebookToken(token);
     Relay.Store.commitUpdate(
       new FacebookLoginMutation({ token }),
       { onFailure: this.onFailure, onSuccess: partial(this.onSuccess, 'facebookLogin') },

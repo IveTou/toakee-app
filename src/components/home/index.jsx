@@ -1,14 +1,22 @@
-import React from 'react';
-import { Button } from 'react-toolbox/lib/button';
-import TopBar from '~/src/components/top-bar';
+import React, { PropTypes } from 'react';
+import Relay from 'react-relay';
 
-const Home = () => (
-  <div>
-    <TopBar />
-    <section style={{ padding: 20 }}>
-      <Button label="Primary Button" primary />
-    </section>
-  </div>
+import FriendList from '~/src/components/friend-list';
+
+const Home = ({ viewer }) => (
+  <div><FriendList viewer={viewer} /></div>
 );
 
-export default Home;
+Home.propTypes = {
+  viewer: PropTypes.obj.isRequired,
+};
+
+export default Relay.createContainer(Home, {
+  fragments: {
+    viewer: () => Relay.QL`
+      fragment on Profile {
+        ${FriendList.getFragment('viewer')}
+      }
+    `,
+  },
+});
