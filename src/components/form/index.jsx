@@ -1,35 +1,31 @@
 import React from 'react';
 import Input from 'react-toolbox/lib/input';
-
 require('./style.scss');
 
 class Form extends React.Component {
-  state = {  phone: '', multiline: '', email: '' };
+  state={phone: '', multiline: '', email: ''};
 
-  handleChange = (name, value) => {
+  handleChange=(name, value) => {
     this.setState({...this.state, [name]: value});
   };
 
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value);
     event.preventDefault();
   }
 
   render () {
     return (
-      <form className = "Form" onSubmit={this.handleSubmit}>
-        <Input className ="Input" type='email' label='E-mail' value={this.state.email} required onChange={this.handleChange.bind(this, 'email')} />
-        <Input className ="Input" type='tel' label='Telefone' name='phone' value={this.state.phone} onChange={this.handleChange.bind(this, 'phone')} />
-        <Input className ="Input" type='text' multiline required rows = {4} label='Mensagem' maxLength={400} value={this.state.multiline} onChange={this.handleChange.bind(this, 'multiline')} />
+      <form className="Form" onSubmit={this.handleSubmit}>
+        <Input className="Input" type='email' label='E-mail' value={this.state.email} required onChange={this.handleChange.bind(this, 'email')}/>
+        <Input className ="Input" type='tel' label='Telefone' name='phone' value={this.state.phone} onChange={this.handleChange.bind(this, 'phone')}/>
+        <Input className ="Input" type='text' multiline required rows = {4} label='Mensagem' maxLength={400} value={this.state.multiline} onChange={this.handleChange.bind(this, 'multiline')}/>
 
         <p>
-          <button className="w3-btn w3-padding" type="submit">ENVIAR
-          </button>
+          <button className="w3-btn w3-padding" type="submit">ENVIAR</button>
         </p>
       </form>
     );
   }
 }
-
 
 export default Form;
