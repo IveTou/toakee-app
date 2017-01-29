@@ -3,7 +3,7 @@ import FeatureElement from '~/src/components/feature-element';
 
 require('./style.scss');
 
-const image_src = 'https://placeimg.com/80/80/animals';
+const imageSource = 'https://placeimg.com/80/80/animals';
 
 const description = {
   first: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard.',
@@ -19,17 +19,15 @@ const title = {
   fourth: 'Fourth Feature'
 };
 
-
-
-const Features = () => ( 
+const Features = () => (
   <div className="Features w3-container w3-padding-24">
     <h3 className="w3-center">Toakee!</h3>
     <p className="w3-center w3-large">Key features of our company</p>
     <div className="w3-row-padding w3-center">
-      <FeatureElement image = {image_src} title={title.first} description ={description.first}/>
-      <FeatureElement image = {image_src} title={title.second} description ={description.second}/>
-      <FeatureElement image = {image_src} title={title.third} description ={description.third}/>
-      <FeatureElement image = {image_src} title={title.fourth} description ={description.fourth}/>
+      <FeatureElement image={imageSource} title={title.first} description={description.first} />
+      <FeatureElement image={imageSource} title={title.second} description={description.second} />
+      <FeatureElement image={imageSource} title={title.third} description={description.third} />
+      <FeatureElement image={imageSource} title={title.fourth} description={description.fourth} />
     </div>
   </div>
 );
