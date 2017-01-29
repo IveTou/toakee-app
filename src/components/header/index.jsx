@@ -16,10 +16,12 @@ const Header = () => (
 
       <div className=" Brands w3-xlarge">
         <a href="#" className="Icon w3-hover-text-white"><i className="fa fa-facebook-official"></i></a>
+        {/*
         <a href="#" className="Icon w3-hover-text-white"><i className="fa fa-flickr"></i></a>
         <a href="#" className="Icon w3-hover-text-white"><i className="fa fa-instagram"></i></a>
         <a href="#" className="Icon w3-hover-text-white"><i className="fa fa-twitter"></i></a>
         <a href="#" className="Icon w3-hover-text-white"><i className="fa fa-linkedin"></i></a>
+        */}
       </div>
 
   </div>
