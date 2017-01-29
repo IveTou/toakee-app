@@ -1,10 +1,13 @@
 import React from 'react';
+require('./style.scss');
 
-const FeatureElement = () => ( 
-  <div className="w3-quarter">
-    <i className="fa fa-desktop w3-margin-bottom w3-jumbo w3-center"></i>
-    <p className="w3-large">Responsive</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+const FeatureElement = (props) => ( 
+  <div className="FeatureElement w3-quarter ">
+    <div className = "Container">
+      <img className = "Image w3-round" src={props.image} alt="Features" />
+      <p className="w3-large">{props.title}</p>
+      {props.description}
+    </div>
   </div>
 
 );
