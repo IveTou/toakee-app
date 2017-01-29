@@ -7,7 +7,7 @@ require('./style.scss');
 
 const TopBar = () => (
   <AppBar title="Toakee" className="TopBar w3-top  w3-card-2" leftIcon={<ToakeeIcon />}>
-    <Navigation type="horizonta" />
+    <Navigation type="horizontal" />
   </AppBar>
 );
 
