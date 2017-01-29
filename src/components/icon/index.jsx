@@ -1,5 +1,4 @@
 import React from 'react';
-//require('./style.scss');
 
 const ToakeeIcon = () => (
   <svg viewBox="0 0 284 277">
