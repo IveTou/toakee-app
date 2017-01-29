@@ -12,7 +12,7 @@ class Form extends React.Component {
     event.preventDefault();
   }
 
-  render () {
+  render() {
     return (
       <form className="Form" onSubmit={this.handleSubmit}>
         <Input className="Input" type="email" label="E-mail" value={this.state.email} required onChange={this.handleChange.bind(this, 'email')} />
