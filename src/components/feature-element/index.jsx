@@ -9,7 +9,6 @@ const FeatureElement = (props) => (
       {props.description}
     </div>
   </div>
-
 );
 
 export default FeatureElement;
