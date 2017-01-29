@@ -4,25 +4,19 @@ require('./style.scss');
 
 const Contact = () => ( 
   <div className="Contact w3-container w3-padding-24 w3-light-grey" id="contact">
-    <h3 className="w3-center">CONTACT</h3>
-    <p className="w3-center w3-large">Lets get in touch. Send us a message:</p>
-
+    <h3 className="w3-center">CONTATO</h3>
+    <p className="w3-center w3-large">Entre em contato. Mande-nos uma mensagem:</p>
       <div className="Container w3-row-padding">
         <div className="w3-third">
-        
           <p><i className="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i> Salvador, BA</p>
           <p><i className="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i> Phone: +55 71 151515</p>
           <p><i className="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i> Email: contato@toakee.com</p>
           <br></br>    
-      
         </div>
-
         <div className="w3-twothird">
           <Form/>
         </div>
       </div>
-
-
   </div>
 );
 
