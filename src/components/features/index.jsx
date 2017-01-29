@@ -9,14 +9,14 @@ const description = {
   first: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard.',
   second: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the indust',
   third: 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley ',
-  fourth: 'standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'
+  fourth: 'standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
 };
 
 const title = {
   first: 'First Feature',
   second: 'Second Feature',
   third: 'Third Feature',
-  fourth: 'Fourth Feature'
+  fourth: 'Fourth Feature',
 };
 
 const Features = () => (
