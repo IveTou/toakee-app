@@ -8,7 +8,7 @@ const Home = ({ viewer }) => (
 );
 
 Home.propTypes = {
-  viewer: PropTypes.object.isRequired,
+  viewer: PropTypes.Object.isRequired,
 };
 
 export default Relay.createContainer(Home, {
