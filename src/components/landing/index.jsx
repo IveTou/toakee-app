@@ -6,11 +6,12 @@ import Footer from '~/src/components/footer';
 
 require('./style.scss');
 
-const Landing = () => 
-  <div className ="Landing">
-    <Header/>
-    <Features/>
-    <Contact/>
-    <Footer/>
+const Landing = () =>
+  <div className="Landing">
+    <Header />
+    <Features />
+    <Contact />
+    <Footer />
   </div>;
+
 export default Landing;
