@@ -14,6 +14,8 @@ const Header = () => (
       <span className = " Span w3-large">Here more details about what is worth to keep on mind regard to our product.
       </span>
 
+      <p><a href="#contact" className="w3-btn w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Contacte-nos!</a></p>
+
       <div className=" Brands w3-xlarge">
         <a href="#" className="Icon w3-hover-text-white"><i className="fa fa-facebook-official"></i></a>
         {/*
