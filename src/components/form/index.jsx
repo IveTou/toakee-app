@@ -1,6 +1,5 @@
 import React from 'react';
 import Input from 'react-toolbox/lib/input';
-require('./style.scss');
 
 class Form extends React.Component {
   state={phone: '', multiline: '', email: ''};
