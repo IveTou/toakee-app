@@ -18,7 +18,7 @@ const FriendList = ({ viewer }) => {
 };
 
 FriendList.propTypes = {
-  viewer: PropTypes.object.isRequired,
+  viewer: PropTypes.Object.isRequired,
 };
 
 export default Relay.createContainer(FriendList, {
