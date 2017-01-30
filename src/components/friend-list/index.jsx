@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Relay from 'react-relay';
 
 import FriendListItem from './item';
@@ -15,10 +15,6 @@ const FriendList = ({ viewer }) => {
       {items}
     </div>
   );
-};
-
-FriendList.propTypes = {
-  viewer: PropTypes.Object.isRequired,
 };
 
 export default Relay.createContainer(FriendList, {
