@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Relay from 'react-relay';
 
 import FriendList from '~/src/components/friend-list';
