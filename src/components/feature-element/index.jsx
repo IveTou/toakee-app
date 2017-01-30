@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 require('./style.scss');
 
-const FeatureElement = props => (
+const FeatureElement = ({ image, title, description }) => (
   <div className="FeatureElement w3-quarter">
     <div className="Container">
-      <img className="Image w3-round" src={props.image} alt="Features" />
-      <p className="w3-large">{props.title}</p>
-      {props.description}
+      <img className="Image w3-round" src={image} alt="Features" />
+      <p className="w3-large">{title}</p>
+      {description}
     </div>
   </div>
 );
+
+FeatureElement.propTypes = {
+  image: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+};
 
 export default FeatureElement;

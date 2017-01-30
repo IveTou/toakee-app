@@ -2,11 +2,18 @@ import React from 'react';
 import Input from 'react-toolbox/lib/input';
 
 class Form extends React.Component {
-  state={ phone: '', multiline: '', email: '' };
+  constructor(props) {
+    super(props);
+    this.state = {
+      phone: '',
+      multiline: '',
+      email: '',
+    };
+  }
 
-  handleChange=(name, value) => {
-    this.setState({ ...this.state, [name]: value });
-  };
+  handleChange(name, value) {
+    this.setState({ [name]: value });
+  }
 
   handleSubmit(event) {
     event.preventDefault();
