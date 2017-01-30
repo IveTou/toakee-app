@@ -1,11 +1,13 @@
 import React from 'react';
-import Form from '~/src/components/form';
+import ContactForm from '~/src/components/contact-form';
 
 require('./style.scss');
 
 const Contact = () => (
   <div className="Contact w3-container w3-padding-24 w3-light-grey" id="contact">
-    <h3 className="w3-center">CONTATO</h3>
+    <h3 className="w3-center">
+      CONTATO
+    </h3>
     <p className="w3-center w3-large">
       Entre em contato. Mande-nos uma mensagem:
     </p>
@@ -26,7 +28,7 @@ const Contact = () => (
         <br />
       </div>
       <div className="w3-twothird">
-        <Form />
+        <ContactForm />
       </div>
     </div>
   </div>
