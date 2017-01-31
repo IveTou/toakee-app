@@ -17,17 +17,14 @@ class ContactForm extends React.Component {
     this.setState({ [name]: value });
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-  }
-
   render() {
     return (
-      <form className="Form" onSubmit={this.handleSubmit}>
+      <form method="POST" action="send-email" className="Form">
         <Input
           className="Input"
           type="email"
           label="E-mail"
+          name="email"
           value={this.state.email}
           onChange={value => this.handleChange('email', value)}
           required
@@ -42,6 +39,7 @@ class ContactForm extends React.Component {
         />
         <Input
           className="Input"
+          name="body"
           type="text"
           rows={4}
           label="Mensagem"

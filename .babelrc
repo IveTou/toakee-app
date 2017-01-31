@@ -6,6 +6,10 @@
     "babel-root-import",
     "transform-class-properties",
     "jsx-control-statements",
-    "babel-relay-plugin-loader"
+    "babel-relay-plugin-loader",
+    ["transform-runtime", {
+      "polyfill": false,
+      "regenerator": true
+    }]
   ]
 }
