@@ -1,5 +1,4 @@
 import React from 'react';
-import AppBar from 'react-toolbox/lib/app_bar';
 import ToakeeIcon from './icon';
 
 const TopBar = () => (
@@ -7,7 +6,7 @@ const TopBar = () => (
     <div className="w3-navbar  w3-left-align w3-xlarge">
       <li>
         <a className="w3-hover-none">
-          Toakee 
+          Toakee
           <ToakeeIcon />
         </a>
       </li>
