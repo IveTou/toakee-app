@@ -1,8 +1,8 @@
 import React from 'react';
-import Header from '~/src/components/header';
-import Features from '~/src/components/features';
-import Contact from '~/src/components/contact';
-import Footer from '~/src/components/footer';
+import Header from './header';
+import Features from './features';
+import Contact from './contact';
+import Footer from './footer';
 
 require('./style.scss');
 

@@ -1,5 +1,45 @@
+@import '../../scss/variables';
+
 .Landing {
   font-family: "Raleway", sans-serif;
   height: 100%;
   line-height: 1.8;
+}
+
+.TopBar {
+  padding: $spacer*3;
+  color: #3884ff;
+  background-image: linear-gradient(45deg, rgba(255,247,237,0.71) 0%, rgba(189,215,234,0.71) 51%, rgba(125,185,232,1) 100%);
+}
+
+.Header {
+  background-color: gray;
+  padding: $spacer*4;
+  margin-top: $spacer*8;
+  color: white;
+}
+
+.Span {
+  flex: 1;
+}
+
+.Brands {
+  flex: 1;
+  overflowY: 'auto';
+  padding-bottom: $spacer;
+}
+.Icon {
+  padding-right: $spacer;
+}
+
+.w3-row-padding {
+  margin-top:64px;
+}
+
+eFeatureElement {
+  margin-bottom: 80px;
+}
+
+.Image {
+  width:100%;
 }
