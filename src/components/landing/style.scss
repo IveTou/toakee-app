@@ -7,9 +7,8 @@
 }
 
 .TopBar {
-  padding: $spacer*3;
-  color: #3884ff;
   background-image: linear-gradient(45deg, rgba(255,247,237,0.71) 0%, rgba(189,215,234,0.71) 51%, rgba(125,185,232,1) 100%);
+  div{li{a{padding: 2px 8px 16px 32px;}}}
 }
 
 .Header {
@@ -29,15 +28,20 @@
   padding-bottom: $spacer;
 }
 .Icon {
-  padding-right: $spacer;
+  padding: 0px;
+  height:64px;
+  width:64px;
+  margin-top: auto;
+  margin-bottom: -28px;
+  margin-left: $spacer;
 }
 
 .w3-row-padding {
-  margin-top:64px;
+  margin-top:$spacer*8;
 }
 
-eFeatureElement {
-  margin-bottom: 80px;
+.FeatureElement {
+  margin-bottom: $spacer*10;
 }
 
 .Image {

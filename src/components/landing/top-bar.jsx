@@ -3,7 +3,16 @@ import AppBar from 'react-toolbox/lib/app_bar';
 import ToakeeIcon from './icon';
 
 const TopBar = () => (
-  <AppBar title="Toakee" className="TopBar w3-top  w3-card-2" leftIcon={<ToakeeIcon />} />
+  <div className="TopBar w3-top">
+    <div className="w3-navbar  w3-left-align w3-xlarge">
+      <li>
+        <a className="w3-hover-none">
+          Toakee 
+          <ToakeeIcon />
+        </a>
+      </li>
+    </div>
+  </div>
 );
 
 export default TopBar;
