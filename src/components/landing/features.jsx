@@ -26,23 +26,24 @@ declare var item;
 declare var idx;
 
 const Features = () => (
-  <div className="Features  bgimg-1 w3-display-container">    
-    <div className="Content w3-row">    
-      <div className="w3-col w3-container l6">    
-        <span className="Span w3-jumbo w3-hide-small">    
-          The greatest take away message!    
-        </span>    
-        <span className="Span w3-xxlarge w3-hide-large w3-hide-medium">    
-          Another take away message for mobile users!    
-        </span>    
-        <br />    
-        <span className="Span w3-large">    
-          Here more details about what is worth to keep on mind regard to our product.              
-        </span>
+  <div className="Features  bgimg-1 w3-display-container">
+    <div className="Content w3-row">
+      <div className="w3-col w3-container l6">
+        <div className="span w3-jumbo w3-hide-small">
+          The greatest take away message!
+        </div>
+        <div className="span w3-xxlarge w3-hide-large w3-hide-medium">
+          Another take away message for mobile users!
+        </div>
+        <br />
+        <div className="span w3-large">
+          Here more details about what is worth to keep on mind regard to our product.
+        </div>
       </div>
       <For each="item" in index="idx" of={features}>
         <FeatureElement
           key={idx}
+          index={idx}
           image={imageSource}
           title={item.title}
           description={item.description}

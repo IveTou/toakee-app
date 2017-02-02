@@ -78,8 +78,26 @@
 
 .FeatureElement {
   margin-bottom: $spacer*10;
+  overflow:auto;
+
+  div{
+    img {
+      width: 100%;
+    }
+  }
 }
 
+.feature-1{
+  margin-right: 10%;
+}
+
+.feature-2{
+  margin-left: 10%;
+}
+
+.feature-3{
+  margin-right:10%;
+}
 .Image {
   width:100%;
 }

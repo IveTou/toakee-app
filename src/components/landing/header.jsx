@@ -29,9 +29,9 @@ const Header = () => (
         </div>
       </div>
       <div className="RightBlock w3-col w3-container l5">
-        <img src="/img/app-handled.png"  alt="Image App on Hands" />
+        <img src="/img/app-handled.png" alt="app on hands" />
       </div>
-   </div>
+    </div>
   </div>
 );
 
