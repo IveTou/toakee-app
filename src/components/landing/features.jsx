@@ -1,24 +1,21 @@
 import React from 'react';
 import FeatureElement from './feature-element';
 
-const imageSource = 'https://placeimg.com/80/80/animals';
-
 const features = [
   {
     title: 'First Feature',
     description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard.',
+    image: '/img/app-front.png',
   },
   {
     title: 'Second Feature',
     description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the indust',
+    image: '/img/app-map.png',
   },
   {
     title: 'Third Feature',
     description: 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley ',
-  },
-  {
-    title: 'Fourth Feature',
-    description: 'standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+    image: '/img/app-compass.png',
   },
 ];
 
@@ -44,7 +41,7 @@ const Features = () => (
         <FeatureElement
           key={idx}
           index={idx}
-          image={imageSource}
+          image={item.image}
           title={item.title}
           description={item.description}
         />
