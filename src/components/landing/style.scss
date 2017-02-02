@@ -31,15 +31,38 @@
   }
 }
 
-.Span {
-  flex: 1;
+.Features {
+  padding-top: $spacer*3;
 }
 
-.Brands {
-  flex: 1;
-  overflowY: 'auto';
-  padding-bottom: $spacer;
+.span {                                                                                             
+  flex: 1;                                                                                          
+  text-align: center;                                                                               
+}  
+
+.cta {                                                                                            
+  text-align: center;                                                                               
 }
+
+.brands {
+  display: none;
+}
+
+@media only screen and (min-width: 768px) {
+  .span {
+    text-align: left;
+  }
+  .cta {  
+    text-align: left;
+  }
+  .brands {
+    display: inline;                                                                                           
+    flex: 1;                                                                                          
+    overflowY: 'auto';                                                                                
+    padding-bottom: $spacer;                                                                          
+  }  
+}
+
 .Icon {
   padding: 0px;
   height:64px;
