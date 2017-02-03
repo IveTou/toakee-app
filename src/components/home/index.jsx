@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
 import Relay from 'react-relay';
 
-import FriendList from '~/src/components/friend-list';
+import EventBox from '~/src/components/event-box';
 
 const Home = ({ viewer }) => (
-  <div><FriendList viewer={viewer} /></div>
+  <div><EventBox viewer={viewer} /></div>
 );
 
 Home.propTypes = {
@@ -15,7 +15,7 @@ export default Relay.createContainer(Home, {
   fragments: {
     viewer: () => Relay.QL`
       fragment on Profile {
-        ${FriendList.getFragment('viewer')}
+        ${EventBox.getFragment('viewer')}
       }
     `,
   },

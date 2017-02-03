@@ -5,6 +5,7 @@
     "add-module-exports",
     "babel-root-import",
     "transform-class-properties",
+    "jsx-control-statements",
     "babel-relay-plugin-loader"
   ]
 }
