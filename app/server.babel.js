@@ -10,6 +10,6 @@ nunjucks.configure('src/templates', {
   express: app,
 });
 
-app.get('*', (_, res) => { res.render('index.html') });
+app.get('*', (_, res) => { res.render('index.html'); });
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));

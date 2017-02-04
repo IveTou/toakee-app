@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import Relay from 'react-relay';
-import Event from '~/src/components/event';
+import { Link } from 'react-router';
+
+import EventListItem from './item';
 
 export const Container = ({ viewer }) => {
   declare var event;
@@ -9,7 +11,9 @@ export const Container = ({ viewer }) => {
   return (
     <div className="Container">
       <For each="event" index="idx" of={viewer.events.edges}>
-        <Event key={idx} {...event.node} />
+        <Link key={idx} to={{ pathname: `/evento/${event.node.slug}` }}>
+          <EventListItem {...event.node} />
+        </Link>
       </For>
     </div>
   );
@@ -30,6 +34,7 @@ export default Relay.createContainer(Container, {
         events(start: $start, end: $end, first: 10) {
           edges {
             node {
+              slug
               title
             }
           }
