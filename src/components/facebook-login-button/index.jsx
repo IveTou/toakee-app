@@ -13,9 +13,7 @@ const defaultProps = {
 };
 
 export default class FacebookLoginButton extends React.Component {
-  defaultProps: defaultProps;
-
-  constructor(props: propTypes) {
+  constructor(props) {
     super(props);
     this.state = { fbInitialized: false };
     autoBind(this);
@@ -50,3 +48,5 @@ export default class FacebookLoginButton extends React.Component {
   }
 }
 
+FacebookLoginButton.defaultProps = defaultProps;
+FacebookLoginButton.propTypes = propTypes;

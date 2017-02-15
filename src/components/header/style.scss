@@ -1,0 +1,21 @@
+@import '../../scss/variables';
+
+.Header {
+  background-color: gray;
+  padding: $spacer*4;
+  margin-top: $spacer*8;
+  color: white;
+}
+
+.Span {
+  flex: 1;
+}
+
+.Brands {
+  flex: 1;
+  overflowY: 'auto';
+  padding-bottom: $spacer;
+}
+.Icon {
+  padding-right: $spacer;
+}

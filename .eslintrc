@@ -1,7 +1,11 @@
 {
   "extends": "airbnb",
   "parser": "babel-eslint",
+  "plugins": [
+    "jsx-control-statements"
+  ],
   "ecmaFeatures": {
+    "jsx": true,
     "modules": true,
     "arrowFunctions":true,
     "destructuring": true
@@ -28,6 +32,9 @@
         "extensions": ['.js', '.jsx']
       }
     }
+  },
+  "env": {
+    "jsx-control-statements/jsx-control-statements": true
   }
 }
 

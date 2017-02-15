@@ -1,0 +1,109 @@
+@import '../../scss/variables';
+
+.Landing {
+  font-family: "Raleway", sans-serif;
+  height: 100%;
+  width: 100%;
+  line-height: 1.8;
+}
+
+.TopBar {
+  background-image: linear-gradient(45deg, rgba(255,247,237,0.71) 0%, rgba(189,215,234,0.71) 51%, rgba(125,185,232,1) 100%);
+  
+ div{
+    li{
+      a{
+        padding: 2px 8px 16px 32px;
+      }
+    }
+  }
+}
+
+.Header {
+  background-color: gray;
+  margin-top: $spacer*8;
+  padding-top: $spacer*3;
+  color: white;
+
+  img{
+    max-width: $spacer*80;
+    margin-bottom: -$spacer;
+  }
+}
+
+.Features {
+  padding-top: $spacer*3;
+}
+
+.span {                                                                                             
+  flex: 1;                                                                                          
+  text-align: center;                                                                               
+}  
+
+.cta {                                                                                            
+  text-align: center;                                                                               
+}
+
+.brands {
+  display: none;
+}
+
+@media only screen and (min-width: 768px) {
+  .span {
+    text-align: left;
+  }
+  .cta {  
+    text-align: left;
+  }
+  .brands {
+    display: inline;                                                                                           
+    flex: 1;                                                                                          
+    overflowY: 'auto';                                                                                
+    padding-bottom: $spacer;                                                                          
+  }  
+}
+
+.Icon {
+  padding: 0px;
+  height:64px;
+  width:64px;
+  margin-top: auto;
+  margin-bottom: -28px;
+  margin-left: $spacer;
+}
+
+.w3-row-padding {
+  margin-top:$spacer*8;
+}
+
+.FeatureElement {
+  margin-bottom: $spacer*10;
+  overflow:auto;
+
+  div{
+    img {
+      width: 100%;
+    }
+  }
+}
+
+.feature-1{
+  margin-right: 10%;
+}
+
+.feature-2{
+  margin-left: 10%;
+}
+
+.feature-3{
+  margin-right:10%;
+}
+.Image {
+  width:100%;
+}
+
+.Content {
+   max-width: 1200px;
+   margin: auto;
+}
+

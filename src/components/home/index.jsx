@@ -8,7 +8,9 @@ const Home = ({ viewer }) => (
 );
 
 Home.propTypes = {
-  viewer: PropTypes.object.isRequired,
+  viewer: PropTypes.shape({
+    friends: PropTypes.arrayOf(Object),
+  }).isRequired,
 };
 
 export default Relay.createContainer(Home, {
