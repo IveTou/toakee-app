@@ -17,20 +17,12 @@ const viewerQueries = {
   viewer: () => Relay.QL`query { viewer }`,
 };
 
-const loggedRoutes = (
+export default (
   <Route path="/" component={Logged}>
     <IndexRoute component={Home} queries={viewerQueries} />
     <Route path="/evento/:slug" component={Event} />
-  </Route>
-);
-
-const unloggedRoutes = (
-  <Route path="/" component={Unlogged}>
-    <IndexRoute component={Landing} />
     <Route path="/login" component={Login} />
     <Route path="/signUp" component={SignUp} />
     <Route path="/redirect" onEnter={() => { window.location = '/'; }} />
   </Route>
 );
-
-export default () => (getToken() ? loggedRoutes : unloggedRoutes);

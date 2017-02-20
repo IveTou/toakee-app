@@ -35,7 +35,7 @@ export default class FacebookLoginButton extends React.Component {
   }
 
   facebookLogin() {
-    FB.login(this.onStatusChange, { scope: 'public_profile,email' });
+    FB.login(this.onStatusChange, { scope: 'public_profile,email,user_events' });
   }
 
   render() {

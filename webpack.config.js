@@ -1,5 +1,11 @@
 const webpack = require('webpack');
 const combineLoaders = require('webpack-combine-loaders');
+const _ = require('lodash');
+
+const pickEnv = vars => vars.reduce(
+  (obj, envVar) => _.merge(obj, { [envVar]: JSON.stringify(process.env[envVar]) }),
+  {}
+);
 
 module.exports = {
   entry: './src/main.jsx',
@@ -30,9 +36,9 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': {
-        'FACEBOOK_APP_ID': JSON.stringify('1848071472114729'),
-      },
+      'process.env': pickEnv([
+        'FACEBOOK_APP_ID',
+      ]),
     }),
   ],
   resolve: {
