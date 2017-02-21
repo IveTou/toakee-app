@@ -1,0 +1,21 @@
+@import '../../scss/colors';
+@import '../../scss/variables';
+
+.TextArea {
+  label {
+    font-size: 20px;
+    display: block;
+    text-transform: uppercase;
+  }
+
+  textarea {
+    width: calc(100% - #{$spacer*4});
+    font-size: 16px;
+    margin: $spacer*2 0;
+    padding: $spacer $spacer*2;
+    background-color: $gray50;
+    border: 1px $gray100 solid;
+    border-radius: 3px;
+    color: $black54;
+  }
+}

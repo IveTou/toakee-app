@@ -4,7 +4,7 @@ const _ = require('lodash');
 
 const pickEnv = vars => vars.reduce(
   (obj, envVar) => _.merge(obj, { [envVar]: JSON.stringify(process.env[envVar]) }),
-  {}
+  { BROWSER: true }
 );
 
 module.exports = {
@@ -15,14 +15,14 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.json$/, loader: 'json' },
+      { test: /\.json$/, loader: 'json-loader' },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel'
       },
       {
-        test: /\.scss$/,
+        test: /\.s?css$/,
         loader: combineLoaders([
           { loader: 'style-loader' },
           {
@@ -41,6 +41,11 @@ module.exports = {
       ]),
     }),
   ],
+  node: {
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty'
+  },
   resolve: {
     extensions: ['', '.js', '.jsx', '.json']
   }

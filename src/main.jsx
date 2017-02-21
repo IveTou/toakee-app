@@ -10,7 +10,12 @@ import {
 
 import { GRAPHQL_URI } from '~/app/config';
 import { getToken } from '~/src/utils/session';
-import routes from '~/src/routes';
+import makeRoutes from '~/src/routes';
+
+if (process.env.BROWSER) {
+  require('~/node_modules/material-design-lite/material.min.css');
+  require('~/node_modules/material-design-lite/material.min.js');
+}
 
 Relay.injectNetworkLayer(
   new Relay.DefaultNetworkLayer(GRAPHQL_URI, {
@@ -26,7 +31,7 @@ const router = (
     history={browserHistory}
     render={applyRouterMiddleware(useRelay)}
     environment={Relay.Store}
-    routes={routes}
+    routes={makeRoutes()}
   />
 );
 

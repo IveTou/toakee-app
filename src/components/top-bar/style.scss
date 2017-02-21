@@ -1,0 +1,8 @@
+@import '../../scss/variables';
+@import '../../scss/colors';
+
+.TopBar {
+  width: 100%;
+  padding: $spacer*2;
+  background-color: $gray;
+}

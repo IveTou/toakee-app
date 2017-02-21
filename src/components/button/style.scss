@@ -1,0 +1,49 @@
+@import '../../scss/variables';
+@import '../../scss/colors';
+@import '../../scss/mixins';
+
+.Button {
+  &.Button--accent {
+    @include gradient-background($primary, $secondary);
+    @include animation(GradientSlide .45s ease forwards);
+
+    &:hover {
+      @include animation(GradientSlideHover .45s ease forwards);
+    }
+
+    &.Button--loading.mdl-button {
+      color: white;
+
+      &:after {
+        @include animation(LoadingEllipsis steps(4,end) 900ms infinite);
+        overflow: hidden;
+        display: inline-block;
+        vertical-align: bottom;
+        content: $ellipsis;
+        width: 0px;
+      }
+    }
+
+    &.Button--done.mdl-button {
+      color: white;
+    }
+  }
+
+  &--block {
+    width: 100%;
+  }
+}
+
+@include keyframes(GradientSlide) {
+  0%{ background-size: 400%; }
+  100% { background-size: 100%; }
+}
+
+@include keyframes(GradientSlideHover) {
+  0% { background-size: 100%; }
+  100%{ background-size: 400%; }
+}
+
+@include keyframes(LoadingEllipsis) {
+  to { width: 1.25em; }
+}
