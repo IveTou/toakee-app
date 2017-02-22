@@ -1,4 +1,4 @@
-import config from '~/app/config';
+import config from '~/src/server/config';
 import BaseAPI from './base';
 
 class ToakeeAPI extends BaseAPI {

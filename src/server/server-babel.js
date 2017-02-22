@@ -3,7 +3,7 @@ import nunjucks from 'nunjucks';
 import nodemailer from 'nodemailer';
 import bodyParser from 'body-parser';
 
-import { PORT, SUPPORT_EMAIL } from './config';
+import { PORT, SUPPORT_EMAIL } from '~/src/server/config';
 
 const app = express();
 app.use(express.static('public'));
@@ -35,4 +35,5 @@ app.post('/send-email', (req, res) => {
 
 app.get('*', (_, res) => { res.render('index.html'); });
 
+// eslint-disable-next-line no-console
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));

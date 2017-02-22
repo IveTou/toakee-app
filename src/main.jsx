@@ -8,7 +8,7 @@ import {
   applyRouterMiddleware,
 } from 'react-router';
 
-import { GRAPHQL_URI } from '~/app/config';
+import { GRAPHQL_URI } from '~/src/server/config';
 import { getToken } from '~/src/utils/session';
 import makeRoutes from '~/src/routes';
 
