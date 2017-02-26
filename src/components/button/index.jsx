@@ -28,13 +28,16 @@ const buildClasses = ({
   })
 );
 
-const Button = ({ onClick, label, type, disabled, ...props }) => (
+const Button = ({ onClick, label, icon, type, disabled, ...props }) => (
   <button
     className={buildClasses(props)}
     type={type}
     onClick={onClick}
     disabled={disabled}
   >
+    <If condition={icon}>
+      <i className={`fa fa-${icon}`} />
+    </If>
     {label}
   </button>
 );
@@ -42,8 +45,9 @@ const Button = ({ onClick, label, type, disabled, ...props }) => (
 Button.propTypes = {
   onClick: PropTypes.func,
   label: PropTypes.string,
+  icon: PropTypes.string,
   type: PropTypes.string,
-  disabled: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 export default Button;

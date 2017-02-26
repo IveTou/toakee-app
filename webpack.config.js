@@ -38,6 +38,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': pickEnv([
         'FACEBOOK_APP_ID',
+        'INSTAGRAM_APP_ID',
       ]),
     }),
   ],

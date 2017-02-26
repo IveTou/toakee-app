@@ -10,7 +10,17 @@ const buildClasses = ({ className }) => (
   classNames(defaultClasses, className)
 );
 
-const Input = ({ type = 'text', name, label, value, children, required, checked, ...props }) => (
+const Input = ({
+  type = 'text',
+  name,
+  label,
+  placeholder,
+  value,
+  children,
+  required,
+  checked,
+  ...props
+}) => (
   <div className={buildClasses(props)}>
     <If condition={label}>
       <label htmlFor={`input-${label}`}>{label}</label>
@@ -19,6 +29,7 @@ const Input = ({ type = 'text', name, label, value, children, required, checked,
       id={`input-${label}`}
       type={type}
       name={name}
+      placeholder={placeholder}
       value={value}
       defaultChecked={checked}
       required={required}
@@ -31,6 +42,7 @@ Input.propTypes = {
   type: PropTypes.string,
   name: PropTypes.string,
   label: PropTypes.string,
+  placeholder: PropTypes.string,
   value: PropTypes.string,
   required: PropTypes.bool,
   checked: PropTypes.bool,

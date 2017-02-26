@@ -34,6 +34,7 @@
   "license": "ISC",
   "dependencies": {
     "auto-bind": "1.0.0",
+    "babel-register": "^6.23.0",
     "babel-relay-plugin": "0.10.0",
     "babel-relay-plugin-loader": "0.10.0",
     "body-parser": "1.16.1",

@@ -1,17 +1,20 @@
 import React, { PropTypes } from 'react';
 import Relay from 'react-relay';
-import { Link, withRouter } from 'react-router';
 import { partial } from 'lodash';
 import autoBind from 'auto-bind';
-import Input from 'react-toolbox/lib/input';
-import { Button } from 'react-toolbox/lib/button';
 
 import LoginMutation from '~/src/mutations/login';
-import FacebookLoginMutation from '~/src/mutations/facebook-login';
-import { setToken, setFacebookToken } from '~/src/utils/session';
-import { stateSetter, errorFromKey } from '~/src/utils/form';
+import SocialLoginMutation from '~/src/mutations/social-login';
+import { setToken, setSocialToken } from '~/src/utils/session';
+import { errorFromKey } from '~/src/utils/form';
 import { extractError } from '~/src/utils/relay';
-import FacebookLoginButton from '~/src/components/facebook-login-button';
+
+import Footer from '~/src/components/footer';
+import Logo from '~/src/components/logo';
+import StrikedText from '~/src/components/striked-text';
+import SocialLoginButton from '~/src/components/social-login-button';
+import Input from '~/src/components/input';
+import Button from '~/src/components/button';
 
 const propTypes = {
   router: PropTypes.object,
@@ -21,7 +24,11 @@ const defaultProps = {
   router: {},
 };
 
-class Login extends React.Component {
+if (process.env.BROWSER) {
+  require('./style.scss');
+}
+
+export default class Login extends React.Component {
   defaultProps: defaultProps;
 
   constructor(props: propTypes) {
@@ -58,12 +65,11 @@ class Login extends React.Component {
     );
   }
 
-  facebookSubmit(token) {
-    this.setState({ errorMessage: '' });
-    setFacebookToken(token);
+  socialSubmit(network, token) {
+    setSocialToken(network, token);
     Relay.Store.commitUpdate(
-      new FacebookLoginMutation({ token }),
-      { onFailure: this.onFailure, onSuccess: partial(this.onSuccess, 'facebookLogin') },
+      new SocialLoginMutation({ network, token }),
+      { onFailure: this.onFailure, onSuccess: partial(this.onSuccess, 'socialLogin') },
     );
   }
 
@@ -75,34 +81,41 @@ class Login extends React.Component {
   render() {
     return (
       <div className="Login">
-        <div className="Login-form">
-          <hr className="Login-form-separator" />
-          <FacebookLoginButton onReceiveToken={this.facebookSubmit} />
-          {this.renderErrorMessage()}
-          <Input
-            type="email"
-            label="E-mail"
-            icon="email"
-            value={this.state.username}
-            onChange={stateSetter(this, 'username')}
-            className="Login-form-username"
-          />
-          <Input
-            type="password"
-            label="Senha"
-            icon="lock"
-            value={this.state.password}
-            onChange={stateSetter(this, 'password')}
-            className="Login-form-password"
-          />
-          <Button label="Entrar" onClick={this.submit} raised primary />
-          <Link to="/signUp">
-            Criar nova conta
-          </Link>
+        <div className="Login-logo">
+          <Logo />
         </div>
+        <div className="Login-box">
+          <StrikedText>Entre com</StrikedText>
+          <div className="Login-box-social">
+            <SocialLoginButton network="facebook" onReceiveToken={this.socialSubmit} />
+            <SocialLoginButton network="instagram" onReceiveToken={this.socialSubmit} />
+          </div>
+          <StrikedText>ou</StrikedText>
+          <form className="Login-box-form">
+            <Input
+              type="email"
+              placeholder="e-mail"
+              icon="email"
+              className="Login-box-form-username"
+            />
+            <Input
+              type="password"
+              placeholder="senha"
+              icon="lock"
+              className="Login-box-form-password"
+            />
+            <Button
+              label="Entrar"
+              className="Login-box-form-submit"
+              onClick={this.submit}
+              raised
+              accent
+              block
+            />
+          </form>
+        </div>
+        <Footer />
       </div>
     );
   }
 }
-
-export default withRouter(Login);

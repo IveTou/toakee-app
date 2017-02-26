@@ -32,6 +32,11 @@
   &--block {
     width: 100%;
   }
+
+  .fa {
+    margin-right: $spacer*2;
+    vertical-align: sub;
+  }
 }
 
 @include keyframes(GradientSlide) {

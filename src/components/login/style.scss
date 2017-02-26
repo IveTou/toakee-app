@@ -1,0 +1,59 @@
+@import '../../scss/colors';
+@import '../../scss/variables';
+
+.Login {
+  background-color: $black06;
+  padding: 10% 0;
+
+  &-logo {
+    display: table;
+    margin: 0 auto $spacer*2;
+  }
+
+  &-box {
+    margin: 0 auto;
+    max-width: $spacer*41;
+    padding: $spacer*3;
+    background-color: $white;
+    border: 1px $gray100 solid;
+    border-radius: 10px;
+
+    &-social {
+      margin: $spacer*2 0;
+    }
+
+    &-form {
+      margin-top: $spacer*2;
+
+      &-submit.mdl-button {
+        margin-top: $spacer*2;
+        height: $spacer*6;
+      }
+    }
+  }
+
+  .SocialLoginButton.mdl-button {
+    color: white;
+    height: $spacer*5;
+    width: calc(50% - #{$spacer/2});
+
+    &:nth-child(1) {
+      background-color: $facebook-color;
+    }
+
+    &:nth-child(2) {
+      float: right;
+      background-color: $instagram-color;
+    }
+
+    .fa {
+      font-size: 24px;
+    }
+  }
+
+  .Footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+}

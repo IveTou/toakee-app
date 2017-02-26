@@ -1,0 +1,18 @@
+@import '../../scss/colors';
+@import '../../scss/variables';
+
+.StrikedText {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid $gray100;
+  line-height: 0.1em;
+  margin: $spacer 0;
+
+  &-content {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: $gray100;
+    background: $white;
+    padding: 0 $spacer;
+  }
+}

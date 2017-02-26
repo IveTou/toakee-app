@@ -1,0 +1,10 @@
+@import '../../scss/colors';
+
+.Footer {
+  background-color: $black87;
+
+  &-logo {
+    text-align: center;
+    width: 100%;
+  }
+}

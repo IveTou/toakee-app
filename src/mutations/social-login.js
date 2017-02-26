@@ -1,8 +1,8 @@
 import Relay from 'react-relay';
 
-export default class FacebookLoginMutation extends Relay.Mutation {
+export default class SocialLoginMutation extends Relay.Mutation {
   getMutation() {
-    return Relay.QL`mutation{ facebookLogin }`;
+    return Relay.QL`mutation{ socialLogin }`;
   }
 
   getConfigs() {
@@ -10,7 +10,7 @@ export default class FacebookLoginMutation extends Relay.Mutation {
       type: 'REQUIRED_CHILDREN',
       children: [
         Relay.QL`
-          fragment on FacebookLoginPayload {
+          fragment on SocialLoginPayload {
             token
           }
         `,
@@ -20,7 +20,7 @@ export default class FacebookLoginMutation extends Relay.Mutation {
 
   getFatQuery() {
     return Relay.QL`
-      fragment on FacebookLoginPayload {
+      fragment on SocialLoginPayload {
         token
       }
     `;
@@ -29,6 +29,7 @@ export default class FacebookLoginMutation extends Relay.Mutation {
   getVariables() {
     return {
       token: this.props.token,
+      network: this.props.network.toUpperCase(),
     };
   }
 }

@@ -33,6 +33,10 @@ app.post('/send-email', (req, res) => {
   return res.json({ ok: true });
 });
 
+app.get('/social-login', (_, res) => {
+  res.render('social-login.html');
+});
+
 app.get('*', (_, res) => { res.render('index.html'); });
 
 // eslint-disable-next-line no-console
