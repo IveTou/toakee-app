@@ -1,6 +1,6 @@
 # Toakee App
 
-TODO: Write a project description
+TODO:Write a project description
 
 ## Installation
 
