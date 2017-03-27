@@ -1,14 +1,20 @@
 import React, { PropTypes } from 'react';
-import Relay from 'react-relay';
 import autoBind from 'auto-bind';
 import { Link, withRouter } from 'react-router';
-import Input from 'react-toolbox/lib/input';
-import { Button } from 'react-toolbox/lib/button';
 
-import SignUpMutation from '~/src/mutations/sign-up';
+import { signUp } from '~/src/toakee-core/ducks/auth';
+
 import { setToken } from '~/src/utils/session';
-import { extractError } from '~/src/utils/relay';
-import { stateSetter, errorFromKey } from '~/src/utils/form';
+import { errorFromKey, formRef } from '~/src/utils/form';
+
+import StrikedText from '~/src/components/striked-text';
+import Input from '~/src/components/input';
+import Button from '~/src/components/button';
+import { showToast } from '~/src/components/snackbar';
+
+if (process.env.BROWSER) {
+  require('./style.scss');
+}
 
 const propTypes = {
   router: PropTypes.object,
@@ -23,99 +29,81 @@ export class SignUp extends React.Component {
 
   constructor(props: propTypes) {
     super(props);
-    this.state = {
-      errorMessage: '',
-      firstName: '',
-      lastName: '',
-      username: '',
-      email: '',
-      password: '',
-    };
     autoBind(this);
   }
 
-  submit() {
-    const { firstName, lastName, username, email, password } = this.state;
+  submit(e) {
+    e.preventDefault();
+
+    const firstName = this.form.firstName.value;
+    const lastName = this.form.lastName.value;
+    const username = this.form.username.value;
+    const email = this.form.email.value;
+    const password = this.form.password.value;
 
     if (!(firstName && lastName && username && email && password)) {
-      this.setState({ errorMessage: errorFromKey('All.UNFILLED') });
+      showToast(errorFromKey('All.UNFILLED'));
       return;
     }
 
-    const onFailure = transaction => (
-      this.setState({ errorMessage: errorFromKey(extractError(transaction)) })
-    );
-
-    const onSuccess = ({ signUp }) => {
-      setToken('user', signUp.token);
+    const onSuccess = ({ signUp: token }) => {
+      setToken('user', token);
       this.props.router.push('/redirect');
     };
 
-    this.setState({ errorMessage: '' });
-    Relay.Store.commitUpdate(
-      new SignUpMutation({
-        firstName,
-        lastName,
-        username,
-        email,
-        password,
-      }),
-      { onFailure, onSuccess },
-    );
-  }
-
-  renderErrorMessage() {
-    const { errorMessage } = this.state;
-    return errorMessage && <div className="SignUp-form-error">{errorMessage}</div>;
+    signUp(username, password, firstName, lastName, email)
+      .then(onSuccess)
+      .catch(es => showToast(errorFromKey(es && es[0])));
   }
 
   render() {
     return (
       <div className="SignUp">
-        <div className="SignUp-form">
-          {this.renderErrorMessage()}
+        <StrikedText>Nova conta</StrikedText>
+        <form ref={formRef(this)} className="SignUp-form">
           <Input
-            type="text"
-            label="Nome"
-            value={this.state.firstName}
-            onChange={stateSetter(this, 'firstName')}
+            className="SignUp-form-firstName"
+            placeholder="nome"
+            name="firstName"
           />
           <Input
-            type="text"
-            label="Sobrenome"
-            value={this.state.lastName}
-            onChange={stateSetter(this, 'lastName')}
+            className="SignUp-form-lastName"
+            placeholder="sobrenome"
+            name="lastName"
           />
           <Input
-            type="text"
-            label="Usuário"
-            value={this.state.username}
-            onChange={stateSetter(this, 'username')}
+            placeholder="usuário"
+            name="username"
           />
           <Input
             type="email"
-            label="E-mail"
-            value={this.state.email}
-            onChange={stateSetter(this, 'email')}
+            name="email"
+            placeholder="e-mail"
           />
           <Input
             type="password"
-            label="Senha"
-            value={this.state.password}
-            onChange={stateSetter(this, 'password')}
+            name="password"
+            placeholder="senha"
           />
-          <Button label="Criar minha conta" onClick={this.submit} raised primary />
-
-          <div className="SignUp-form-back">
-            <Link to={{ pathname: '/login' }}>
-              Já possuo uma conta
-            </Link>
-          </div>
-        </div>
+          <Button
+            className="SignUp-form-submit"
+            label="Criar minha conta"
+            onClick={this.submit}
+            raised
+            accent
+            block
+          />
+          <Link to={{ pathname: '/login' }}>
+            <Button
+              className="SignUp-form-back"
+              label="Voltar"
+              block
+            />
+          </Link>
+        </form>
       </div>
     );
   }
 }
 
 export default withRouter(SignUp);
-

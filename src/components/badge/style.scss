@@ -1,0 +1,7 @@
+@import '../../scss/variables';
+
+.Badge {
+  border: 1px solid;
+  border-radius: 3px;
+  padding: $spacer/4 $spacer/2;
+}

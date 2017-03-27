@@ -1,0 +1,19 @@
+@import '../../scss/colors';
+@import '../../scss/variables';
+
+.RecoverPassword {
+  text-align: center;
+  font-size: 13px;
+
+  &-title {
+    font-weight: 700;
+  }
+
+  &-form-back.mdl-button {
+    margin: $spacer 0 $spacer*-1;
+  }
+
+  .Button {
+    height: $spacer*5;
+  }
+}

@@ -4,9 +4,11 @@ import TopBar from '~/src/components/top-bar';
 require('./style.scss');
 
 const Logged = ({ children }) => (
-  <div className="Logged">
+  <div className="Logged mdl-layout mdl-layout--fixed-header">
     <TopBar />
-    {children}
+    <main className="main mdl-layout__content">
+      {children}
+    </main>
   </div>
 );
 

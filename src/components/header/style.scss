@@ -1,0 +1,21 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/mixins';
+@import '../../scss/variables';
+@import '../../scss/colors';
+
+.Header {
+  color: $secondary;
+  background-color: $gray50;
+  padding: $spacer*3;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 22px;
+  @include box-shadow(0 0 $spacer*2 $black26);
+}
+
+@include media("<tablet") {
+  .Header {
+    font-size: 16px;
+  }
+}

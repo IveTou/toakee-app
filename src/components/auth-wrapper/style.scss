@@ -1,0 +1,26 @@
+@import '../../scss/colors';
+@import '../../scss/variables';
+@import '../../scss/mixins';
+
+.AuthWrapper {
+  height: calc(100vh - #{$footer-height});
+  background-color: $black06;
+
+  &-content {
+    padding-top: 5%;
+
+    &-logo {
+      display: table;
+      margin: 0 auto $spacer*2;
+    }
+
+    &-box {
+      margin: 0 auto;
+      max-width: $spacer*41;
+      padding: $spacer*3;
+      background-color: $white;
+      border: 1px $gray100 solid;
+      border-radius: 10px;
+    }
+  }
+}

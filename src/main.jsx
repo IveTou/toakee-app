@@ -1,38 +1,34 @@
 import React from 'react';
-import Relay from 'react-relay';
 import { render } from 'react-dom';
-import useRelay from 'react-router-relay';
+import moment from 'moment';
 import {
   Router,
   browserHistory,
-  applyRouterMiddleware,
 } from 'react-router';
 
-import { GRAPHQL_URI } from '~/src/server/config';
-import { getToken } from '~/src/utils/session';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunkMiddleware from 'redux-thunk';
+
 import makeRoutes from '~/src/routes';
+import rootReducer from '~/src/toakee-core/ducks';
 
 if (process.env.BROWSER) {
-  require('~/node_modules/material-design-lite/material.min.css');
+  require('~/src/scss/base.scss');
+  require('~/node_modules/include-media/dist/_include-media.scss');
   require('~/node_modules/material-design-lite/material.min.js');
 }
 
-Relay.injectNetworkLayer(
-  new Relay.DefaultNetworkLayer(GRAPHQL_URI, {
-    headers: {
-      credentials: 'include',
-      Authorization: getToken() ? `Bearer ${getToken()}` : '',
-    },
-  }),
+moment.locale('pt-br');
+
+const createStoreWithMiddleware = applyMiddleware(
+  thunkMiddleware,
+)(createStore);
+
+const app = (
+  <Provider store={createStoreWithMiddleware(rootReducer)}>
+    <Router history={browserHistory} routes={makeRoutes()} />
+  </Provider>
 );
 
-const router = (
-  <Router
-    history={browserHistory}
-    render={applyRouterMiddleware(useRelay)}
-    environment={Relay.Store}
-    routes={makeRoutes()}
-  />
-);
-
-render(router, document.getElementById('app'));
+render(app, document.getElementById('app'));

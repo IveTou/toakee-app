@@ -1,0 +1,61 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/variables';
+@import '../../scss/colors';
+
+.EventList {
+  padding: $spacer*3;
+
+  &-title {
+    color: $black87;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  &-list {
+    display: flex;
+
+    .EventListItem {
+      margin-right: $spacer*2;
+
+      &-link {
+        text-decoration: none;
+      }
+
+      &-background {
+        width: 100%;
+        height: 100%;
+      }
+
+      &-content {
+        padding: $spacer*2;
+
+        &-title {
+          padding: 0;
+
+          &-text {
+            font-size: 14px;
+            font-weight: 500;
+          }
+        }
+
+        &-body,
+        &-time {
+          margin-top: $spacer;
+          padding: 0;
+        }
+      }
+    }
+  }
+}
+
+@include media("<tablet") {
+  .EventList-list {
+    flex-direction: column;
+
+    .EventListItem {
+      margin: 0 0 $spacer*2;
+      width: 100%;
+    }
+  }
+}

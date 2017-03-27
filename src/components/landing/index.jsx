@@ -4,7 +4,6 @@ import { Link } from 'react-router';
 
 import ToakeeAPI from '~/src/apis/toakee';
 
-import Footer from '~/src/components/footer';
 import Logo from '~/src/components/logo';
 import Button from '~/src/components/button';
 import Input from '~/src/components/input';
@@ -90,10 +89,10 @@ export default class Landing extends React.Component {
             <nav className="mdl-navigation">
               <Link className="mdl-navigation__link" href="#quem-somos">Quem somos</Link>
               <Link className="mdl-navigation__link" href="#contato">Contato</Link>
-              <Link className="mdl-navigation__link" to={{ pathname: '/login' }}>
-                <Button className="header-action" label="Criar lista" raised ripple accent />
-              </Link>
             </nav>
+            <Link to={{ pathname: '/login' }}>
+              <Button className="header-action" label="Criar lista" raised ripple accent />
+            </Link>
           </div>
         </header>
         <main className="main mdl-layout__content">
@@ -150,7 +149,6 @@ export default class Landing extends React.Component {
               </div>
             </form>
           </div>
-          <Footer />
         </main>
       </div>
     );

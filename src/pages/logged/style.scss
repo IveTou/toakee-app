@@ -1,8 +1,14 @@
-html, body #app {
-  font-family: 'Roboto', sans-serif;
-  line-height: 1.2;
+@import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/variables';
+
+.Logged {
+  .main {
+    padding-top: $spacer*10;
+  }
 }
 
-body {
-  margin: 0;
+@include media("<tablet") {
+  .Logged .main {
+    padding-top: $spacer*9;
+  }
 }

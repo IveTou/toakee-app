@@ -1,0 +1,27 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/mixins';
+@import '../../scss/variables';
+
+.Snackbar {
+  &.mdl-snackbar {
+    top: 0;
+    bottom: initial;
+    @include transform(translate(-50%, $spacer*-10));
+
+    &--active {
+      @include transform(translate(-50%, 0));
+    }
+  }
+}
+
+@include media("<tablet") {
+  .Snackbar {
+    &.mdl-snackbar {
+      @include transform(translate(0, $spacer*-10));
+
+      &--active {
+        @include transform(translate(0, 0));
+      }
+    }
+  }
+}

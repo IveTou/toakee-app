@@ -1,3 +1,4 @@
+export const logout = () => localStorage.clear();
 export const getToken = () => localStorage.getItem('token');
 export const setToken = token => localStorage.setItem('token', token);
 export const setSocialToken = (network, token) => {

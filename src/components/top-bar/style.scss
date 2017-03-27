@@ -1,8 +1,41 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/mixins';
 @import '../../scss/variables';
 @import '../../scss/colors';
 
-.TopBar {
-  width: 100%;
-  padding: $spacer*2;
-  background-color: $gray;
+.TopBar.header {
+  position: fixed;
+  padding: $spacer;
+  background-color: $gray50;
+  @include box-shadow(0 0 $spacer*2 $black26);
+
+  .mdl-navigation__link {
+    color: $black54;
+    text-transform: uppercase;
+  }
+
+  .mdl-layout__header-row {
+    padding-left: $spacer*5;
+  }
+
+  .mdl-menu__item {
+    width: 100%;
+  }
+
+  &-action.mdl-button {
+    margin-left: $spacer*3;
+    width: $spacer*20;
+    height: $spacer*6;
+    font-weight: 400;
+    line-height: $spacer*6;
+  }
 }
+
+@include media("<tablet") {
+  .TopBar.header {
+    .mdl-layout__header-row {
+      padding-left: $spacer*2;
+    }
+  }
+}
+

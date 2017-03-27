@@ -8,6 +8,10 @@ import {
   SOCIAL_REDIRECT_URI,
 } from '~/src/server/config';
 
+if (process.env.BROWSER) {
+  require('./style.scss');
+}
+
 const query = clientId => [
   `client_id=${clientId}`,
   `redirect_uri=${encodeURIComponent(SOCIAL_REDIRECT_URI)}`,

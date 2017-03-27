@@ -1,20 +1,18 @@
 import React, { PropTypes } from 'react';
-import Relay from 'react-relay';
-import { partial } from 'lodash';
+import { Link } from 'react-router';
+import { partial, upperCase } from 'lodash';
 import autoBind from 'auto-bind';
 
-import LoginMutation from '~/src/mutations/login';
-import SocialLoginMutation from '~/src/mutations/social-login';
-import { setToken, setSocialToken } from '~/src/utils/session';
-import { errorFromKey } from '~/src/utils/form';
-import { extractError } from '~/src/utils/relay';
+import { login, socialLogin } from '~/src/toakee-core/ducks/auth';
 
-import Footer from '~/src/components/footer';
-import Logo from '~/src/components/logo';
+import { setToken, setSocialToken } from '~/src/utils/session';
+import { errorFromKey, formRef } from '~/src/utils/form';
+
 import StrikedText from '~/src/components/striked-text';
 import SocialLoginButton from '~/src/components/social-login-button';
 import Input from '~/src/components/input';
 import Button from '~/src/components/button';
+import { showToast } from '~/src/components/snackbar';
 
 const propTypes = {
   router: PropTypes.object,
@@ -33,88 +31,79 @@ export default class Login extends React.Component {
 
   constructor(props: propTypes) {
     super(props);
-    this.state = {
-      errorMessage: '',
-      username: '',
-      password: '',
-    };
     autoBind(this);
   }
 
   onSuccess(mutation, response) {
-    setToken(response[mutation].token);
+    setToken(response[mutation]);
     this.props.router.push('/redirect');
   }
 
-  onFailure(transaction) {
-    this.setState({ errorMessage: errorFromKey(extractError(transaction)) });
-  }
+  submit(e) {
+    e.preventDefault();
 
-  submit() {
-    const { username, password } = this.state;
+    const username = this.form.username.value;
+    const password = this.form.password.value;
 
     if (!(username && password)) {
-      this.setState({ errorMessage: errorFromKey('All.UNFILLED') });
+      showToast(errorFromKey('All.UNFILLED'));
       return;
     }
 
-    this.setState({ errorMessage: '' });
-    Relay.Store.commitUpdate(
-      new LoginMutation({ username, password }),
-      { onFailure: this.onFailure, onSuccess: partial(this.onSuccess, 'login') },
-    );
+    login(username, password)
+      .then(partial(this.onSuccess, 'login'))
+      .catch(es => showToast(errorFromKey(es && es[0])));
   }
 
   socialSubmit(network, token) {
     setSocialToken(network, token);
-    Relay.Store.commitUpdate(
-      new SocialLoginMutation({ network, token }),
-      { onFailure: this.onFailure, onSuccess: partial(this.onSuccess, 'socialLogin') },
-    );
-  }
 
-  renderErrorMessage() {
-    const { errorMessage } = this.state;
-    return errorMessage && <div className="Login-form-error">{errorMessage}</div>;
+    socialLogin(upperCase(network), token)
+      .then(partial(this.onSuccess, 'socialLogin'))
+      .catch(es => showToast(errorFromKey(es && es[0])));
   }
 
   render() {
     return (
       <div className="Login">
-        <div className="Login-logo">
-          <Logo />
+        <StrikedText>Entre com</StrikedText>
+        <div className="Login-social">
+          <SocialLoginButton network="facebook" onReceiveToken={this.socialSubmit} />
+          <SocialLoginButton network="instagram" onReceiveToken={this.socialSubmit} />
         </div>
-        <div className="Login-box">
-          <StrikedText>Entre com</StrikedText>
-          <div className="Login-box-social">
-            <SocialLoginButton network="facebook" onReceiveToken={this.socialSubmit} />
-            <SocialLoginButton network="instagram" onReceiveToken={this.socialSubmit} />
+        <StrikedText>ou</StrikedText>
+        <form ref={formRef(this)} className="Login-form">
+          <Input
+            type="email"
+            name="username"
+            placeholder="e-mail"
+            className="Login-form-username"
+          />
+          <Input
+            type="password"
+            name="password"
+            placeholder="senha"
+            className="Login-form-password"
+          />
+          <div className="Login-form-signUp">
+            <Link to={{ pathname: '/cadastrar' }}>
+              Não tenho cadastro
+            </Link>
           </div>
-          <StrikedText>ou</StrikedText>
-          <form className="Login-box-form">
-            <Input
-              type="email"
-              placeholder="e-mail"
-              icon="email"
-              className="Login-box-form-username"
-            />
-            <Input
-              type="password"
-              placeholder="senha"
-              icon="lock"
-              className="Login-box-form-password"
-            />
-            <Button
-              label="Entrar"
-              className="Login-box-form-submit"
-              onClick={this.submit}
-              raised
-              accent
-              block
-            />
-          </form>
-        </div>
-        <Footer />
+          <div className="Login-form-forgotPassword">
+            <Link to={{ pathname: '/recuperar-senha' }}>
+              Esqueci minha senha
+            </Link>
+          </div>
+          <Button
+            label="Entrar"
+            className="Login-form-submit"
+            onClick={this.submit}
+            raised
+            accent
+            block
+          />
+        </form>
       </div>
     );
   }

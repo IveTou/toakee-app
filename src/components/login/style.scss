@@ -2,33 +2,39 @@
 @import '../../scss/variables';
 
 .Login {
-  background-color: $black06;
-  padding: 10% 0;
-
-  &-logo {
-    display: table;
-    margin: 0 auto $spacer*2;
+  &-social {
+    margin: $spacer*2 0;
   }
 
-  &-box {
-    margin: 0 auto;
-    max-width: $spacer*41;
-    padding: $spacer*3;
-    background-color: $white;
-    border: 1px $gray100 solid;
-    border-radius: 10px;
+  &-form {
+    margin-top: $spacer*2;
 
-    &-social {
-      margin: $spacer*2 0;
+    &-signUp,
+    &-forgotPassword {
+      display: inline-block;
+      font-size: 12px;
+      a {
+        color: $black26;
+        text-decoration: none;
+
+        &:hover {
+          color: $black54;
+          text-decoration: underline;
+        }
+      }
     }
 
-    &-form {
-      margin-top: $spacer*2;
+    &-signUp {
+      float: left;
+    }
 
-      &-submit.mdl-button {
-        margin-top: $spacer*2;
-        height: $spacer*6;
-      }
+    &-forgotPassword {
+      float: right;
+    }
+
+    &-submit.mdl-button {
+      margin-top: $spacer*2;
+      height: $spacer*6;
     }
   }
 
@@ -50,10 +56,5 @@
       font-size: 24px;
     }
   }
-
-  .Footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-  }
 }
+

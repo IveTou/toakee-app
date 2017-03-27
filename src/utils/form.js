@@ -11,3 +11,6 @@ export const errors = {
 
 export const errorFromKey =
   key => (errors[key] || 'Um erro ocorreu, tente novamente mais tarde.');
+
+// eslint-disable-next-line no-param-reassign
+export const formRef = _this => (ref) => { _this.form = ref; };

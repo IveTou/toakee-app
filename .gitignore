@@ -1,7 +1,12 @@
+.DS_Store
 node_modules/
 npm-debug.log
 
 public/js/bundle.js
 public/css/bundle.css
+
+dist
+
+data
 
 howto.txt

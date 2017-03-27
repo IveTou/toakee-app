@@ -2,6 +2,12 @@ $gray: #f9f9f9;
 $primary: #febc2d;
 $secondary: #fc3b1d;
 
+$color-primary: "246, 77, 21";
+//$color-primary-dark: "";
+$color-accent: "246, 77, 21";
+$color-primary-contrast: "255, 255, 255";
+$color-accent-contrast: "255, 255, 255";
+
 $black: #000;
 $gray: #808080;
 $white: #fff;
@@ -20,6 +26,8 @@ $gray100: lighten($gray, 40%);
 $gray500: $gray;
 $gray600: darken($gray, 10%);
 $gray800: darken($gray, 30%);
+
+$green: #92b329;
 
 $instagram-color: #fb3958;
 $facebook-color: #3b5998;

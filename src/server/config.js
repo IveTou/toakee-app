@@ -4,7 +4,7 @@ const env = (key, miss) => (process.env[key] || miss);
 const reducer = (obj, miss, key) => ({ ...obj, [key]: env(key, miss) });
 
 const config = reduce({
-  GRAPHQL_URI: 'http://localhost:4000/graphql',
+  GRAPHQL_URI: 'http://localhost:4000',
   BASE_URI: 'http://localhost:3000',
   SOCIAL_REDIRECT_URI: 'http://localhost:3000/social-login',
   FACEBOOK_APP_ID: '',

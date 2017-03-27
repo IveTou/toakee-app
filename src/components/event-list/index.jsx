@@ -1,22 +1,52 @@
 import React, { PropTypes } from 'react';
-import { RootContainer } from 'react-relay';
-import EventListRoute from './route';
-import Container from './container';
+import { connect } from 'react-redux';
 
-const EventList = ({ title, start, end }) => (
-  <div className="EventList">
-    <h3>{title}</h3>
-    <RootContainer
-      Component={Container}
-      route={new EventListRoute({ start, end })}
-    />
-  </div>
-);
+import { fetchEvents } from '~/src/toakee-core/ducks/events';
+import EventListItem from './item';
+
+if (process.env.BROWSER) {
+  require('./style.scss');
+}
+
+class EventList extends React.Component {
+  componentWillMount() {
+    const { start, end } = this.props;
+    this.props.dispatch(fetchEvents({ start, end }));
+  }
+
+  render() {
+    const { title, events, start, end } = this.props;
+    const list = events.get('data').size
+      ? events.get('data')
+          .filter(e => start.isSameOrBefore(e.start) && (!end || end.isSameOrAfter(e.start)))
+          .sort((a, b) => a.start > b.start)
+          .toArray()
+      : [];
+
+    declare var event;
+    declare var idx;
+
+    return !!list.length && (
+      <div className="EventList">
+        <div className="EventList-title">{title}</div>
+        <div className="EventList-list">
+          <For each="event" index="idx" of={list}>
+            <EventListItem key={idx} {...event} />
+          </For>
+        </div>
+      </div>
+    );
+  }
+}
 
 EventList.propTypes = {
-  title: PropTypes.string.isRequired,
-  start: PropTypes.object.isRequired,
-  end: PropTypes.object.isRequired,
+  title: PropTypes.string,
+  events: PropTypes.object,
+  start: PropTypes.object,
+  end: PropTypes.object,
+  dispatch: PropTypes.func,
 };
 
-export default EventList;
+export default connect(
+  ({ events }) => ({ events }),
+)(EventList);

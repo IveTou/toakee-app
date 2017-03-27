@@ -2,8 +2,11 @@
 @import '../../scss/colors';
 @import '../../scss/mixins';
 
-.Button {
+.mdl-button.Button {
+  color: $black54;
+
   &.Button--accent {
+    color: white;
     @include gradient-background($primary, $secondary);
     @include animation(GradientSlide .45s ease forwards);
 
@@ -11,7 +14,7 @@
       @include animation(GradientSlideHover .45s ease forwards);
     }
 
-    &.Button--loading.mdl-button {
+    &.Button--loading {
       color: white;
 
       &:after {
@@ -24,18 +27,22 @@
       }
     }
 
-    &.Button--done.mdl-button {
+    &.Button--done {
       color: white;
     }
   }
 
-  &--block {
-    width: 100%;
+  &.Button--success {
+    color: $green;
   }
 
-  .fa {
-    margin-right: $spacer*2;
-    vertical-align: sub;
+  .Button-avatar {
+    width: 100%;
+    height: 100%;
+  }
+
+  &--block {
+    width: 100%;
   }
 }
 

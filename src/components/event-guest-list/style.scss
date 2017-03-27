@@ -1,0 +1,38 @@
+@import '../../scss/variables';
+@import '../../scss/colors';
+
+.EventGuestList {
+  &-list {
+    margin: 0 auto;
+    max-width: $spacer*80;
+  }
+
+  &-filters {
+    text-align: center;
+    padding: $spacer*2 $spacer*2 0;
+  }
+}
+
+.EventGuestListItem {
+  display: flex;
+  margin: $spacer*2;
+  border-bottom: 1px solid $gray100;
+  justify-content: space-between;
+  padding: $spacer 0;
+
+  .Button--success {
+    padding-left: $spacer/2;
+  }
+
+  &-name-first {
+    font-size: 20px;
+  }
+
+  &-right {
+    align-self: center;
+
+    &-badge {
+      margin: 0 $spacer;
+    }
+  }
+}
