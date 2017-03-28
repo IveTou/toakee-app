@@ -1,12 +1,10 @@
 import React, { PropTypes } from 'react';
-import autoBind from 'auto-bind';
+import autoBind from 'react-autobind';
 import Button from '~/src/components/button';
 
-import {
-  FACEBOOK_APP_ID,
-  INSTAGRAM_APP_ID,
-  SOCIAL_REDIRECT_URI,
-} from '~/src/server/config';
+import config from '~/src/server/config';
+
+const { FACEBOOK_APP_ID, INSTAGRAM_APP_ID, SOCIAL_REDIRECT_URI } = config;
 
 if (process.env.BROWSER) {
   require('./style.scss');

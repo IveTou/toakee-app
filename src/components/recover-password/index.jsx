@@ -1,5 +1,5 @@
 import React from 'react';
-import autoBind from 'auto-bind';
+import autoBind from 'react-autobind';
 import { Link } from 'react-router';
 
 import { recoverPassword } from '~/src/toakee-core/ducks/auth';

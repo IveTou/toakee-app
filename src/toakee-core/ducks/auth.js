@@ -2,7 +2,7 @@ import { logout as sessionLogout } from '~/src/utils/session';
 import GraphQLAPI from '../apis/graphql';
 import { buildMutationQuery } from '../utils';
 
-const LOGOUT = 'auth/LOGOUT';
+export const LOGOUT = 'auth/LOGOUT';
 
 const loginQuery = buildMutationQuery(
   'login',

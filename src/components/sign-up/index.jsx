@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import autoBind from 'auto-bind';
+import autoBind from 'react-autobind';
 import { Link, withRouter } from 'react-router';
 
 import { signUp } from '~/src/toakee-core/ducks/auth';

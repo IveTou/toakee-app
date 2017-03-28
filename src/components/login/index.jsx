@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { partial, upperCase } from 'lodash';
-import autoBind from 'auto-bind';
+import autoBind from 'react-autobind';
 
 import { login, socialLogin } from '~/src/toakee-core/ducks/auth';
 

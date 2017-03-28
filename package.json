@@ -7,8 +7,8 @@
     "start": "node ./dist/index.js",
     "script": "babel-node scripts/index",
     "webpack:watch": "webpack -w",
-    "express-server": "node ./src/server/index.js",
-    "build:app": "webpack -p --config webpack.config.js",
+    "express-server": "babel-node ./src/server/index.js",
+    "build:app": "webpack -p",
     "build:server": "babel src/server/ -d dist/",
     "dev": "concurrently --kill-others  \"npm run webpack:watch\" \"npm run express-server\"",
     "lint": "eslint --ext .js,.jsx src/**"
@@ -33,7 +33,6 @@
   ],
   "license": "ISC",
   "dependencies": {
-    "auto-bind": "1.0.0",
     "babel-register": "^6.23.0",
     "babel-relay-plugin": "0.10.0",
     "babel-relay-plugin-loader": "0.10.0",
@@ -50,6 +49,7 @@
     "nodemailer": "3.1.3",
     "nunjucks": "^3.0.0",
     "react": "^15.4.1",
+    "react-autobind": "^1.0.6",
     "react-dom": "^15.4.1",
     "react-redux": "5.0.3",
     "react-relay": "0.10.0",
@@ -87,13 +87,14 @@
     "eslint-plugin-jsx-a11y": "^3.0.2",
     "eslint-plugin-jsx-control-statements": "^2.1.1",
     "eslint-plugin-react": "^6.9.0",
+    "extract-text-webpack-plugin": "^2.1.0",
     "google-map-react": "^0.22.3",
     "json-loader": "^0.5.4",
     "jsx-control-statements": "^3.1.5",
     "node-sass": "^4.2.0",
     "sass-loader": "^4.1.1",
     "style-loader": "^0.13.1",
-    "webpack": "^1.14.0",
+    "webpack": "^2.3.2",
     "webpack-combine-loaders": "^2.0.3"
   }
 }

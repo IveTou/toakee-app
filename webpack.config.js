@@ -1,46 +1,42 @@
+const path = require('path');
 const webpack = require('webpack');
 const combineLoaders = require('webpack-combine-loaders');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const _ = require('lodash');
-
-const pickEnv = vars => vars.reduce(
-  (obj, envVar) => _.merge(obj, { [envVar]: JSON.stringify(process.env[envVar]) }),
-  { BROWSER: true }
-);
 
 module.exports = {
   entry: './src/main.jsx',
   output: {
-    path: './public/js',
+    path: path.join(__dirname, '/public/js'),
     filename: 'bundle.js'
   },
   module: {
-    loaders: [
-      { test: /\.json$/, loader: 'json-loader' },
+    rules: [
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel'
+        loader: 'babel-loader',
       },
       {
         test: /\.s?css$/,
-        loader: combineLoaders([
-          { loader: 'style-loader' },
-          {
-            loader: 'css-loader',
-            query: { modules: true, localIdentName: '[local]' },
-          },
-          { loader: 'sass-loader' },
-        ]),
-      }
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader'],
+          publicPath: './public/css',
+        }),
+      },
     ]
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': pickEnv([
-        'FACEBOOK_APP_ID',
-        'INSTAGRAM_APP_ID',
-      ]),
+      'process.env': {
+        GRAPHQL_URI: JSON.stringify('http://104.236.136.8:8080'),
+        FACEBOOK_APP_ID: JSON.stringify('1848071472114729'),
+        INSTAGRAM_APP_ID: JSON.stringify('e054e2eab38043d78abd577d5800d994'),
+        BROWSER: JSON.stringify(true),
+      },
     }),
+    new ExtractTextPlugin('../css/style.css'),
   ],
   node: {
     fs: 'empty',
@@ -48,6 +44,6 @@ module.exports = {
     tls: 'empty'
   },
   resolve: {
-    extensions: ['', '.js', '.jsx', '.json']
+    extensions: ['.js', '.jsx', '.json']
   }
 };

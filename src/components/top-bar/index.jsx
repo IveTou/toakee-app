@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import autoBind from 'auto-bind';
+import autoBind from 'react-autobind';
 import { browserHistory } from 'react-router';
 
 import Button from '~/src/components/button';

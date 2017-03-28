@@ -8,16 +8,16 @@ COPY package.json ${wdir}/
 RUN npm config set registry http://registry.npmjs.org/
 RUN npm install
 
+RUN mkdir -p public/
+COPY public/ public/
+
 COPY src/ ${wdir}/src
 COPY scripts/ ${wdir}/scripts
 COPY webpack.config.js .babelrc ${wdir}/
 ENV NODE_ENV=production
 RUN mkdir -p data
-RUN npm run script download-schema
 RUN npm run build:server
 RUN npm run build:app
-RUN mkdir -p public/
-COPY public/imgs/ public/imgs/
 
 EXPOSE 3000
 
