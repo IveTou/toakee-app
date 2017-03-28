@@ -30,7 +30,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        GRAPHQL_URI: JSON.stringify('http://104.236.136.8:8080'),
+        GRAPHQL_URI: JSON.stringify('https://graphql-api.herokuapp.com'),
         FACEBOOK_APP_ID: JSON.stringify('1848071472114729'),
         INSTAGRAM_APP_ID: JSON.stringify('e054e2eab38043d78abd577d5800d994'),
         BROWSER: JSON.stringify(true),
