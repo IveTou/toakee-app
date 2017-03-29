@@ -36,7 +36,7 @@ class EventGuestList extends React.Component {
           .filter(({ normalizedName }) => normalizedName.match(filter))
           .sort(({ normalizedName: a }, { normalizedName: b }) => (
             a.match(filter).index - b.match(filter).index
-            || a - b
+            || a < b ? -1 : 1
           ))
           .toArray()
       : [];
