@@ -69,7 +69,6 @@ export default class Login extends React.Component {
         <StrikedText>Entre com</StrikedText>
         <div className="Login-social">
           <SocialLoginButton network="facebook" onReceiveToken={this.socialSubmit} />
-          <SocialLoginButton network="instagram" onReceiveToken={this.socialSubmit} />
         </div>
         <StrikedText>ou</StrikedText>
         <form ref={formRef(this)} className="Login-form">

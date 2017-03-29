@@ -41,7 +41,7 @@
   .SocialLoginButton.mdl-button {
     color: white;
     height: $spacer*5;
-    width: calc(50% - #{$spacer/2});
+    width: 100%;
 
     &:nth-child(1) {
       background-color: $facebook-color;
