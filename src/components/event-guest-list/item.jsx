@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 
 import { changeAttendanceStatus } from '~/src/toakee-core/ducks/invitations';
 
@@ -14,12 +15,16 @@ const EventGuestListItem = ({ dispatch, id, name, status, guestListId, guestList
 
   const [buttonLabel, buttonColor, statusChange] = (() => (
     status === 'INVITED'
-      ? ['Confirmar', { accent: true }, 'ATTENDED']
-      : ['Confirmado', { success: true }, 'INVITED']
+      ? ['o/', { accent: true }, 'ATTENDED']
+      : [<i className="fa fa-check" />, { success: true }, 'INVITED']
   ))();
 
+  const classes = classNames('EventGuestListItem', {
+    'EventGuestListItem-confirmed': status === 'ATTENDED',
+  });
+
   return (
-    <div className="EventGuestListItem">
+    <div className={classes}>
       <div className="EventGuestListItem-name">
         <div className="EventGuestListItem-name-first">{firstName}</div>
         <div className="EventGuestListItem-name-last">{lastName}</div>

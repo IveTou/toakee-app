@@ -6,8 +6,12 @@
 .TopBar.header {
   position: fixed;
   padding: $spacer;
-  background-color: $gray50;
+  background-color: $white;
   @include box-shadow(0 0 $spacer*2 $black26);
+
+  .TopBar-avatar {
+    z-index: 1;
+  }
 
   .mdl-navigation__link {
     color: $black54;
@@ -16,6 +20,10 @@
 
   .mdl-layout__header-row {
     padding-left: $spacer*5;
+  }
+
+  .mdl-layout-title {
+    flex-grow: 1;
   }
 
   .mdl-menu__item {
@@ -29,12 +37,24 @@
     font-weight: 400;
     line-height: $spacer*6;
   }
+
+  .Logo {
+    width: $spacer*20;
+    flex: none;
+  }
 }
 
 @include media("<tablet") {
   .TopBar.header {
     .mdl-layout__header-row {
       padding-left: $spacer*2;
+    }
+
+    .mdl-layout-title {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      text-align: center;
     }
   }
 }

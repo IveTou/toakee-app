@@ -2,23 +2,78 @@
 @import '../../scss/colors';
 
 .EventGuestList {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
   &-list {
     margin: 0 auto;
+    width: 100%;
     max-width: $spacer*80;
+    overflow-y: auto;
   }
 
   &-filters {
     text-align: center;
-    padding: $spacer*2 $spacer*2 0;
+    padding: $spacer*2;
+    border-bottom: 1px solid $gray100;
+
+    &-input {
+      display: inline-block;
+      position: relative;
+
+      input {
+        border: 2px solid $gray300;
+        width: $spacer*30;
+        padding: $spacer $spacer*4 $spacer $spacer*2;
+        border-radius: 24px;
+        color: $black54;
+        font-size: 11px;
+        text-transform: uppercase;
+      }
+
+      .fa {
+        position: absolute;
+        right: $spacer*2;
+        top: $spacer;
+        font-size: 15px;
+      }
+    }
+
+    &-summary {
+      margin-top: $spacer;
+      font-size: 11px;
+      text-transform: uppercase;
+
+      &-separator {
+        font-size: 14px;
+        color: $orange;
+        font-weight: 600;
+      }
+    }
   }
 }
 
 .EventGuestListItem {
   display: flex;
-  margin: $spacer*2;
+  padding: $spacer*2;
   border-bottom: 1px solid $gray100;
   justify-content: space-between;
-  padding: $spacer 0;
+
+  &-confirmed {
+    border-left: 4px solid $green;
+
+    .EventGuestListItem-name-first {
+      color: $black54;
+    }
+  }
+
+  .Button {
+    padding: 0;
+    min-width: $spacer*5;
+    font-size: 22px;
+    text-transform: none;
+  }
 
   .Button--success {
     padding-left: $spacer/2;
@@ -26,6 +81,7 @@
 
   &-name-first {
     font-size: 20px;
+    color: $orange;
   }
 
   &-right {

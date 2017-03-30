@@ -3,8 +3,6 @@ import { reduce } from 'lodash';
 const env = (key, miss) => (process.env[key] || miss);
 const reducer = (obj, miss, key) => ({ ...obj, [key]: env(key, miss) });
 
-const defaultUri = 'http://localhost:3000';
-
 const PORT = env('PORT', 3000);
 const BASE_URI = env('BASE_URI', `http://localhost:${PORT}`);
 
