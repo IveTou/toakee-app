@@ -5,7 +5,10 @@ if (process.env.BROWSER) {
 }
 
 const Header = ({ title }) => (
-  <div className="Header">{title}</div>
+  <div className="Header">
+    <div className="Header-title">{title}</div>
+    <div className="Header-arrow" />
+  </div>
 );
 
 Header.propTypes = {
