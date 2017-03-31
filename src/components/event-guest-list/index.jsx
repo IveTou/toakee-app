@@ -89,7 +89,7 @@ EventGuestList.propTypes = {
   router: PropTypes.object,
   dispatch: PropTypes.func,
   event: PropTypes.object,
-  invitations: PropTypes.arrayOf(PropTypes.object),
+  invitations: PropTypes.object,
 };
 
 export default connect(({ invitations, events }, { router }) => ({

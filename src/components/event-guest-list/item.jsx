@@ -24,8 +24,6 @@ const EventGuestListItem = ({ dispatch, id, name, status, guestListId, guestList
     'EventGuestListItem-shadow': status !== 'INVITED' && shadow,
   });
 
-  console.log(name, shadow);
-
   return (
     <div className={classes}>
       <div className="EventGuestListItem-name">
@@ -51,6 +49,7 @@ EventGuestListItem.propTypes = {
   name: PropTypes.string,
   status: PropTypes.string,
   guestListId: PropTypes.string,
+  shadow: PropTypes.bool,
   guestLists: PropTypes.arrayOf(PropTypes.object),
 };
 
