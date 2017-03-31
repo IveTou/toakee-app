@@ -59,13 +59,22 @@
   padding: $spacer*2;
   border-bottom: 1px solid $gray100;
   justify-content: space-between;
+  background: $gray50;
+  border-left: 4px solid $orange;
+  transition: all .25 ease-out;
 
   &-confirmed {
     border-left: 4px solid $green;
+    background: $white;
 
     .EventGuestListItem-name-first {
-      color: $black54;
+      color: $green;
     }
+  }
+
+  &-shadow {
+    box-shadow: 0 2px 4px $black12;
+    position: relative;
   }
 
   .Button {

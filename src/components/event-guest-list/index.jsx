@@ -73,7 +73,11 @@ class EventGuestList extends React.Component {
         </div>
         <div className="EventGuestList-list">
           <For each="invitation" index="idx" of={list}>
-            <EventGuestListItem key={idx} {...invitation} />
+            <EventGuestListItem
+              key={idx}
+              shadow={list[idx + 1] && list[idx + 1].status === 'INVITED'}
+              {...invitation}
+            />
           </For>
         </div>
       </div>

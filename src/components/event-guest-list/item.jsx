@@ -7,7 +7,7 @@ import { changeAttendanceStatus } from '~/src/toakee-core/ducks/invitations';
 import Badge from '~/src/components/badge';
 import Button from '~/src/components/button';
 
-const EventGuestListItem = ({ dispatch, id, name, status, guestListId, guestLists }) => {
+const EventGuestListItem = ({ dispatch, id, name, status, guestListId, guestLists, shadow }) => {
   const [firstName, lastName] = name.split(/\s(.+)/);
   const data = guestLists.get('data');
   const guestList = !!data.size && data.get(guestListId);
@@ -15,13 +15,16 @@ const EventGuestListItem = ({ dispatch, id, name, status, guestListId, guestList
 
   const [buttonLabel, buttonColor, statusChange] = (() => (
     status === 'INVITED'
-      ? ['o/', { accent: true }, 'ATTENDED']
-      : [<i className="fa fa-check" />, { success: true }, 'INVITED']
+      ? [<i className="fa fa-square-o" />, {}, 'ATTENDED']
+      : [<i className="fa fa-check-square-o" />, { success: true }, 'INVITED']
   ))();
 
   const classes = classNames('EventGuestListItem', {
     'EventGuestListItem-confirmed': status === 'ATTENDED',
+    'EventGuestListItem-shadow': status !== 'INVITED' && shadow,
   });
+
+  console.log(name, shadow);
 
   return (
     <div className={classes}>
