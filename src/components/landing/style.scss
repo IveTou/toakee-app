@@ -111,6 +111,9 @@
 
         textarea {
           height: $spacer*15;
+          width: calc(100% - #{$spacer*4});
+          background-color: $gray50;
+          font-size: 16px;
         }
       }
     }

@@ -1,12 +1,13 @@
 import { Map } from 'immutable';
 
 import GraphQLAPI from '../apis/graphql';
-import { fetchableState, buildMutationQuery } from '../utils';
+import { fetchableState, buildMutationQuery, normalize } from '../utils';
 
-const CHANGE_FILTER = 'guestLists/CHANGE_FILTER';
+const CHANGE_FILTER = 'invitations/CHANGE_FILTER';
 const START_FETCHING = 'invitations/START_FETCHING';
 const FINISHED_FETCHING = 'invitations/FINISHED_FETCHING';
 const SET_ATTENDANCE_STATUS = 'invitations/SET_ATTENDANCE_STATUS';
+const NAMES_ADDED_TO_GUEST_LIST = 'invitations/CREATED';
 
 const invitationsQuery = `
   query Invitations($eventId: String, $eventSlug: String) {
@@ -28,33 +29,42 @@ const setAttendanceStatusMutation = buildMutationQuery(
   { invitationId: 'String!', status: 'GuestStatus!' },
 );
 
+const addNamesToGuestListMutation = buildMutationQuery(
+  'addNamesToGuestList',
+  { eventId: 'String!', guestListId: 'String!', names: '[String]' },
+  '{ id, name, guestListId, profileId, status, timestamp }',
+);
+
+const mapify = invitations => (
+  invitations
+    .map(i => ({
+      ...i,
+      normalizedName: normalize(i.name),
+    }))
+    .reduce((obj, invitation) => obj.set(invitation.id, invitation), Map({}))
+);
+
 const initialState = {
   filter: '',
 };
 
 export default function reducer(state = fetchableState(initialState), action) {
-  let invitations;
-
   switch (action.type) {
     case START_FETCHING:
       return state.set('fetching', true);
 
     case FINISHED_FETCHING:
-      invitations = action.invitations
-        .map(i => ({
-          ...i,
-          normalizedName: i.name.normalize('NFD').replace(/[\u0300-\u036f]/g, ''),
-        }))
-        .reduce((obj, invitation) => obj.set(invitation.id, invitation), Map({}));
-
       return state
         .set('fetching', false)
         .set('fetched', true)
-        .set('data', invitations);
+        .mergeIn(['data'], mapify(action.invitations));
 
     case CHANGE_FILTER:
       return state
-        .set('filter', action.filter);
+        .set('filter', normalize(action.filter));
+
+    case NAMES_ADDED_TO_GUEST_LIST:
+      return state.mergeIn(['data'], mapify(action.invitations));
 
     case SET_ATTENDANCE_STATUS:
       return state
@@ -95,5 +105,16 @@ export const changeAttendanceStatus = (invitationId, status) => (dispatch) => {
     .post(setAttendanceStatusMutation, { invitationId, status })
     .then(({ errors }) => {
       if (!errors) dispatch(setAttendanceStatus(invitationId, status));
+    });
+};
+
+export const namesAddedToGuestList =
+  invitations => ({ type: NAMES_ADDED_TO_GUEST_LIST, invitations });
+
+export const addNamesToGuestList = (eventId, guestListId, names) => (dispatch) => {
+  GraphQLAPI
+    .post(addNamesToGuestListMutation, { eventId, guestListId, names })
+    .then(({ errors, addNamesToGuestList: invitations }) => {
+      if (!errors) dispatch(namesAddedToGuestList(invitations));
     });
 };

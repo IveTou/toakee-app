@@ -10,10 +10,17 @@ const buildClasses = ({ className }) => (
   classNames(defaultClasses, className)
 );
 
-const TextArea = ({ label, name, ...props }) => (
+const TextArea = ({ label, name, placeholder, rows, ...props }) => (
   <div className={buildClasses(props)}>
-    <label htmlFor={`area-${label}`}>{label}</label>
-    <textarea id={`area-${label}`} name={name} />
+    <If condition={label}>
+      <label htmlFor={`area-${label}`}>{label}</label>
+    </If>
+    <textarea
+      id={label && `area-${label}`}
+      name={name}
+      rows={rows}
+      placeholder={placeholder}
+    />
   </div>
 );
 

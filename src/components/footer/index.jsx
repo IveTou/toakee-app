@@ -6,7 +6,7 @@ if (process.env.BROWSER) {
 
 const Footer = () => (
   <footer className="Footer mdl-mini-footer">
-    <div className="Footer-logo mdl-logo">© ToAKEE 2017</div>
+    <div className="Footer-logo mdl-logo">© Toakee 2017</div>
   </footer>
 );
 

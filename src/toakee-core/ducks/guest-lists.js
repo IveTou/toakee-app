@@ -1,4 +1,5 @@
 import GraphQLAPI from '../apis/graphql';
+import { Map } from 'immutable';
 import { fetchableState } from '../utils';
 
 const START_FETCHING = 'guestLists/START_FETCHING';
@@ -9,7 +10,9 @@ const guestListsQuery = `
     viewer {
       guestLists(eventId: $eventId, eventSlug: $eventSlug) {
         id,
+        eventId
         name,
+        privacy,
         limit,
         registrationDeadline,
         entranceDeadline,
@@ -18,6 +21,10 @@ const guestListsQuery = `
     }
   }
 `;
+
+const mapify = guestLists => (
+  guestLists.reduce((obj, invitation) => obj.set(invitation.id, invitation), Map({}))
+);
 
 export default function reducer(state = fetchableState(), action) {
   switch (action.type) {
@@ -28,10 +35,7 @@ export default function reducer(state = fetchableState(), action) {
       return state
         .set('fetching', false)
         .set('fetched', true)
-        .set(
-          'data',
-          action.guestLists.reduce((obj, e) => obj.set(e.id, e), state.get('data')),
-        );
+        .mergeIn(['data'], mapify(action.guestLists));
 
     default:
       return state;

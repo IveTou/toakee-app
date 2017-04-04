@@ -50,7 +50,7 @@ EventGuestListItem.propTypes = {
   status: PropTypes.string,
   guestListId: PropTypes.string,
   shadow: PropTypes.bool,
-  guestLists: PropTypes.arrayOf(PropTypes.object),
+  guestLists: PropTypes.object,
 };
 
 export default connect(({ guestLists }) => ({ guestLists }))(EventGuestListItem);

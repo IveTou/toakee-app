@@ -16,12 +16,10 @@ class EventList extends React.Component {
 
   render() {
     const { title, events, start, end } = this.props;
-    const list = events.get('data').size
-      ? events.get('data')
+    const list = events.get('data')
           .filter(e => start.isSameOrBefore(e.start) && (!end || end.isSameOrAfter(e.start)))
           .sort((a, b) => a.start > b.start)
-          .toArray()
-      : [];
+          .toArray();
 
     declare var event;
     declare var idx;

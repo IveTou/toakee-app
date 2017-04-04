@@ -1,4 +1,150 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/variables';
+@import '../../scss/colors';
+
 .EventPage {
-  height: 100%;
-  background-color: lightblue;
+  &-header {
+    padding: $spacer*2;
+
+    &-flyer.mdl-card {
+      padding: $spacer/2;
+
+      .EventPage-header-flyer-img {
+        width: 100%;
+      }
+    }
+
+    &-right {
+      &-title {
+        font-size: 28px;
+        color: $orange;
+      }
+
+      &-place {
+        font-size: 15px;
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  &-info {
+    padding: $spacer*2;
+    color: $white;
+    font-weight: 300;
+    background-color: $orange;
+
+    &-item {
+      margin: $spacer 0;
+    }
+
+    .fa {
+      width: $spacer*2;
+      text-align: center;
+      margin-right: $spacer;
+
+      &-blr {
+        font: inherit;
+        font-size: 12px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  &-body {
+    display: flex;
+    padding: $spacer*2;
+
+    &-title {
+      color: $orange;
+      font-size: 18px;
+      text-transform: uppercase;
+    }
+
+    &-content {
+      margin-top: $spacer*2;
+    }
+
+    &-description {
+      padding: 0 $spacer*2;
+    }
+
+    &-guestLists {
+      padding: 0 $spacer*2;
+
+      &-area textarea {
+        width: calc(100% - #{$spacer*4});
+        margin: $spacer*2 0;
+      }
+
+      &-button {
+        width: 100%;
+      }
+    }
+  }
 }
+
+@include media(">=tablet") {
+  .EventPage {
+    &-header {
+      padding: $spacer*3 $spacer*3 0;
+
+      &-flyer.mdl-card {
+        float: left;
+        width: 40%;
+      }
+
+      &-right {
+        border-left: 4px solid $orange;
+        margin-left: 42%;
+        padding: $spacer*2;
+      }
+
+    }
+
+    &-info {
+      padding: $spacer*2 $spacer*2 $spacer*2 calc(42% + #{$spacer*3});
+    }
+
+    &-body {
+      &-description {
+        width: 50%;
+        border-right: 1px solid $gray100;
+      }
+
+      &-guestLists {
+        width: calc(50% - #{$spacer*3});
+
+        &-area textarea {
+          width: calc(100% - #{$spacer*8});
+        }
+
+        &-button {
+          width: calc(100% - #{$spacer*4});
+        }
+      }
+    }
+  }
+}
+
+@include media("<tablet") {
+  .EventPage {
+    &-header {
+      display: flex;
+      flex-direction: column-reverse;
+      border-left: 4px solid $orange;
+
+      &-flyer.mdl-card {
+        margin: $spacer*2 0 $spacer;
+      }
+    }
+
+    &-info {
+      border-left: 4px solid $orange;
+    }
+
+    &-body {
+      flex-direction: column;
+    }
+  }
+}
+

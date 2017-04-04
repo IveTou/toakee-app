@@ -14,7 +14,7 @@ const renderTime = (start) => {
 
   // FIXME next to end of week conflicts with today/tomorrow
   if (moment().endOf('week').isBefore(start)) {
-    dom = moment(start).format('DD/MM (ddd) HH:mm');
+    dom = moment(start).format('DD/MM (ddd)');
   } else if (moment().add(1, 'day').endOf('day').isBefore(start)) {
     dom = moment(start).format('dddd HH:mm');
   } else if (moment().endOf('day').isBefore(start)) {
@@ -34,16 +34,13 @@ const renderTime = (start) => {
 
 const EventListItem = ({ slug, title, description, flyer, start }) => (
   <div className="EventListItem mdl-card mdl-shadow--2dp">
-    <Link className="EventListItem-link" to={{ pathname: `/lista/${slug}` }}>
+    <Link className="EventListItem-link" to={{ pathname: `/evento/${slug}` }}>
       {renderFlyer(flyer, `flyer do ${title}`)}
       <div className="EventListItem-content">
         <div className="EventListItem-content-title mdl-card__title">
           <h2 className="EventListItem-content-title-text mdl-card__title-text">
             {title}
           </h2>
-        </div>
-        <div className="EventListItem-content-body mdl-card__supporting-text">
-          {description}
         </div>
         {renderTime(start)}
       </div>

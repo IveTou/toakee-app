@@ -12,13 +12,16 @@ import RecoverPassword from '~/src/components/recover-password';
 import Event from '~/src/components/event';
 
 import Logged from '~/src/pages/logged';
+import EventFeed from '~/src/components/event-feed';
 import EventPage from '~/src/components/event-page';
 import EventGuestList from '~/src/components/event-guest-list';
+import EventGuestListEdit from '~/src/components/event-guest-list-edit';
 
 const loggedRoutes = (
   <Route path="/" component={Logged}>
-    <IndexRoute component={EventPage} />
-    <Route path="/lista/:slug" component={EventGuestList} />
+    <IndexRoute component={EventFeed} />
+    <Route path="/evento/:slug" component={EventPage} />
+    <Route path="/evento/:slug/lista" component={EventGuestList} />
     <Route path="/redirect" onEnter={() => { window.location = '/'; }} />
   </Route>
 );

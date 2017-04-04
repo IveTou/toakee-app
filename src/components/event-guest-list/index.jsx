@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchGuestLists } from '~/src/toakee-core/ducks/guest-lists';
-
 import { fetchInvitations, changeInvitationsFilter } from '~/src/toakee-core/ducks/invitations';
 import { fetchEvents } from '~/src/toakee-core/ducks/events';
 
@@ -30,8 +29,12 @@ class EventGuestList extends React.Component {
 
   render() {
     const { invitations, event, dispatch } = this.props;
-    const filter = new RegExp(`\\b${invitations.get('filter')}`, 'i');
     const total = invitations.get('data').size;
+    const filter = new RegExp(
+      `\\b${invitations.get('filter').trim().replace(/\s+/, '[\\s\\S]*\\s')}`,
+      'i'
+    );
+
     const confirmed = invitations.get('data')
       .filter(({ status }) => status === 'ATTENDED')
       .size;
@@ -94,5 +97,5 @@ EventGuestList.propTypes = {
 
 export default connect(({ invitations, events }, { router }) => ({
   invitations,
-  event: events.get('data').filter(({ slug }) => slug === router.params.slug).toArray()[0],
+  event: events.get('data').filter(({ slug }) => slug === router.params.slug).first(),
 }))(EventGuestList);
