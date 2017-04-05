@@ -3,7 +3,9 @@ import nunjucks from 'nunjucks';
 import nodemailer from 'nodemailer';
 import bodyParser from 'body-parser';
 
-import { PORT, SUPPORT_EMAIL } from '~/src/server/config';
+import config from '~/src/config';
+
+const { PORT, SUPPORT_EMAIL } = config;
 
 const app = express();
 app.use(express.static('public'));

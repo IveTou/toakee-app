@@ -1,5 +1,5 @@
 import { extend } from 'lodash';
-import { FACEBOOK_APP_ID } from '~/src/server/config';
+import { FACEBOOK_APP_ID } from '~/src/config';
 
 export const fbInit = (callback) => {
   window.fbAsyncInit = () => {

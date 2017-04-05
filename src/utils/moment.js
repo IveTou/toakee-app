@@ -1,8 +1,10 @@
+import { upperFirst } from 'lodash';
 import moment from 'moment';
 
-export const dateTimeFormat = time => {
+export const dateTimeFormat = (time) => {
   if (moment().endOf('week').isBefore(time)) {
-    return moment(time).format('DD/MM (ddd)'); } else if (moment().add(1, 'day').endOf('day').isBefore(time)) {
+    return moment(time).format('DD/MM (ddd)');
+  } else if (moment().add(1, 'day').endOf('day').isBefore(time)) {
     return moment(time).format('dddd HH:mm');
   } else if (moment().endOf('day').isBefore(time)) {
     return moment(time).format('[Amanhã] HH:mm');
@@ -17,7 +19,7 @@ export const dateTimeFormat = time => {
   return moment(time).format('DD/MM HH:mm');
 };
 
-export const fullDateFormat = time => {
+export const fullDateFormat = (time) => {
   let day;
 
   if (moment().add(1, 'day').endOf('day').isBefore(time)) {
@@ -33,14 +35,14 @@ export const fullDateFormat = time => {
   return moment(time).format(`${day} - DD [de] MMMM [de] YYYY`);
 };
 
-export const timeFormat = time => {
+export const timeFormat = (time) => {
   if (moment().subtract(4, 'hours').isAfter(time)) {
     return moment(time).format('[Começou] kk[h]');
   } else if (moment().isAfter(time)) {
     return `Começou ${moment(time).fromNow()}`;
   } else if (moment().add(2, 'hours').isAfter(time)) {
     return `Começa ${moment(time).fromNow()}`;
-  } else {
-    return moment(time).format('[A partir das] kk[h]');
   }
+
+  return moment(time).format('[A partir das] kk[h]');
 };

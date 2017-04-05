@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import autoBind from 'react-autobind';
 import Button from '~/src/components/button';
 
-import config from '~/src/server/config';
+import config from '~/src/config';
 
 const { FACEBOOK_APP_ID, INSTAGRAM_APP_ID, SOCIAL_REDIRECT_URI } = config;
 

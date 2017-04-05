@@ -61,7 +61,7 @@
   justify-content: space-between;
   background: $gray50;
   border-left: 4px solid $orange;
-  transition: all .28 ease-out;
+  transition: all .28s ease-out;
 
   &-confirmed {
     border-left: 4px solid $green;

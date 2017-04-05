@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { reduce } from 'lodash';
 import classNames from 'classnames';
 
 if (process.env.BROWSER) {
@@ -32,13 +33,18 @@ const buildClasses = ({
   })
 );
 
-const Button = ({ id, onClick, avatar, label, icon, type, disabled, ...props }) => (
+const buildDataProps = props => (
+  reduce(props, (obj, value, key) => ({ ...obj, [`data-${key}`]: value }), {})
+);
+
+const Button = ({ id, onClick, avatar, label, icon, type, disabled, dataProps, ...props }) => (
   <button
     id={id}
     className={buildClasses(props)}
     type={type}
     onClick={onClick}
     disabled={disabled}
+    {...buildDataProps(dataProps)}
   >
     <If condition={icon && !avatar}>
       <i className={`fa fa-${icon}`} />
@@ -58,6 +64,7 @@ Button.propTypes = {
   icon: PropTypes.string,
   type: PropTypes.string,
   disabled: PropTypes.bool,
+  dataProps: PropTypes.object,
 };
 
 export default Button;

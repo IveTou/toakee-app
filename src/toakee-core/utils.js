@@ -14,5 +14,3 @@ export const fetchableState = extra => Map({
   data: Map({}),
   ...extra,
 });
-
-export const normalize = text => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');

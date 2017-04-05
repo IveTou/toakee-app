@@ -27,6 +27,8 @@ const TextArea = ({ label, name, placeholder, rows, ...props }) => (
 TextArea.propTypes = {
   label: PropTypes.string,
   name: PropTypes.string,
+  rows: PropTypes.string,
+  placeholder: PropTypes.string,
 };
 
 export default TextArea;

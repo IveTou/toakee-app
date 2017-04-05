@@ -1,9 +1,14 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import autoBind from 'react-autobind';
+
+import config from '~/src/config';
+import { formRef } from '~/src/utils/form';
 
 import { fullDateFormat, timeFormat } from '~/src/utils/moment';
 import { fetchEvents } from '~/src/toakee-core/ducks/events';
 import { fetchGuestLists } from '~/src/toakee-core/ducks/guest-lists';
+import { addNamesToGuestList } from '~/src/toakee-core/ducks/invitations';
 
 import Input from '~/src/components/input';
 import Button from '~/src/components/button';
@@ -13,7 +18,15 @@ if (process.env.BROWSER) {
   require('./style.scss');
 }
 
+let listener = () => {};
+window.recaptchaCallback = () => listener();
+
 class EventPage extends React.Component {
+  constructor(props) {
+    super(props);
+    autoBind(this);
+  }
+
   componentWillMount() {
     const { slug } = this.props.router.params;
     const { event, dispatch } = this.props;
@@ -26,6 +39,26 @@ class EventPage extends React.Component {
     if (!event.id) {
       dispatch(fetchEvents({ slug }));
     }
+  }
+
+  submit(e) {
+    e.preventDefault();
+
+    listener = () => {
+      const recaptchaToken = this.form['g-recaptcha-response'].value;
+      if (recaptchaToken) {
+        const names = this.form.names.value
+          .split('\n')
+          .map(name => name.trim().replace(/\s\s+/g, ' '))
+          .filter(name => name);
+
+        if (names.length) {
+          const { event, dispatch } = this.props;
+          const guestListId = this.form.guestList.value;
+          dispatch(addNamesToGuestList(event.id, guestListId, names, recaptchaToken));
+        }
+      }
+    };
   }
 
   render() {
@@ -58,17 +91,17 @@ class EventPage extends React.Component {
         <div className="EventPage-info">
           <If condition={start}>
             <div className="EventPage-info-item">
-              <i className="fa fa-calendar"/>
+              <i className="fa fa-calendar" />
               <span>{fullDateFormat(start)}</span>
             </div>
             <div className="EventPage-info-item">
-              <i className="fa fa-clock-o"/>
+              <i className="fa fa-clock-o" />
               <span>{timeFormat(start)}</span>
             </div>
           </If>
           <If condition={place && place.address}>
             <div className="EventPage-info-item">
-              <i className="fa fa-map-marker"/>
+              <i className="fa fa-map-marker" />
               <span>{place.address}</span>
             </div>
           </If>
@@ -91,24 +124,28 @@ class EventPage extends React.Component {
           <div className="EventPage-body-guestLists">
             <div className="EventPage-body-title">Nome na lista</div>
             <div className="EventPage-body-content">
-              <For each="guestList" index="idx" of={guestLists}>
-                <Input key={guestList.id} type="radio" name="guestList" value={guestList.id} checked={idx === 0}>
-                  {guestList.name}
-                </Input>
-              </For>
-              <TextArea
-                rows="4"
-                className="EventPage-body-guestLists-area"
-                name="names"
-                placeholder="Escreva cada nome em uma linha"
-              />
-              <Button
-                className="EventPage-body-guestLists-button"
-                label="Enviar"
-                type="submit"
-                accent
-                colored
-              />
+              <form ref={formRef(this)} className="EventPage-form">
+                <For each="guestList" index="idx" of={guestLists}>
+                  <Input key={guestList.id} type="radio" name="guestList" value={guestList.id} checked={idx === 0}>
+                    {guestList.name}
+                  </Input>
+                </For>
+                <TextArea
+                  rows="4"
+                  className="EventPage-body-guestLists-area"
+                  name="names"
+                  placeholder="Escreva cada nome em uma linha"
+                />
+                <Button
+                  className="EventPage-body-guestLists-button g-recaptcha"
+                  label="Enviar"
+                  type="submit"
+                  dataProps={{ sitekey: config.RECAPTCHA_SITE_KEY, callback: 'recaptchaCallback' }}
+                  accent
+                  colored
+                  onClick={this.submit}
+                />
+              </form>
             </div>
           </div>
         </div>
@@ -116,6 +153,17 @@ class EventPage extends React.Component {
     );
   }
 }
+
+EventPage.propTypes = {
+  event: PropTypes.object,
+  dispatch: PropTypes.func,
+  guestLists: PropTypes.array,
+  router: PropTypes.shape({
+    params: PropTypes.shape({
+      slug: PropTypes.string,
+    }),
+  }),
+};
 
 export default connect(({ events, guestLists }, { router }) => {
   const event = events
@@ -126,5 +174,5 @@ export default connect(({ events, guestLists }, { router }) => {
   return {
     event,
     guestLists: guestLists.get('data').filter(({ eventId }) => event.id === eventId).toArray(),
-  }
+  };
 })(EventPage);

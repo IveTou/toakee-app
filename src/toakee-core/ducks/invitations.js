@@ -1,7 +1,8 @@
 import { Map } from 'immutable';
+import { deburr } from 'lodash';
 
 import GraphQLAPI from '../apis/graphql';
-import { fetchableState, buildMutationQuery, normalize } from '../utils';
+import { fetchableState, buildMutationQuery } from '../utils';
 
 const CHANGE_FILTER = 'invitations/CHANGE_FILTER';
 const START_FETCHING = 'invitations/START_FETCHING';
@@ -31,7 +32,12 @@ const setAttendanceStatusMutation = buildMutationQuery(
 
 const addNamesToGuestListMutation = buildMutationQuery(
   'addNamesToGuestList',
-  { eventId: 'String!', guestListId: 'String!', names: '[String]' },
+  {
+    eventId: 'String!',
+    guestListId: 'String!',
+    names: '[String]',
+    recaptchaToken: 'String',
+  },
   '{ id, name, guestListId, profileId, status, timestamp }',
 );
 
@@ -39,7 +45,7 @@ const mapify = invitations => (
   invitations
     .map(i => ({
       ...i,
-      normalizedName: normalize(i.name),
+      normalizedName: deburr(i.name),
     }))
     .reduce((obj, invitation) => obj.set(invitation.id, invitation), Map({}))
 );
@@ -61,7 +67,7 @@ export default function reducer(state = fetchableState(initialState), action) {
 
     case CHANGE_FILTER:
       return state
-        .set('filter', normalize(action.filter));
+        .set('filter', deburr(action.filter));
 
     case NAMES_ADDED_TO_GUEST_LIST:
       return state.mergeIn(['data'], mapify(action.invitations));
@@ -111,9 +117,9 @@ export const changeAttendanceStatus = (invitationId, status) => (dispatch) => {
 export const namesAddedToGuestList =
   invitations => ({ type: NAMES_ADDED_TO_GUEST_LIST, invitations });
 
-export const addNamesToGuestList = (eventId, guestListId, names) => (dispatch) => {
+export const addNamesToGuestList = (eventId, guestListId, names, recaptchaToken) => (dispatch) => {
   GraphQLAPI
-    .post(addNamesToGuestListMutation, { eventId, guestListId, names })
+    .post(addNamesToGuestListMutation, { eventId, guestListId, names, recaptchaToken })
     .then(({ errors, addNamesToGuestList: invitations }) => {
       if (!errors) dispatch(namesAddedToGuestList(invitations));
     });

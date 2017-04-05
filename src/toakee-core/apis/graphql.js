@@ -1,5 +1,5 @@
 import { getToken } from '~/src/utils/session';
-import config from '~/src/server/config';
+import config from '~/src/config';
 import BaseAPI from './base';
 
 class GraphQLAPI extends BaseAPI {

@@ -7,6 +7,7 @@ export const errors = {
   'User.NOT_FOUND': 'Usuário não encontrado',
   'User.INVALID_CREDENTIALS': 'A senha e o usuário não conferem.',
   'User.ALREADY_EXISTS': 'Usuário já cadastrado.',
+  'Recaptcha.INVALID': 'Opa. Você foi muito rápido, pareceu até um robô.',
 };
 
 export const errorFromKey =

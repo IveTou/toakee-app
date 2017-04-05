@@ -1,5 +1,6 @@
-import GraphQLAPI from '../apis/graphql';
 import { Map } from 'immutable';
+
+import GraphQLAPI from '../apis/graphql';
 import { fetchableState } from '../utils';
 
 const START_FETCHING = 'guestLists/START_FETCHING';

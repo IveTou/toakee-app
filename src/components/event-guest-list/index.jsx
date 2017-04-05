@@ -32,7 +32,7 @@ class EventGuestList extends React.Component {
     const total = invitations.get('data').size;
     const filter = new RegExp(
       `\\b${invitations.get('filter').trim().replace(/\s+/, '[\\s\\S]*\\s')}`,
-      'i'
+      'i',
     );
 
     const confirmed = invitations.get('data')
