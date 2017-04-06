@@ -10,9 +10,11 @@ if (process.env.BROWSER) {
   require('./style.scss');
 }
 
+const redirectUri = `${location.protocol}//${location.host}${SOCIAL_REDIRECT_URI}`;
+
 const query = clientId => [
   `client_id=${clientId}`,
-  `redirect_uri=${encodeURIComponent(SOCIAL_REDIRECT_URI)}`,
+  `redirect_uri=${encodeURIComponent(redirectUri)}`,
   'response_type=token',
 ].join('&');
 

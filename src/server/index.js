@@ -3,7 +3,7 @@ import nunjucks from 'nunjucks';
 import nodemailer from 'nodemailer';
 import bodyParser from 'body-parser';
 
-import config from '~/src/config';
+import config from './config';
 
 const { PORT, SUPPORT_EMAIL } = config;
 

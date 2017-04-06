@@ -1,4 +1,3 @@
-import config from '~/src/config';
 import BaseAPI from './base';
 
 class ToakeeAPI extends BaseAPI {
@@ -11,4 +10,4 @@ class ToakeeAPI extends BaseAPI {
   }
 }
 
-export default new ToakeeAPI(config.BASE_URI, config.RP_TIMEOUT);
+export default new ToakeeAPI();
