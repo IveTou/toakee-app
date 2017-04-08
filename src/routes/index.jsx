@@ -22,14 +22,15 @@ const loggedRoutes = (
     <IndexRoute component={EventFeed} />
     <Route path="/evento/:slug" component={EventPage} />
     <Route path="/evento/:slug/lista" component={EventGuestList} />
+    <Route path="/evento/:slug/editar-listas" component={EventGuestListEdit} />
     <Route path="/redirect" onEnter={() => { window.location = '/'; }} />
   </Route>
 );
 
 const unloggedRoutes = (
   <Route path="/" component={Unlogged}>
-    <IndexRoute component={Landing} />
-    <Route path="/evento/:slug" component={Event} />
+    <IndexRoute component={EventFeed} />
+    <Route path="/evento/:slug" component={EventPage} />
     <Route component={AuthWrapper}>
       <Route path="/login" component={Login} />
       <Route path="/cadastrar" component={SignUp} />

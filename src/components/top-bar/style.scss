@@ -19,6 +19,7 @@
   }
 
   .mdl-layout__header-row {
+    flex-direction: row-reverse;
     padding-left: $spacer*5;
   }
 
@@ -51,6 +52,7 @@
   .TopBar.header {
     .mdl-layout__header-row {
       padding-left: $spacer*2;
+      flex-direction: row;
     }
   }
 }

@@ -1,15 +1,18 @@
 import React, { PropTypes } from 'react';
 
+import TopBar from '~/src/components/top-bar';
 import Snackbar from '~/src/components/snackbar';
 import Footer from '~/src/components/footer';
 
 require('./style.scss');
 
 const Unlogged = ({ children }) => (
-  <div className="Unlogged">
+  <div className="Unlogged mdl-layout mdl-layout--fixed-header mdl-js-layout">
+    <TopBar />
     <Snackbar />
-    {children}
-    <Footer />
+    <main className="main mdl-layout__content">
+      {children}
+    </main>
   </div>
 );
 

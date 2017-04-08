@@ -5,7 +5,7 @@ import Header from '~/src/components/header';
 
 const EventFeed = () => (
   <div className="EventFeed">
-    <Header title="Meus eventos" />
+    <Header title="Eventos" />
     <div className="EventFeed-content">
       <EventBox />
     </div>
