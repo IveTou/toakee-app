@@ -4,6 +4,7 @@
 
 .mdl-button.Button {
   color: $black54;
+  z-index: 1;
 
   &.Button--accent {
     color: white;

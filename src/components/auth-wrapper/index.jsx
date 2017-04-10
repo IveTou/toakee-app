@@ -13,9 +13,6 @@ if (process.env.BROWSER) {
 const AuthWrapper = ({ children }) => (
   <div className="AuthWrapper">
     <div className="AuthWrapper-content">
-      <div className="AuthWrapper-content-logo">
-        <Logo />
-      </div>
       <div className="AuthWrapper-content-box">
         {children}
       </div>

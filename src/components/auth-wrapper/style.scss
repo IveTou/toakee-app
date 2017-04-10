@@ -3,11 +3,11 @@
 @import '../../scss/mixins';
 
 .AuthWrapper {
-  height: calc(100vh - #{$footer-height});
+  height: calc(100vh - #{$topbar-height});
   background-color: $black06;
 
   &-content {
-    padding-top: 5%;
+    padding-top: 6%;
 
     &-logo {
       display: table;
