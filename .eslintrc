@@ -11,6 +11,7 @@
     "destructuring": true
   },
   "globals": {
+    "location": true,
     "document": true,
     "localStorage": true,
     "window": true,

@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react';
 
-import Logo from '~/src/components/logo';
-
 const propTypes = {
   children: PropTypes.node,
 };

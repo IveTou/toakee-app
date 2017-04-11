@@ -34,8 +34,8 @@ const renderTime = (start) => {
 
 const EventListItem = ({ slug, title, flyer, start }) => (
   <div className="EventListItem mdl-card mdl-shadow--2dp">
+    {renderFlyer(flyer, `flyer do ${title}`)}
     <Link className="EventListItem-link" to={{ pathname: `/evento/${slug}` }}>
-      {renderFlyer(flyer, `flyer do ${title}`)}
       <div className="EventListItem-content">
         <div className="EventListItem-content-title mdl-card__title">
           <h2 className="EventListItem-content-title-text mdl-card__title-text">
@@ -51,7 +51,7 @@ const EventListItem = ({ slug, title, flyer, start }) => (
 EventListItem.propTypes = {
   slug: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  start: PropTypes.string,
+  start: PropTypes.object,
   flyer: PropTypes.string,
 };
 

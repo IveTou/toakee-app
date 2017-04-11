@@ -2,7 +2,7 @@ const devMode = process.env.NODE_ENV !== 'production';
 
 export default {
   RP_TIMEOUT: 5000,
-  SOCIAL_REDIRECT_URI: `/social-login`,
+  SOCIAL_REDIRECT_URI: '/social-login',
   GRAPHQL_URI: devMode
     ? 'http://localhost:4000'
     : 'https://graphql-api.herokuapp.com',

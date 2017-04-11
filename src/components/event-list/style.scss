@@ -1,4 +1,5 @@
 @import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/mixins';
 @import '../../scss/variables';
 @import '../../scss/colors';
 
@@ -14,18 +15,20 @@
 
   &-list {
     display: flex;
+    margin-left: $spacer*-1;
 
     .EventListItem {
-      margin-right: $spacer*2;
-      width: $spacer*30;
+      margin: $spacer;
+      max-width: $spacer*30;
 
       &-link {
         text-decoration: none;
       }
 
       &-background {
+        @include drag(none);
         width: 100%;
-        height: 100%;
+        height: $spacer*30;
       }
 
       &-content {
@@ -55,7 +58,6 @@
     flex-direction: column;
 
     .EventListItem {
-      margin: 0 0 $spacer*2;
       width: 100%;
     }
   }

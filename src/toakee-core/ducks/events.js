@@ -1,3 +1,5 @@
+import { Map } from 'immutable';
+
 import GraphQLAPI from '../apis/graphql';
 import { fetchableState } from '../utils';
 
@@ -23,6 +25,16 @@ const eventsQuery = `
   }
 `;
 
+const mapify = events => (
+  events
+    .map(e => ({
+      ...e,
+      start: e.start && new Date(e.start),
+      end: e.end && new Date(e.end),
+    }))
+    .reduce((obj, event) => obj.set(event.id, event), Map({}))
+);
+
 export default function reducer(state = fetchableState(), action) {
   switch (action.type) {
     case START_FETCHING:
@@ -32,10 +44,7 @@ export default function reducer(state = fetchableState(), action) {
       return state
         .set('fetching', false)
         .set('fetched', true)
-        .set(
-          'data',
-          action.events.reduce((obj, e) => obj.set(e.id, e), state.get('data')),
-        );
+        .mergeIn(['data'], mapify(action.events));
 
     default:
       return state;

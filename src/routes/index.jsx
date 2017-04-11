@@ -4,12 +4,10 @@ import { Route, IndexRoute } from 'react-router';
 import { getToken } from '~/src/utils/session';
 
 import Unlogged from '~/src/pages/unlogged';
-import Landing from '~/src/components/landing';
 import AuthWrapper from '~/src/components/auth-wrapper';
 import Login from '~/src/components/login';
 import SignUp from '~/src/components/sign-up';
 import RecoverPassword from '~/src/components/recover-password';
-import Event from '~/src/components/event';
 
 import Logged from '~/src/pages/logged';
 import EventFeed from '~/src/components/event-feed';

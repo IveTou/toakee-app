@@ -29,3 +29,13 @@
 	-webkit-transform: $transform;
           transform: $transform;
 }
+
+
+@mixin drag($drag) {
+  user-drag: $drag;
+  user-select: $drag;
+  -moz-user-select: $drag;
+  -webkit-user-drag: $drag;
+  -webkit-user-select: $drag;
+  -ms-user-select: $drag;
+}

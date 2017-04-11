@@ -13,3 +13,12 @@ body {
   margin: 0;
   color: $black54;
 }
+
+* {
+  min-width: 0;
+  min-height: 0;
+}
+
+button.slick-arrow {
+  display: none !important;
+}
