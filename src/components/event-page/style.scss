@@ -66,10 +66,12 @@
 
     &-description {
       padding: 0 $spacer*2;
+      flex: 1 1 0;
     }
 
     &-guestLists {
       padding: 0 $spacer*2;
+      flex: 1 1 0;
 
       &-area textarea {
         width: calc(100% - #{$spacer*4});
@@ -106,13 +108,8 @@
     }
 
     &-body {
-      &-description {
-        width: 50%;
-        border-right: 1px solid $gray100;
-      }
-
       &-guestLists {
-        width: calc(50% - #{$spacer*3});
+        border-left: 1px solid $gray100;
 
         &-area textarea {
           width: calc(100% - #{$spacer*8});
@@ -128,6 +125,8 @@
 
 @include media("<tablet") {
   .EventPage {
+    padding-bottom: $spacer*5;
+
     &-header {
       display: flex;
       flex-direction: column-reverse;
@@ -144,6 +143,10 @@
 
     &-body {
       flex-direction: column;
+
+      &-guestLists {
+        margin: $spacer*2 0 $spacer*4;
+      }
     }
   }
 }

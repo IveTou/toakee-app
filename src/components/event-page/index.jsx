@@ -121,33 +121,35 @@ class EventPage extends React.Component {
               dangerouslySetInnerHTML={{ __html: description }}
             />
           </div>
-          <div className="EventPage-body-guestLists">
-            <div className="EventPage-body-title">Nome na lista</div>
-            <div className="EventPage-body-content">
-              <form ref={formRef(this)} className="EventPage-form">
-                <For each="guestList" index="idx" of={guestLists}>
-                  <Input key={guestList.id} type="radio" name="guestList" value={guestList.id} checked={idx === 0}>
-                    {guestList.name}
-                  </Input>
-                </For>
-                <TextArea
-                  rows="4"
-                  className="EventPage-body-guestLists-area"
-                  name="names"
-                  placeholder="Escreva cada nome em uma linha"
-                />
-                <Button
-                  className="EventPage-body-guestLists-button g-recaptcha"
-                  label="Enviar"
-                  type="submit"
-                  dataProps={{ sitekey: config.RECAPTCHA_SITE_KEY, callback: 'recaptchaCallback' }}
-                  accent
-                  colored
-                  onClick={this.submit}
-                />
-              </form>
+          <If condition={guestLists.length}>
+            <div className="EventPage-body-guestLists">
+              <div className="EventPage-body-title">Nome na lista</div>
+              <div className="EventPage-body-content">
+                <form ref={formRef(this)} className="EventPage-form">
+                  <For each="guestList" index="idx" of={guestLists}>
+                    <Input key={guestList.id} type="radio" name="guestList" value={guestList.id} checked={idx === 0}>
+                      {guestList.name}
+                    </Input>
+                  </For>
+                  <TextArea
+                    rows="4"
+                    className="EventPage-body-guestLists-area"
+                    name="names"
+                    placeholder="Escreva cada nome em uma linha"
+                  />
+                  <Button
+                    className="EventPage-body-guestLists-button g-recaptcha"
+                    label="Enviar"
+                    type="submit"
+                    dataProps={{ sitekey: config.RECAPTCHA_SITE_KEY, callback: 'recaptchaCallback' }}
+                    accent
+                    colored
+                    onClick={this.submit}
+                  />
+                </form>
+              </div>
             </div>
-          </div>
+          </If>
         </div>
       </div>
     );
