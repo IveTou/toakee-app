@@ -4,9 +4,10 @@
 @import '../../scss/colors';
 
 .EventList {
-  padding: $spacer*3;
+  padding: $spacer*3 0;
 
   &-title {
+    margin-left: $spacer*2;
     color: $black87;
     font-size: 16px;
     font-weight: bold;
@@ -18,7 +19,7 @@
     margin-left: $spacer*-1;
 
     .EventListItem {
-      margin: $spacer;
+      margin: $spacer 0 $spacer $spacer*3;
       max-width: $spacer*30;
 
       &-link {
