@@ -144,6 +144,11 @@
     &-body {
       flex-direction: column;
 
+      &-description,
+      &-guestLists {
+        flex-basis: 100%;
+      }
+
       &-guestLists {
         margin: $spacer*2 0 $spacer*4;
       }
