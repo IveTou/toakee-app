@@ -54,6 +54,12 @@
   }
 }
 
+@include media(">tablet") {
+  .EventListItem-link.img {
+    pointer-events: none;
+  }
+}
+
 @include media("<tablet") {
   .EventList-list {
     flex-direction: column;

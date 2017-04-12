@@ -34,7 +34,9 @@ const renderTime = (start) => {
 
 const EventListItem = ({ slug, title, flyer, start }) => (
   <div className="EventListItem mdl-card mdl-shadow--2dp">
-    {renderFlyer(flyer, `flyer do ${title}`)}
+    <Link className="EventListItem-link img" to={{ pathname: `/evento/${slug}` }}>
+      {renderFlyer(flyer, `flyer do ${title}`)}
+    </Link>
     <Link className="EventListItem-link" to={{ pathname: `/evento/${slug}` }}>
       <div className="EventListItem-content">
         <div className="EventListItem-content-title mdl-card__title">
