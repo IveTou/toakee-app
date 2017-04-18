@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Slider from 'react-slick';
 
 import { fetchEvents } from '~/src/toakee-core/ducks/events';
 import EventListItem from './item';
@@ -44,13 +43,10 @@ class EventList extends React.Component {
       <div className="EventList">
         <div className="EventList-title">{title}</div>
         <div className="EventList-list">
-          <Slider {...settings}>
-            <For each="event" index="idx" of={list}>
-              <div key={idx}>
-                <EventListItem key={idx} {...event} />
-              </div>
-            </For>
-          </Slider>
+          <For each="event" index="idx" of={list}>
+            <EventListItem key={idx} {...event} />
+          </For>
+          <div className="EventList-list-end" />
         </div>
       </div>
     );

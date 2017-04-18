@@ -16,9 +16,15 @@
 
   &-list {
     display: flex;
+    overflow-x: auto;
     margin-left: $spacer*-1;
 
+    &-end {
+      flex: 0 0 1%;
+    }
+
     .EventListItem {
+      flex: 0 0 100%;
       margin: $spacer 0 $spacer $spacer*3;
       max-width: $spacer*30;
 
@@ -55,16 +61,8 @@
   }
 }
 
-@include media(">tablet") {
-  .EventListItem-link.img {
-    pointer-events: none;
-  }
-}
-
 @include media("<tablet") {
   .EventList-list {
-    flex-direction: column;
-
     .EventListItem {
       width: 100%;
     }
