@@ -33,7 +33,9 @@
 
     &-banner {
       padding: $spacer*10;
-      background: url(/imgs/partying.jpg) center / cover;
+      background: 
+        url(https://s3-us-west-2.amazonaws.com/toakee-app-assets/core/images/partying.jpg)
+        center / cover;
 
       &-content {
         padding: $spacer*5 $spacer*3;

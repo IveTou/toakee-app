@@ -65,7 +65,7 @@ class EventPage extends React.Component {
     const { event, guestLists } = this.props;
     const { title, description, place, start, price, flyer } = event;
     const flyerAlt = `Flyer do ${title || 'evento'}`;
-    const flyerSrc = flyer || 'imgs/partying';
+    const flyerSrc = flyer || 'https://s3-us-west-2.amazonaws.com/toakee-app-assets/core/images/partying.jpg';
 
     declare var guestList;
     declare var idx;
