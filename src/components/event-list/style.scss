@@ -26,7 +26,7 @@
     .EventListItem {
       flex: 0 0 100%;
       margin: $spacer 0 $spacer $spacer*3;
-      max-width: $spacer*30;
+      max-width: $spacer*25;
 
       &-link {
         text-decoration: none;
@@ -35,7 +35,7 @@
       &-background {
         @include drag(none);
         width: 100%;
-        height: $spacer*30;
+        height: $spacer*25;
         object-fit: cover;
       }
 
@@ -46,9 +46,13 @@
           padding: 0;
 
           &-text {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 500;
           }
+        }
+
+        &-time {
+          font-size: 14px;
         }
 
         &-body,
@@ -56,6 +60,35 @@
           margin-top: $spacer;
           padding: 0;
         }
+      }
+    }
+
+    .EventListArrow {
+      display: flex;
+      position: absolute;
+      padding: $spacer;
+      background-color: $orange87;
+      font-size: 60px;
+      z-index: 2;
+      color: $white;
+      margin-top: $spacer*12;
+      height: $spacer*10;
+      align-items: center;
+      border-radius: 3px;
+      @include box-shadow(0 0 $spacer $black26);
+      cursor: pointer;
+      border: 0;
+
+      &:hover {
+        background-color: $orange;
+      }
+
+      &--right {
+        right: $spacer;
+      }
+
+      &--left {
+        left: $spacer;
       }
     }
   }

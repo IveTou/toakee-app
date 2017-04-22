@@ -36,6 +36,7 @@
     "babel-register": "^6.23.0",
     "babel-relay-plugin": "0.10.0",
     "babel-relay-plugin-loader": "0.10.0",
+    "bezier-easing": "^2.0.3",
     "body-parser": "1.16.1",
     "classnames": "^2.2.5",
     "concurrently": "^3.1.0",

@@ -36,8 +36,8 @@ class EventPage extends React.Component {
       : { eventSlug: slug };
 
     dispatch(fetchGuestLists(params));
-    if (!event.id) {
-      dispatch(fetchEvents({ slug }));
+    if (!event.id || !event.description) {
+      dispatch(fetchEvents({ slug, full: true }));
     }
   }
 
