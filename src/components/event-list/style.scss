@@ -16,7 +16,7 @@
 
   &-list {
     display: flex;
-    overflow-x: auto;
+    overflow-x: hidden;
     margin-left: $spacer*-1;
 
     &-end {
@@ -96,8 +96,14 @@
 
 @include media("<tablet") {
   .EventList-list {
+    overflow-x: auto;
+
     .EventListItem {
       width: 100%;
+    }
+
+    .EventListArrow {
+      display: none;
     }
   }
 }
