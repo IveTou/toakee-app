@@ -10,6 +10,7 @@ import SignUp from '~/src/components/sign-up';
 import RecoverPassword from '~/src/components/recover-password';
 
 import Logged from '~/src/pages/logged';
+import Landing from '~/src/components/landing';
 import EventFeed from '~/src/components/event-feed';
 import EventPage from '~/src/components/event-page';
 import EventGuestList from '~/src/components/event-guest-list';
@@ -27,7 +28,7 @@ const loggedRoutes = (
 
 const unloggedRoutes = (
   <Route path="/" component={Unlogged}>
-    <IndexRoute component={EventFeed} />
+    <IndexRoute component={Landing} />
     <Route path="/evento/:slug" component={EventPage} />
     <Route component={AuthWrapper}>
       <Route path="/login" component={Login} />

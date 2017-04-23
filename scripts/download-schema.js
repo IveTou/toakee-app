@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import GraphqlAPI from '~/src/apis/graphql';
+import GraphqlAPI from '~/src/toakee-core/apis/graphql';
 
 (async () => {
   const schema = await GraphqlAPI.downloadSchema();

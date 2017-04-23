@@ -8,6 +8,12 @@ html, body #app {
   height: 100%;
 }
 
+#app {
+  .mdl-layout__container {
+    height: auto;
+  }
+}
+
 body {
   height: 100%;
   margin: 0;
