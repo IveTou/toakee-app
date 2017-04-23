@@ -5,7 +5,8 @@
 
 .Landing {
   &-banner {
-    background: url(/imgs/triangles_bg.png);
+    background: url(/imgs/triangles_bg_op30.png);
+    background-size: $spacer*25;
     background-attachment: fixed;
     display: flex;
     @include box-shadow(inset 0 0 $spacer*2 $black26);
@@ -49,12 +50,16 @@
 
     &-list {
       margin-left: $spacer*4;
+      display: flex;
+      align-items: center;
 
-      .EventList-title {
-        font-size: 24px;
-        text-align: center;
-        color: $black26;
-        text-shadow: 2px 2px white;
+      .EventList {
+        padding-top: 0;
+
+        &-title {
+          font-size: 14px;
+          font-weight: 300;
+        }
       }
     }
   }
