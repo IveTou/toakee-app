@@ -26,9 +26,9 @@ const fullEventsQuery = `
 `;
 
 const feedEventsQuery = `
-  query Events($slug: String, $start: Date, $end: Date) {
+  query Events($slug: String, $start: Date, $end: Date, $skip: Int, $limit: Int) {
     viewer {
-      events(slug: $slug, start: $start, end: $end) {
+      events(slug: $slug, start: $start, end: $end, skip: $skip, limit: $limit) {
         id,
         slug,
         title,
@@ -69,9 +69,9 @@ export default function reducer(state = fetchableState(), action) {
 
 export const startFetchingEvents = () => ({ type: START_FETCHING });
 export const finishedFetchingEvents = events => ({ type: FINISHED_FETCHING, events });
-export const fetchEvents = ({ start, end, slug, full = false }) => (dispatch) => {
+export const fetchEvents = ({ start, end, slug, skip, limit, full = false }) => (dispatch) => {
   dispatch(startFetchingEvents());
   GraphQLAPI
-    .post(full ? fullEventsQuery : feedEventsQuery, { start, end, slug })
+    .post(full ? fullEventsQuery : feedEventsQuery, { start, end, slug, skip, limit })
     .then(({ viewer }) => dispatch(finishedFetchingEvents(viewer.events)));
 };
