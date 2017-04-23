@@ -4,14 +4,16 @@
 @import '../../scss/colors';
 
 .EventList {
-  padding: $spacer*3 0;
+  padding: $spacer*3 0 0;
 
   &-title {
-    margin-left: $spacer*2;
+    margin: 0 $spacer*2 $spacer*2;
+    padding-bottom: $spacer;
     color: $black87;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: bold;
     text-transform: uppercase;
+    border-bottom: 1px solid $gray300;
   }
 
   &-list {
@@ -43,12 +45,23 @@
         padding: $spacer*2;
 
         &-title {
+          display: block;
+          height: $spacer*6;
           padding: 0;
+          overflow: hidden;
 
           &-text {
             font-size: 16px;
             font-weight: 500;
           }
+        }
+
+        &-truncate {
+          width: 100%;
+          height: $spacer;
+          position: absolute;
+          @include gradient-background(to bottom, $white30, $white);
+          margin: $spacer*-1 $spacer*-2;
         }
 
         &-time {
@@ -95,15 +108,38 @@
 }
 
 @include media("<tablet") {
-  .EventList-list {
-    overflow-x: auto;
-
-    .EventListItem {
-      width: 100%;
+  .EventList {
+    &-title {
+      margin-bottom: 0;
+      font-size: 18px;
+      border: 0;
+      padding: 0;
     }
 
-    .EventListArrow {
-      display: none;
+    &-list {
+      overflow-x: auto;
+
+      .EventListItem {
+        width: 100%;
+
+        &-content {
+          &-title {
+            height: $spacer*5;
+
+            &-text {
+              font-size: 13px;
+            }
+          }
+
+          &-time {
+            font-size: 12px;
+          }
+        }
+      }
+
+      .EventListArrow {
+        display: none;
+      }
     }
   }
 }
