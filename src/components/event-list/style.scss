@@ -91,6 +91,7 @@
       @include box-shadow(0 0 $spacer $black26);
       cursor: pointer;
       border: 0;
+      transition: all .20s ease-out;
 
       &:hover {
         background-color: $orange;
@@ -98,10 +99,23 @@
 
       &--right {
         right: $spacer;
+
+        &.EventListArrow--hidden {
+          right: 0;
+        }
       }
 
       &--left {
         margin-left: $spacer;
+
+        &.EventListArrow--hidden {
+          margin-left: 0;
+        }
+      }
+
+      &--hidden {
+        opacity: 0;
+        pointer-events: none;
       }
     }
   }

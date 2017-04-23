@@ -26,15 +26,23 @@ class EventList extends React.Component {
     this.props.dispatch(fetchEvents({ start, end, limit: FEED_LIMIT }));
   }
 
+  shouldFetchMore() {
+    const { events } = this.props;
+    const lastEvent = events[events.length - 1];
+    return this.state.lastEventId !== lastEvent.id;
+  }
+
   fetchEvents() {
     const { events, end } = this.props;
     const lastEvent = events[events.length - 1];
-    if (this.state.lastEventId !== lastEvent.id) {
+    if (this.shouldFetchMore()) {
       this.setState({
         lastEventId: lastEvent.id,
       }, () => {
         const { start } = lastEvent;
-        const skip = events.filter(e => e.start.getTime() === start.getTime()).length;
+        const skip = events
+          .filter(e => e.start.getTime() === start.getTime())
+          .length;
         this.props.dispatch(fetchEvents({ start, end, skip, limit: FEED_LIMIT }));
       });
     }
@@ -47,19 +55,26 @@ class EventList extends React.Component {
 
     ease(500, (tweaker) => {
       node.scrollLeft = startingPoint + (tweaker * amount);
-    });
+    }, () => this.forceUpdate());
   }
 
   render() {
     const { title, events } = this.props;
+
+    const node = this._listDOM || {};
+    const hideLeftArrow = !node.scrollLeft;
+    const hideRightArrow =
+      node.scrollLeft + node.offsetWidth >= node.scrollWidth
+      && !this.shouldFetchMore();
+
     declare var event;
     declare var idx;
     return !!events.length && (
       <div className="EventList">
         <div className="EventList-title">{title}</div>
-        <div className="EventList-list" ref={(node) => { this._listDOM = node; }}>
-          <EventListArrow direction="left" onClick={() => this.scroll(-1)} />
-          <EventListArrow direction="right" onClick={() => this.scroll(1)} />
+        <div className="EventList-list" ref={(dom) => { this._listDOM = dom; }}>
+          <EventListArrow direction="left" onClick={() => this.scroll(-1)} hide={hideLeftArrow} />
+          <EventListArrow direction="right" onClick={() => this.scroll(1)} hide={hideRightArrow} />
           <For each="event" index="idx" of={events}>
             <EventListItem key={idx} {...event} />
           </For>

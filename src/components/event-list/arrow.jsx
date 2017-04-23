@@ -1,7 +1,18 @@
 import React, { PropTypes } from 'react';
+import classNames from 'classnames';
 
-const EventListArrow = ({ onClick, direction }) => (
-  <button role="button" className={`EventListArrow EventListArrow--${direction}`} onClick={onClick}>
+const buildClasses = ({ direction, hide }) => classNames(
+  'EventListArrow',
+  `EventListArrow--${direction}`,
+  { 'EventListArrow--hidden': hide },
+);
+
+const EventListArrow = ({ onClick, direction, hide }) => (
+  <button
+    role="button"
+    className={buildClasses({ direction, hide })}
+    onClick={onClick}
+  >
     <i className={`fa fa-caret-${direction}`} />
   </button>
 );
@@ -9,6 +20,7 @@ const EventListArrow = ({ onClick, direction }) => (
 EventListArrow.propTypes = {
   direction: PropTypes.string.isRequired,
   onClick: PropTypes.func,
+  hide: PropTypes.bool,
 };
 
 export default EventListArrow;

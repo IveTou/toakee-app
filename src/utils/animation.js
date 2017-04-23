@@ -1,6 +1,6 @@
 import BezierEasing from 'bezier-easing';
 
-export const ease = (duration, callback) => {
+export const ease = (duration, animation, callback) => {
   const easer = BezierEasing(0.2, 0.5, 0.6, 1);
   let start;
 
@@ -8,10 +8,12 @@ export const ease = (duration, callback) => {
     if (!start) start = timestamp;
 
     const timeLapsed = timestamp - start;
-    callback(easer(timeLapsed / duration));
+    animation(easer(timeLapsed / duration));
 
     if (timeLapsed < duration) {
       window.requestAnimationFrame(step);
+    } else {
+      callback();
     }
   };
 
