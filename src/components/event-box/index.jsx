@@ -3,6 +3,10 @@ import moment from 'moment';
 
 import EventList from '~/src/components/event-list';
 
+if (process.env.BROWSER) {
+  require('./style.scss');
+}
+
 const EventBox = () => (
   <div className="EventBox">
     <EventList

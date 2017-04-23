@@ -4,7 +4,7 @@
 @import '../../scss/colors';
 
 .EventList {
-  padding: $spacer*3 0 0;
+  margin-bottom: $spacer*3;
 
   &-title {
     margin: 0 $spacer*2 $spacer*2;
@@ -123,9 +123,11 @@
 
 @include media("<tablet") {
   .EventList {
+    margin-bottom: $spacer*2;
+
     &-title {
       margin-bottom: 0;
-      font-size: 18px;
+      font-size: 14px;
       border: 0;
       padding: 0;
     }
@@ -135,6 +137,10 @@
 
       .EventListItem {
         width: 100%;
+
+        &-background {
+          height: $spacer*16;
+        }
 
         &-content {
           &-title {
