@@ -5,6 +5,7 @@
 
 .Landing {
   &-banner {
+    margin-bottom: $spacer*3;
     background: url(/imgs/triangles_bg_op30.png);
     background-size: $spacer*25;
     background-attachment: fixed;
