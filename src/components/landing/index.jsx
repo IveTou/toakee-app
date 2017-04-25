@@ -106,11 +106,11 @@ export default class Landing extends React.Component {
           <EventList
             title="Nesta semana"
             start={moment().add(2, 'days').startOf('day')}
-            end={moment().endOf('week')}
+            end={moment().endOf('isoWeek')}
           />
           <EventList
             title="Eventos futuros"
-            start={moment().add(1, 'week').startOf('week')}
+            start={moment().add(1, 'week').startOf('isoWeek')}
           />
         </div>
       </div>
