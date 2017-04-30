@@ -64,6 +64,8 @@
     }
 
     &-description {
+      width: 50%;
+      display: inline-block;
       padding: 0 $spacer*2;
     }
 
@@ -126,9 +128,15 @@
 
     &-header {
       border-left: 4px solid $orange;
+      display: table;
+
+      &-right {
+        display: table-header-group;
+      }
 
       &-flyer.mdl-card {
         margin: $spacer*2 0 $spacer;
+        width: 100%;
       }
     }
 
@@ -137,6 +145,11 @@
     }
 
     &-body {
+      &-description {
+        width: 100%;
+        padding: 0;
+      }
+
       &-guestLists {
         margin: $spacer*2 0 $spacer*4;
       }

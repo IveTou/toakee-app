@@ -40,6 +40,10 @@ export class TopBar extends React.Component {
     return (
       <header className="TopBar header mdl-layout__header">
         <div className="mdl-layout__header-row">
+          <span className="mdl-layout-title">
+            <Logo />
+          </span>
+          <div className="mdl-layout-spacer" />
           <Choose>
             <When condition={isLogged()}>
               <Button
@@ -64,10 +68,6 @@ export class TopBar extends React.Component {
               </Link>
             </Otherwise>
           </Choose>
-          <div className="mdl-layout-spacer" />
-          <span className="mdl-layout-title">
-            <Logo />
-          </span>
         </div>
       </header>
     );
