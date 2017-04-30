@@ -12,6 +12,11 @@ html, body #app {
   .mdl-layout__container {
     height: auto;
   }
+
+  .mdl-layout {
+    display: block;
+    overflow-y: hidden;
+  }
 }
 
 body {

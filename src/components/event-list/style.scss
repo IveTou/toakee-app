@@ -17,18 +17,14 @@
   }
 
   &-list {
-    display: flex;
     overflow-x: hidden;
     margin-left: $spacer*-1;
-
-    &-end {
-      flex: 0 0 1%;
-    }
+    white-space: nowrap;
 
     .EventListItem {
-      flex: 0 0 100%;
       margin: $spacer 0 $spacer $spacer*3;
       max-width: $spacer*25;
+      display: inline-block;
 
       &-link {
         text-decoration: none;
@@ -77,9 +73,8 @@
     }
 
     .EventListArrow {
-      display: flex;
       position: absolute;
-      padding: $spacer;
+      padding: 0 $spacer;
       background-color: $orange87;
       font-size: 60px;
       z-index: 2;

@@ -2,7 +2,7 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import moment from 'moment';
 
-import ToakeeAPI from '~/src/apis/toakee';
+import ToakeeAPI from '~/src/toakee-core/apis/toakee';
 
 import Button from '~/src/components/button';
 
