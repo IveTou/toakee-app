@@ -51,7 +51,6 @@
   }
 
   &-body {
-    display: flex;
     padding: $spacer*2;
 
     &-title {
@@ -65,13 +64,13 @@
     }
 
     &-description {
+      width: 50%;
+      display: inline-block;
       padding: 0 $spacer*2;
-      flex: 1 1 0;
     }
 
     &-guestLists {
       padding: 0 $spacer*2;
-      flex: 1 1 0;
 
       &-area textarea {
         width: calc(100% - #{$spacer*4});
@@ -128,12 +127,16 @@
     padding-bottom: $spacer*5;
 
     &-header {
-      display: flex;
-      flex-direction: column-reverse;
       border-left: 4px solid $orange;
+      display: table;
+
+      &-right {
+        display: table-header-group;
+      }
 
       &-flyer.mdl-card {
         margin: $spacer*2 0 $spacer;
+        width: 100%;
       }
     }
 
@@ -142,11 +145,9 @@
     }
 
     &-body {
-      flex-direction: column;
-
-      &-description,
-      &-guestLists {
-        flex-basis: 100%;
+      &-description {
+        width: 100%;
+        padding: 0;
       }
 
       &-guestLists {
