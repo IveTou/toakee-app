@@ -4,29 +4,27 @@
 @import '../../scss/colors';
 
 .EventList {
-  padding: $spacer*3 0;
+  margin-bottom: $spacer*3;
 
   &-title {
-    margin-left: $spacer*2;
+    margin: 0 $spacer*2 $spacer*2;
+    padding-bottom: $spacer;
     color: $black87;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: bold;
     text-transform: uppercase;
+    border-bottom: 1px solid $gray300;
   }
 
   &-list {
-    display: flex;
-    overflow-x: auto;
+    overflow-x: hidden;
     margin-left: $spacer*-1;
-
-    &-end {
-      flex: 0 0 1%;
-    }
+    white-space: nowrap;
 
     .EventListItem {
-      flex: 0 0 100%;
       margin: $spacer 0 $spacer $spacer*3;
-      max-width: $spacer*30;
+      max-width: $spacer*25;
+      display: inline-block;
 
       &-link {
         text-decoration: none;
@@ -35,7 +33,7 @@
       &-background {
         @include drag(none);
         width: 100%;
-        height: $spacer*30;
+        height: $spacer*25;
         object-fit: cover;
       }
 
@@ -43,12 +41,27 @@
         padding: $spacer*2;
 
         &-title {
+          display: block;
+          height: $spacer*6;
           padding: 0;
+          overflow: hidden;
 
           &-text {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 500;
           }
+        }
+
+        &-truncate {
+          width: 100%;
+          height: $spacer;
+          position: absolute;
+          @include gradient-background(to bottom, $white30, $white);
+          margin: $spacer*-1 $spacer*-2;
+        }
+
+        &-time {
+          font-size: 14px;
         }
 
         &-body,
@@ -58,13 +71,90 @@
         }
       }
     }
+
+    .EventListArrow {
+      position: absolute;
+      padding: 0 $spacer;
+      background-color: $orange87;
+      font-size: 60px;
+      z-index: 2;
+      color: $white;
+      margin-top: $spacer*12;
+      height: $spacer*10;
+      align-items: center;
+      border-radius: 3px;
+      @include box-shadow(0 0 $spacer $black26);
+      cursor: pointer;
+      border: 0;
+      transition: all .20s ease-out;
+
+      &:hover {
+        background-color: $orange;
+      }
+
+      &--right {
+        right: $spacer;
+
+        &.EventListArrow--hidden {
+          right: 0;
+        }
+      }
+
+      &--left {
+        margin-left: $spacer;
+
+        &.EventListArrow--hidden {
+          margin-left: 0;
+        }
+      }
+
+      &--hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
   }
 }
 
 @include media("<tablet") {
-  .EventList-list {
-    .EventListItem {
-      width: 100%;
+  .EventList {
+    margin-bottom: $spacer*2;
+
+    &-title {
+      margin-bottom: 0;
+      font-size: 14px;
+      border: 0;
+      padding: 0;
+    }
+
+    &-list {
+      overflow-x: auto;
+
+      .EventListItem {
+        width: 100%;
+
+        &-background {
+          height: $spacer*16;
+        }
+
+        &-content {
+          &-title {
+            height: $spacer*5;
+
+            &-text {
+              font-size: 13px;
+            }
+          }
+
+          &-time {
+            font-size: 12px;
+          }
+        }
+      }
+
+      .EventListArrow {
+        display: none;
+      }
     }
   }
 }

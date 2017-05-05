@@ -1,13 +1,12 @@
 import React from 'react';
 import autoBind from 'react-autobind';
-import { Link } from 'react-router';
+import moment from 'moment';
 
-import ToakeeAPI from '~/src/apis/toakee';
+import ToakeeAPI from '~/src/toakee-core/apis/toakee';
 
-import Logo from '~/src/components/logo';
 import Button from '~/src/components/button';
-import Input from '~/src/components/input';
-import TextArea from '~/src/components/text-area';
+
+import EventList from '~/src/components/event-list';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -79,77 +78,41 @@ export default class Landing extends React.Component {
 
   render() {
     return (
-      <div className="Landing mdl-layout mdl-layout--fixed-header">
-        <header className="header mdl-layout__header">
-          <div className="mdl-layout__header-row">
-            <span className="mdl-layout-title">
-              <Logo />
-            </span>
-            <div className="mdl-layout-spacer" />
-            <nav className="mdl-navigation">
-              <Link className="mdl-navigation__link" href="#quem-somos">Quem somos</Link>
-              <Link className="mdl-navigation__link" href="#contato">Contato</Link>
-            </nav>
-            <Link to={{ pathname: '/login' }}>
-              <Button className="header-action" label="Criar lista" raised ripple accent />
-            </Link>
-          </div>
-        </header>
-        <main className="main mdl-layout__content">
-          <div className="main-banner">
-            <div className="main-banner-content">
-              <div className="main-banner-content-title">Crie listas</div>
-              <div className="main-banner-content-subtitle">para seus eventos</div>
-              <p className="main-banner-content-body">
-                Escolha a praticidade! <br />
-                Crie listas e gerencie quem vai ao seu evento
-                tendo acesso às listas de aniversariantes, listas VIP’s,
-                listas que oferecem descontos entre outras...
-              </p>
-            </div>
-          </div>
-          <div id="quem-somos" className="main-section main-section-info">
-            <div className="main-section-title">Quem somos</div>
-            <p className="main-section-info-body">
-              O Toakee é uma empresa que conecta pessoas.
-              Hoje nós oferecemos o serviço de gerenciamento
-              de listas de convidados para eventos com a mais
-              nova tecnologia do mercado. Nós buscamos facilitar
-              o acesso do nosso público aos mais diversos tipos
-              de eventos, com um sistema unificado com redes
-              sociais nos proporcionamos uma maior adesão e uma
-              nova forma de interagir com a cidade.
+      <div className="Landing">
+        <div className="Landing-banner">
+          <div className="Landing-banner-content">
+            <div className="Landing-banner-content-title">A solução</div>
+            <div className="Landing-banner-content-subtitle">para listas de eventos</div>
+            <p className="Landing-banner-content-body">
+              Você, promoter, publique seu evento e aproveite
+              toda praticidade que oferecemos.
+            </p>
+
+            <p className="Landing-banner-content-body right">
+              Você, baladeiro, faça aquele &quot;Vamos marcar...&quot; acontecer.
+              Confira nossos eventos!
             </p>
           </div>
-          <div id="contato" className="main-section main-section-contact">
-            <div className="main-section-title">Contato</div>
-            <form ref={(f) => { this.form = f; }} className="Form" onSubmit={this.submit}>
-              <div className="main-section-contact-body">
-                <Input label="Nome" name="name" required />
-                <Input type="email" label="E-mail" name="email" required />
-                <Input
-                  label="Qual o motivo do contato?"
-                  type="radio"
-                  name="reason"
-                  value="doubt"
-                  checked
-                >
-                  Dúvida
-                </Input>
-                <Input type="radio" name="reason" value="suggestion">
-                  Sugestão
-                </Input>
-                <Input type="radio" name="reason" value="criticism">
-                  Crítica
-                </Input>
-              </div>
-              <div className="main-section-contact-body">
-                <TextArea label="Conte-nos mais" name="body" />
-                {this.renderSubmitButton()}
-              </div>
-            </form>
+
+          <div className="Landing-banner-list">
+            <EventList
+              title="Próximos Eventos"
+              start={moment().startOf('day')}
+              end={moment().add(1, 'days').endOf('day')}
+            />
           </div>
-        </main>
+        </div>
+        <div className="Landing-lists">
+          <EventList
+            title="Nesta semana"
+            start={moment().add(2, 'days').startOf('day')}
+            end={moment().endOf('isoWeek')}
+          />
+          <EventList
+            title="Eventos futuros"
+            start={moment().add(1, 'week').startOf('isoWeek')}
+          />
+        </div>
       </div>
     );
   }

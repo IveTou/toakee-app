@@ -3,6 +3,10 @@ import moment from 'moment';
 
 import EventList from '~/src/components/event-list';
 
+if (process.env.BROWSER) {
+  require('./style.scss');
+}
+
 const EventBox = () => (
   <div className="EventBox">
     <EventList
@@ -13,11 +17,11 @@ const EventBox = () => (
     <EventList
       title="Nesta semana"
       start={moment().add(1, 'days').startOf('day')}
-      end={moment().endOf('week')}
+      end={moment().endOf('isoWeek')}
     />
     <EventList
       title="Eventos futuros"
-      start={moment().add(1, 'week').startOf('week')}
+      start={moment().add(1, 'week').startOf('isoWeek')}
     />
   </div>
 );

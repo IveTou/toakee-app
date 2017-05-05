@@ -4,117 +4,129 @@
 @import '../../scss/colors';
 
 .Landing {
-  .header {
-    position: fixed;
-    padding: $spacer;
-    background-color: $gray50;
-    @include box-shadow(0 0 $spacer*2 $black26);
+  &-banner {
+    margin-bottom: $spacer*3;
+    background: url(/imgs/triangles_bg_op30.png);
+    background-size: $spacer*25;
+    background-attachment: fixed;
+    white-space: nowrap;
+    @include box-shadow(inset 0 0 $spacer*2 $black26);
 
-    .mdl-navigation__link {
-      color: $black54;
-      text-transform: uppercase;
+    &-content {
+      display: inline-block;
+      background: url(/imgs/orange_bg.png) center / cover;
+      padding: $spacer*9 $spacer*4;
+      color: $white;
+      margin-left: $spacer*5;
+      max-width: $spacer*34;
+      text-shadow: 2px 2px $black26;
+      white-space: normal;
+      vertical-align: top;
+
+      &-title {
+        text-transform: uppercase;
+      }
+
+      &-title,
+      &-subtitle {
+        font-size: 32px;
+        text-align: center;
+        max-width: $spacer*25;
+        margin: 0 auto;
+      }
+
+      &-subtitle,
+      &-body {
+        font-weight: 300;
+      }
+
+      &-body {
+        margin-top: $spacer*5;
+        font-size: 18px; line-height: 1.3;
+
+        &.right {
+          float: right;
+          text-align: right;
+        }
+      }
     }
 
-    .mdl-layout__header-row {
-      padding-left: $spacer*5;
-    }
+    &-list {
+      margin-left: $spacer*4;
+      display: inline-block;
+      vertical-align: middle;
+      width: calc(100% - #{$spacer*51});
+      padding-top: $spacer*9;
 
-    &-action.mdl-button {
-      margin-left: $spacer*3;
-      width: $spacer*20;
-      height: $spacer*6;
-      font-weight: 400;
-      line-height: $spacer*6;
+      .EventList {
+        padding-top: 0;
+
+        &-title {
+          font-size: 14px;
+          font-weight: 300;
+        }
+      }
     }
   }
 
-  .main {
-    padding-top: $spacer*10;
+  &-lists {
+    padding-left: $spacer;
+  }
 
-    &-banner {
-      padding: $spacer*10;
-      background: url(/imgs/partying.jpg) center / cover;
+  &-section {
+    padding: $spacer*9 $spacer*13;
 
-      &-content {
-        padding: $spacer*5 $spacer*3;
-        color: $white;
-        max-width: $spacer*68;
-        background-color: $black54;
-        border-left: $secondary $spacer solid;
-
-        &-title,
-        &-subtitle {
-          font-size: 48px;
-          text-transform: uppercase;
-        }
-
-        &-subtitle,
-        &-body {
-          font-weight: 300;
-        }
-
-        &-body {
-          margin-top: $spacer*3;
-          font-size: 24px; line-height: 1.3;
-        }
-      }
+    &:nth-child(even) {
+      background-color: $black06;
     }
 
-    &-section {
-      padding: $spacer*9 $spacer*13;
+    &-title {
+      display: table;
+      margin: 0 auto $spacer*7;
+      text-transform: uppercase;
+      border-left: $secondary $spacer/2 solid;
+      padding-left: $spacer;
+      font-size: 30px;
+      color: $black87;
+    }
 
-      &:nth-child(even) {
-        background-color: $black06;
+    &-info-body {
+      max-width: $spacer*80;
+      margin: 0 auto;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    &-contact {
+      &-body {
+        vertical-align: top;
+        display: inline-block;
+        width: 40%;
+
+        &:first-child {
+          margin-right: 10%;
+        }
       }
 
-      &-title {
-        display: table;
-        margin: 0 auto $spacer*7;
-        text-transform: uppercase;
-        border-left: $secondary $spacer/2 solid;
-        padding-left: $spacer;
-        font-size: 30px;
-        color: $black87;
+      .Input {
+        font-size: 20px;
       }
 
-      &-info-body {
-        max-width: $spacer*80;
-        margin: 0 auto;
+      .Button {
+        height: $spacer*6;
+      }
+
+      input[type="text"],
+      input[type="email"] {
+        margin: $spacer*2 0;
+        background-color: $gray50;
+      }
+
+      textarea {
+        height: $spacer*15;
+        width: calc(100% - #{$spacer*4});
+        background-color: $gray50;
         font-size: 16px;
-        text-align: center;
-      }
-
-      &-contact {
-        &-body {
-          vertical-align: top;
-          display: inline-block;
-          width: 40%;
-
-          &:first-child {
-            margin-right: 10%;
-          }
-        }
-
-        .Input {
-          font-size: 20px;
-        }
-
-        .Button {
-          height: $spacer*6;
-        }
-
-        input[type="text"],
-        input[type="email"] {
-          margin: $spacer*2 0;
-          background-color: $gray50;
-        }
-
-        textarea {
-          height: $spacer*15;
-          width: calc(100% - #{$spacer*4});
-          background-color: $gray50;
-          font-size: 16px;
-        }
       }
     }
   }
@@ -122,36 +134,39 @@
 
 @include media("<tablet") {
   .Landing {
-    .header {
-      .mdl-layout__header-row {
-        padding-left: $spacer;
+    &-banner {
+      padding: 0;
+      white-space: normal;
+
+      &-content {
+        display: block;
+        margin: 0;
+        max-width: 100%;
+        padding: $spacer*3;
+
+        &-body {
+          display: none;
+        }
       }
 
-      .mdl-navigation {
-        display: none;
-      }
-
-      &-action.mdl-button {
-        width: auto;
+      &-list {
+        display: block;
+        margin: 0;
+        padding-top: $spacer*3;
+        width: 100%;
       }
     }
 
-    .main {
-      &-banner {
-        padding: 0;
+    &-section {
+      padding: $spacer*4;
+
+      &-title {
+        margin-bottom: $spacer*4;
       }
 
-      &-section {
-        padding: $spacer*4;
-
-        &-title {
-          margin-bottom: $spacer*4;
-        }
-
-        &-contact-body {
-          display: block;
-          width: 100%;
-        }
+      &-contact-body {
+        display: block;
+        width: 100%;
       }
     }
   }

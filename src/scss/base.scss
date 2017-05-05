@@ -8,6 +8,17 @@ html, body #app {
   height: 100%;
 }
 
+#app {
+  .mdl-layout__container {
+    height: auto;
+  }
+
+  .mdl-layout {
+    display: block;
+    overflow-y: hidden;
+  }
+}
+
 body {
   height: 100%;
   margin: 0;

@@ -10,10 +10,10 @@
   @keyframes #{$name} { @content; }
 }
 
-@mixin gradient-background($from, $to) {
-  background: -moz-linear-gradient(to right, $from, $to);
-  background: -webkit-linear-gradient(to right, $from, $to);
-  background: linear-gradient(to right, $from , $to);
+@mixin gradient-background($direction, $from, $to) {
+  background: -moz-linear-gradient($direction, $from, $to);
+  background: -webkit-linear-gradient($direction, $from, $to);
+  background: linear-gradient($direction, $from , $to);
 }
 
 @mixin box-shadow($shadow) {

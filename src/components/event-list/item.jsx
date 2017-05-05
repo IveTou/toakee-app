@@ -37,11 +37,15 @@ const EventListItem = ({ slug, title, flyer, start }) => (
     <Link className="EventListItem-link" to={{ pathname: `/evento/${slug}` }}>
       {renderFlyer(flyer, `flyer do ${title}`)}
       <div className="EventListItem-content">
-        <div className="EventListItem-content-title mdl-card__title">
+        <div
+          className="EventListItem-content-title mdl-card__title"
+          title={title}
+        >
           <h2 className="EventListItem-content-title-text mdl-card__title-text">
             {title}
           </h2>
         </div>
+        <div className="EventListItem-content-truncate" />
         {renderTime(start)}
       </div>
     </Link>

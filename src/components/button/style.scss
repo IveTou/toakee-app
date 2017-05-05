@@ -8,7 +8,7 @@
 
   &.Button--accent {
     color: white;
-    @include gradient-background($primary, $secondary);
+    @include gradient-background(to right, $primary, $secondary);
     @include animation(GradientSlide .45s ease forwards);
 
     &:hover {

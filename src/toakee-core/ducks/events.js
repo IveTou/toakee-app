@@ -6,7 +6,7 @@ import { fetchableState } from '../utils';
 const START_FETCHING = 'events/START_FETCHING';
 const FINISHED_FETCHING = 'events/FINISHED_FETCHING';
 
-const eventsQuery = `
+const fullEventsQuery = `
   query Events($slug: String, $start: Date, $end: Date) {
     viewer {
       events(slug: $slug, start: $start, end: $end) {
@@ -18,6 +18,21 @@ const eventsQuery = `
         flyer,
         place { name, coordinates, address, city { name } },
         directions,
+        start,
+        end,
+      }
+    }
+  }
+`;
+
+const feedEventsQuery = `
+  query Events($slug: String, $start: Date, $end: Date, $skip: Int, $limit: Int) {
+    viewer {
+      events(slug: $slug, start: $start, end: $end, skip: $skip, limit: $limit) {
+        id,
+        slug,
+        title,
+        flyer,
         start,
         end,
       }
@@ -54,9 +69,9 @@ export default function reducer(state = fetchableState(), action) {
 
 export const startFetchingEvents = () => ({ type: START_FETCHING });
 export const finishedFetchingEvents = events => ({ type: FINISHED_FETCHING, events });
-export const fetchEvents = ({ start, end, slug }) => (dispatch) => {
+export const fetchEvents = ({ start, end, slug, skip, limit, full = false }) => (dispatch) => {
   dispatch(startFetchingEvents());
   GraphQLAPI
-    .post(eventsQuery, { start, end, slug })
+    .post(full ? fullEventsQuery : feedEventsQuery, { start, end, slug, skip, limit })
     .then(({ viewer }) => dispatch(finishedFetchingEvents(viewer.events)));
 };
