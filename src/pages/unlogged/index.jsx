@@ -5,15 +5,19 @@ import Snackbar from '~/src/components/snackbar';
 
 require('./style.scss');
 
-const Unlogged = ({ children }) => (
-  <div className="Unlogged mdl-layout mdl-layout--fixed-header mdl-js-layout">
-    <TopBar />
-    <Snackbar />
-    <main className="main mdl-layout__content">
-      {children}
-    </main>
-  </div>
-);
+class Unlogged extends React.Component {
+  render() {
+    return (
+      <div className="Unlogged mdl-layout mdl-layout--fixed-header mdl-js-layout">
+        <TopBar />
+        <Snackbar />
+        <main className="main mdl-layout__content">
+          { this.props.children }
+        </main>
+      </div>
+    );
+  }
+}
 
 Unlogged.propTypes = {
   children: PropTypes.node,

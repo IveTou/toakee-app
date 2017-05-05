@@ -35,6 +35,14 @@ app.post('/send-email', (req, res) => {
   return res.json({ ok: true });
 });
 
+app.post('/events/track', (req, res) => {
+  if (req.body.name) {
+    mixpanel.send(req.body.name, req.body.props);
+  }
+
+  return res.json({ ok: true });
+});
+
 app.get('/termos-de-uso', (_, res) => {
   res.render('termos-de-uso.html');
 });
