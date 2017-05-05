@@ -10,6 +10,6 @@ export default {
   INSTAGRAM_APP_ID: 'e054e2eab38043d78abd577d5800d994',
   RECAPTCHA_SITE_KEY: '6LcbbxsUAAAAAEpNul2MOigAfpvpWVF0hN_ZMfBj',
   MIXPANEL_TOKEN: devMode
-    ? '8415d1781f0ad020eb90d84025402a4f'
+    ? '7b57fa79fe746a43e479aa0f416d9e23'
     : '7b57fa79fe746a43e479aa0f416d9e23',
 };
