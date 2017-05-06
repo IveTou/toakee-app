@@ -36,12 +36,30 @@ app.post('/send-email', (req, res) => {
   return res.json({ ok: true });
 });
 
-app.post('/events/track', (req, res) => {
-  if (req.body.name) {
-    mixpanel.send(req.body.name, req.body.props);
+app.post('/events/*', (req, res) => {
+  if(req.body.name && req.body.props) {
+    if (req.path === "/events/track") {
+      mixpanel.track(req.body.name, req.body.props);
+    }
+  } else if(req.body.name) {
+    if (req.path === "/events/time") {
+      mixpanel.time(req.body.name);
+    }
+  } else if(req.body.props){
+    if (req.path === "/events/set-people") {
+      mixpanel.setPeople(req.body.props);
+    } else if (req.path === "/events/update-people") {
+      mixpanel.updatePeople(req.body.props);
+    } else if (req.path === "/events/register") {
+      mixpanel.register(req.body.props); 
+    } else if (req.path === "/events/identify") {
+      mixpanel.identify(req.body.props);
+    } else if (req.path === "/events/alias") {
+      mixpanel.alias(req.body.props);
+    }
   }
 
-  return res.json({ success: true });  
+  return res.json({ success: true });
 });
 
 app.get('/termos-de-uso', (_, res) => {

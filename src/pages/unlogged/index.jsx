@@ -7,7 +7,12 @@ require('./style.scss');
 
 class Unlogged extends React.Component {
   render() {
-    Tracking.sendTrack('Page View', {"genre": "hip-hop"});
+    Tracking.register({ 
+      "refer": "refer",
+    });
+    Tracking.track('Unlogged Page View', {
+      "path": "path",
+    });
     return (
       <div className="Unlogged mdl-layout mdl-layout--fixed-header mdl-js-layout">
         <TopBar />
