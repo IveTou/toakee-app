@@ -7,11 +7,12 @@ require('./style.scss');
 
 class Unlogged extends React.Component {
   render() {
-    Tracking.register({ 
-      "refer": "refer",
-    });
+    /*Tracking.register({
+      "user_id": "user",
+    });*/
     Tracking.track('Unlogged Page View', {
       "path": "path",
+      "refer": "refer",
     });
     return (
       <div className="Unlogged mdl-layout mdl-layout--fixed-header mdl-js-layout">

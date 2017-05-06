@@ -39,7 +39,7 @@ class MixpanelClient {
   alias(identity) {
     this._mixpanel.alias(edentity);
   }
-
+   
   getDistinctId() {
     this._mixpanel.get_distinct_id();
   }

@@ -11,15 +11,17 @@ class TrackingAPI extends BaseAPI {
         props
       };
     } else if(eventName) {
-      options = { eventName };
+      options = {name: eventName };
     } else if(props) {
       options = { props };
     }
+    
+    console.log(options);
 
     return this.rp({
       method: 'POST',
       uri: path,
-      body: { options },
+      body: options,
       json: true,
     }).then(function (repos) {
       console.log(repos);
