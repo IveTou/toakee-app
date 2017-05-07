@@ -14,5 +14,5 @@ export default {
   RECAPTCHA_SITE_KEY: '6LcbbxsUAAAAAEpNul2MOigAfpvpWVF0hN_ZMfBj',
   MIXPANEL_TOKEN: devMode
     ? '7b57fa79fe746a43e479aa0f416d9e23'
-    : '7b57fa79fe746a43e479aa0f416d9e23',
+    : '4de036ffde489bc4ecdc1e03498aab2b',
 };
