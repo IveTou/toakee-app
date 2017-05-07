@@ -19,7 +19,7 @@ class Unlogged extends React.Component {
         $browser: tracking.navigator(),
       });
     });
-    
+
     return (
       <div className="Unlogged mdl-layout mdl-layout--fixed-header mdl-js-layout">
         <TopBar />

@@ -12,12 +12,12 @@ class MixpanelClient {
     this._mixpanel.track(eventName, props);
   }
 
-  time(eventName){
+  time(eventName) {
     this._mixpanel.time_event(eventName);
   }
-  
-  setPeople(props){
-    this._mixpanel.people.set_once(props)
+
+  setPeople(props) {
+    this._mixpanel.people.set_once(props);
   }
 
   updatePeople(props) {
@@ -25,9 +25,9 @@ class MixpanelClient {
   }
 
   alias(identity) {
-    this._mixpanel.alias(edentity);
+    this._mixpanel.alias(identity);
   }
-   
+
   getDistinctId() {
     this._mixpanel.get_distinct_id();
   }
