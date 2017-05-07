@@ -1,22 +1,22 @@
 import React, { PropTypes } from 'react';
 import TopBar from '~/src/components/top-bar';
 import Snackbar from '~/src/components/snackbar';
-import Tracking from '~/src/toakee-core/apis/tracking';
+import tracking from '~/src/toakee-core/apis/tracking';
 
 require('./style.scss');
 
 class Unlogged extends React.Component {
   render() {
-    Tracking.locale((locale) => {
-      Tracking.track('Unlogged Page View', {
-        distinct_id: 'some unique client id',
-        path: location,
-        $referring_domain: 'ref',
+    tracking.locale((locale) => {
+      tracking.track('Unlogged Page View', {
+        distinct_id: 'Unamed',
+        path: location.pathname,
+        $referring_domain: document.referrer,
         $city: locale.city,
         $region: locale.regionName,
         mp_country_code: locale.countryCode,
         ip: locale.query,
-        $browser: 'Chrome',
+        $browser: tracking.navigator(),
       });
     });
     
