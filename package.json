@@ -44,6 +44,7 @@
     "fb": "1.1.1",
     "immutable": "3.8.1",
     "include-media": "^1.4.9",
+    "ip-locator": "0.0.1",
     "lodash": "4.17.4",
     "material-design-lite": "^1.3.0",
     "mixpanel": "^0.7.0",

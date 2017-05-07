@@ -7,13 +7,19 @@ require('./style.scss');
 
 class Unlogged extends React.Component {
   render() {
-    /*Tracking.register({
-      "user_id": "user",
-    });*/
-    Tracking.track('Unlogged Page View', {
-      "path": "path",
-      "refer": "refer",
+    Tracking.locale((locale) => {
+      Tracking.track('Unlogged Page View', {
+        distinct_id: 'some unique client id',
+        path: location,
+        $referring_domain: 'ref',
+        $city: locale.city,
+        $region: locale.regionName,
+        mp_country_code: locale.countryCode,
+        ip: locale.query,
+        $browser: 'Chrome',
+      });
     });
+    
     return (
       <div className="Unlogged mdl-layout mdl-layout--fixed-header mdl-js-layout">
         <TopBar />

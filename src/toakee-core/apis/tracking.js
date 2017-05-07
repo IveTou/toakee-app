@@ -1,4 +1,5 @@
-import BaseAPI from './base'; 
+import BaseAPI from './base';
+import iplocator from 'ip-locator';
 import config from '~/src/config';
 
 class TrackingAPI extends BaseAPI {
@@ -47,17 +48,20 @@ class TrackingAPI extends BaseAPI {
     this.post('/events/update-people', null, props);
   }
 
-  register(props) {
-    this.post('/events/register', null, props);
-  }
-
-  identify(identity) {
-    this.post('/events/identify', null, identity);
-  }
-
   alias(identity) {
     this.post('/events/alias', null, identity);
   }
+
+  locale(fn){
+    iplocator.getDomainOrIPDetails('', 'json', (err, res) => {
+      if(err) {
+        console.log(err);
+      } else {
+        fn(res);
+      }
+    });
+  }
+
 }
 
-export default new TrackingAPI('http://localhost:3000', config.RP_TIMEOUT);
+export default new TrackingAPI(config.TOAKEE_URI, config.RP_TIMEOUT);

@@ -4,11 +4,7 @@ import config from '~/src/config';
 class MixpanelClient {
   constructor(token) {
     this._mixpanel = token
-      ? Mixpanel.init(token, {
-        loaded: function(mixpanel) {
-          distinct_id = mixpanel.get_distinct_id();
-        }
-      })
+      ? Mixpanel.init(token)
       : { track: () => console.warn('MIXPANEL disabled.') };
   }
 
@@ -26,14 +22,6 @@ class MixpanelClient {
 
   updatePeople(props) {
     this._mixpanel.people.set(props);
-  }
-
-  register(props) {
-    this._mixpanel.register_once(props);
-  }
-
-  identify(identity) {
-    this._mixpanel.identify(identity);
   }
 
   alias(identity) {

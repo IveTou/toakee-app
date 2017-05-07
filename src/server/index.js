@@ -40,31 +40,25 @@ app.post('/events/*', (req, res) => {
   var success;
 
   if(req.body.name && req.body.props) {
-    if(req.path === "/events/track") {
+    if(req.path === '/events/track') {
       mixpanel.track(req.body.name, req.body.props);
       success = 'Mixpanel Track';
+    } else if(req.path === '/events/alias') {
+      mixpanel.alias(req.body.name, req.body.props);
+      success = 'Mixpanel Alias';
     }
   } else if(req.body.name) {
-    if(req.path === "/events/time") {
+    if(req.path === '/events/time') {
       mixpanel.time(req.body.name);
       success = 'Mixpanel Time';
     }
   } else if(req.body.props) {
-    if(req.path === "/events/set-people") {
+    if(req.path === '/events/set-people') {
       mixpanel.setPeople(req.body.props);
       success = 'Mixpanel Set People';
     } else if(req.path === "/events/update-people") {
       mixpanel.updatePeople(req.body.props);
       success = 'Mixpanel Update People';
-    } else if(req.path === "/events/register") {
-      mixpanel.register(req.body.props); 
-      success = 'Mixpanel Register';
-    } else if(req.path === "/events/identify") {
-      mixpanel.identify(req.body.props);
-      success = 'Mixpanel Identify';
-    } else if(req.path === "/events/alias") {
-      mixpanel.alias(req.body.props);
-      success = 'Mixpanel Alias';
     }
   }
 
