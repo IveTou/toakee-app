@@ -28,14 +28,6 @@ class MixpanelClient {
     this._mixpanel.alias(identity);
   }
 
-  getDistinctId() {
-    this._mixpanel.get_distinct_id();
-  }
-
-  getProperty(prop) {
-    this._mixpanel.get_property(prop);
-  }
-
 }
 
 export default new MixpanelClient(config.MIXPANEL_TOKEN);

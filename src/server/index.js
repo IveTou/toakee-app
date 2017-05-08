@@ -36,34 +36,39 @@ app.post('/send-email', (req, res) => {
   return res.json({ ok: true });
 });
 
-app.post('/events/*', (req, res) => {
-  let success;
-
+app.post('/events/track', (req, res) => {
   if (req.body.name && req.body.props) {
-    if (req.path === '/events/track') {
-      mixpanel.track(req.body.name, req.body.props);
-      success = 'Mixpanel Track';
-    } else if (req.path === '/events/alias') {
-      mixpanel.alias(req.body.name, req.body.props);
-      success = 'Mixpanel Alias';
-    }
-  } else if (req.body.name) {
-    if (req.path === '/events/time') {
-      mixpanel.time(req.body.name);
-      success = 'Mixpanel Time';
-    }
-  } else if (req.body.props) {
-    if (req.path === '/events/set-people') {
-      mixpanel.setPeople(req.body.props);
-      success = 'Mixpanel Set People';
-    } else if (req.path === '/events/update-people') {
-      mixpanel.updatePeople(req.body.props);
-      success = 'Mixpanel Update People';
-    }
+    mixpanel.track(req.body.name, req.body.props);
   }
+  return res.json({ ok: true });
+});
 
-  return success ? res.json({ success: true, message: success })
-                 : res.json({ success: false });
+app.post('/events/time', (req, res) => {
+  if (req.body.name) {
+    mixpanel.time(req.body.name);
+  }
+  return res.json({ ok: true });
+});
+
+app.post('/events/alias', (req, res) => {
+  if (req.body.name && req.body.props) {
+    mixpanel.alias(req.body.name, req.body.props);
+  }
+  return res.json({ ok: true });
+});
+
+app.post('/events/set-people', (req, res) => {
+  if (req.body.props) {
+    mixpanel.setPeople(req.body.props);
+  }
+  return res.json({ ok: true });
+});
+
+app.post('/events/update-people', (req, res) => {
+  if (req.body.props) {
+    mixpanel.updatePeople(req.body.props);
+  }
+  return res.json({ ok: true });
 });
 
 app.get('/termos-de-uso', (_, res) => {

@@ -1,5 +1,5 @@
-import config from '~/src/config';
 import iplocator from 'ip-locator';
+import config from '~/src/config';
 import BaseAPI from './base';
 
 class TrackingAPI extends BaseAPI {
@@ -54,7 +54,7 @@ class TrackingAPI extends BaseAPI {
   }
 
   navigator() {
-    let nav = 'unknown';
+    let nav;
     if (window.navigator.userAgent.search('MSIE') >= 0) {
       nav = 'MS Internet Explorer';
     } else if (window.navigator.userAgent.search('Chrome') >= 0) {

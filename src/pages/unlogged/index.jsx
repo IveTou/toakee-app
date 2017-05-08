@@ -25,7 +25,7 @@ class Unlogged extends React.Component {
         <TopBar />
         <Snackbar />
         <main className="main mdl-layout__content">
-          { this.props.children }
+          {this.props.children}
         </main>
       </div>
     );
