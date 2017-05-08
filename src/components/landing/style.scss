@@ -6,7 +6,7 @@
 .Landing {
   &-banner {
     margin-bottom: $spacer*3;
-    background: url(/imgs/triangles_bg_op30.png);
+    background: url(#{$assets-base-uri}/core/site/triangles_bg_op30.png);
     background-size: $spacer*25;
     background-attachment: fixed;
     white-space: nowrap;
@@ -14,7 +14,7 @@
 
     &-content {
       display: inline-block;
-      background: url(/imgs/orange_bg.png) center / cover;
+      background: url(#{$assets-base-uri}/core/site/orange_bg.png) center / cover;
       padding: $spacer*9 $spacer*4;
       color: $white;
       margin-left: $spacer*5;
