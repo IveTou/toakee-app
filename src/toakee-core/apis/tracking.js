@@ -18,18 +18,6 @@ class TrackingAPI extends BaseAPI {
     this.post('/events/track', eventName, props);
   }
 
-  setPeople(props) {
-    this.post('/events/set-people', null, props);
-  }
-
-  updatePeople(props) {
-    this.post('/events/update-people', null, props);
-  }
-
-  alias(identity) {
-    this.post('/events/alias', null, identity);
-  }
-
 }
 
 export default new TrackingAPI(config.TOAKEE_URI, config.RP_TIMEOUT);

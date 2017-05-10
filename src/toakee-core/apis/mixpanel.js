@@ -12,18 +12,6 @@ class MixpanelClient {
     this._mixpanel.track(eventName, props);
   }
 
-  setPeople(props) {
-    this._mixpanel.people.set_once(props);
-  }
-
-  updatePeople(props) {
-    this._mixpanel.people.set(props);
-  }
-
-  alias(identity) {
-    this._mixpanel.alias(identity);
-  }
-
 }
 
 export default new MixpanelClient(config.MIXPANEL_TOKEN);

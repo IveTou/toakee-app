@@ -43,27 +43,6 @@ app.post('/events/track', (req, res) => {
   return res.json({ ok: true });
 });
 
-app.post('/events/alias', (req, res) => {
-  if (req.body.name && req.body.props) {
-    mixpanel.alias(req.body.name, req.body.props);
-  }
-  return res.json({ ok: true });
-});
-
-app.post('/events/set-people', (req, res) => {
-  if (req.body.props) {
-    mixpanel.setPeople(req.body.props);
-  }
-  return res.json({ ok: true });
-});
-
-app.post('/events/update-people', (req, res) => {
-  if (req.body.props) {
-    mixpanel.updatePeople(req.body.props);
-  }
-  return res.json({ ok: true });
-});
-
 app.get('/termos-de-uso', (_, res) => {
   res.render('termos-de-uso.html');
 });
