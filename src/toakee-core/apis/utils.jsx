@@ -12,6 +12,7 @@ class UtilsAPI {
 
   navigator() {
     let nav;
+
     if (window.navigator.userAgent.search('MSIE') >= 0) {
       nav = 'MS Internet Explorer';
     } else if (window.navigator.userAgent.search('Chrome') >= 0) {
