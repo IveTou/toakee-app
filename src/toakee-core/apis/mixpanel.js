@@ -12,10 +12,6 @@ class MixpanelClient {
     this._mixpanel.track(eventName, props);
   }
 
-  time(eventName) {
-    this._mixpanel.time_event(eventName);
-  }
-
   setPeople(props) {
     this._mixpanel.people.set_once(props);
   }

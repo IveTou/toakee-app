@@ -43,13 +43,6 @@ app.post('/events/track', (req, res) => {
   return res.json({ ok: true });
 });
 
-app.post('/events/time', (req, res) => {
-  if (req.body.name) {
-    mixpanel.time(req.body.name);
-  }
-  return res.json({ ok: true });
-});
-
 app.post('/events/alias', (req, res) => {
   if (req.body.name && req.body.props) {
     mixpanel.alias(req.body.name, req.body.props);
