@@ -1,4 +1,5 @@
 import config from '~/src/config';
+import { navigatorName } from '~/src/utils/navigator';
 import BaseAPI from './base';
 
 class TrackingAPI extends BaseAPI {
@@ -14,8 +15,13 @@ class TrackingAPI extends BaseAPI {
     });
   }
 
-  track(eventName, props) {
-    this.post('/events/track', eventName, props);
+  track(eventName, pid) {
+    this.post('/events/track', eventName, {
+      distinct_id: pid,
+      path: location.pathname,
+      $browser: navigatorName(),
+      $referring_domain: document.referrer,
+    });
   }
 
 }

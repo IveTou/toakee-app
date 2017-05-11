@@ -1,20 +1,14 @@
 import React, { PropTypes } from 'react';
+import tracking from '~/src/toakee-core/apis/tracking';
 import TopBar from '~/src/components/top-bar';
 import Snackbar from '~/src/components/snackbar';
-import tracking from '~/src/toakee-core/apis/tracking';
-import { navigatorName } from '~/src/utils/navigator';
 
 require('./style.scss');
 
 class Unlogged extends React.Component {
 
   componentWillMount() {
-    tracking.track('Unlogged Page View', {
-      distinct_id: 'Unamed',
-      path: location.pathname,
-      $browser: navigatorName(),
-      $referring_domain: document.referrer,
-    });
+    tracking.track('Unlogged Page View', 'Guest');
   }
 
   render() {
