@@ -2,6 +2,7 @@ import express from 'express';
 import nunjucks from 'nunjucks';
 import nodemailer from 'nodemailer';
 import bodyParser from 'body-parser';
+import MixpanelAPI from '~/src/toakee-core/apis/mixpanel';
 
 import config from './config';
 
@@ -32,6 +33,13 @@ app.post('/send-email', (req, res) => {
   transporter.sendMail({ to: SUPPORT_EMAIL, from, subject, text });
   transporter.close();
 
+  return res.json({ ok: true });
+});
+
+app.post('/events/track', (req, res) => {
+  if (req.body.name && req.body.props) {
+    MixpanelAPI.track(req.body.name, req.body.props);
+  }
   return res.json({ ok: true });
 });
 
