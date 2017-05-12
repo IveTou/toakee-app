@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import tracking from '~/src/toakee-core/apis/tracking';
+import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import TopBar from '~/src/components/top-bar';
 import Snackbar from '~/src/components/snackbar';
 
@@ -8,7 +8,7 @@ require('./style.scss');
 class Unlogged extends React.Component {
 
   componentWillMount() {
-    tracking.track('Unlogged Page View', 'Guest');
+    TrackingAPI.track('Unlogged Page View', 'Guest');
   }
 
   render() {
