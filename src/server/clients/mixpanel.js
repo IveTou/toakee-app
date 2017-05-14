@@ -1,7 +1,7 @@
 import Mixpanel from 'mixpanel';
 import config from '~/src/config';
 
-class MixpanelAPI {
+class MixpanelClient {
   constructor(token) {
     this._mixpanel = token
       ? Mixpanel.init(token)
@@ -11,7 +11,6 @@ class MixpanelAPI {
   track(eventName, props) {
     this._mixpanel.track(eventName, props);
   }
-
 }
 
-export default new MixpanelAPI(config.MIXPANEL_TOKEN);
+export default new MixpanelClient(config.MIXPANEL_TOKEN);

@@ -23,7 +23,6 @@ class TrackingAPI extends BaseAPI {
       $referring_domain: document.referrer,
     });
   }
-
 }
 
 export default new TrackingAPI(config.TOAKEE_URI, config.RP_TIMEOUT);
