@@ -2,7 +2,8 @@ import express from 'express';
 import nunjucks from 'nunjucks';
 import nodemailer from 'nodemailer';
 import bodyParser from 'body-parser';
-import MixpanelClient from '~/src/toakee-core/apis/mixpanel';
+
+import MixpanelClient from './clients/mixpanel';
 
 import config from './config';
 

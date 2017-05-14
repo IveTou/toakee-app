@@ -1,5 +1,5 @@
 import Mixpanel from 'mixpanel';
-import config from '~/src/config';
+import config from '../config';
 
 class MixpanelClient {
   constructor(token) {
