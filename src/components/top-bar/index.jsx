@@ -14,7 +14,7 @@ if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-class TopBar extends React.Component {
+export class TopBar extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
@@ -73,12 +73,9 @@ class TopBar extends React.Component {
 
 TopBar.propTypes = {
   viewer: PropTypes.object,
-  dispatch: PropTypes.func,  
+  dispatch: PropTypes.func,
 };
 
-TopBar.defaultProps = {
-  viewer: null,
-  dispatch: null,
-};
-
-export default TopBar;
+export default connect(
+  ({ viewer }) => ({ viewer }),
+)(TopBar);
