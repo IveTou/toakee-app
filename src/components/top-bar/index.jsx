@@ -68,10 +68,12 @@ class TopBar extends React.Component {
 
 TopBar.propTypes = {
   viewer: PropTypes.object,
+  dispatch: PropTypes.func,  
 };
 
 TopBar.defaultProps = {
   viewer: null,
+  dispatch: null,
 };
 
 export default TopBar;

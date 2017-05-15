@@ -14,11 +14,12 @@ export class Logged extends React.Component {
     const { viewer } = this.props;
 
     if (viewer.get('data').size) {
-      TrackingAPI.track('Logged Page View', viewer.get('data').get('id'));
+      //TrackingAPI.track('Logged Page View', viewer.get('data').get('id'));
     }
+    
   }
 
-  render() {
+  render() {;
     return (
       <div className="Logged mdl-layout mdl-layout--fixed-header mdl-js-layout">
         <TopBar viewer={this.props.viewer} />
