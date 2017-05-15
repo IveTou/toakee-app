@@ -8,23 +8,16 @@ import Button from '~/src/components/button';
 import Logo from '~/src/components/logo';
 
 import { isLogged } from '~/src/utils/session';
-import { fetchViewer } from '~/src/toakee-core/ducks/viewer';
 import { logout } from '~/src/toakee-core/ducks/auth';
 
 if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-export class TopBar extends React.Component {
+class TopBar extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
-  }
-
-  componentWillMount() {
-    if (isLogged()) {
-      this.props.dispatch(fetchViewer());
-    }
   }
 
   logout() {
@@ -80,10 +73,10 @@ export class TopBar extends React.Component {
 
 TopBar.propTypes = {
   viewer: PropTypes.object,
-  dispatch: PropTypes.func,
 };
 
+TopBar.defaultProps = {
+  viewer: null,
+};
 
-export default connect(
-  ({ viewer }) => ({ viewer }),
-)(TopBar);
+export default TopBar;
