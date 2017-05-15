@@ -8,18 +8,18 @@ import TopBar from '~/src/components/top-bar';
 require('./style.scss');
 
 export class Logged extends React.Component {
-  
+
   componentWillMount() {
     this.props.dispatch(fetchViewer());
     const { viewer } = this.props;
 
     if (viewer.get('data').size) {
-      //TrackingAPI.track('Logged Page View', viewer.get('data').get('id'));
+      TrackingAPI.track('Logged Page View', viewer.get('data').get('id'));
+      console.log('Logged Page View');
     }
-    
   }
 
-  render() {;
+  render() {
     return (
       <div className="Logged mdl-layout mdl-layout--fixed-header mdl-js-layout">
         <TopBar viewer={this.props.viewer} />
