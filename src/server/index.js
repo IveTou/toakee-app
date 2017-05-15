@@ -3,6 +3,8 @@ import nunjucks from 'nunjucks';
 import nodemailer from 'nodemailer';
 import bodyParser from 'body-parser';
 
+import MixpanelClient from './clients/mixpanel';
+
 import config from './config';
 
 const { PORT, SUPPORT_EMAIL } = config;
@@ -11,6 +13,14 @@ const app = express();
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://www.toakee.com/');
+  res.setHeader('Access-Control-Allow-Origin', 'http://www.toakee.com.br/');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
 
 nunjucks.configure('src/templates', {
   autoescape: true,
@@ -32,6 +42,13 @@ app.post('/send-email', (req, res) => {
   transporter.sendMail({ to: SUPPORT_EMAIL, from, subject, text });
   transporter.close();
 
+  return res.json({ ok: true });
+});
+
+app.post('/events/track', (req, res) => {
+  if (req.body.name && req.body.props) {
+    MixpanelClient.track(req.body.name, req.body.props);
+  }
   return res.json({ ok: true });
 });
 
