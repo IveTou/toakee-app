@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import { fetchEvents } from '~/src/toakee-core/ducks/events';
 
@@ -14,7 +15,11 @@ const FEED_LIMIT = 10;
 
 class Dashboard extends React.Component {
   componentWillMount() {
-    this.props.dispatch(fetchEvents({ onlyMine: true, limit: FEED_LIMIT }));
+    this.props.dispatch(fetchEvents({
+      start: moment(),
+      onlyMine: true,
+      limit: FEED_LIMIT,
+    }));
   }
 
   render() {
