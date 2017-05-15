@@ -1,20 +1,27 @@
 import React, { PropTypes } from 'react';
-//import { getToken } from '~/src/utils/session';
+
+import { connect } from 'react-redux';
+import { fetchViewer } from '~/src/toakee-core/ducks/viewer';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import TopBar from '~/src/components/top-bar';
 
 require('./style.scss');
 
-class Logged extends React.Component {
+export class Logged extends React.Component {
   
   componentWillMount() {
-    //TrackingAPI.track('Logged Page View', 'pid');
+    this.props.dispatch(fetchViewer());
+    const { viewer } = this.props;
+
+    if (viewer.get('data').size) {
+      TrackingAPI.track('Logged Page View', viewer.get('data').get('id'));
+    }
   }
 
   render() {
     return (
       <div className="Logged mdl-layout mdl-layout--fixed-header mdl-js-layout">
-        <TopBar />
+        <TopBar viewer={this.props.viewer} />
         <main className="main mdl-layout__content">
           {this.props.children}
         </main>
@@ -25,10 +32,16 @@ class Logged extends React.Component {
 
 Logged.propTypes = {
   children: PropTypes.node,
+  viewer: PropTypes.object,
+  dispatch: PropTypes.func,
 };
 
 Logged.defaultProps = {
   children: null,
+  viewer: null,
+  dispatch: null,
 };
 
-export default Logged;
+export default connect(
+  ({ viewer }) => ({ viewer }),
+)(Logged);
