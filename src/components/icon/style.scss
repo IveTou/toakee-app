@@ -1,0 +1,9 @@
+.Icon {
+  &.fa-brl:before {
+    content: 'R$';
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    font-style: normal;
+  }
+}

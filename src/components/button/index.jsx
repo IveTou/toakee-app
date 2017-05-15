@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react';
 import { reduce } from 'lodash';
 import classNames from 'classnames';
 
+import Icon from '~/src/components/icon';
+
 if (process.env.BROWSER) {
   require('./style.scss');
 }
@@ -47,7 +49,7 @@ const Button = ({ id, onClick, avatar, label, icon, type, disabled, dataProps, .
     {...buildDataProps(dataProps)}
   >
     <If condition={icon && !avatar}>
-      <i className={`fa fa-${icon}`} />
+      <Icon icon={icon} />
     </If>
     <If condition={avatar}>
       <img alt="avatar" className="Button-avatar" src={avatar} />

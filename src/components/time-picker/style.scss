@@ -1,0 +1,10 @@
+@import '../../scss/colors';
+@import '../../scss/mixins';
+
+.TimePicker {
+  select {
+    border: 0;
+    background: none;
+    @include appearance(none);
+  }
+}

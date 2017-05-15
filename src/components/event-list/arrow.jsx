@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 
+import Icon from '~/src/components/icon';
+
 const buildClasses = ({ direction, hide }) => classNames(
   'EventListArrow',
   `EventListArrow--${direction}`,
@@ -13,7 +15,7 @@ const EventListArrow = ({ onClick, direction, hide }) => (
     className={buildClasses({ direction, hide })}
     onClick={onClick}
   >
-    <i className={`fa fa-caret-${direction}`} />
+    <Icon icon={`arrow-${direction}-b`} />
   </button>
 );
 

@@ -37,16 +37,10 @@
       margin: $spacer 0;
     }
 
-    .fa {
+    .Icon:before {
       width: $spacer*2;
       text-align: center;
       margin-right: $spacer;
-
-      &-blr {
-        font: inherit;
-        font-size: 12px;
-        font-weight: 600;
-      }
     }
   }
 

@@ -16,6 +16,7 @@ const invitationsQuery = `
       invitations(eventId: $eventId, eventSlug: $eventSlug) {
         id,
         name,
+        eventId,
         guestListId,
         profileId,
         status,
@@ -52,6 +53,7 @@ const mapify = invitations => (
 
 const initialState = {
   filter: '',
+  newInvitations: '',
 };
 
 export default function reducer(state = fetchableState(initialState), action) {
@@ -70,7 +72,9 @@ export default function reducer(state = fetchableState(initialState), action) {
         .set('filter', deburr(action.filter));
 
     case NAMES_ADDED_TO_GUEST_LIST:
-      return state.mergeIn(['data'], mapify(action.invitations));
+      return state
+        .set('newInvitations', '')
+        .mergeIn(['data'], mapify(action.invitations));
 
     case SET_ATTENDANCE_STATUS:
       return state
