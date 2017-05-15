@@ -31,6 +31,6 @@ export const finishedFetchingViewer = viewer => ({ type: FINISHED_FETCHING, view
 export const fetchViewer = () => (dispatch) => {
   dispatch(startFetchingViewer());
   GraphQLAPI
-    .post('query { viewer { firstName, photo } }')
+    .post('query { viewer { id, firstName, photo } }')
     .then(({ viewer }) => dispatch(finishedFetchingViewer(viewer)));
 };

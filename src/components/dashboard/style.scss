@@ -1,0 +1,103 @@
+@import '../../scss/variables';
+@import '../../scss/colors';
+@import '../../scss/mixins';
+
+.DashboardMenu {
+  position: fixed;
+  height: calc(100% - #{$spacer*10});
+  width: $spacer*40;
+  @include box-shadow(0 $spacer/4 $spacer/2 $black26);
+
+  &-header {
+    position: relative;
+    padding: $spacer*4;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-bottom: 2px solid $gray100;
+  }
+
+  &-events {
+    height: calc(100% - #{$spacer*11});
+    overflow-y: auto;
+  }
+
+  .DashboardMenuItem {
+    margin: $spacer/2 0;
+    cursor: pointer;
+
+    &:hover {
+      color: $orange;
+    }
+
+    &-header {
+      display: table;
+
+      &-flyer {
+        display: table-cell;
+        padding: $spacer*2;
+        width: $spacer*6;
+
+        img {
+          width: 100%;
+          border-radius: 3px;
+        }
+      }
+
+      &-title {
+        display: table-cell;
+        vertical-align: middle;
+        padding: $spacer $spacer*2 $spacer 0;
+        font-weight: bold;
+      }
+    }
+
+    &-content {
+      display: none;
+    }
+
+    &--open {
+      color: $orange;
+      cursor: default;
+
+      &:hover {
+      }
+
+      .DashboardMenuItem-content {
+        display: block;
+
+        &-option {
+          display: block;
+          text-decoration: none;
+          margin: 0 $spacer $spacer $spacer*2;
+          border-left: 2px solid;
+          padding: $spacer/2 $spacer;
+          color: $orange;
+
+          &.active {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}
+
+.DashboardContent {
+  margin-left: $spacer*40;
+
+  .DashboardRoot {
+    color: $orange;
+    font-size: 20px;
+    padding: $spacer*8;
+    text-align: center;
+
+    &-divider {
+      width: 30%;
+      margin: $spacer 0 0 35%;
+      border-top: 2px solid;
+    }
+  }
+}
+

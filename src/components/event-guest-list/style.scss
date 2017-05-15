@@ -55,10 +55,11 @@
 .EventGuestListItem {
   padding: $spacer*2;
   border-bottom: 1px solid $gray100;
-  justify-content: space-between;
   background: $gray50;
   border-left: 4px solid $orange;
   transition: all .28s ease-out;
+  display: table;
+  width: calc(100% - #{$spacer*4 + 4px});
 
   &-confirmed {
     border-left: 4px solid $green;
@@ -85,13 +86,19 @@
     padding-left: $spacer/2;
   }
 
-  &-name-first {
-    font-size: 20px;
-    color: $orange;
+  &-name {
+    display: table-cell;
+    width: 100%;
+
+    &-first {
+      font-size: 20px;
+      color: $orange;
+    }
   }
 
   &-right {
-    align-self: center;
+    display: table-cell;
+    vertical-align: middle;
 
     &-badge {
       margin: 0 $spacer;

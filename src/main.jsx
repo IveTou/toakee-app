@@ -13,6 +13,8 @@ import thunkMiddleware from 'redux-thunk';
 import makeRoutes from '~/src/routes';
 import rootReducer from '~/src/toakee-core/ducks';
 
+import StoreProvider from '~/src/components/store-provider';
+
 if (process.env.BROWSER) {
   require('~/src/scss/base.scss');
   require('~/node_modules/include-media/dist/_include-media.scss');
@@ -28,7 +30,9 @@ const createStoreWithMiddleware = applyMiddleware(
 
 const app = (
   <Provider store={createStoreWithMiddleware(rootReducer)}>
-    <Router history={browserHistory} routes={makeRoutes()} />
+    <StoreProvider>
+      <Router history={browserHistory} routes={makeRoutes()} />
+    </StoreProvider>
   </Provider>
 );
 
