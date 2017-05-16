@@ -15,10 +15,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use((req, res, next) => {
   const hosts = ['toakee.com', 'toakee.com.br'];
-  for (let i = 0; i < hosts.length; i += 1) {
-    if (req.headers.host.indexOf(hosts[i]) > -1) {
-      res.setHeader('Access-Control-Allow-Origin', req.headers.host);
-    }
+  if (hosts.some(host => req.headers.host.includes(host))) {
+    res.setHeader('Access-Control-Allow-Origin', req.headers.host);
   }
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
