@@ -15,7 +15,7 @@ const EventListArrow = ({ onClick, direction, hide }) => (
     className={buildClasses({ direction, hide })}
     onClick={onClick}
   >
-    <Icon icon={`arrow-${direction}-b`} />
+    <Icon icon={`caret-${direction}`} />
   </button>
 );
 
