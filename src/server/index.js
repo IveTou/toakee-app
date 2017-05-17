@@ -14,8 +14,10 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'www.toakee.com/');
-  res.setHeader('Access-Control-Allow-Origin', 'www.toakee.com.br/');
+  const hosts = ['toakee.com', 'toakee.com.br'];
+  if (hosts.some(host => req.headers.host.includes(host))) {
+    res.setHeader('Access-Control-Allow-Origin', req.headers.host);
+  }
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
   res.setHeader('Access-Control-Allow-Credentials', true);
