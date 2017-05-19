@@ -14,8 +14,8 @@ export class Logged extends React.Component {
     const { viewer } = this.props;
 
     if (viewer.get('data').size) {
-      TrackingAPI.track('Logged Page View', viewer.get('data').get('id'));
-      console.log('Logged Page View');
+      //TrackingAPI.track('Logged Page View', viewer.get('data').get('id'));
+      //Here is the problem: I'd need a callback function to track only after fetchView function is finished. In another way I could to put in render function, but you've told me this is a bad idea.
     }
   }
 
