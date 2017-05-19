@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import { Link } from 'react-router';
 import { partial, upperCase } from 'lodash';
 import autoBind from 'react-autobind';
@@ -49,6 +50,8 @@ export default class Login extends React.Component {
       showToast(errorFromKey('All.UNFILLED'));
       return;
     }
+
+    TrackingAPI.track('Loginpage Login trigger', 'Guest');
 
     login(username, password)
       .then(partial(this.onSuccess, 'login'))
