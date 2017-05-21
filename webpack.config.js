@@ -5,7 +5,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const _ = require('lodash');
 
 module.exports = {
-  entry: './src/main.jsx',
+  entry: ['babel-polyfill', './src/main.jsx'],
   output: {
     path: path.join(__dirname, '/public/js'),
     filename: 'bundle.js'

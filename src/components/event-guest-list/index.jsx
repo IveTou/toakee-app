@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import { fetchGuestLists } from '~/src/toakee-core/ducks/guest-lists';
 import { fetchInvitations, changeInvitationsFilter } from '~/src/toakee-core/ducks/invitations';
-import { fetchEvents } from '~/src/toakee-core/ducks/events';
 
 import Header from '~/src/components/header';
 import EventGuestListItem from './item';
@@ -15,38 +14,36 @@ if (process.env.BROWSER) {
 class EventGuestList extends React.Component {
   componentWillMount() {
     const { slug } = this.props.router.params;
-    const { event, dispatch } = this.props;
-    const params = event
-      ? { eventId: event.id }
+    const { selectedEvent, dispatch } = this.props;
+    const params = selectedEvent
+      ? { eventId: selectedEvent.id }
       : { eventSlug: slug };
 
     dispatch(fetchInvitations(params));
     dispatch(fetchGuestLists(params));
-    if (!event) {
-      dispatch(fetchEvents(params));
-    }
   }
 
   render() {
-    const { invitations, event, dispatch } = this.props;
-    const total = invitations.get('data').size;
-    const filter = new RegExp(
-      `\\b${invitations.get('filter').trim().replace(/\s+/, '[\\s\\S]*\\s')}`,
+    const { invitations, filter, selectedEvent, dispatch } = this.props;
+
+    const total = invitations.size;
+    const filterRegex = new RegExp(
+      `\\b${filter.trim().replace(/\s+/, '[\\s\\S]*\\s')}`,
       'i',
     );
 
-    const confirmed = invitations.get('data')
+    const confirmed = invitations
       .filter(({ status }) => status === 'ATTENDED')
       .size;
 
     const list = total
-      ? invitations.get('data')
-          .filter(({ normalizedName }) => normalizedName.match(filter))
+      ? invitations
+          .filter(({ normalizedName }) => normalizedName.match(filterRegex))
           .sort(({ normalizedName: a }, { normalizedName: b }) => (
-            a.match(filter).index - b.match(filter).index
+            a.match(filterRegex).index - b.match(filterRegex).index
             || a < b ? -1 : 1
           ))
-          .toArray()
+          .toList()
       : [];
 
     declare var invitation;
@@ -54,7 +51,7 @@ class EventGuestList extends React.Component {
 
     return (
       <div className="EventGuestList">
-        <Header title={event && event.title} />
+        <Header title={selectedEvent && selectedEvent.title} />
         <div className="EventGuestList-filters">
           <div className="EventGuestList-filters-input">
             <input
@@ -91,11 +88,12 @@ class EventGuestList extends React.Component {
 EventGuestList.propTypes = {
   router: PropTypes.object,
   dispatch: PropTypes.func,
-  event: PropTypes.object,
   invitations: PropTypes.object,
+  selectedEvent: PropTypes.object,
+  filter: PropTypes.string,
 };
 
-export default connect(({ invitations, events }, { router }) => ({
-  invitations,
-  event: events.get('data').filter(({ slug }) => slug === router.params.slug).first(),
+export default connect(({ invitations, events }, { selectedEvent = {} }) => ({
+  invitations: invitations.get('data').filter(i => i.eventId === selectedEvent.id),
+  filter: invitations.get('filter'),
 }))(EventGuestList);

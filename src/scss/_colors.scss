@@ -33,5 +33,12 @@ $gray800: darken($gray, 30%);
 
 $orange87: rgba($orange, .87);
 
+$orange50: lighten($orange, 45%);
+$orange100: lighten($orange, 40%);
+$orange400: lighten($orange, 10%);
+$orange500: $orange;
+$orange600: darken($orange, 10%);
+$orange800: darken($orange, 30%);
+
 $instagram-color: #fb3958;
 $facebook-color: #3b5998;

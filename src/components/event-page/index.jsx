@@ -10,6 +10,7 @@ import { fetchEvents } from '~/src/toakee-core/ducks/events';
 import { fetchGuestLists } from '~/src/toakee-core/ducks/guest-lists';
 import { addNamesToGuestList } from '~/src/toakee-core/ducks/invitations';
 
+import Icon from '~/src/components/icon';
 import Input from '~/src/components/input';
 import Button from '~/src/components/button';
 import TextArea from '~/src/components/text-area';
@@ -91,23 +92,23 @@ class EventPage extends React.Component {
         <div className="EventPage-info">
           <If condition={start}>
             <div className="EventPage-info-item">
-              <i className="fa fa-calendar" />
+              <Icon icon="calendar" />
               <span>{fullDateFormat(start)}</span>
             </div>
             <div className="EventPage-info-item">
-              <i className="fa fa-clock-o" />
+              <Icon icon="clock-o" />
               <span>{timeFormat(start)}</span>
             </div>
           </If>
           <If condition={place && place.address}>
             <div className="EventPage-info-item">
-              <i className="fa fa-map-marker" />
+              <Icon icon="map-marker" />
               <span>{place.address}</span>
             </div>
           </If>
           <If condition={price}>
             <div className="EventPage-info-item">
-              <i className="fa fa-blr">R$</i>
+              <Icon icon="brl" />
               <span>{price}</span>
             </div>
           </If>

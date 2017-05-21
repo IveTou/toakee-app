@@ -54,7 +54,7 @@ export class TopBar extends React.Component {
                 fab
               />
               <ul
-                className="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+                className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                 htmlFor="TopBar-avatar"
               >
                 <button onClick={this.logout} className="mdl-menu__item">
