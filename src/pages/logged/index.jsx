@@ -37,12 +37,6 @@ Logged.propTypes = {
   dispatch: PropTypes.func,
 };
 
-Logged.defaultProps = {
-  children: null,
-  viewer: null,
-  dispatch: null,
-};
-
 export default connect(
   ({ viewer }) => ({ viewer }),
 )(Logged);
