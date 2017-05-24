@@ -13,9 +13,10 @@ const app = express();
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const whiteList = ['toakee.com', 'toakee.com.br'];
 app.use((req, res, next) => {
-  const hosts = ['toakee.com', 'toakee.com.br'];
-  if (hosts.some(host => req.headers.host.includes(host))) {
+  if (whiteList.some(host => req.headers.host.includes(host))) {
     res.setHeader('Access-Control-Allow-Origin', req.headers.host);
   }
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
