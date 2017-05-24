@@ -69,7 +69,7 @@ export class TopBar extends React.Component {
             </When>
             <Otherwise>
               <Link to={{ pathname: '/login' }}>
-                <Button onClick={this.trackButtonClick} lassName="header-action" label="Entrar" raised ripple accent />
+                <Button onClick={this.trackButtonClick} className="header-action" label="Entrar" raised ripple accent />
               </Link>
             </Otherwise>
           </Choose>
