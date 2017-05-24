@@ -25,4 +25,5 @@ class TrackingAPI extends BaseAPI {
   }
 }
 
-export default new TrackingAPI(config.TOAKEE_URI, config.RP_TIMEOUT);
+const { protocol, host } = window.location;
+export default new TrackingAPI(`${protocol}//${host}`);
