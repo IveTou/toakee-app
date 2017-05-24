@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import { connect } from 'react-redux';
 import autoBind from 'react-autobind';
-import { browserHistory, Link } from 'react-router';
+import { browserHistory } from 'react-router';
 
 import Button from '~/src/components/button';
 import Logo from '~/src/components/logo';
@@ -32,8 +32,9 @@ export class TopBar extends React.Component {
     browserHistory.push('/redirect');
   }
 
-  trackButtonClick() {
+  login() {
     TrackingAPI.track('Landing Login Trigger', 'Guest');
+    browserHistory.push('/login');
   }
 
   render() {
@@ -68,9 +69,7 @@ export class TopBar extends React.Component {
               </ul>
             </When>
             <Otherwise>
-              <Link to={{ pathname: '/login' }}>
-                <Button onClick={this.trackButtonClick} className="header-action" label="Entrar" raised ripple accent />
-              </Link>
+              <Button onClick={this.login} className="header-action" label="Entrar" raised ripple accent />
             </Otherwise>
           </Choose>
         </div>
