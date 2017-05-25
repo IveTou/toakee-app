@@ -8,7 +8,6 @@ import Button from '~/src/components/button';
 import Logo from '~/src/components/logo';
 
 import { isLogged } from '~/src/utils/session';
-import { fetchViewer } from '~/src/toakee-core/ducks/viewer';
 import { logout } from '~/src/toakee-core/ducks/auth';
 
 if (process.env.BROWSER) {
@@ -19,12 +18,6 @@ export class TopBar extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
-  }
-
-  componentWillMount() {
-    if (isLogged()) {
-      this.props.dispatch(fetchViewer());
-    }
   }
 
   logout() {
@@ -82,7 +75,6 @@ TopBar.propTypes = {
   viewer: PropTypes.object,
   dispatch: PropTypes.func,
 };
-
 
 export default connect(
   ({ viewer }) => ({ viewer }),
