@@ -51,10 +51,11 @@ export default class Login extends React.Component {
       return;
     }
 
-    TrackingAPI.track('Loginpage Login trigger', 'Guest');
-
     login(username, password)
-      .then(partial(this.onSuccess, 'login'))
+      .then(
+        partial(this.onSuccess, 'login'),
+        TrackingAPI.track('Loginpage Login Trigger', 'Guest'),
+      )
       .catch(es => showToast(errorFromKey(es && es[0])));
   }
 
@@ -62,7 +63,10 @@ export default class Login extends React.Component {
     setSocialToken(network, token);
 
     socialLogin(upperCase(network), token)
-      .then(partial(this.onSuccess, 'socialLogin'))
+      .then(
+        partial(this.onSuccess, 'socialLogin'),
+        TrackingAPI.track('Loginpage Social Login Trigger', 'Guest'),
+      )
       .catch(es => showToast(errorFromKey(es && es[0])));
   }
 
