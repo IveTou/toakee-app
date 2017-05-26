@@ -2,12 +2,14 @@ import express from 'express';
 import nunjucks from 'nunjucks';
 import nodemailer from 'nodemailer';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 import MixpanelClient from './clients/mixpanel';
 
 import config from './config';
 
 const { PORT, SUPPORT_EMAIL } = config;
+const isDev = process.env.NODE_ENV !== 'production';
 
 const app = express();
 app.use(express.static('public'));
