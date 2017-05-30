@@ -2,19 +2,21 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { provideState, injectState, softUpdate } from 'freactal';
 import { merge } from 'lodash';
+import { Icon as SemanticIcon } from 'semantic-ui-react';
 
 import { addNamesToGuestList } from '~/src/toakee-core/ducks/invitations';
+import { removeGuestList } from '~/src/toakee-core/ducks/guest-lists';
+import { dialogConfirm } from '~/src/toakee-core/ducks/dialog';
 
 import TimePicker from '~/src/components/time-picker';
 import Button from '~/src/components/button';
 import Icon from '~/src/components/icon';
 
+import EventGuestListEditInvitationsList from './invitations-list';
+
 const buildInputClass = (state, input) => (
   `EventGuestListEditItem-input ${state.editingForm[input] ? 'editing' : ''}`
 );
-
-declare var invitation;
-declare var idx;
 
 const stateWrapper = provideState({
   initialState: ({ id, name, entranceDeadline, registrationDeadline, socialIntegrations }) => ({
@@ -62,7 +64,7 @@ const stateWrapper = provideState({
   },
 });
 
-export const EventGuestListEditItem = ({
+const EventGuestListEditItem = ({
   id,
   eventId,
   name,
@@ -73,6 +75,7 @@ export const EventGuestListEditItem = ({
   state,
   effects,
   submitNewInvitations,
+  deleteGuestList,
 }) => {
   const guestList = { id, eventId };
   const socialIntegration = socialIntegrations.length
@@ -88,6 +91,11 @@ export const EventGuestListEditItem = ({
 
   return (
     <div className={`EventGuestListEditItem mdl-card mdl-shadow--2dp id-${id}`}>
+      <SemanticIcon
+        className="EventGuestListEditItem-remove"
+        name="delete"
+        onClick={deleteGuestList}
+      />
       <div className={`EventGuestListEditItem-name ${buildInputClass(state, 'name')}`}>
         <input
           defaultValue={state.name}
@@ -147,17 +155,11 @@ export const EventGuestListEditItem = ({
         />
         <Button
           icon="plus"
-          onClick={submitNewInvitations(guestList, state, effects)}
+          onClick={submitNewInvitations(state, effects)}
           success
         />
       </div>
-      <div className="EventGuestListEditItem-invitations">
-        <For each="invitation" index="idx" of={invitationsList}>
-          <div key={idx} className="EventGuestListEditItem-invitations-item">
-            {invitation.name}
-          </div>
-        </For>
-      </div>
+      <EventGuestListEditInvitationsList invitationsList={invitationsList} />
     </div>
   );
 };
@@ -173,6 +175,7 @@ EventGuestListEditItem.propTypes = {
   state: PropTypes.object,
   effects: PropTypes.object,
   submitNewInvitations: PropTypes.func,
+  deleteGuestList: PropTypes.func,
 };
 
 export default connect(
@@ -183,10 +186,15 @@ export default connect(
       .sortBy(i => i.name)
       .toList(),
   }),
-  dispatch => ({
-    submitNewInvitations: (guestList, { newInvitations }, effects) => () => {
-      const { eventId, id } = guestList;
+  (dispatch, { id, eventId }) => ({
+    deleteGuestList: () => {
+      const title = 'Tem certeza que deseja remover a lista?';
+      const onConfirm = () => dispatch(removeGuestList(eventId, id));
+      const confirmTrigger = { color: 'red', icon: 'trash' };
 
+      dispatch(dialogConfirm(title, onConfirm, { confirmTrigger }));
+    },
+    submitNewInvitations: ({ newInvitations }, effects) => () => {
       const names = newInvitations
         .split('\n')
         .map(name => name.trim().replace(/\s+/g, ' '))

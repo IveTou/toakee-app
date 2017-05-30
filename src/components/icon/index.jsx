@@ -6,13 +6,14 @@ if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-const Icon = ({ icon, onClick }) => (
-  <i className={`Icon fa fa-${icon}`} onClick={onClick} />
+const Icon = ({ icon, onClick, className }) => (
+  <i className={`Icon fa fa-${icon} ${className}`} onClick={onClick} />
 );
 
 Icon.propTypes = {
   icon: PropTypes.string,
   onClick: PropTypes.func,
+  className: PropTypes.string,
 };
 
 export default Icon;

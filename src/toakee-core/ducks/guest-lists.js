@@ -9,6 +9,7 @@ const START_FETCHING = 'guestLists/START_FETCHING';
 const FINISHED_FETCHING = 'guestLists/FINISHED_FETCHING';
 const STARTED_CREATING = 'guestLists/STARTED_CREATING';
 const FINISHED_CREATING = 'guestLists/FINISHED_CREATING';
+const REMOVED_GUEST_LIST = 'guestLists/REMOVED_GUEST_LIST';
 
 const guestListsQuery = `
   query GuestLists($eventId: String, $eventSlug: String) {
@@ -46,6 +47,14 @@ const updateGuestListMutation = buildMutationQuery(
     eventId: 'String!',
     guestListId: 'String!',
     patch: 'GuestListPatchInputType!',
+  },
+);
+
+const removeGuestListMutation = buildMutationQuery(
+  'removeGuestList',
+  {
+    eventId: 'String!',
+    guestListId: 'String!',
   },
 );
 
@@ -106,6 +115,10 @@ export default function reducer(state = fetchableState(initialState), action) {
         .set('startedCreating', false)
         .mergeIn(['data'], mapify([action.guestList]));
 
+    case REMOVED_GUEST_LIST:
+      return state
+        .deleteIn(['data', action.guestListId]);
+
     default:
       return state;
   }
@@ -118,12 +131,23 @@ export const finishedFetching =
 export const startedCreating = () => ({ type: STARTED_CREATING });
 export const finishedCreating = guestList => ({ type: FINISHED_CREATING, guestList });
 
+export const removedGuestList =
+  guestListId => ({ type: REMOVED_GUEST_LIST, guestListId });
+
 export const createGuestList = (eventId, guestList) => (dispatch) => {
   dispatch(startedCreating());
   GraphQLAPI
     .post(createGuestListMutation, { eventId, ...guestList })
     .then(({ createGuestList: { id } }) => (
       dispatch(finishedCreating({ id, eventId, ...guestList }))
+    ));
+};
+
+export const removeGuestList = (eventId, guestListId) => (dispatch) => {
+  GraphQLAPI
+    .post(removeGuestListMutation, { eventId, guestListId })
+    .then(({ removeGuestList: ok }) => (
+      ok && dispatch(removedGuestList(guestListId))
     ));
 };
 
