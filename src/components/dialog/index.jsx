@@ -57,7 +57,7 @@ const Dialog = ({ open, close, mode, allProps }) => {
 
 Dialog.propTypes = {
   open: PropTypes.bool,
-  close: PropTypes.bool,
+  close: PropTypes.func,
   mode: PropTypes.string,
   allProps: PropTypes.shape({
     confirmTrigger: PropTypes.obj,

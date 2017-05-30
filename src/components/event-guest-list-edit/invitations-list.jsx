@@ -24,7 +24,7 @@ export const EventGuestListEditInvitationsList = ({ invitationsList, deleteInvit
 );
 
 EventGuestListEditInvitationsList.propTypes = {
-  invitationsList: PropTypes.array,
+  invitationsList: PropTypes.object,
   deleteInvitation: PropTypes.func,
 };
 
