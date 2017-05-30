@@ -1,4 +1,3 @@
-import config from '~/src/config';
 import { navigatorName } from '~/src/utils/navigator';
 import BaseAPI from './base';
 

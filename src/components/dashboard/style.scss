@@ -38,6 +38,7 @@
         display: table-cell;
         padding: $spacer*2;
         width: $spacer*6;
+        box-sizing: initial;
 
         img {
           width: 100%;

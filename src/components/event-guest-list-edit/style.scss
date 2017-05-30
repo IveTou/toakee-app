@@ -22,6 +22,12 @@
 }
 
 .EventGuestListEditItem {
+  &-remove {
+    float: right;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
   &-name input {
     color: $orange;
     font-size: 14px;
@@ -41,7 +47,17 @@
     overflow: auto;
 
     &-item {
+      cursor: default;
       margin-bottom: $spacer;
+
+      &:hover {
+        background-color: $orange100;
+      }
+
+      &-remove {
+        float: right;
+        cursor: pointer;
+      }
     }
   }
 

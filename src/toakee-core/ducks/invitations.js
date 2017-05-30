@@ -8,7 +8,8 @@ const CHANGE_FILTER = 'invitations/CHANGE_FILTER';
 const START_FETCHING = 'invitations/START_FETCHING';
 const FINISHED_FETCHING = 'invitations/FINISHED_FETCHING';
 const SET_ATTENDANCE_STATUS = 'invitations/SET_ATTENDANCE_STATUS';
-const NAMES_ADDED_TO_GUEST_LIST = 'invitations/CREATED';
+const ADDED_NAMES_TO_GUEST_LIST = 'invitations/CREATED';
+const REMOVED_INVITATION = 'invitations/REMOVED';
 
 const invitationsQuery = `
   query Invitations($eventId: String, $eventSlug: String) {
@@ -29,6 +30,11 @@ const invitationsQuery = `
 const setAttendanceStatusMutation = buildMutationQuery(
   'setAttendanceStatus',
   { invitationId: 'String!', status: 'GuestStatus!' },
+);
+
+const removeInvitationMutation = buildMutationQuery(
+  'removeInvitation',
+  { eventId: 'String!', invitationId: 'String!' },
 );
 
 const addNamesToGuestListMutation = buildMutationQuery(
@@ -71,7 +77,7 @@ export default function reducer(state = fetchableState(initialState), action) {
       return state
         .set('filter', deburr(action.filter));
 
-    case NAMES_ADDED_TO_GUEST_LIST:
+    case ADDED_NAMES_TO_GUEST_LIST:
       return state
         .set('newInvitations', '')
         .mergeIn(['data'], mapify(action.invitations));
@@ -82,6 +88,10 @@ export default function reducer(state = fetchableState(initialState), action) {
           ['data', action.invitationId],
           { ...state.getIn(['data', action.invitationId]), status: action.status },
         );
+
+    case REMOVED_INVITATION:
+      return state
+        .removeIn(['data', action.invitationId]);
 
     default:
       return state;
@@ -110,6 +120,17 @@ export const setAttendanceStatus = (invitationId, status) => ({
   status,
 });
 
+export const removedInvitation =
+  invitationId => ({ type: REMOVED_INVITATION, invitationId });
+
+export const removeInvitation = (eventId, invitationId) => (dispatch) => {
+  GraphQLAPI
+    .post(removeInvitationMutation, { eventId, invitationId })
+    .then(({ removeInvitation: ok }) => (
+      ok && dispatch(removedInvitation(invitationId))
+    ));
+};
+
 export const changeAttendanceStatus = (invitationId, status) => (dispatch) => {
   GraphQLAPI
     .post(setAttendanceStatusMutation, { invitationId, status })
@@ -119,7 +140,7 @@ export const changeAttendanceStatus = (invitationId, status) => (dispatch) => {
 };
 
 export const namesAddedToGuestList =
-  invitations => ({ type: NAMES_ADDED_TO_GUEST_LIST, invitations });
+  invitations => ({ type: ADDED_NAMES_TO_GUEST_LIST, invitations });
 
 export const addNamesToGuestList = (eventId, guestListId, names, recaptchaToken) => (dispatch) => {
   GraphQLAPI
