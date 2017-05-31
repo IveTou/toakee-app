@@ -1,3 +1,4 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
 @import '../../scss/variables';
 @import '../../scss/colors';
 
@@ -57,9 +58,10 @@
   border-bottom: 1px solid $gray100;
   background: $gray50;
   border-left: 4px solid $orange;
+  border-right: 1px solid $gray100;
   transition: all .28s ease-out;
   display: table;
-  width: calc(100% - #{$spacer*4 + 4px});
+  width: 100%;
 
   &-confirmed {
     border-left: 4px solid $green;
@@ -103,5 +105,12 @@
     &-badge {
       margin: 0 $spacer;
     }
+  }
+}
+
+
+@include media("<tablet") {
+  .EventGuestListItem {
+    border-right: 0;
   }
 }

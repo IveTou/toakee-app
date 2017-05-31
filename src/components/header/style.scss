@@ -7,20 +7,28 @@
   &-title {
     color: $white;
     background-color: $orange;
-    padding: $spacer*2 0;
+    padding: $spacer*2;
     text-align: center;
     text-transform: uppercase;
     font-weight: bold;
     font-size: 22px;
     @include box-shadow(0 0 $spacer $black26);
-  }
 
+    &-icon.icon {
+      float: left;
+      display: none;
+    }
+  }
 }
 
 @include media("<tablet") {
   .Header {
     &-title {
       font-size: 16px;
+
+      &-icon.icon {
+        display: block;
+      }
     }
     &-arrow {
       margin-left: $spacer*3/2;

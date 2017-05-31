@@ -1,7 +1,10 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { Link } from 'react-router';
 import { keys } from 'lodash';
+
+import { closeDashboard } from '~/src/toakee-core/ducks/dashboard';
 
 const buildClasses = ({ open }) => classNames('DashboardMenuItem', {
   'DashboardMenuItem--open': open,
@@ -14,8 +17,9 @@ const options = {
   'editar-listas': 'Gerenciar listas',
 };
 
-const DashboardMenuItem = ({ slug, flyer, title, open }) => (
-  <div className={buildClasses({ open })}>
+const DashboardMenuItem = ({ slug, flyer, title, open, onClick }) => (
+  // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+  <div className={buildClasses({ open })} onClick={onClick}>
     <Link to={{ pathname: `/dashboard/${slug}/lista` }}>
       <div className="DashboardMenuItem-header">
         <div className="DashboardMenuItem-header-flyer">
@@ -44,6 +48,10 @@ DashboardMenuItem.propTypes = {
   flyer: PropTypes.string,
   title: PropTypes.string,
   open: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
-export default DashboardMenuItem;
+export default connect(
+  () => ({}),
+  dispatch => ({ onClick: () => dispatch(closeDashboard()) }),
+)(DashboardMenuItem);

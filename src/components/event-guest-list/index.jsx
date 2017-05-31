@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+import { closeDashboard } from '~/src/toakee-core/ducks/dashboard';
 import { fetchGuestLists } from '~/src/toakee-core/ducks/guest-lists';
 import { fetchInvitations, changeInvitationsFilter } from '~/src/toakee-core/ducks/invitations';
 
@@ -21,6 +22,7 @@ class EventGuestList extends React.Component {
 
     dispatch(fetchInvitations(params));
     dispatch(fetchGuestLists(params));
+    dispatch(closeDashboard());
   }
 
   render() {

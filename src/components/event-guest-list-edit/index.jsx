@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import autoBind from 'react-autobind';
 import { injectState } from 'freactal';
 
+import { closeDashboard } from '~/src/toakee-core/ducks/dashboard';
 import { fetchGuestLists } from '~/src/toakee-core/ducks/guest-lists';
 import { fetchInvitations } from '~/src/toakee-core/ducks/invitations';
 
@@ -31,6 +32,7 @@ class EventGuestListEdit extends React.Component {
 
     dispatch(fetchInvitations(params));
     dispatch(fetchGuestLists(params));
+    dispatch(closeDashboard());
   }
 
   render() {
