@@ -19,6 +19,12 @@ export class Logged extends React.Component {
     }
   }
 
+  componentWillReceiveProps({ viewer }) {
+    if (viewer.id && !this.props.viewer.id) {
+        console.log('testing');
+    }
+  }
+
   render() {
     return (
       <div className="Logged mdl-layout mdl-layout--fixed-header mdl-js-layout">
@@ -38,5 +44,5 @@ Logged.propTypes = {
 };
 
 export default connect(
-  ({ viewer }) => ({ viewer }),
+  ({ viewer }) => ({ viewer: viewer.get('data') }),
 )(Logged);
