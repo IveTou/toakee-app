@@ -1,10 +1,9 @@
 import React, { PropTypes } from 'react';
-
 import { connect } from 'react-redux';
+
 import { fetchViewer } from '~/src/toakee-core/ducks/viewer';
 
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
-
 import TopBar from '~/src/components/top-bar';
 
 require('./style.scss');
@@ -13,13 +12,11 @@ export class Logged extends React.Component {
 
   componentWillMount() {
     this.props.dispatch(fetchViewer());
-    const {viewer} = this.props;
   }
 
   componentWillReceiveProps({ viewer }) {
     if (viewer.size) {
       TrackingAPI.track('Logged Page View', viewer.id);
-      console.log('Tracking');         
     }
   }
 
