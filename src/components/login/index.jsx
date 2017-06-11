@@ -52,22 +52,20 @@ export default class Login extends React.Component {
     }
 
     login(username, password)
-      .then(
-        partial(this.onSuccess, 'login'),
-        TrackingAPI.track('Login Trigger', 'Guest'),
-      )
+      .then(partial(this.onSuccess, 'login'))
       .catch(es => showToast(errorFromKey(es && es[0])));
+    
+    TrackingAPI.track('Login Trigger', 'Guest');
   }
 
   socialSubmit(network, token) {
     setSocialToken(network, token);
 
     socialLogin(upperCase(network), token)
-      .then(
-        partial(this.onSuccess, 'socialLogin'),
-        TrackingAPI.track('Social Login Trigger', 'Guest'),
-      )
+      .then(partial(this.onSuccess, 'socialLogin'))
       .catch(es => showToast(errorFromKey(es && es[0])));
+
+    TrackingAPI.track('Social Login Trigger', 'Guest');
   }
 
   render() {
