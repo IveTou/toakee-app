@@ -53,9 +53,8 @@ export default class Login extends React.Component {
 
     login(username, password)
       .then(partial(this.onSuccess, 'login'))
+      .then(() => TrackingAPI.track('Login Trigger', 'Guest'))
       .catch(es => showToast(errorFromKey(es && es[0])));
-    
-    TrackingAPI.track('Login Trigger', 'Guest');//However this call is triggered even if it wasn't successfull
   }
 
   socialSubmit(network, token) {
@@ -63,9 +62,8 @@ export default class Login extends React.Component {
 
     socialLogin(upperCase(network), token)
       .then(partial(this.onSuccess, 'socialLogin'))
+      .then(() => TrackingAPI.track('Social Login Trigger', 'Guest'))
       .catch(es => showToast(errorFromKey(es && es[0])));
-
-    TrackingAPI.track('Social Login Trigger', 'Guest');//The same here
   }
 
   render() {
