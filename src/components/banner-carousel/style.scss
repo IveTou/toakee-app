@@ -1,0 +1,15 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/variables';
+
+.BannerCarousel {
+
+  .Slider{
+    
+    &-div{
+      &-img {
+        width: 100%;
+      }
+    }
+  }
+}
+
