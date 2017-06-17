@@ -18,7 +18,6 @@ const settings = {
   cellSpacin: 0,
 };
 
-
 const images = [
   'https://catracalivre.com.br/wp-content/uploads/2015/10/imagens-3D_11.gif',
   'https://cdn.mensagenscomamor.com/content/images/p000002673.jpg?v=0',
@@ -28,9 +27,15 @@ const images = [
   'http://esquenta.com.br/wp-content/uploads/2013/09/10007959-1367035383184.jpg',
 ];
 
+const bannerImage = (url, index) => (
+  <div className='BannerImage' key={index}>
+    <img src={url} alt="slideshow" />
+  </div>
+);
+
 const BannerCarousel = () => (
   <Slider {...settings}>
-    {images.map(url => <div><img src={url} alt="slideshow" style={{"width":"100%","height":"400px"}}/></div>)}
+    {images.map((url,index) => bannerImage(url, index))}
   </Slider>
 );
 
