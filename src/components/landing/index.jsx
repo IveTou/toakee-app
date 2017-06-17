@@ -82,9 +82,7 @@ export default class Landing extends React.Component {
     return (
       <div className="Landing">
         <div className="Landing-banner">
-          <Container>
-            <BannerCarousel/>
-          </Container>
+          <BannerCarousel/>
 
           <div className="Landing-banner-list">
             <EventList
