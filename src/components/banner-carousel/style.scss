@@ -4,7 +4,20 @@
 .BannerImage {
   img {
     width: 100%;
-    height :400px;
+    height: $spacer*50;
   }
 }
 
+.slick-slider {
+  margin-left: $spacer*10;
+  margin-right: $spacer*10;
+
+  .slick-list {
+    box-shadow: 0 0 $spacer*3 grey;
+  }
+}
+
+@include media("<tablet") {
+  margin-left: 0;
+  margin-right: 0;
+}
