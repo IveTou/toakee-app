@@ -8,16 +8,44 @@
   }
 }
 
-.slick-slider {
+.Slider {
   margin-left: $spacer*10;
   margin-right: $spacer*10;
 
   .slick-list {
     box-shadow: 0 0 $spacer*3 grey;
   }
+  .button {
+    top: $spacer*20;
+    position: absolute;
+    z-index: 1000;
+    box-shadow: 0 0 $spacer*2 black;
+    display: block !important;
+
+    &.slick-prev {
+      left: $spacer*3;
+    }
+    &.slick-next {
+      right: $spacer*3;
+    }
+  }
+  
 }
 
 @include media("<tablet") {
-  margin-left: 0;
-  margin-right: 0;
+  .BannerImage {
+    img {
+      width: 100%;
+      height: $spacer*30;
+    }
+  }
+
+  .Slider{
+    margin-left: 0;
+    margin-right: 0;
+    
+    .button {
+      display: none;
+    }
+  }
 }

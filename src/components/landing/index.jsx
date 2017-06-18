@@ -4,8 +4,6 @@ import moment from 'moment';
 
 import ToakeeAPI from '~/src/toakee-core/apis/toakee';
 
-import { Container } from 'semantic-ui-react'
-
 import Button from '~/src/components/button';
 import BannerCarousel from '~/src/components/banner-carousel';
 import EventList from '~/src/components/event-list';
@@ -83,16 +81,13 @@ export default class Landing extends React.Component {
       <div className="Landing">
         <div className="Landing-banner">
           <BannerCarousel/>
-
-          <div className="Landing-banner-list">
-            <EventList
-              title="Próximos Eventos"
-              start={moment().startOf('day')}
-              end={moment().endOf('day')}
-            />
-          </div>
         </div>
         <div className="Landing-lists">
+          <EventList
+            title="Próximos Eventos"
+            start={moment().startOf('day')}
+            end={moment().endOf('day')}
+          />          
           <EventList
             title="Nesta semana"
             start={moment().add(1, 'days').startOf('day')}
