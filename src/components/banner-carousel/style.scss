@@ -30,6 +30,36 @@
     }
   }
   
+  .custom-dots {
+    position: absolute;
+    bottom: $spacer*0;
+    display: block;
+    width: 100%;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+  
+    li {
+      position: relative;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      margin: 0 5px;
+      padding: 0;
+      cursor: pointer;
+
+      &.slick-active {
+        button {
+          background-color: black;
+        }
+      }
+
+      button {
+        width: 10px;
+        height: 10px;
+      }
+    }
+  }
 }
 
 @include media("<tablet") {

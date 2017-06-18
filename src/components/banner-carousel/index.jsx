@@ -50,6 +50,7 @@ function LeftArrow (props) {
 
 const settings = {
   dots: true,
+  dotsClass: 'custom-dots',
   infinite: true,
   autoplay: true,
   autoplaySpeed: 2000,
