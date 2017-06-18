@@ -4,16 +4,16 @@
 .BannerImage {
   img {
     width: 100%;
-    height: $spacer*50;
+    height: $spacer*32;
   }
 }
 
 .Slider {
-  margin-left: $spacer*10;
-  margin-right: $spacer*10;
+  margin-left: 24%;
+  margin-right: 24%;
 
   .slick-list {
-    box-shadow: 0 0 $spacer*3 grey;
+    box-shadow: 0 0 $spacer*2 grey;
   }
   .button {
     top: $spacer*20;
@@ -99,5 +99,9 @@
     .button {
       display: none !important;
     }
+  }
+  
+  .custom-dots {
+    display: none !important;
   }
 }
