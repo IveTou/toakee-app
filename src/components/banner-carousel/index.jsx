@@ -17,14 +17,18 @@ const images = [
   'https://res.cloudinary.com/toakeeassets/image/upload/s--tBm1oWsv--/v1497637201/events/29460_400x400.jpg',
 ];
 
-const BannerImage = (url, index) => (
-  <div className='BannerImage' key={index}>
-    <img src={url} alt="slideshow" />
-  </div>
-);
+const BannerImage = (url, index) => {
+  const style = {
+    backgroundImage: 'url(' + url + ')'
+  }
+
+  return (
+    <div className='BannerImage' key={index} style={style} />
+  );
+}
 
 
-function RightArrow (props) {
+const RightArrow = (props) =>  {
   const {className, onClick} = props
   return (
     <Button 
@@ -36,7 +40,7 @@ function RightArrow (props) {
   );
 }
 
-function LeftArrow (props) {
+const LeftArrow = (props) => {
   const {className, onClick} = props
   return (
     <Button 
@@ -46,7 +50,7 @@ function LeftArrow (props) {
       onClick={onClick}
     />
   );
-};
+}
 
 const settings = {
   dots: true,

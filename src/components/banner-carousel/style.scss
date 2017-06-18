@@ -1,11 +1,11 @@
 @import 'node_modules/include-media/dist/_include-media.scss';
 @import '../../scss/variables';
 
-.BannerImage {
-  img {
-    width: 100%;
-    height: $spacer*32;
-  }
+.BannerImage {  
+  height: $spacer*30 !important;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .Slider {
@@ -86,10 +86,8 @@
 
 @include media("<tablet") {
   .BannerImage {
-    img {
-      width: 100%;
-      height: $spacer*30;
-    }
+    height: $spacer*25;
+    width: 100%;
   }
 
   .Slider{
