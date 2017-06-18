@@ -16,17 +16,17 @@
     box-shadow: 0 0 $spacer*2 grey;
   }
   .button {
-    top: $spacer*20;
+    top: 45%;
     position: absolute;
     z-index: 1000;
     box-shadow: 0 0 $spacer*2 black;
     display: block !important;
 
     &.slick-prev {
-      left: $spacer*3;
+      left: $spacer*2;
     }
     &.slick-next {
-      right: $spacer*3;
+      right: $spacer*2;
     }
   }
   
