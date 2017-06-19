@@ -122,7 +122,7 @@ class EventPage extends React.Component {
               dangerouslySetInnerHTML={{ __html: description }}
             />
           </div>
-          <If condition={guestLists.length}>
+          <If condition={guestLists.length && false}>
             <div className="EventPage-body-guestLists">
               <div className="EventPage-body-title">Nome na lista</div>
               <div className="EventPage-body-content">
