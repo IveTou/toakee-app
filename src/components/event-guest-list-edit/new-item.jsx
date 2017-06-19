@@ -13,9 +13,11 @@ export default class EventGuestListEditNewItem extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
+
+    const { event: { start } } = this.props;
     this.state = {
-      registrationDeadline: moment().set({ hour: 20, minute: 0 }),
-      entranceDeadline: moment().set({ hour: 23, minute: 59 }),
+      registrationDeadline: moment(start).set({ hour: 20, minute: 0 }),
+      entranceDeadline: moment(start).set({ hour: 23, minute: 59 }),
     };
   }
 

@@ -16,7 +16,7 @@ const FEED_LIMIT = 10;
 class Dashboard extends React.Component {
   componentWillMount() {
     this.props.dispatch(fetchEvents({
-      start: moment(),
+      start: moment().startOf('day'),
       onlyMine: true,
       limit: FEED_LIMIT,
     }));

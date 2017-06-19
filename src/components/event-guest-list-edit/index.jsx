@@ -43,7 +43,9 @@ class EventGuestListEdit extends React.Component {
       <div className="EventGuestListEdit">
         <Header title="Gerenciar listas" />
         <div className="EventGuestListEdit-lists">
-          <EventGuestListEditNewItem event={selectedEvent} dispatch={dispatch} />
+          <If condition={selectedEvent}>
+            <EventGuestListEditNewItem event={selectedEvent} dispatch={dispatch} />
+          </If>
           <For each="guestList" of={guestLists}>
             <EventGuestListEditItem key={guestList.id} {...guestList} />
           </For>
