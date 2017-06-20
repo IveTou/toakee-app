@@ -8,9 +8,11 @@
   background-size: cover;
 }
 
-.Slider {
-  margin-left: 24%;
-  margin-right: 24%;
+.BannerCarousel {
+  margin-left: 16%;
+  margin-right: 16%;
+  padding-top: $spacer*3;
+  padding-bottom: $spacer*3;
 
   .slick-list {
     box-shadow: 0 0 $spacer*2 grey;
@@ -35,24 +37,25 @@
     bottom: $spacer*0;
     display: block;
     width: 100%;
-    padding: 0;
+    padding: $spacer*0;
     list-style: none;
     text-align: center;
   
     li {
       position: relative;
       display: inline-block;
-      width: 20px;
-      height: 20px;
-      margin: 0 10px;
+      width: $spacer*2;
+      height: $spacer*2;
+      margin: 0 $spacer;
       padding: 0;
       cursor: pointer;
 
       &.slick-active {
         button {
           background-color: #4d4d4d;
-          height: 25px;                                                                               
-          width: 25px;
+          height: $spacer*2.5;                                                                               
+          width: $spacer*2.5;
+          opacity: 1;
           -webkit-transition: width .3s;
           transition: width .3s;
         }
@@ -60,16 +63,16 @@
 
       button {
         border: 0;
-        border-radius: 50px;
+        border-radius: $spacer*2;
         background-color: #f2f2f2;
         display: block;
-        height: 20px;
-        width: 20px;
+        height: $spacer*2;
+        width: $spacer*2;
         outline: none;
-        line-height: 0px;
-        font-size: 0px;
+        line-height: $spacer*0;
+        font-size: $spacer*0;
         color: transparent;
-        padding: 5px;
+        padding: $spacer;
         cursor: pointer;
         box-shadow: 0 0 5px black;
         opacity: .75;
@@ -86,13 +89,15 @@
 
 @include media("<tablet") {
   .BannerImage {
-    height: $spacer*25;
+    height: $spacer*25 !important;
     width: 100%;
   }
 
-  .Slider{
+  .BannerCarousel {
     margin-left: 0;
     margin-right: 0;
+    padding-top: 0;                                                                           
+    padding-bottom: 0;
     
     .button {
       display: none !important;

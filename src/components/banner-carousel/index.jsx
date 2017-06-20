@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import Slider from 'react-slick';
-import { Button } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -19,38 +19,22 @@ const images = [
 
 const BannerImage = (url, index) => {
   const style = {
-    backgroundImage: 'url(' + url + ')'
-  }
+    backgroundImage: `url(${url})`,
+  };
 
   return (
-    <div className='BannerImage' key={index} style={style} />
+    <div className="BannerImage" key={index} style={style} />
   );
-}
+};
 
-
-const RightArrow = (props) =>  {
-  const {className, onClick} = props
-  return (
-    <Button 
-      circular
-      className={className} 
-      icon='chevron right' 
-      onClick={onClick} 
-    />
-  );
-}
-
-const LeftArrow = (props) => {
-  const {className, onClick} = props
-  return (
-    <Button 
-      circular
-      className={className}
-      icon='chevron left'
-      onClick={onClick}
-    />
-  );
-}
+const Arrow = ({ className, onClick, direction }) => (
+  <Button
+    circular
+    className={className}
+    icon={`chevron ${direction}`}
+    onClick={onClick}
+  />
+);
 
 const settings = {
   dots: true,
@@ -63,17 +47,23 @@ const settings = {
   slidesToScroll: 1,
   cellSpacin: 0,
   mobileFirst: true,
-  nextArrow: <RightArrow />,
-  prevArrow: <LeftArrow />,
+  nextArrow: <Arrow direction="right" />,
+  prevArrow: <Arrow direction="left" />,
 };
 
 const BannerCarousel = () => (
-  <div className='Slider'>
+  <div className="BannerCarousel">
     <Slider {...settings}>
-      {images.map((url,index) => BannerImage(url, index))}
+      {images.map((url, index) => BannerImage(url, index))}
     </Slider>
   </div>
 );
+
+Arrow.propTypes = {
+  className: PropTypes.string,
+  direction: PropTypes.string,
+  onClick: PropTypes.func,
+};
 
 export default BannerCarousel;
 

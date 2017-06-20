@@ -80,14 +80,14 @@ export default class Landing extends React.Component {
     return (
       <div className="Landing">
         <div className="Landing-banner">
-          <BannerCarousel/>
+          <BannerCarousel />
         </div>
         <div className="Landing-lists">
           <EventList
             title="Próximos Eventos"
             start={moment().startOf('day')}
             end={moment().endOf('day')}
-          />          
+          />
           <EventList
             title="Nesta semana"
             start={moment().add(1, 'days').startOf('day')}
