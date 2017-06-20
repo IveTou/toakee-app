@@ -8,7 +8,6 @@
   &-list {
     margin: 0 auto;
     width: 100%;
-    max-width: $spacer*80;
     overflow-y: auto;
   }
 
@@ -18,24 +17,10 @@
     border-bottom: 1px solid $gray100;
 
     &-input {
-      display: inline-block;
-      position: relative;
-
       input {
-        border: 2px solid $gray300;
         width: $spacer*30;
-        padding: $spacer $spacer*4 $spacer $spacer*2;
-        border-radius: 24px;
-        color: $black54;
         font-size: 11px;
         text-transform: uppercase;
-      }
-
-      .fa {
-        position: absolute;
-        right: $spacer*2;
-        top: $spacer;
-        font-size: 15px;
       }
     }
 
@@ -89,21 +74,28 @@
   }
 
   &-name {
-    display: table-cell;
-    width: 100%;
+    display: inline-block;
+    vertical-align: middle;
+    width: 50%;
 
     &-first {
       font-size: 20px;
       color: $orange;
+      text-transform: uppercase;
     }
   }
 
   &-right {
-    display: table-cell;
+    display: inline-block;
     vertical-align: middle;
+    text-align: right;
+    width: 50%;
 
-    &-badge {
-      margin: 0 $spacer;
+    &-badge.label {
+      white-space: nowrap;
+      overflow: auto;
+      max-width: calc(100% - #{$spacer*6});
+      vertical-align: middle;
     }
   }
 }

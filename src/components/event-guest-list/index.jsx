@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Input } from 'semantic-ui-react';
 
 import { closeDashboard } from '~/src/toakee-core/ducks/dashboard';
 import { fetchGuestLists } from '~/src/toakee-core/ducks/guest-lists';
@@ -55,14 +56,12 @@ class EventGuestList extends React.Component {
       <div className="EventGuestList">
         <Header title={selectedEvent && selectedEvent.title} />
         <div className="EventGuestList-filters">
-          <div className="EventGuestList-filters-input">
-            <input
-              placeholder="Quem você deseja buscar na lista?"
-              onChange={e => dispatch(changeInvitationsFilter(e.target.value))}
-              type="text"
-            />
-            <i className="fa fa-search" />
-          </div>
+          <Input
+            className="EventGuestList-filters-input"
+            icon='search'
+            placeholder='Digite o nome'
+            onChange={e => dispatch(changeInvitationsFilter(e.target.value))}
+          />
           <div className="EventGuestList-filters-summary">
             <span className="EventGuestList-filters-summary-total">
               <b>Nomes na lista:</b> {total}

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
+import { Label } from 'semantic-ui-react';
 
 import { changeAttendanceStatus } from '~/src/toakee-core/ducks/invitations';
 
@@ -31,7 +32,9 @@ const EventGuestListItem = ({ dispatch, id, name, status, guestListId, guestList
         <div className="EventGuestListItem-name-last">{lastName}</div>
       </div>
       <div className="EventGuestListItem-right">
-        <Badge className="EventGuestListItem-right-badge" label={listName} />
+        <Label className="EventGuestListItem-right-badge" as="span">
+          {listName}
+        </Label>
         <Button
           className="EventGuestListItem-right-action"
           label={buttonLabel}
