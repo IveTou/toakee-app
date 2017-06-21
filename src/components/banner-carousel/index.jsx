@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react';
 
-import Cloudinary from 'cloudinary';
-
 import Slider from 'react-slick';
 import { Button } from 'semantic-ui-react';
 
@@ -61,14 +59,6 @@ export class BannerCarousel extends React.Component {
   }
 
   componentWillMount() {
-    Cloudinary.config({ 
-      cloud_name: config.ASSETS_CLOUD_NAME, 
-      api_key: config.ASSETS_API_KEY, 
-      api_secret: config.ASSETS_API_SECRET, 
-    });  
-
-    const imageList = Cloudinary.image('ads.json', {type: 'list'});
-    console.log(imageList);
   }
 
   render () {
