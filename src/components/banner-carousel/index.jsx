@@ -7,7 +7,6 @@ if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-
 const images = [
   'https://res.cloudinary.com/toakeeassets/image/upload/s--e0tcSGpi--/v1497419551/events/592ccf20140f0.jpg',
   'https://res.cloudinary.com/toakeeassets/image/upload/s--hViaUCT9--/v1497743494/events/19030625_1389314694492303_6749445352138203782_n.jpg',
