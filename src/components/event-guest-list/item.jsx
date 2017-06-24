@@ -1,24 +1,20 @@
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 import classNames from 'classnames';
-import { Label } from 'semantic-ui-react';
+import { Label, Icon } from 'semantic-ui-react';
 
-import { changeAttendanceStatus } from '~/src/toakee-core/ducks/invitations';
+import { setAttendanceStatusMutation } from '~/src/toakee-core/mutations/invitations';
 
-import Badge from '~/src/components/badge';
-import Button from '~/src/components/button';
+import { query } from './index';
 
-const EventGuestListItem = ({ dispatch, id, name, status, guestListId, guestLists, shadow }) => {
+const EventGuestListItem = ({ invitation, toggleAttendanceStatus, shadow }) => {
+  const { name, status, guestList } = invitation;
   const [firstName, lastName] = name.split(/\s(.+)/);
-  const data = guestLists.get('data');
-  const guestList = !!data.size && data.get(guestListId);
   const { name: listName } = guestList || { name: null };
 
-  const [buttonLabel, buttonColor, statusChange] = (() => (
-    status === 'INVITED'
-      ? [<i className="fa fa-square-o" />, {}, 'ATTENDED']
-      : [<i className="fa fa-check-square-o" />, { success: true }, 'INVITED']
-  ))();
+  const iconName = status === 'ATTENDED' ? 'checkmark box' : 'square outline';
+  const linkColor = status === 'ATTENDED' ? 'green' : 'grey';
 
   const classes = classNames('EventGuestListItem', {
     'EventGuestListItem-confirmed': status === 'ATTENDED',
@@ -35,11 +31,13 @@ const EventGuestListItem = ({ dispatch, id, name, status, guestListId, guestList
         <Label className="EventGuestListItem-right-badge" as="span">
           {listName}
         </Label>
-        <Button
+        <Icon
+          link
+          name={iconName}
+          color={linkColor}
+          size="large"
           className="EventGuestListItem-right-action"
-          label={buttonLabel}
-          onClick={() => dispatch(changeAttendanceStatus(id, statusChange))}
-          {...buttonColor}
+          onClick={toggleAttendanceStatus}
         />
       </div>
     </div>
@@ -47,13 +45,33 @@ const EventGuestListItem = ({ dispatch, id, name, status, guestListId, guestList
 };
 
 EventGuestListItem.propTypes = {
-  dispatch: PropTypes.func,
-  id: PropTypes.string,
-  name: PropTypes.string,
-  status: PropTypes.string,
-  guestListId: PropTypes.string,
+  invitation: PropTypes.object,
+  toggleAttendanceStatus: PropTypes.func,
   shadow: PropTypes.bool,
-  guestLists: PropTypes.object,
 };
 
-export default connect(({ guestLists }) => ({ guestLists }))(EventGuestListItem);
+export default graphql(gql(setAttendanceStatusMutation), {
+  props: ({ mutate, ownProps: { event, invitation } }) => ({
+    toggleAttendanceStatus: () => {
+      const { status } = invitation;
+      const newStatus = status === 'ATTENDED' ? 'INVITED' : 'ATTENDED';
+
+      return mutate({
+        variables: { eventId: event.id, status: newStatus, invitationId: invitation.id },
+        update: (store, { data: { setAttendanceStatus } }) => {
+          const data = store.readQuery({ query, variables: { eventSlug: event.slug } });
+
+          data.viewer.event.invitations
+            .find(({ id }) => id === invitation.id)
+            .status = setAttendanceStatus ? newStatus : status;
+
+          store.writeQuery({ query, data });
+        },
+        optimisticResponse: {
+          __typename: 'Mutation',
+          setAttendanceStatus: true,
+        },
+      });
+    },
+  }),
+})(EventGuestListItem);

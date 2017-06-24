@@ -7,7 +7,6 @@ import { fetchableState, buildMutationQuery } from '../utils';
 const CHANGE_FILTER = 'invitations/CHANGE_FILTER';
 const START_FETCHING = 'invitations/START_FETCHING';
 const FINISHED_FETCHING = 'invitations/FINISHED_FETCHING';
-const SET_ATTENDANCE_STATUS = 'invitations/SET_ATTENDANCE_STATUS';
 const ADDED_NAMES_TO_GUEST_LIST = 'invitations/CREATED';
 const REMOVED_INVITATION = 'invitations/REMOVED';
 
@@ -26,11 +25,6 @@ const invitationsQuery = `
     }
   }
 `;
-
-const setAttendanceStatusMutation = buildMutationQuery(
-  'setAttendanceStatus',
-  { invitationId: 'String!', status: 'GuestStatus!' },
-);
 
 const removeInvitationMutation = buildMutationQuery(
   'removeInvitation',
@@ -82,13 +76,6 @@ export default function reducer(state = fetchableState(initialState), action) {
         .set('newInvitations', '')
         .mergeIn(['data'], mapify(action.invitations));
 
-    case SET_ATTENDANCE_STATUS:
-      return state
-        .setIn(
-          ['data', action.invitationId],
-          { ...state.getIn(['data', action.invitationId]), status: action.status },
-        );
-
     case REMOVED_INVITATION:
       return state
         .removeIn(['data', action.invitationId]);
@@ -114,12 +101,6 @@ export const fetchInvitations = ({ eventId, eventSlug }) => (dispatch) => {
 
 export const changeInvitationsFilter = filter => ({ type: CHANGE_FILTER, filter });
 
-export const setAttendanceStatus = (invitationId, status) => ({
-  type: SET_ATTENDANCE_STATUS,
-  invitationId,
-  status,
-});
-
 export const removedInvitation =
   invitationId => ({ type: REMOVED_INVITATION, invitationId });
 
@@ -129,14 +110,6 @@ export const removeInvitation = (eventId, invitationId) => (dispatch) => {
     .then(({ removeInvitation: ok }) => (
       ok && dispatch(removedInvitation(invitationId))
     ));
-};
-
-export const changeAttendanceStatus = (invitationId, status) => (dispatch) => {
-  GraphQLAPI
-    .post(setAttendanceStatusMutation, { invitationId, status })
-    .then(({ errors }) => {
-      if (!errors) dispatch(setAttendanceStatus(invitationId, status));
-    });
 };
 
 export const namesAddedToGuestList =

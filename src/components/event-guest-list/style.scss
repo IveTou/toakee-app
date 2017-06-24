@@ -5,16 +5,22 @@
 .EventGuestList {
   height: 100%;
 
-  &-list {
-    margin: 0 auto;
-    width: 100%;
-    overflow-y: auto;
-  }
-
   &-filters {
+    position: relative;
     text-align: center;
     padding: $spacer*2;
     border-bottom: 1px solid $gray100;
+
+    &-tools {
+      position: absolute;
+      right: $spacer*2;
+      top: 50%;
+      transform: translateY(-50%);
+
+      &-icon {
+        cursor: pointer;
+      }
+    }
 
     &-input {
       input {
@@ -36,6 +42,12 @@
       }
     }
   }
+}
+
+.EventGuestListList {
+  margin: 0 auto;
+  width: 100%;
+  overflow-y: auto;
 }
 
 .EventGuestListItem {
@@ -96,6 +108,10 @@
       overflow: auto;
       max-width: calc(100% - #{$spacer*6});
       vertical-align: middle;
+    }
+
+    &-action.icon {
+      margin-left: $spacer;
     }
   }
 }

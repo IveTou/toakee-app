@@ -1,15 +1,15 @@
 import React from 'react';
 import { render } from 'react-dom';
 import moment from 'moment';
-import {
-  Router,
-  browserHistory,
-} from 'react-router';
+import { Router, browserHistory } from 'react-router';
+
+import ApolloClient, { createNetworkInterface } from 'apollo-client';
+import { ApolloProvider } from 'react-apollo';
 
 import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 
+import config from '~/src/config';
 import makeRoutes from '~/src/routes';
 import rootReducer from '~/src/toakee-core/ducks';
 
@@ -24,16 +24,24 @@ if (process.env.BROWSER) {
 
 moment.locale('pt-br');
 
+const apolloClient = new ApolloClient({
+  networkInterface: createNetworkInterface({
+    uri: config.GRAPHQL_URI,
+  }),
+});
+
 const createStoreWithMiddleware = applyMiddleware(
   thunkMiddleware,
 )(createStore);
 
+const reduxStore = createStoreWithMiddleware(rootReducer);
+
 const app = (
-  <Provider store={createStoreWithMiddleware(rootReducer)}>
+  <ApolloProvider store={reduxStore} client={apolloClient}>
     <StoreProvider>
       <Router history={browserHistory} routes={makeRoutes()} />
     </StoreProvider>
-  </Provider>
+  </ApolloProvider>
 );
 
 render(app, document.getElementById('app'));

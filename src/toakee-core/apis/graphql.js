@@ -10,7 +10,7 @@ class GraphQLAPI extends BaseAPI {
   post(query, variables) {
     return this.rp({
       method: 'POST',
-      uri: '/graphql',
+      uri: '/',
       headers: {
         credentials: 'include',
         Authorization: getToken() ? `Bearer ${getToken()}` : '',

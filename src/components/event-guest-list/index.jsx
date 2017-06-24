@@ -1,65 +1,67 @@
 import React, { PropTypes } from 'react';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 import { connect } from 'react-redux';
-import { Input } from 'semantic-ui-react';
+import { Input, Icon } from 'semantic-ui-react';
 
 import { closeDashboard } from '~/src/toakee-core/ducks/dashboard';
-import { fetchGuestLists } from '~/src/toakee-core/ducks/guest-lists';
-import { fetchInvitations, changeInvitationsFilter } from '~/src/toakee-core/ducks/invitations';
+import { changeInvitationsFilter } from '~/src/toakee-core/ducks/invitations';
 
+import { generateGuestListPdf } from '~/src/utils/pdf';
 import Header from '~/src/components/header';
-import EventGuestListItem from './item';
+import EventGuestListList from './list';
 
 if (process.env.BROWSER) {
   require('./style.scss');
 }
 
+export const query = gql`
+  query Invitations($eventSlug: String) {
+    viewer {
+      event(slug: $eventSlug) {
+        id
+        title
+        slug
+
+        invitations {
+          id
+          name
+          normalizedName
+          status
+
+          guestList {
+            name
+          }
+        }
+      }
+    }
+  }
+`;
+
 class EventGuestList extends React.Component {
   componentWillMount() {
-    const { slug } = this.props.router.params;
-    const { selectedEvent, dispatch } = this.props;
-    const params = selectedEvent
-      ? { eventId: selectedEvent.id }
-      : { eventSlug: slug };
-
-    dispatch(fetchInvitations(params));
-    dispatch(fetchGuestLists(params));
+    const { dispatch } = this.props;
     dispatch(closeDashboard());
   }
 
   render() {
-    const { invitations, filter, selectedEvent, dispatch } = this.props;
+    const { filter, dispatch, viewer } = this.props;
+    const { event } = viewer || {};
+    const { invitations } = event || {};
 
-    const total = invitations.size;
-    const filterRegex = new RegExp(
-      `\\b${filter.trim().replace(/\s+/, '[\\s\\S]*\\s')}`,
-      'i',
-    );
-
-    const confirmed = invitations
+    const total = (invitations || []).length;
+    const confirmed = (invitations || [])
       .filter(({ status }) => status === 'ATTENDED')
-      .size;
-
-    const list = total
-      ? invitations
-          .filter(({ normalizedName }) => normalizedName.match(filterRegex))
-          .sort(({ normalizedName: a }, { normalizedName: b }) => (
-            a.match(filterRegex).index - b.match(filterRegex).index
-            || a < b ? -1 : 1
-          ))
-          .toList()
-      : [];
-
-    declare var invitation;
-    declare var idx;
+      .length;
 
     return (
       <div className="EventGuestList">
-        <Header title={selectedEvent && selectedEvent.title} />
+        <Header title={event && event.title} />
         <div className="EventGuestList-filters">
           <Input
             className="EventGuestList-filters-input"
-            icon='search'
-            placeholder='Digite o nome'
+            icon="search"
+            placeholder="Digite o nome"
             onChange={e => dispatch(changeInvitationsFilter(e.target.value))}
           />
           <div className="EventGuestList-filters-summary">
@@ -71,30 +73,40 @@ class EventGuestList extends React.Component {
               <b>Confirmados:</b> {confirmed}
             </span>
           </div>
-        </div>
-        <div className="EventGuestList-list">
-          <For each="invitation" index="idx" of={list}>
-            <EventGuestListItem
-              key={idx}
-              shadow={list[idx + 1] && list[idx + 1].status === 'INVITED'}
-              {...invitation}
+          <div className="EventGuestList-filters-tools">
+            <Icon
+              className="EventGuestList-filters-tools-icon"
+              onClick={() => generateGuestListPdf(event, invitations)}
+              name="file pdf outline"
+              size="big"
             />
-          </For>
+          </div>
         </div>
+        <EventGuestListList
+          invitations={invitations}
+          filter={filter}
+          event={event}
+        />
       </div>
     );
   }
 }
 
 EventGuestList.propTypes = {
-  router: PropTypes.object,
+  viewer: PropTypes.object,
   dispatch: PropTypes.func,
-  invitations: PropTypes.object,
-  selectedEvent: PropTypes.object,
   filter: PropTypes.string,
 };
 
-export default connect(({ invitations, events }, { selectedEvent = {} }) => ({
-  invitations: invitations.get('data').filter(i => i.eventId === selectedEvent.id),
+const EventGuestListWithData = graphql(query, {
+  options: ({ router }) => ({
+    variables: {
+      eventSlug: router.params.slug,
+    },
+  }),
+  props: ({ data: { viewer } }) => ({ viewer }),
+})(EventGuestList);
+
+export default connect(({ invitations }) => ({
   filter: invitations.get('filter'),
-}))(EventGuestList);
+}))(EventGuestListWithData);
