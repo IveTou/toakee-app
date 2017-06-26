@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import { Link } from 'react-router';
 import { partial, upperCase } from 'lodash';
 import autoBind from 'react-autobind';
@@ -52,6 +53,7 @@ export default class Login extends React.Component {
 
     login(username, password)
       .then(partial(this.onSuccess, 'login'))
+      .then(() => TrackingAPI.track('Login Trigger', 'Guest'))
       .catch(es => showToast(errorFromKey(es && es[0])));
   }
 
@@ -60,6 +62,7 @@ export default class Login extends React.Component {
 
     socialLogin(upperCase(network), token)
       .then(partial(this.onSuccess, 'socialLogin'))
+      .then(() => TrackingAPI.track('Social Login Trigger', 'Guest'))
       .catch(es => showToast(errorFromKey(es && es[0])));
   }
 
