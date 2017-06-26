@@ -4,8 +4,7 @@ import { Link } from 'react-router';
 import Slider from 'react-slick';
 import { Button } from 'semantic-ui-react';
 
-import config from '~/src/config';
-import banners from '~/src/banners'
+import banners from '~/src/banners';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -15,9 +14,9 @@ const BannerImage = (img, url, index) => {
   const style = {
     backgroundImage: `url(${img})`,
   };
-  
+
   return (
-    <Link className="BannerImage" key={index} style={style} to={{ pathname: `/evento/${url}` }} />
+    <Link className="BannerImage" key={index} style={style} to={`${url}`} />
   );
 };
 
@@ -46,21 +45,13 @@ const settings = {
 };
 
 
-export class BannerCarousel extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render () {
-    return (
-      <div className="BannerCarousel">
-        <Slider {...settings}>
-          {banners.map((banner, index) => BannerImage(banner.img, banner.url, index))}
-        </Slider>
-      </div>
-    );
-  }
-}
+const BannerCarousel = () => (
+  <div className="BannerCarousel">
+    <Slider {...settings}>
+      {banners.map((banner, index) => BannerImage(banner.img, banner.url, index))}
+    </Slider>
+  </div>
+);
 
 Arrow.propTypes = {
   className: PropTypes.string,
