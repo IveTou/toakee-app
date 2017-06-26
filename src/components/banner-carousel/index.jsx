@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
 
 import Slider from 'react-slick';
 import { Button } from 'semantic-ui-react';
@@ -16,7 +15,9 @@ const BannerImage = (img, url, index) => {
   };
 
   return (
-    <Link className="BannerImage" key={index} style={style} to={`${url}`} />
+    <a href={url}>
+      <div className="BannerImage" key={index} style={style} href={url} />
+    </a>
   );
 };
 
