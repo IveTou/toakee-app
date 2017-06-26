@@ -16,7 +16,7 @@ const BannerImage = (img, url, index) => {
 
   return (
     <a href={url}>
-      <div className="BannerImage" key={index} style={style} href={url} />
+      <div className="BannerImage" key={index} style={style} />
     </a>
   );
 };
