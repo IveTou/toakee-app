@@ -1,30 +1,23 @@
 import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
 
 import Slider from 'react-slick';
 import { Button } from 'semantic-ui-react';
 
 import config from '~/src/config';
+import banners from '~/src/banners'
 
 if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-const images = [
-  'https://res.cloudinary.com/toakeeassets/image/upload/s--e0tcSGpi--/v1497419551/events/592ccf20140f0.jpg',
-  'https://res.cloudinary.com/toakeeassets/image/upload/s--hViaUCT9--/v1497743494/events/19030625_1389314694492303_6749445352138203782_n.jpg',
-  'https://res.cloudinary.com/toakeeassets/image/upload/s--TA5P9YAK--/v1494622507/events/18425168_1097932713673984_3660071346111008452_n.jpg',
-  'https://res.cloudinary.com/toakeeassets/image/upload/s---1d7OEUU--/v1497747626/events/64742e456fb347269841093e8b0813e5.jpg',
-  'https://res.cloudinary.com/toakeeassets/image/upload/s--rUjsJjXc--/v1494366866/events/Ger_C3_B4nimo_foto-de-Andre-Lima.jpg',
-  'https://res.cloudinary.com/toakeeassets/image/upload/s--tBm1oWsv--/v1497637201/events/29460_400x400.jpg',
-];
-
-const BannerImage = (url, index) => {
+const BannerImage = (img, url, index) => {
   const style = {
-    backgroundImage: `url(${url})`,
+    backgroundImage: `url(${img})`,
   };
   
   return (
-    <div className="BannerImage" key={index} style={style} ></div>
+    <Link className="BannerImage" key={index} style={style} to={{ pathname: `/evento/${url}` }} />
   );
 };
 
@@ -62,7 +55,7 @@ export class BannerCarousel extends React.Component {
     return (
       <div className="BannerCarousel">
         <Slider {...settings}>
-          {images.map((url, index) => BannerImage(url, index))}
+          {banners.map((banner, index) => BannerImage(banner.img, banner.url, index))}
         </Slider>
       </div>
     );
@@ -76,4 +69,3 @@ Arrow.propTypes = {
 };
 
 export default BannerCarousel;
-
