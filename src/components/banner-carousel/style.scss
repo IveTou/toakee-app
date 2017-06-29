@@ -10,8 +10,8 @@
 }
 
 .BannerCarousel {
-  width: 60%;
-  max-width: $spacer*120;
+  width: 100%;
+  max-width: $spacer*96;
   margin: 0 auto;
   padding: $spacer*3 auto;
 
@@ -98,10 +98,6 @@
   }
 
   .BannerCarousel {
-    width: 100%;
-    margin: 0;                                                                           
-    padding: 0;
-    
     .button {
       display: none !important;
     }
