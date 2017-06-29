@@ -1,0 +1,109 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/variables';
+@import '../../scss/colors';
+
+.BannerImage {  
+  height: $spacer*30 !important;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.BannerCarousel {
+  width: 100%;
+  max-width: $spacer*96;
+  margin: 0 auto;
+  padding: $spacer*3 auto;
+
+  .slick-list {
+    box-shadow: 0 0 $spacer $black;
+  }
+
+  .button {
+    top: 45%;
+    position: absolute;
+    z-index: 1000;
+    box-shadow: 0 0 $spacer*2 $black;
+    display: block !important;
+
+    &.slick-prev {
+      left: $spacer*2;
+    }
+    &.slick-next {
+      right: $spacer*2;
+    }
+  }
+  
+  .custom-dots {
+    position: absolute;
+    bottom: 0;
+    display: block;
+    width: 100%;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+  
+    li {
+      position: relative;
+      display: inline-block;
+      width: $spacer*2;
+      height: $spacer*2;
+      margin: 0 $spacer;
+      padding: 0;
+      cursor: pointer;
+
+      &.slick-active {
+        button {
+          background-color: $gray800;
+          height: $spacer*2.5;                                                                               
+          width: $spacer*2.5;
+          opacity: 1;
+          -webkit-transition: width .3s;
+          transition: width .3s;
+        }
+      }
+
+      button {
+        border: 0;
+        border-radius: $spacer*2;
+        background-color: $gray100;
+        display: block;
+        height: $spacer*2;
+        width: $spacer*2;
+        outline: none;
+        line-height: 0;
+        font-size: 0;
+        color: transparent;
+        padding: $spacer;
+        cursor: pointer;
+        box-shadow: 0 0 5px $black;
+        opacity: .75;
+        -webkit-transition: width .3s;
+        transition: width .3s;
+
+        &:hover, 
+        &:focus {
+          outline: none;
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+@include media("<tablet") {
+  .BannerImage {
+    height: $spacer*25 !important;
+    width: 100%;
+  }
+
+  .BannerCarousel {
+    .button {
+      display: none !important;
+    }
+  }
+  
+  .custom-dots {
+    display: none !important;
+  }
+}
