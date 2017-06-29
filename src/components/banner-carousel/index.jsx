@@ -3,8 +3,8 @@ import Slider from 'react-slick';
 
 import banners from '~/src/banners';
 
-import Arrow from './arrow.jsx';
-import BannerImage from './banner-image.jsx';
+import Arrow from './arrow';
+import BannerImage from './banner-image';
 
 if (process.env.BROWSER) {
   require('./style.scss');

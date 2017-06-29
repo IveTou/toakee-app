@@ -2,7 +2,6 @@
 @import '../../scss/variables';
 @import '../../scss/colors';
 
-
 .BannerImage {  
   height: $spacer*30 !important;
   background-position: center;
@@ -79,7 +78,6 @@
         cursor: pointer;
         box-shadow: 0 0 5px $black;
         opacity: .75;
-
         -webkit-transition: width .3s;
         transition: width .3s;
 
@@ -94,7 +92,6 @@
 }
 
 @include media("<tablet") {
-
   .BannerImage {
     height: $spacer*25 !important;
     width: 100%;
