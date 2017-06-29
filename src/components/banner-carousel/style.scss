@@ -1,5 +1,7 @@
 @import 'node_modules/include-media/dist/_include-media.scss';
 @import '../../scss/variables';
+@import '../../scss/colors';
+
 
 .BannerImage {  
   height: $spacer*30 !important;
@@ -10,20 +12,19 @@
 
 .BannerCarousel {
   width: 60%;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: $spacer*3;
-  padding-bottom: $spacer*3;
+  max-width: $spacer*120;
+  margin: 0 auto;
+  padding: $spacer*3 auto;
 
   .slick-list {
-    box-shadow: 0 0 $spacer black;
+    box-shadow: 0 0 $spacer $black;
   }
+
   .button {
     top: 45%;
     position: absolute;
     z-index: 1000;
-    box-shadow: 0 0 $spacer*2 black;
+    box-shadow: 0 0 $spacer*2 $black;
     display: block !important;
 
     &.slick-prev {
@@ -36,10 +37,10 @@
   
   .custom-dots {
     position: absolute;
-    bottom: $spacer*0;
+    bottom: 0;
     display: block;
     width: 100%;
-    padding: $spacer*0;
+    padding: 0;
     list-style: none;
     text-align: center;
   
@@ -54,7 +55,7 @@
 
       &.slick-active {
         button {
-          background-color: #4d4d4d;
+          background-color: $gray800;
           height: $spacer*2.5;                                                                               
           width: $spacer*2.5;
           opacity: 1;
@@ -66,30 +67,34 @@
       button {
         border: 0;
         border-radius: $spacer*2;
-        background-color: #f2f2f2;
+        background-color: $gray100;
         display: block;
         height: $spacer*2;
         width: $spacer*2;
         outline: none;
-        line-height: $spacer*0;
-        font-size: $spacer*0;
+        line-height: 0;
+        font-size: 0;
         color: transparent;
         padding: $spacer;
         cursor: pointer;
-        box-shadow: 0 0 5px black;
+        box-shadow: 0 0 5px $black;
         opacity: .75;
-        &:hover, &:focus {
+
+        -webkit-transition: width .3s;
+        transition: width .3s;
+
+        &:hover, 
+        &:focus {
           outline: none;
           opacity: 1;
         }
-        -webkit-transition: width .3s;
-        transition: width .3s;
       }
     }
   }
 }
 
 @include media("<tablet") {
+
   .BannerImage {
     height: $spacer*25 !important;
     width: 100%;
@@ -97,10 +102,8 @@
 
   .BannerCarousel {
     width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    padding-top: 0;                                                                           
-    padding-bottom: 0;
+    margin: 0;                                                                           
+    padding: 0;
     
     .button {
       display: none !important;

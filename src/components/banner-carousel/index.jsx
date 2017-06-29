@@ -1,34 +1,16 @@
-import React, { PropTypes } from 'react';
-
+import React from 'react';
 import Slider from 'react-slick';
-import { Button } from 'semantic-ui-react';
 
 import banners from '~/src/banners';
+
+import Arrow from './arrow.jsx';
+import BannerImage from './banner-image.jsx';
 
 if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-const BannerImage = (img, url, index) => {
-  const style = {
-    backgroundImage: `url(${img})`,
-  };
-
-  return (
-    <a href={url}>
-      <div className="BannerImage" key={index} style={style} />
-    </a>
-  );
-};
-
-const Arrow = ({ className, onClick, direction }) => (
-  <Button
-    circular
-    className={className}
-    icon={`chevron ${direction}`}
-    onClick={onClick}
-  />
-);
+declare var banner;
 
 const settings = {
   dots: true,
@@ -45,19 +27,14 @@ const settings = {
   prevArrow: <Arrow direction="left" />,
 };
 
-
 const BannerCarousel = () => (
   <div className="BannerCarousel">
     <Slider {...settings}>
-      {banners.map((banner, index) => BannerImage(banner.img, banner.url, index))}
+      <For each="banner" of={banners}>
+        <BannerImage key={banner.img} {...banner} />
+      </For>
     </Slider>
   </div>
 );
-
-Arrow.propTypes = {
-  className: PropTypes.string,
-  direction: PropTypes.string,
-  onClick: PropTypes.func,
-};
 
 export default BannerCarousel;
