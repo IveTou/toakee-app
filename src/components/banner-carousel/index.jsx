@@ -17,7 +17,7 @@ const settings = {
   dotsClass: 'custom-dots',
   infinite: true,
   autoplay: true,
-  autoplaySpeed: 2000,
+  autoplaySpeed: 4000,
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
