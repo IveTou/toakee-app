@@ -16,7 +16,6 @@ import makeRoutes from '~/src/routes';
 
 if (process.env.BROWSER) {
   require('~/src/scss/base.scss');
-  require('~/node_modules/include-media/dist/_include-media.scss');
   require('~/node_modules/material-design-lite/material.min.js');
   require('~/node_modules/slick-carousel/slick/slick.css');
 }

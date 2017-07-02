@@ -12,44 +12,15 @@
     margin: 0 auto;
   }
 
-  .SignUp {
-    &-back {
-      display: block;
-      color: $black26;
-      text-decoration: none;
-      text-align: center;
+  &-link {
+    display: block;
+    text-align: center;
+    color: $black54;
+    text-decoration: none;
 
-      &:hover {
-        color: $black54;
-        text-decoration: underline;
-      }
-    }
-  }
-
-  .Login {
-    &-form {
-      &-signUp,
-      &-forgotPassword {
-        display: inline-block;
-        font-size: 12px;
-        a {
-          color: $black26;
-          text-decoration: none;
-
-          &:hover {
-            color: $black54;
-            text-decoration: underline;
-          }
-        }
-      }
-
-      &-signUp {
-        float: left;
-      }
-
-      &-forgotPassword {
-        float: right;
-      }
+    &:hover {
+      color: $black87;
+      text-decoration: underline;
     }
   }
 }

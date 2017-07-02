@@ -153,7 +153,7 @@ export class SignUp extends React.Component {
             color="orange"
             fluid
           />
-          <Link className="SignUp-back" to={{ pathname: '/login' }}>
+          <Link className="AuthWrapper-link" to={{ pathname: '/login' }}>
             Já possuo uma conta
           </Link>
         </Form>

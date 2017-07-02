@@ -98,14 +98,12 @@ export class Login extends React.Component {
             icon={this.renderErrorIcon('password')}
             error={!!this.state.errors.password}
           />
-          <div className="Login-form-signUp">
-            <Link to={{ pathname: '/cadastrar' }}>
-              Não tenho cadastro
-            </Link>
-          </div>
           <Form.Button color="orange" onClick={this.submit} fluid>
             Entrar
           </Form.Button>
+          <Link className="AuthWrapper-link" to={{ pathname: '/cadastrar' }}>
+            Não tenho cadastro
+          </Link>
         </Form>
       </div>
     );
