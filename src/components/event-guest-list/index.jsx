@@ -33,6 +33,7 @@ class EventGuestList extends React.Component {
       .filter(({ status }) => status === 'ATTENDED')
       .length;
 
+    console.log('got here');
     return (
       <div className="EventGuestList">
         <Header title={event && event.title} onIconClick={toggleDashboard} />
@@ -120,7 +121,7 @@ const injectSetAttendanceStatusMutation = graphql(setAttendanceStatusMutation, {
 const EventGuestListWithData = compose(
   injectData,
   injectSetAttendanceStatusMutation,
-)(EventGuestListList);
+)(EventGuestList);
 
 export default connect(
   ({ invitations }) => ({ filter: invitations.get('filter') }),
