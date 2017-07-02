@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
+import BannerCarousel from '~/src/components/banner-carousel';
 import EventList from '~/src/components/event-list';
 
 if (process.env.BROWSER) {
@@ -10,29 +11,14 @@ if (process.env.BROWSER) {
 const Landing = () => (
   <div className="Landing">
     <div className="Landing-banner">
-      <div className="Landing-banner-content">
-        <div className="Landing-banner-content-title">A solução</div>
-        <div className="Landing-banner-content-subtitle">para listas de eventos</div>
-        <p className="Landing-banner-content-body">
-          Você, promoter, publique seu evento e aproveite
-          toda praticidade que oferecemos.
-        </p>
-
-        <p className="Landing-banner-content-body right">
-          Você, baladeiro, faça aquele &quot;Vamos marcar...&quot; acontecer.
-          Confira nossos eventos!
-        </p>
-      </div>
-
-      <div className="Landing-banner-list">
-        <EventList
-          title="Próximos Eventos"
-          start={moment().startOf('day')}
-          end={moment().endOf('day')}
-        />
-      </div>
+      <BannerCarousel />
     </div>
     <div className="Landing-lists">
+      <EventList
+        title="Próximos Eventos"
+        start={moment().startOf('day')}
+        end={moment().endOf('day')}
+      />
       <EventList
         title="Nesta semana"
         start={moment().add(1, 'days').startOf('day')}
