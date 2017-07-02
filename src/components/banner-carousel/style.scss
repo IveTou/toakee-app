@@ -3,7 +3,7 @@
 @import '../../scss/colors';
 
 .BannerImage {  
-  height: $spacer*30 !important;
+  height: $spacer*30;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -93,7 +93,7 @@
 
 @include media("<tablet") {
   .BannerImage {
-    height: $spacer*25 !important;
+    height: $spacer*25;
     width: 100%;
   }
 
