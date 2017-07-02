@@ -8,9 +8,3 @@
     width: 100%;
   }
 }
-
-@include media("<tablet") {
-  .Logged .main {
-    padding-top: $spacer*9;
-  }
-}

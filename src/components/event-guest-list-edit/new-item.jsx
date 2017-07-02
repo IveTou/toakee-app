@@ -1,43 +1,49 @@
 import React, { PropTypes } from 'react';
 import moment from 'moment';
 import autoBind from 'react-autobind';
+import { Card, Divider, Form, Button } from 'semantic-ui-react';
 
-import { formRef } from '~/src/utils/form';
-import { createGuestList } from '~/src/toakee-core/ducks/guest-lists';
-
-import Button from '~/src/components/button';
-import Input from '~/src/components/input';
 import TimePicker from '~/src/components/time-picker';
+
+const initialState = start => ({
+  name: '',
+  socialIntegration: '',
+  registrationDeadline: moment(start).set({ hour: 20, minute: 0, second: 0 }),
+  entranceDeadline: moment(start).set({ hour: 23, minute: 59, second: 0 }),
+});
 
 export default class EventGuestListEditNewItem extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
-    this.state = {
-      registrationDeadline: moment().set({ hour: 20, minute: 0 }),
-      entranceDeadline: moment().set({ hour: 23, minute: 59 }),
-    };
+
+    const { event: { start } } = this.props;
+    this.state = initialState(start);
   }
 
-  onSubmit(e) {
-    e.preventDefault();
+  onChange(_, { name, value }) {
+    this.setState({ [name]: value });
+  }
 
-    const { dispatch, event: { id, start } } = this.props;
-    const { name, socialIntegration } = this.form;
+  onSubmit() {
+    const { registrationDeadline, entranceDeadline, name, socialIntegration } = this.state;
 
-    if (name.value) {
-      const { registrationDeadline, entranceDeadline } = this.state;
+    if (name) {
+      const { createGuestList, event: { id, start } } = this.props;
 
-      dispatch(createGuestList(id, {
-        name: name.value,
+      createGuestList({
+        eventId: id,
+        name,
         registrationDeadline: registrationDeadline.toDate(),
         entranceDeadline: moment(start).isAfter(entranceDeadline)
           ? entranceDeadline.add(1, 'days').toDate()
           : entranceDeadline.toDate(),
-        socialIntegrations: socialIntegration.value
-         ? [{ network: 'INSTAGRAM', mediaUrl: socialIntegration.value }]
+        socialIntegrations: socialIntegration
+         ? [{ network: 'INSTAGRAM', mediaUrl: socialIntegration }]
          : [],
-      }));
+      });
+
+      this.setState(initialState(start));
     }
   }
 
@@ -45,45 +51,49 @@ export default class EventGuestListEditNewItem extends React.Component {
     const { registrationDeadline, entranceDeadline } = this.state;
 
     return (
-      <div className="EventGuestListEditNewItem mdl-card mdl-shadow--2dp">
-        <form ref={formRef(this)}>
-          <Input
-            className="EventGuestListEditNewItem-input"
-            placeholder="Ex.: VIP"
-            label="Nome da lista"
-            name="name"
-          />
-          <Input
-            className="EventGuestListEditNewItem-input"
-            placeholder="https://www.instagram.com/p/00000000000/"
-            label="Link da foto no instagram"
-            name="socialIntegration"
-          />
-          <TimePicker
-            time={registrationDeadline}
-            onChange={value => this.setState({ registrationDeadline: value })}
-            className="EventGuestListEditNewItem-input"
-            label={<span>Entrar na <b>lista</b> até</span>}
-          />
-          <TimePicker
-            time={entranceDeadline}
-            onChange={value => this.setState({ entranceDeadline: value })}
-            className="EventGuestListEditNewItem-input"
-            label={<span>Entrar na <b>festa</b> até</span>}
-          />
-          <Button
-            label="Adicionar lista"
-            success
-            block
-            onClick={this.onSubmit}
-          />
-        </form>
-      </div>
+      <Card className="EventGuestListEditNewItem">
+        <Card.Content>
+          <Card.Header>Nova lista</Card.Header>
+          <Divider />
+          <Form onSubmit={this.onSubmit}>
+            <Form.Input
+              onChange={this.onChange}
+              placeholder="Ex.: VIP"
+              label="Nome"
+              name="name"
+            />
+            <Form.Input
+              onChange={this.onChange}
+              placeholder="https://www.instagram.com/p/00000000000/"
+              label="Link da foto no instagram"
+              name="socialIntegration"
+            />
+            <Form.Field inline>
+              <label>Entrar na <u>lista</u> até:</label>
+              <TimePicker
+                time={registrationDeadline}
+                onChange={value => this.setState({ registrationDeadline: value })}
+                className="EventGuestListEditNewItem-input"
+              />
+            </Form.Field>
+            <Form.Field inline>
+              <label>Entrar na <u>festa</u> até:</label>
+              <TimePicker
+                time={entranceDeadline}
+                onChange={value => this.setState({ entranceDeadline: value })}
+                className="EventGuestListEditNewItem-input"
+              />
+            </Form.Field>
+          </Form>
+          <Divider />
+          <Button content="Adicionar lista" onClick={this.onSubmit} color="green" fluid />
+        </Card.Content>
+      </Card>
     );
   }
 }
 
 EventGuestListEditNewItem.propTypes = {
   event: PropTypes.object,
-  dispatch: PropTypes.func,
+  createGuestList: PropTypes.func,
 };

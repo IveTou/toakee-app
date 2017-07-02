@@ -23,73 +23,72 @@
 
     .EventListItem {
       margin: $spacer 0 $spacer $spacer*3;
-      max-width: $spacer*25;
+      max-width: $spacer*30;
       display: inline-block;
+
+      .header {
+        overflow: hidden;
+      }
 
       &-link {
         text-decoration: none;
       }
 
-      &-background {
+      &-background,
+      &-background.image img {
         @include drag(none);
         width: 100%;
         height: $spacer*25;
         object-fit: cover;
       }
 
-      &-content {
-        padding: $spacer*2;
-
-        &-title {
-          display: block;
-          height: $spacer*6;
+      &-details {
+        &.content {
           padding: 0;
           overflow: hidden;
+        }
 
-          &-text {
-            font-size: 16px;
-            font-weight: 500;
+        &-calendar {
+          color: $black54;
+          text-align: center;
+          font-weight: bold;
+          padding: 0 $spacer;
+          border-right: 1px solid rgba(0,0,0,.05);
+          display: inline-block;
+          vertical-align: middle;
+
+          &-month {
+            font-size: 12px;
+            text-transform: uppercase;
+          }
+
+          &-day {
+            font-weight: 300;
+            font-size: 26px;
+            padding: $spacer/2 0;
           }
         }
 
-        &-truncate {
-          width: 100%;
-          height: $spacer;
-          position: absolute;
-          @include gradient-background(to bottom, $white30, $white);
-          margin: $spacer*-1 $spacer*-2;
-        }
-
-        &-time {
-          font-size: 14px;
-        }
-
-        &-body,
-        &-time {
-          margin-top: $spacer;
-          padding: 0;
+        &-timeAndPlace {
+          width: calc(100% - #{$spacer*7});
+          padding: 0 $spacer;
+          display: inline-block;
+          vertical-align: middle;
+          overflow: hidden;
         }
       }
+
     }
 
     .EventListArrow {
       position: absolute;
-      padding: 0 $spacer;
-      background-color: $orange87;
-      font-size: 60px;
       z-index: 2;
-      color: $white;
       margin-top: $spacer*12;
-      height: $spacer*10;
-      align-items: center;
-      border-radius: 3px;
       @include box-shadow(0 0 $spacer $black26);
-      cursor: pointer;
-      border: 0;
-      transition: all .20s ease-out;
+      border-radius: 4px;
 
-      &:hover {
-        background-color: $orange;
+      &.icon.bordered {
+        width: $spacer*8;
       }
 
       &--right {
@@ -108,10 +107,20 @@
         }
       }
 
-      &--hidden {
+      &--hidden.icon.link {
         opacity: 0;
         pointer-events: none;
+
+        &:hover {
+          opacity: 0 !important;
+        }
       }
+    }
+
+    &-end {
+      display: inline-block;
+      height: 100%;
+      width: $spacer*3;
     }
   }
 }

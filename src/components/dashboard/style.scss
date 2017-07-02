@@ -5,7 +5,7 @@
 
 .DashboardMenu {
   position: fixed;
-  height: calc(100% - #{$spacer*10});
+  height: calc(100% - #{$topbar-height});
   width: $spacer*40;
   @include box-shadow(0 $spacer/4 $spacer/2 $black26);
 

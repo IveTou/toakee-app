@@ -1,12 +1,18 @@
 import React, { PropTypes } from 'react';
+import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
+import { Input, Icon } from 'semantic-ui-react';
 
-import { closeDashboard } from '~/src/toakee-core/ducks/dashboard';
-import { fetchGuestLists } from '~/src/toakee-core/ducks/guest-lists';
-import { fetchInvitations, changeInvitationsFilter } from '~/src/toakee-core/ducks/invitations';
-
+import { changeInvitationsFilter } from '~/src/ducks/invitations';
+import {
+  closeDashboard,
+  toggleDashboard as _toggleDashboard,
+} from '~/src/ducks/dashboard';
+import { generateGuestListPdf } from '~/src/utils/pdf';
 import Header from '~/src/components/header';
-import EventGuestListItem from './item';
+
+import EventGuestListList from './list';
+import query, { setAttendanceStatusMutation } from './graphql';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -14,55 +20,29 @@ if (process.env.BROWSER) {
 
 class EventGuestList extends React.Component {
   componentWillMount() {
-    const { slug } = this.props.router.params;
-    const { selectedEvent, dispatch } = this.props;
-    const params = selectedEvent
-      ? { eventId: selectedEvent.id }
-      : { eventSlug: slug };
-
-    dispatch(fetchInvitations(params));
-    dispatch(fetchGuestLists(params));
-    dispatch(closeDashboard());
+    this.props.closeDashboard();
   }
 
   render() {
-    const { invitations, filter, selectedEvent, dispatch } = this.props;
+    const { filter, viewer, toggleAttendanceStatus, toggleDashboard, changeFilter } = this.props;
+    const { event } = viewer || {};
+    const { invitations } = event || {};
 
-    const total = invitations.size;
-    const filterRegex = new RegExp(
-      `\\b${filter.trim().replace(/\s+/, '[\\s\\S]*\\s')}`,
-      'i',
-    );
-
-    const confirmed = invitations
+    const total = (invitations || []).length;
+    const confirmed = (invitations || [])
       .filter(({ status }) => status === 'ATTENDED')
-      .size;
-
-    const list = total
-      ? invitations
-          .filter(({ normalizedName }) => normalizedName.match(filterRegex))
-          .sort(({ normalizedName: a }, { normalizedName: b }) => (
-            a.match(filterRegex).index - b.match(filterRegex).index
-            || a < b ? -1 : 1
-          ))
-          .toList()
-      : [];
-
-    declare var invitation;
-    declare var idx;
+      .length;
 
     return (
       <div className="EventGuestList">
-        <Header title={selectedEvent && selectedEvent.title} />
+        <Header title={event && event.title} onIconClick={toggleDashboard} />
         <div className="EventGuestList-filters">
-          <div className="EventGuestList-filters-input">
-            <input
-              placeholder="Quem você deseja buscar na lista?"
-              onChange={e => dispatch(changeInvitationsFilter(e.target.value))}
-              type="text"
-            />
-            <i className="fa fa-search" />
-          </div>
+          <Input
+            className="EventGuestList-filters-input"
+            icon="search"
+            placeholder="Digite o nome"
+            onChange={changeFilter}
+          />
           <div className="EventGuestList-filters-summary">
             <span className="EventGuestList-filters-summary-total">
               <b>Nomes na lista:</b> {total}
@@ -72,30 +52,81 @@ class EventGuestList extends React.Component {
               <b>Confirmados:</b> {confirmed}
             </span>
           </div>
-        </div>
-        <div className="EventGuestList-list">
-          <For each="invitation" index="idx" of={list}>
-            <EventGuestListItem
-              key={idx}
-              shadow={list[idx + 1] && list[idx + 1].status === 'INVITED'}
-              {...invitation}
+          <div className="EventGuestList-filters-tools">
+            <Icon
+              className="EventGuestList-filters-tools-icon"
+              onClick={() => generateGuestListPdf(event, invitations)}
+              name="file pdf outline"
+              size="big"
             />
-          </For>
+          </div>
         </div>
+        <EventGuestListList
+          toggleAttendanceStatus={toggleAttendanceStatus}
+          invitations={invitations}
+          filter={filter}
+        />
       </div>
     );
   }
 }
 
 EventGuestList.propTypes = {
-  router: PropTypes.object,
-  dispatch: PropTypes.func,
-  invitations: PropTypes.object,
-  selectedEvent: PropTypes.object,
+  viewer: PropTypes.object,
   filter: PropTypes.string,
+  toggleAttendanceStatus: PropTypes.func,
+  toggleDashboard: PropTypes.func,
+  closeDashboard: PropTypes.func,
+  changeFilter: PropTypes.func,
 };
 
-export default connect(({ invitations, events }, { selectedEvent = {} }) => ({
-  invitations: invitations.get('data').filter(i => i.eventId === selectedEvent.id),
-  filter: invitations.get('filter'),
-}))(EventGuestList);
+const injectData = graphql(query, {
+  options: ({ router }) => ({
+    variables: {
+      eventSlug: router.params.slug,
+    },
+  }),
+  props: ({ data: { viewer } }) => ({ viewer }),
+});
+
+const injectSetAttendanceStatusMutation = graphql(setAttendanceStatusMutation, {
+  props: ({ mutate, ownProps: { viewer } }) => ({
+    toggleAttendanceStatus: (invitation) => {
+      const { slug: eventSlug, id: eventId } = viewer.event;
+
+      const { status } = invitation;
+      const newStatus = status === 'ATTENDED' ? 'INVITED' : 'ATTENDED';
+
+      return mutate({
+        variables: { eventId, status: newStatus, invitationId: invitation.id },
+        update: (store, { data: { setAttendanceStatus } }) => {
+          const data = store.readQuery({ query, variables: { eventSlug } });
+
+          data.viewer.event.invitations
+            .find(({ id }) => id === invitation.id)
+            .status = setAttendanceStatus ? newStatus : status;
+
+          store.writeQuery({ query, data });
+        },
+        optimisticResponse: {
+          __typename: 'Mutation',
+          setAttendanceStatus: true,
+        },
+      });
+    },
+  }),
+});
+
+const EventGuestListWithData = compose(
+  injectData,
+  injectSetAttendanceStatusMutation,
+)(EventGuestListList);
+
+export default connect(
+  ({ invitations }) => ({ filter: invitations.get('filter') }),
+  dispatch => ({
+    toggleDashboard: () => dispatch(_toggleDashboard()),
+    closeDashboard: () => dispatch(closeDashboard()),
+    changeFilter: e => dispatch(changeInvitationsFilter(e.target.value)),
+  }),
+)(EventGuestListWithData);

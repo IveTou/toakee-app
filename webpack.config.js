@@ -1,14 +1,15 @@
 const path = require('path');
 const webpack = require('webpack');
-const combineLoaders = require('webpack-combine-loaders');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const _ = require('lodash');
+const AssetsPlugin = require('assets-webpack-plugin');
+
+const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-  entry: ['babel-polyfill', './src/main.jsx'],
+  entry: ['./src/main.jsx'],
   output: {
-    path: path.join(__dirname, '/public/js'),
-    filename: 'bundle.js'
+    path: path.join(__dirname, '/public'),
+    filename: devMode ? '[name].js' : '[name].[chunkhash].js',
   },
   module: {
     rules: [
@@ -25,7 +26,12 @@ module.exports = {
           publicPath: './public/css',
         }),
       },
-    ]
+      {
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        loader: 'graphql-tag/loader',
+      },
+    ],
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -33,14 +39,18 @@ module.exports = {
         BROWSER: JSON.stringify(true),
       },
     }),
-    new ExtractTextPlugin('../css/style.css'),
+    new ExtractTextPlugin(devMode ? 'style.css' : 'style.[contenthash].css'),
+    new AssetsPlugin({ filename: 'assets.json', prettyPrint: true }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: ['vendor'],
+    }),
   ],
   node: {
     fs: 'empty',
     net: 'empty',
-    tls: 'empty'
+    tls: 'empty',
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json']
-  }
+    extensions: ['.js', '.jsx', '.json'],
+  },
 };

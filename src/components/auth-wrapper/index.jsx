@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { Card } from 'semantic-ui-react';
 
 const propTypes = {
   children: PropTypes.node,
@@ -10,11 +11,11 @@ if (process.env.BROWSER) {
 
 const AuthWrapper = ({ children }) => (
   <div className="AuthWrapper">
-    <div className="AuthWrapper-content">
-      <div className="AuthWrapper-content-box">
+    <Card className="AuthWrapper-content">
+      <Card.Content>
         {children}
-      </div>
-    </div>
+      </Card.Content>
+    </Card>
   </div>
 );
 

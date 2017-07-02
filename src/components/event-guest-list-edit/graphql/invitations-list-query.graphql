@@ -1,0 +1,8 @@
+fragment EventGuestListEditInvitationsListFragment on GuestList {
+  invitations {
+    id
+    name
+    eventId
+    guestListId
+  }
+}

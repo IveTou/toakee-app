@@ -13,37 +13,37 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="HandheldFriendly" content="True">
     <meta http-equiv="cleartype" content="on">
-    <link href="/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
-    <style>
-      @import '../scss/variables';
-      @media screen and (max-width: 1024px) {
-        .TopBar.header {
-          display: block;
-        }
-      }
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css" />
+    <link href="/{{assets.main.css}}" rel="stylesheet" />
 
-      .TopBar.header .Logo { width: 200px; }
-      main {
-        padding: 80px 40px;
-        max-width: 720px;
+    <style>
+      .main {
+        padding: 104px 24px;
+        max-width: 640px;
       }
-      .Logo { background: url(#{$assets-base-uri}/core/site/logo.png) }
     </style>
   </head>
   <body>
-    <header class="TopBar header mdl-layout__header">
-      <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title">
-          <a href="/">
-            <img class="Logo" alt="toakee logo" />
-          </a>
-        </span>
-        <div class="mdl-layout-spacer" />
-        <nav class="mdl-navigation" />
+    <header class="ui borderless top fixed TopBar menu">
+      <div class="item">
+        <a href="/">
+          <img
+            class="Logo"
+            alt="toakee logo"
+            src="http://res.cloudinary.com/toakeeassets/image/upload/s--Ug65JuU_--/v1494199755/core/site/logo.png"
+          />
+        </a>
+      </div>
+      <div class="right menu">
+        <div class="item">
+          <div class="ui buttons">
+            <a class="ui basic button" href="/login">Entrar</a>
+            <a class="ui orange button" href="/cadastrar">Cadastrar</a>
+          </div>
+        </div>
       </div>
     </header>
-    <main>
+    <main class="main">
      <h2>TERMOS DE USO PARA TOAKEE</h2>
      <p>
        Leia com atenção este termo de uso. Se você não concordar com qualquer condição do documento,

@@ -1,26 +1,32 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
 @import '../../scss/colors';
 @import '../../scss/variables';
 @import '../../scss/mixins';
 
 .AuthWrapper {
-  height: calc(100vh - #{$topbar-height});
+  min-height: calc(100vh - #{$topbar-height});
   background-color: $black06;
+  padding: $spacer*10 $spacer*2 $spacer*3;
 
-  &-content {
-    padding-top: 6%;
+  &-content.card {
+    margin: 0 auto;
+  }
 
-    &-logo {
-      display: table;
-      margin: 0 auto $spacer*2;
+  &-link {
+    display: block;
+    text-align: center;
+    color: $black54;
+    text-decoration: none;
+
+    &:hover {
+      color: $black87;
+      text-decoration: underline;
     }
+  }
+}
 
-    &-box {
-      margin: 0 auto;
-      max-width: $spacer*41;
-      padding: $spacer*3;
-      background-color: $white;
-      border: 1px $gray100 solid;
-      border-radius: 10px;
-    }
+@include media("<tablet") {
+  .AuthWrapper {
+    padding-top: $spacer*3;
   }
 }
