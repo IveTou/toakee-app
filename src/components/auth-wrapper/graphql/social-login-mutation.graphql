@@ -1,0 +1,3 @@
+mutation SocialLogin($network: SocialNetwork!, $token: String!) {
+  socialLogin(network: $network, token: $token)
+}

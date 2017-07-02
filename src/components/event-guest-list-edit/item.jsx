@@ -1,212 +1,201 @@
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { provideState, injectState, softUpdate } from 'freactal';
-import { merge } from 'lodash';
-import { Icon as SemanticIcon } from 'semantic-ui-react';
-
-import { addNamesToGuestList } from '~/src/toakee-core/ducks/invitations';
-import { removeGuestList } from '~/src/toakee-core/ducks/guest-lists';
-import { dialogConfirm } from '~/src/toakee-core/ducks/dialog';
+import moment from 'moment';
+import { Map } from 'immutable';
+import autoBind from 'react-autobind';
+import { Form, Input, Divider, Button, Icon, TextArea, Card, Label } from 'semantic-ui-react';
 
 import TimePicker from '~/src/components/time-picker';
-import Button from '~/src/components/button';
-import Icon from '~/src/components/icon';
 
 import EventGuestListEditInvitationsList from './invitations-list';
 
-const buildInputClass = (state, input) => (
-  `EventGuestListEditItem-input ${state.editingForm[input] ? 'editing' : ''}`
+const extractNames = newInvitations => (
+  newInvitations
+    .split('\n')
+    .map(name => name.trim().replace(/\s+/g, ' '))
+    .filter(name => name)
 );
 
-const stateWrapper = provideState({
-  initialState: ({ id, name, entranceDeadline, registrationDeadline, socialIntegrations }) => ({
-    id,
-    name,
-    editingForm: {},
-    entranceDeadline,
-    registrationDeadline,
-    socialIntegration: socialIntegrations[0] ? socialIntegrations[0].mediaUrl : '',
-    newInvitations: '',
-  }),
-  effects: {
-    onChange: softUpdate((state, attr, value) => ({
-      [attr]: value,
-      editingForm: { ...state.editingForm, [attr]: true },
-    })),
-    cancelChanges: (effects, attr, oldValue, id) => (state) => {
-      if (attr === 'name') {
-        const input =
-          document.querySelector(`.EventGuestListEditItem.id-${id} input`);
-        input.value = oldValue;
-      } else if (attr === 'socialIntegration') {
-        const input =
-          document.querySelector(
-            `.EventGuestListEditItem.id-${id} .socialIntegrations input`,
-          );
-        input.value = oldValue;
-      }
-
-      return merge({}, state, {
-        [attr]: oldValue,
-        editingForm: { ...state.editingForm, [attr]: false },
-      });
-    },
-    saveChanges: (effects, guestList, attr, _state) => {
-      const patch = attr === 'socialIntegration'
-        ? { socialIntegrations: { mediaUrl: [_state[attr]] } }
-        : { [attr]: _state[attr] };
-
-      return effects.updateGuestList(guestList.eventId, guestList.id, patch)
-        .then(() => state => (
-          merge({}, state, { editingForm: { ...state.editingForm, [attr]: false } })
-        ));
-    },
-  },
+const mapGuestList = gl => ({
+  id: gl.id,
+  name: gl.name,
+  entranceDeadline: moment(gl.entranceDeadline),
+  registrationDeadline: moment(gl.registrationDeadline),
+  socialIntegration: gl.socialIntegrations[0] ? gl.socialIntegrations[0].mediaUrl : '',
 });
 
-const EventGuestListEditItem = ({
-  id,
-  eventId,
-  name,
-  entranceDeadline,
-  registrationDeadline,
-  socialIntegrations,
-  invitationsList,
-  state,
-  effects,
-  submitNewInvitations,
-  deleteGuestList,
-}) => {
-  const guestList = { id, eventId };
-  const socialIntegration = socialIntegrations.length
-    ? socialIntegrations[0].mediaUrl
-    : '';
+class EventGuestListEditItem extends React.Component {
+  constructor(props) {
+    super(props);
+    autoBind(this);
 
-  const renderEditingButtons = (attr, oldValue) => (
-    <span className="EventGuestListEditItem-input-editingButtons">
-      <Icon icon="check" onClick={() => effects.saveChanges(guestList, attr, state)} />
-      <Icon icon="times" onClick={() => effects.cancelChanges(attr, oldValue, id)} />
-    </span>
-  );
+    const { guestList } = this.props;
 
-  return (
-    <div className={`EventGuestListEditItem mdl-card mdl-shadow--2dp id-${id}`}>
-      <SemanticIcon
-        className="EventGuestListEditItem-remove"
-        name="delete"
-        onClick={deleteGuestList}
-      />
-      <div className={`EventGuestListEditItem-name ${buildInputClass(state, 'name')}`}>
-        <input
-          defaultValue={state.name}
-          onChange={e => effects.onChange('name', e.target.value)}
-        />
-        {renderEditingButtons('name', name)}
-      </div>
-      <div className={buildInputClass(state, 'registrationDeadline')}>
-        <span>Entrar na <b>lista</b> até: </span>
-        <span className="EventGuestListEditItem-input-field">
-          <TimePicker
-            className="EventGuestListEditItem-input"
-            onChange={time => effects.onChange('registrationDeadline', time)}
-            time={state.registrationDeadline}
+    this.state = {
+      tempGuestList: Map(mapGuestList(guestList)),
+      editingForm: Map({
+        name: false,
+        registrationDeadline: false,
+        entranceDeadline: false,
+        socialIntegration: false,
+      }),
+    };
+  }
+
+  onChange(attr, value) {
+    this.setState({
+      tempGuestList: this.state.tempGuestList.set(attr, value),
+      editingForm: this.state.editingForm.set(attr, true),
+    });
+  }
+
+  onChangeArea(e) {
+    this.setState({ newInvitations: e.target.value });
+  }
+
+  addNamesToGuestList(e) {
+    e.preventDefault();
+
+    const { newInvitations } = this.state;
+    this.props.addNamesToGuestList(this.props.guestList, extractNames(newInvitations))
+      .catch(() => this.setState({ newInvitations }));
+
+    this.setState({ newInvitations: '' });
+  }
+
+  saveChanges(attr) {
+    const { tempGuestList, editingForm } = this.state;
+    const patch = attr === 'socialIntegration'
+      ? { socialIntegrations: [{ mediaUrl: tempGuestList.get(attr), network: 'INSTAGRAM' }] }
+      : { [attr]: tempGuestList.get(attr) };
+    const updater = (value, isEditing) => {
+      this.setState({
+        tempGuestList: tempGuestList.set(attr, value),
+        editingForm: editingForm.set(attr, isEditing),
+      });
+    };
+
+    this.props.updateGuestList(this.props.guestList, patch)
+      .catch(() => updater(mapGuestList(this.props.guestList)[attr], true));
+
+    updater(patch[attr], false);
+  }
+
+  cancelChanges(attr) {
+    const value = mapGuestList(this.props.guestList)[attr];
+
+    this.setState({
+      tempGuestList: this.state.tempGuestList.set(attr, value),
+      editingForm: this.state.editingForm.set(attr, false),
+    });
+  }
+
+  removeGuestList() {
+    this.props.removeGuestList(this.props.guestList.id);
+  }
+
+  renderEditingButtons(attr) {
+    return this.state.editingForm.get(attr) && (
+      <span className="EventGuestListEditItem-input-editingButtons">
+        <Icon link name="check" onClick={() => this.saveChanges(attr)} />
+        <Icon link name="delete" onClick={() => this.cancelChanges(attr)} />
+      </span>
+    );
+  }
+
+  render() {
+    const { guestList, removeInvitation } = this.props;
+    const { tempGuestList, editingForm } = this.state;
+
+    const inputClasses = editingForm
+      .map(v => `EventGuestListEditItem-input ${v ? 'editing' : ''}`);
+
+    const socialIntegration = guestList.socialIntegrations.length
+      ? guestList.socialIntegrations[0].mediaUrl
+      : '';
+
+    return (
+      <Card className="EventGuestListEditItem">
+        <Card.Content>
+          <Label corner>
+            <Icon link name="trash" onClick={this.removeGuestList} />
+          </Label>
+          <Card.Header color="orange">
+            <Input
+              transparent
+              value={tempGuestList.get('name')}
+              onChange={e => this.onChange('name', e.target.value)}
+              className={inputClasses.get('name')}
+            />
+            {this.renderEditingButtons('name')}
+          </Card.Header>
+
+          <Divider />
+
+          <Form>
+            <Form.Field inline>
+              <label>Entrar na <u>lista</u> até: </label>
+              <TimePicker
+                time={tempGuestList.get('registrationDeadline')}
+                onChange={time => this.onChange('registrationDeadline', time)}
+              />
+              {this.renderEditingButtons('registrationDeadline')}
+            </Form.Field>
+
+            <Form.Field inline>
+              <label>Entrar na <u>festa</u> até: </label>
+              <TimePicker
+                time={tempGuestList.get('entranceDeadline')}
+                onChange={time => this.onChange('entranceDeadline', time)}
+              />
+              {this.renderEditingButtons('entranceDeadline')}
+            </Form.Field>
+
+            <Form.Field>
+              <label>Link no instagram:</label>
+              <Input
+                placeholder="http://linkaqui"
+                value={tempGuestList.get('socialIntegration')}
+                onChange={(_, { value }) => this.onChange('socialIntegration', value)}
+                transparent
+              >
+                <input />
+                <If condition={socialIntegration && !editingForm.get('socialIntegration')}>
+                  <a href={socialIntegration} target="_blank" rel="noopener noreferrer">
+                    <Icon name="external" />
+                  </a>
+                </If>
+                {this.renderEditingButtons('socialIntegration')}
+              </Input>
+            </Form.Field>
+          </Form>
+
+          <Divider />
+
+          <Form>
+            <TextArea
+              onChange={this.onChangeArea}
+              placeholder="Adicionar nomes. Um por linha."
+              value={this.state.newInvitations}
+              rows={2}
+            />
+            <Button icon="plus" onClick={this.addNamesToGuestList} color="green" basic />
+          </Form>
+          <EventGuestListEditInvitationsList
+            invitationsList={guestList.invitations}
+            removeInvitation={removeInvitation}
           />
-        </span>
-        {renderEditingButtons('registrationDeadline', registrationDeadline)}
-      </div>
-      <div className={buildInputClass(state, 'entranceDeadline')}>
-        <span>Entrar na <b>festa</b> até: </span>
-        <span className="EventGuestListEditItem-input-field">
-          <TimePicker
-            className="EventGuestListEditItem-input"
-            onChange={time => effects.onChange('entranceDeadline', time)}
-            time={state.entranceDeadline}
-          />
-        </span>
-        {renderEditingButtons('entranceDeadline', entranceDeadline)}
-      </div>
-      <div className="EventGuestListEditItem-input socialIntegrations">
-        Link no instagram:
-        <div
-          className={
-            `EventGuestListEditItem-socialIntegrations-item ${buildInputClass(state, 'socialIntegration')}`
-          }
-        >
-          <input
-            placeholder="http://linkaqui"
-            defaultValue={state.socialIntegration}
-            onChange={e => effects.onChange('socialIntegration', e.target.value)}
-          />
-          {renderEditingButtons('socialIntegration', socialIntegration)}
-          <If condition={socialIntegration}>
-            <a
-              href={socialIntegration.mediaUrl}
-            >
-              <Icon icon="external-link" />
-            </a>
-          </If>
-        </div>
-      </div>
-      <hr />
-      <div className="EventGuestListEditItem-input addNames">
-        <textarea
-          placeholder="Adicionar nomes. Separe por quebra de linha."
-          onChange={e => effects.onChange('newInvitations', e.target.value)}
-        />
-        <Button
-          icon="plus"
-          onClick={submitNewInvitations(state, effects)}
-          success
-        />
-      </div>
-      <EventGuestListEditInvitationsList invitationsList={invitationsList} />
-    </div>
-  );
-};
+        </Card.Content>
+      </Card>
+    );
+  }
+}
 
 EventGuestListEditItem.propTypes = {
-  id: PropTypes.string,
-  eventId: PropTypes.string,
-  name: PropTypes.string,
-  entranceDeadline: PropTypes.object,
-  registrationDeadline: PropTypes.object,
-  socialIntegrations: PropTypes.array,
-  invitationsList: PropTypes.object,
-  state: PropTypes.object,
-  effects: PropTypes.object,
-  submitNewInvitations: PropTypes.func,
-  deleteGuestList: PropTypes.func,
+  guestList: PropTypes.object,
+  addNamesToGuestList: PropTypes.func,
+  updateGuestList: PropTypes.func,
+  removeGuestList: PropTypes.func,
+  removeInvitation: PropTypes.func,
 };
 
-export default connect(
-  ({ invitations, newInvitations }, { id }) => ({
-    invitationsList: invitations
-      .get('data')
-      .filter(i => i.guestListId === id)
-      .sortBy(i => i.name)
-      .toList(),
-  }),
-  (dispatch, { id, eventId }) => ({
-    deleteGuestList: () => {
-      const title = 'Tem certeza que deseja remover a lista?';
-      const onConfirm = () => dispatch(removeGuestList(eventId, id));
-      const confirmTrigger = { color: 'red', icon: 'trash' };
-
-      dispatch(dialogConfirm(title, onConfirm, { confirmTrigger }));
-    },
-    submitNewInvitations: ({ newInvitations }, effects) => () => {
-      const names = newInvitations
-        .split('\n')
-        .map(name => name.trim().replace(/\s+/g, ' '))
-        .filter(name => name);
-
-      const textarea = document.querySelector(
-        `.EventGuestListEditItem.id-${id} textarea`,
-      );
-      textarea.value = '';
-
-      effects.onChange('newInvitations', '');
-      dispatch(addNamesToGuestList(eventId, id, names));
-    },
-  }),
-)(stateWrapper(injectState(EventGuestListEditItem)));
+export default EventGuestListEditItem;

@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
-
-import Icon from '~/src/components/icon';
+import { Icon } from 'semantic-ui-react';
 
 const buildClasses = ({ direction, hide }) => classNames(
   'EventListArrow',
@@ -10,13 +9,16 @@ const buildClasses = ({ direction, hide }) => classNames(
 );
 
 const EventListArrow = ({ onClick, direction, hide }) => (
-  <button
-    role="button"
+  <Icon
+    bordered
+    inverted
+    link
+    color="orange"
     className={buildClasses({ direction, hide })}
     onClick={onClick}
-  >
-    <Icon icon={`caret-${direction}`} />
-  </button>
+    name={`caret ${direction}`}
+    size="huge"
+  />
 );
 
 EventListArrow.propTypes = {

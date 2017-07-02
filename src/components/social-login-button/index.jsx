@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import autoBind from 'react-autobind';
-import Button from '~/src/components/button';
+import { capitalize } from 'lodash';
+import { Button, Icon } from 'semantic-ui-react';
 
 import config from '~/src/config';
 
@@ -21,6 +22,11 @@ const query = clientId => [
 const url = {
   facebook: `https://www.facebook.com/v2.8/dialog/oauth?${query(FACEBOOK_APP_ID)}`,
   instagram: `https://api.instagram.com/oauth/authorize?${query(INSTAGRAM_APP_ID)}`,
+};
+
+const icon = {
+  facebook: 'facebook f',
+  instagram: 'instagram',
 };
 
 const propTypes = {
@@ -58,13 +64,9 @@ export default class SocialLoginButton extends React.Component {
   render() {
     const { network } = this.props;
     return (
-      <Button
-        className="SocialLoginButton"
-        onClick={this.login}
-        label={network}
-        icon={network}
-        raised
-      />
+      <Button color={network} onClick={this.login} fluid>
+        <Icon name={icon[network]} /> {capitalize(network)}
+      </Button>
     );
   }
 }

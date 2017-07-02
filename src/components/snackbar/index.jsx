@@ -1,21 +1,30 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { Message } from 'semantic-ui-react';
+import classNames from 'classnames';
 
 if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-export const showToast = (message, options) => {
-  document.querySelector('.Snackbar').MaterialSnackbar.showSnackbar({
-    message,
-    ...options,
-  });
-};
+const buildClasses = visible => classNames('Snackbar', {
+  'Snackbar--visible': visible,
+});
 
-const Snackbar = () => (
-  <div className="Snackbar mdl-js-snackbar mdl-snackbar">
-    <div className="mdl-snackbar__text" />
-    <button className="mdl-snackbar__action" type="button" />
-  </div>
+const Snackbar = ({ visible, props: { color, message } }) => (
+  <Message color={color} className={buildClasses(visible)}>
+    {message}
+  </Message>
 );
 
-export default Snackbar;
+Snackbar.propTypes = {
+  visible: PropTypes.bool,
+  props: PropTypes.shape({
+    color: PropTypes.string,
+    message: PropTypes.string,
+  }),
+};
+
+export default connect(
+  ({ snackbar }) => ({ visible: snackbar.get('visible'), props: snackbar.get('props') }),
+)(Snackbar);

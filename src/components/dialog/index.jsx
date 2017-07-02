@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Modal } from 'semantic-ui-react';
 
-import { dialogClose } from '~/src/toakee-core/ducks/dialog';
+import { dialogClose } from '~/src/ducks/dialog';
 
 const defaultCancelTrigger = {
   key: 'cancel',
@@ -38,21 +38,14 @@ const Dialog = ({ open, close, mode, allProps }) => {
     onConfirm = () => {},
     ...modalProps
   } = allProps;
+
   const onClick = () => { onConfirm(); close(); };
 
-  return (
-    <Modal
-      open={open}
-      size="small"
-      basic
-      actions={
-        mode === 'confirm'
-          ? buildConfirmTriggers(onClick, close, confirmTrigger, cancelTrigger)
-          : buildAlertTriggers(close, confirmTrigger)
-      }
-      {...modalProps}
-    />
-  );
+  const actions = mode === 'confirm'
+    ? buildConfirmTriggers(onClick, close, confirmTrigger, cancelTrigger)
+    : buildAlertTriggers(close, confirmTrigger);
+
+  return <Modal open={open} actions={actions} size="small" basic {...modalProps} />;
 };
 
 Dialog.propTypes = {

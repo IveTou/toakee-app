@@ -4,12 +4,14 @@
   "description": "Node Express React Simplest Application",
   "main": "index.js",
   "scripts": {
-    "start": "node ./dist/index.js",
+    "postinstall": "npm run build",
+    "start": "NODE_ENV=production node ./dist/index.js",
     "script": "babel-node scripts/index",
     "webpack:watch": "webpack -w",
     "express-server": "babel-node ./src/server/index.js",
-    "build:app": "webpack -p",
-    "build:server": "babel src/server/ -d dist/",
+    "build": "npm run build:server && npm run build:app",
+    "build:app": "NODE_ENV=production webpack -p",
+    "build:server": "NODE_ENV=production babel src/server/ -d dist/",
     "dev": "concurrently --kill-others  \"npm run webpack:watch\" \"npm run express-server\"",
     "lint": "eslint --ext .js,.jsx src/**"
   },
@@ -43,7 +45,6 @@
     "concurrently": "^3.1.0",
     "express": "^4.14.0",
     "fb": "1.1.1",
-    "freactal": "^1.0.0",
     "graphql-tag": "^2.4.0",
     "immutable": "3.8.1",
     "include-media": "^1.4.9",
@@ -71,9 +72,11 @@
     "request-promise": "4.1.1",
     "semantic-ui-react": "^0.68.3",
     "slick-carousel": "^1.6.0",
-    "smoothit": "^1.0.6"
+    "smoothit": "^1.0.6",
+    "validate.js": "^0.11.1"
   },
   "devDependencies": {
+    "assets-webpack-plugin": "^3.5.1",
     "babel": "^6.5.2",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.21.0",

@@ -1,181 +1,87 @@
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import autoBind from 'react-autobind';
+import { graphql } from 'react-apollo';
+import { Icon } from 'semantic-ui-react';
 
 import config from '~/src/config';
-import { formRef } from '~/src/utils/form';
 
 import { fullDateFormat, timeFormat } from '~/src/utils/moment';
-import { fetchEvents } from '~/src/toakee-core/ducks/events';
-import { fetchGuestLists } from '~/src/toakee-core/ducks/guest-lists';
-import { addNamesToGuestList } from '~/src/toakee-core/ducks/invitations';
 
-import Icon from '~/src/components/icon';
-import Input from '~/src/components/input';
-import Button from '~/src/components/button';
-import TextArea from '~/src/components/text-area';
+
+import query from './graphql';
 
 if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-let listener = () => {};
-window.recaptchaCallback = () => listener();
+const EventPage = ({ viewer = {} }) => {
+  const { event = {} } = viewer;
+  const { title, description, place, start, price, flyer } = event;
+  const flyerAlt = `Flyer do ${title || 'evento'}`;
+  const flyerSrc = flyer || `${config.ASSETS_BASE_URI}/core/site/partying`;
 
-class EventPage extends React.Component {
-  constructor(props) {
-    super(props);
-    autoBind(this);
-  }
-
-  componentWillMount() {
-    const { slug } = this.props.router.params;
-    const { event, dispatch } = this.props;
-
-    const params = event.id
-      ? { eventId: event.id }
-      : { eventSlug: slug };
-
-    dispatch(fetchGuestLists(params));
-    if (!event.id || !event.description) {
-      dispatch(fetchEvents({ slug, full: true }));
-    }
-  }
-
-  submit(e) {
-    e.preventDefault();
-
-    listener = () => {
-      const recaptchaToken = this.form['g-recaptcha-response'].value;
-      if (recaptchaToken) {
-        const names = this.form.names.value
-          .split('\n')
-          .map(name => name.trim().replace(/\s\s+/g, ' '))
-          .filter(name => name);
-
-        if (names.length) {
-          const { event, dispatch } = this.props;
-          const guestListId = this.form.guestList.value;
-          dispatch(addNamesToGuestList(event.id, guestListId, names, recaptchaToken));
-        }
-      }
-    };
-  }
-
-  render() {
-    const { event, guestLists } = this.props;
-    const { title, description, place, start, price, flyer } = event;
-    const flyerAlt = `Flyer do ${title || 'evento'}`;
-    const flyerSrc = flyer || `${config.ASSETS_BASE_URI}/core/site/partying`;
-
-    declare var guestList;
-    declare var idx;
-
-    return (
-      <div className="EventPage">
-        <div className="EventPage-header">
-          <div className="EventPage-header-flyer mdl-card mdl-shadow--2dp">
-            <img alt={flyerAlt} className="EventPage-header-flyer-img" src={flyerSrc} />
-          </div>
-          <div className="EventPage-header-right">
-            <div className="EventPage-header-right-title">
-              {title}
-            </div>
-            <If condition={place}>
-              <div className="EventPage-header-right-place">
-                {place.name}
-              </div>
-            </If>
-          </div>
+  return (
+    <div className="EventPage">
+      <div className="EventPage-header">
+        <div className="EventPage-header-flyer mdl-card mdl-shadow--2dp">
+          <img alt={flyerAlt} className="EventPage-header-flyer-img" src={flyerSrc} />
         </div>
-
-        <div className="EventPage-info">
-          <If condition={start}>
-            <div className="EventPage-info-item">
-              <Icon icon="calendar" />
-              <span>{fullDateFormat(start)}</span>
-            </div>
-            <div className="EventPage-info-item">
-              <Icon icon="clock-o" />
-              <span>{timeFormat(start)}</span>
-            </div>
-          </If>
-          <If condition={place && place.address}>
-            <div className="EventPage-info-item">
-              <Icon icon="map-marker" />
-              <span>{place.address}</span>
-            </div>
-          </If>
-          <If condition={price}>
-            <div className="EventPage-info-item">
-              <Icon icon="brl" />
-              <span>{price}</span>
-            </div>
-          </If>
-        </div>
-
-        <div className="EventPage-body">
-          <div className="EventPage-body-description">
-            <div className="EventPage-body-title">Descrição</div>
-            <div
-              className="EventPage-body-content"
-              dangerouslySetInnerHTML={{ __html: description }}
-            />
+        <div className="EventPage-header-right">
+          <div className="EventPage-header-right-title">
+            {title}
           </div>
-          <If condition={guestLists.length && false}>
-            <div className="EventPage-body-guestLists">
-              <div className="EventPage-body-title">Nome na lista</div>
-              <div className="EventPage-body-content">
-                <form ref={formRef(this)} className="EventPage-form">
-                  <For each="guestList" index="idx" of={guestLists}>
-                    <Input key={guestList.id} type="radio" name="guestList" value={guestList.id} checked={idx === 0}>
-                      {guestList.name}
-                    </Input>
-                  </For>
-                  <TextArea
-                    rows="4"
-                    className="EventPage-body-guestLists-area"
-                    name="names"
-                    placeholder="Escreva cada nome em uma linha"
-                  />
-                  <Button
-                    className="EventPage-body-guestLists-button g-recaptcha"
-                    label="Enviar"
-                    type="submit"
-                    dataProps={{ sitekey: config.RECAPTCHA_SITE_KEY, callback: 'recaptchaCallback' }}
-                    accent
-                    colored
-                    onClick={this.submit}
-                  />
-                </form>
-              </div>
+          <If condition={place}>
+            <div className="EventPage-header-right-place">
+              {place.name}
             </div>
           </If>
         </div>
       </div>
-    );
-  }
-}
 
-EventPage.propTypes = {
-  event: PropTypes.object,
-  dispatch: PropTypes.func,
-  guestLists: PropTypes.array,
-  router: PropTypes.shape({
-    params: PropTypes.shape({
-      slug: PropTypes.string,
-    }),
-  }),
+      <div className="EventPage-info">
+        <If condition={start}>
+          <div className="EventPage-info-item">
+            <Icon name="calendar" />
+            <span>{fullDateFormat(start)}</span>
+          </div>
+          <div className="EventPage-info-item">
+            <Icon name="clock" />
+            <span>{timeFormat(start)}</span>
+          </div>
+        </If>
+        <If condition={place && place.address}>
+          <div className="EventPage-info-item">
+            <Icon name="marker" />
+            <span>{place.address}</span>
+          </div>
+        </If>
+        <If condition={price}>
+          <div className="EventPage-info-item">
+            <Icon name="dollar" />
+            <span>{price}</span>
+          </div>
+        </If>
+      </div>
+
+      <div className="EventPage-body">
+        <div className="EventPage-body-description">
+          <div className="EventPage-body-title">Descrição</div>
+          <div
+            className="EventPage-body-content"
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export default connect(({ events, guestLists }, { router }) => {
-  const event = events
-    .get('data')
-    .filter(({ slug }) => slug === router.params.slug)
-    .first() || {};
+EventPage.propTypes = {
+  viewer: PropTypes.object,
+};
 
-  return {
-    event,
-    guestLists: guestLists.get('data').filter(({ eventId }) => event.id === eventId).toArray(),
-  };
+export default graphql(query, {
+  options: ({ router }) => ({
+    variables: { slug: router.params.slug },
+  }),
+  props: ({ data: { viewer } }) => ({ viewer }),
 })(EventPage);

@@ -1,0 +1,18 @@
+query EventPage($slug: String) {
+  viewer {
+    id
+
+    event(slug: $slug) {
+      id,
+      slug,
+      title,
+      flyer,
+      start,
+      end,
+      description,
+      price,
+      place { name, coordinates, address, city { name } },
+      directions,
+    }
+  }
+}
