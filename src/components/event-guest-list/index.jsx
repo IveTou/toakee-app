@@ -33,7 +33,6 @@ class EventGuestList extends React.Component {
       .filter(({ status }) => status === 'ATTENDED')
       .length;
 
-    console.log('got here');
     return (
       <div className="EventGuestList">
         <Header title={event && event.title} onIconClick={toggleDashboard} />
