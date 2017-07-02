@@ -24,7 +24,7 @@ const renderLabel = (start) => {
 };
 
 const EventListItem = ({ slug, title, place, flyer, start }) => {
-  const time = moment(start).subtract(15, 'hours');
+  const time = moment(start);
 
   return (
     <Link className="EventListItem" to={{ pathname: `/evento/${slug}` }}>

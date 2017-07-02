@@ -60,10 +60,6 @@ app.post('/events/track', (req, res) => {
   return res.json({ ok: true });
 });
 
-app.get('/termos-de-uso', (_, res) => {
-  res.render('termos-de-uso.html');
-});
-
 app.get('/social-login', (_, res) => {
   res.render('social-login.html');
 });
@@ -71,6 +67,10 @@ app.get('/social-login', (_, res) => {
 const assets = devMode
   ? { main: { js: 'main.js', css: 'style.css' }, vendor: { js: 'vendor.js' } }
   : JSON.parse(fs.readFileSync('assets.json'));
+
+app.get('/termos-de-uso', (_, res) => {
+  res.render('termos-de-uso.html', { assets });
+});
 
 app.get('*', (_, res) => { res.render('index.html', { assets }); });
 

@@ -73,64 +73,6 @@
   &-lists {
     padding-left: $spacer;
   }
-
-  &-section {
-    padding: $spacer*9 $spacer*13;
-
-    &:nth-child(even) {
-      background-color: $black06;
-    }
-
-    &-title {
-      display: table;
-      margin: 0 auto $spacer*7;
-      text-transform: uppercase;
-      border-left: $secondary $spacer/2 solid;
-      padding-left: $spacer;
-      font-size: 30px;
-      color: $black87;
-    }
-
-    &-info-body {
-      max-width: $spacer*80;
-      margin: 0 auto;
-      font-size: 16px;
-      text-align: center;
-    }
-
-    &-contact {
-      &-body {
-        vertical-align: top;
-        display: inline-block;
-        width: 40%;
-
-        &:first-child {
-          margin-right: 10%;
-        }
-      }
-
-      .Input {
-        font-size: 20px;
-      }
-
-      .Button {
-        height: $spacer*6;
-      }
-
-      input[type="text"],
-      input[type="email"] {
-        margin: $spacer*2 0;
-        background-color: $gray50;
-      }
-
-      textarea {
-        height: $spacer*15;
-        width: calc(100% - #{$spacer*4});
-        background-color: $gray50;
-        font-size: 16px;
-      }
-    }
-  }
 }
 
 @include media("<tablet") {
@@ -154,19 +96,6 @@
         display: block;
         margin: 0;
         padding-top: $spacer*3;
-        width: 100%;
-      }
-    }
-
-    &-section {
-      padding: $spacer*4;
-
-      &-title {
-        margin-bottom: $spacer*4;
-      }
-
-      &-contact-body {
-        display: block;
         width: 100%;
       }
     }
