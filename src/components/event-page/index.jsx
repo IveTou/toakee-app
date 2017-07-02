@@ -1,8 +1,6 @@
 import React, { PropTypes } from 'react';
 import { graphql } from 'react-apollo';
-import { Icon } from 'semantic-ui-react';
-
-import config from '~/src/config';
+import { Icon, Card, Image } from 'semantic-ui-react';
 
 import { fullDateFormat, timeFormat } from '~/src/utils/moment';
 
@@ -17,14 +15,13 @@ const EventPage = ({ viewer = {} }) => {
   const { event = {} } = viewer;
   const { title, description, place, start, price, flyer } = event;
   const flyerAlt = `Flyer do ${title || 'evento'}`;
-  const flyerSrc = flyer || `${config.ASSETS_BASE_URI}/core/site/partying`;
 
   return (
     <div className="EventPage">
       <div className="EventPage-header">
-        <div className="EventPage-header-flyer mdl-card mdl-shadow--2dp">
-          <img alt={flyerAlt} className="EventPage-header-flyer-img" src={flyerSrc} />
-        </div>
+        <Card className="EventPage-header-flyer">
+          <Image alt={flyerAlt} className="EventPage-header-flyer-img" src={flyer} />
+        </Card>
         <div className="EventPage-header-right">
           <div className="EventPage-header-right-title">
             {title}

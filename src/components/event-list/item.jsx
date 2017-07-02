@@ -2,59 +2,68 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { upperFirst } from 'lodash';
 import moment from 'moment';
+import { Card, Image, Icon } from 'semantic-ui-react';
 
-const renderFlyer = (flyer, alt) => flyer && (
-  <img alt={alt} className="EventListItem-background" src={flyer} />
-);
+const renderLabel = (start) => {
+  if (!start
+    || moment().endOf('day').isBefore(start)
+    || moment().subtract(4, 'hours').isAfter(start)
+  ) return null;
 
-const renderTime = (start) => {
-  if (!start) return null;
+  let content;
 
-  let dom;
-
-  // FIXME next to end of week conflicts with today/tomorrow
-  if (moment().endOf('week').isBefore(start)) {
-    dom = moment(start).format('DD/MM (ddd)');
-  } else if (moment().add(1, 'day').endOf('day').isBefore(start)) {
-    dom = moment(start).format('dddd HH:mm');
-  } else if (moment().endOf('day').isBefore(start)) {
-    dom = moment(start).format('[Amanhã] HH:mm');
-  } else if (moment().add(2, 'hours').isBefore(start)) {
-    dom = moment(start).format('[Hoje] HH:mm');
+  if (moment().add(2, 'hours').isBefore(start)) {
+    content = 'Hoje';
   } else if (moment().isBefore(start)) {
-    dom = upperFirst(moment(start).fromNow());
-  } else if (moment().subtract(4, 'hours').isBefore(start)) {
-    dom = `Começou ${moment(start).fromNow()}`;
+    content = upperFirst(start.fromNow());
   } else {
-    dom = moment(start).format('DD/MM HH:mm');
+    content = `Começou ${start.fromNow()}`;
   }
 
-  return <div className="EventListItem-content-time">{dom}</div>;
+  return { color: 'orange', content, ribbon: true };
 };
 
-const EventListItem = ({ slug, title, flyer, start }) => (
-  <div className="EventListItem mdl-card mdl-shadow--2dp">
-    <Link className="EventListItem-link" to={{ pathname: `/evento/${slug}` }}>
-      {renderFlyer(flyer, `flyer do ${title}`)}
-      <div className="EventListItem-content">
-        <div
-          className="EventListItem-content-title mdl-card__title"
-          title={title}
-        >
-          <h2 className="EventListItem-content-title-text mdl-card__title-text">
-            {title}
-          </h2>
-        </div>
-        <div className="EventListItem-content-truncate" />
-        {renderTime(start)}
-      </div>
+const EventListItem = ({ slug, title, place, flyer, start }) => {
+  const time = moment(start).subtract(15, 'hours');
+
+  return (
+    <Link className="EventListItem" to={{ pathname: `/evento/${slug}` }}>
+      <Card>
+        <If condition={flyer}>
+          <Image
+            className="EventListItem-background"
+            label={renderLabel(time)}
+            alt={`flyer do ${title}`}
+            src={flyer}
+          />
+        </If>
+        <Card.Content>
+          <Card.Header>{title}</Card.Header>
+          <Card.Meta>{place.name}</Card.Meta>
+        </Card.Content>
+        <Card.Content className="EventListItem-details" extra>
+          <div className="EventListItem-details-calendar">
+            <div className="EventListItem-details-calendar-month">
+              {time.format('MMM')}
+            </div>
+            <div className="EventListItem-details-calendar-day">
+              {time.format('DD')}
+            </div>
+          </div>
+          <div className="EventListItem-details-timeAndPlace">
+            <div><Icon name="clock" />{time.format('HH')}h</div>
+            <div><Icon name="marker" />{place.address}</div>
+          </div>
+        </Card.Content>
+      </Card>
     </Link>
-  </div>
-);
+  );
+};
 
 EventListItem.propTypes = {
   slug: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  place: PropTypes.object,
   start: PropTypes.object,
   flyer: PropTypes.string,
 };

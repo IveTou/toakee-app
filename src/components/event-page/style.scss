@@ -6,7 +6,7 @@
   &-header {
     padding: $spacer*2;
 
-    &-flyer.mdl-card {
+    &-flyer.card {
       padding: $spacer/2;
 
       .EventPage-header-flyer-img {
@@ -84,7 +84,7 @@
     &-header {
       padding: $spacer*3 $spacer*3 0;
 
-      &-flyer.mdl-card {
+      &-flyer.card {
         float: left;
         width: 40%;
       }
@@ -129,7 +129,7 @@
         display: table-header-group;
       }
 
-      &-flyer.mdl-card {
+      &-flyer.card {
         margin: $spacer*2 0 $spacer;
         width: 100%;
       }

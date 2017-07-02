@@ -3,16 +3,16 @@ query EventPage($slug: String) {
     id
 
     event(slug: $slug) {
-      id,
-      slug,
-      title,
-      flyer,
-      start,
-      end,
-      description,
-      price,
-      place { name, coordinates, address, city { name } },
-      directions,
+      id
+      slug
+      title
+      flyer
+      start
+      end
+      description
+      price
+      directions
+      place { id, name, coordinates, address, city { name } },
     }
   }
 }
