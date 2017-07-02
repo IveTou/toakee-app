@@ -1,9 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-import Button from '~/src/components/button';
 import BannerCarousel from '~/src/components/banner-carousel';
-
 import EventList from '~/src/components/event-list';
 
 if (process.env.BROWSER) {
