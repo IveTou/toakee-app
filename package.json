@@ -9,6 +9,7 @@
     "script": "babel-node scripts/index",
     "webpack:watch": "webpack -w",
     "express-server": "babel-node ./src/server/index.js",
+    "prebuild": "npm run lint",
     "build": "npm run build:server && npm run build:app",
     "build:app": "NODE_ENV=production webpack -p",
     "build:server": "NODE_ENV=production babel src/server/ -d dist/",
