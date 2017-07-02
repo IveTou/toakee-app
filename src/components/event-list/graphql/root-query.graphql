@@ -1,0 +1,19 @@
+query EventList(
+  $start: Date,
+  $end: Date,
+  $skip: Int,
+  $limit: Int
+) {
+  viewer {
+    id
+
+    events(start: $start, end: $end, skip: $skip, limit: $limit) {
+      id,
+      slug,
+      title,
+      flyer,
+      start,
+      end,
+    }
+  }
+}

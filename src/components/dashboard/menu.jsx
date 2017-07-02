@@ -1,23 +1,27 @@
 import React, { PropTypes } from 'react';
+import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { Icon } from 'semantic-ui-react';
 
-import { toggleDashboard } from '~/src/toakee-core/ducks/dashboard';
+import { toggleDashboard } from '~/src/ducks/dashboard';
+
 import DashboardMenuItem from './menu-item';
+import { dashboardMenuQuery } from './graphql';
 
 declare var event;
 
-const DashboardMenu = ({ events, open, toggle, selectedEvent = {} }) => (
+const DashboardMenu = ({ viewer = {}, open, toggle, selectedEventSlug }) => (
   <div className={`DashboardMenu${open ? ' DashboardMenu-open' : ''}`}>
     <div className="DashboardMenu-header">
       <Icon className="DashboardMenu-header-icon" name="sidebar" onClick={toggle} />
       <span className="DashboardMenu-header-title">Gerenciar eventos</span>
     </div>
     <div className="DashboardMenu-events">
-      <For each="event" of={events}>
+      <For each="event" of={viewer.events || []}>
         <DashboardMenuItem
           key={event.id}
-          open={selectedEvent.id === event.id}
+          open={selectedEventSlug === event.slug}
           {...event}
         />
       </For>
@@ -26,13 +30,20 @@ const DashboardMenu = ({ events, open, toggle, selectedEvent = {} }) => (
 );
 
 DashboardMenu.propTypes = {
-  selectedEvent: PropTypes.object,
-  events: PropTypes.array,
+  viewer: PropTypes.object,
+  selectedEventSlug: PropTypes.string,
   open: PropTypes.bool,
   toggle: PropTypes.func,
 };
 
+const DashboardMenuWithData = graphql(dashboardMenuQuery, {
+  options: () => ({
+    variables: { start: moment().startOf('day') },
+  }),
+  props: ({ data: { viewer } }) => ({ viewer }),
+})(DashboardMenu);
+
 export default connect(
   ({ dashboard }) => ({ open: dashboard.get('open') }),
   dispatch => ({ toggle: () => dispatch(toggleDashboard()) }),
-)(DashboardMenu);
+)(DashboardMenuWithData);

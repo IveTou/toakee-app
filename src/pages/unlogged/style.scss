@@ -9,8 +9,3 @@
   }
 }
 
-@include media("<tablet") {
-  .Unlogged .main {
-    padding-top: $spacer*9;
-  }
-}

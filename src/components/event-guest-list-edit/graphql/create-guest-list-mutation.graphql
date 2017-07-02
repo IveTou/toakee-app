@@ -1,0 +1,28 @@
+#import "./invitations-list-query.graphql"
+
+mutation CreateGuestList(
+  $eventId: String!,
+  $name: String,
+  $registrationDeadline: Date,
+  $entranceDeadline: Date,
+  $socialIntegrations: [SocialIntegrationInputType],
+) {
+  createGuestList(
+    eventId: $eventId,
+    name: $name,
+    registrationDeadline: $registrationDeadline,
+    entranceDeadline: $entranceDeadline,
+    socialIntegrations: $socialIntegrations,
+  ) {
+    id
+    eventId
+    name
+    privacy
+    limit
+    registrationDeadline
+    entranceDeadline
+    socialIntegrations { mediaUrl }
+
+    ...EventGuestListEditInvitationsListFragment
+  }
+}

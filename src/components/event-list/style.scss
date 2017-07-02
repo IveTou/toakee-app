@@ -74,22 +74,13 @@
 
     .EventListArrow {
       position: absolute;
-      padding: 0 $spacer;
-      background-color: $orange87;
-      font-size: 60px;
       z-index: 2;
-      color: $white;
       margin-top: $spacer*12;
-      height: $spacer*10;
-      align-items: center;
-      border-radius: 3px;
       @include box-shadow(0 0 $spacer $black26);
-      cursor: pointer;
-      border: 0;
-      transition: all .20s ease-out;
+      border-radius: 4px;
 
-      &:hover {
-        background-color: $orange;
+      &.icon.bordered {
+        width: $spacer*8;
       }
 
       &--right {
@@ -108,9 +99,13 @@
         }
       }
 
-      &--hidden {
+      &--hidden.icon.link {
         opacity: 0;
         pointer-events: none;
+
+        &:hover {
+          opacity: 0 !important;
+        }
       }
     }
   }

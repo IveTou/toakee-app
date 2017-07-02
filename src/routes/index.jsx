@@ -5,9 +5,8 @@ import { getToken } from '~/src/utils/session';
 
 import Unlogged from '~/src/pages/unlogged';
 import AuthWrapper from '~/src/components/auth-wrapper';
-import Login from '~/src/components/login';
-import SignUp from '~/src/components/sign-up';
-import RecoverPassword from '~/src/components/recover-password';
+import Login from '~/src/components/auth-wrapper/login';
+import SignUp from '~/src/components/auth-wrapper/sign-up';
 
 import Logged from '~/src/pages/logged';
 import Landing from '~/src/components/landing';
@@ -38,7 +37,6 @@ const unloggedRoutes = (
     <Route component={AuthWrapper}>
       <Route path="/login" component={Login} />
       <Route path="/cadastrar" component={SignUp} />
-      <Route path="/recuperar-senha" component={RecoverPassword} />
     </Route>
     <Route path="/redirect" onEnter={() => { window.location = '/'; }} />
   </Route>

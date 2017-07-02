@@ -2,9 +2,9 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import { Link } from 'react-router';
 
-import { recoverPassword } from '~/src/toakee-core/ducks/auth';
+import { recoverPassword } from '~/src/ducks/auth';
 
-import { errorFromKey } from '~/src/utils/form';
+import { errorFromKey } from '~/src/utils/errors';
 
 import { showToast } from '~/src/components/snackbar';
 import Input from '~/src/components/input';

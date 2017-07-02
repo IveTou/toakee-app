@@ -13,10 +13,10 @@ class Unlogged extends React.Component {
 
   render() {
     return (
-      <div className="Unlogged mdl-layout mdl-layout--fixed-header mdl-js-layout">
+      <div className="Unlogged">
         <TopBar />
         <Snackbar />
-        <main className="main mdl-layout__content">
+        <main className="main">
           {this.props.children}
         </main>
       </div>

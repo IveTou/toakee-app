@@ -1,0 +1,17 @@
+#import "./item-query.graphql"
+
+query GuestLists($eventSlug: String) {
+  viewer {
+    id
+
+    event(slug: $eventSlug) {
+      id
+      slug
+      start
+
+      guestLists {
+        ...EventGuestListEditItemFragment
+      }
+    }
+  }
+}

@@ -29,6 +29,7 @@
     "no-unused-vars": [2, { "argsIgnorePattern": "^_$", "varsIgnorePattern": "^_$" }],
     "global-require": 0,
     "class-methods-use-this": 0,
+    "jsx-a11y/label-has-for": 0,
   },
   "settings": {
     "import/resolver": {

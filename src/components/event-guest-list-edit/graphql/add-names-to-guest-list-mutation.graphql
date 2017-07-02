@@ -1,0 +1,16 @@
+mutation AddNamesToGuestList(
+  $eventId: String!,
+  $guestListId: String!,
+  $names: [String],
+) {
+  addNamesToGuestList(
+    eventId: $eventId,
+    guestListId: $guestListId,
+    names: $names,
+  ) {
+    id
+    name
+    eventId
+    guestListId
+  }
+}

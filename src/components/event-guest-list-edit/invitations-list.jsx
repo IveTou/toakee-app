@@ -1,20 +1,20 @@
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
+import { sortBy } from 'lodash';
 import { Icon } from 'semantic-ui-react';
-
-import { removeInvitation } from '~/src/toakee-core/ducks/invitations';
-import { dialogConfirm } from '~/src/toakee-core/ducks/dialog';
 
 declare var idx;
 declare var invitation;
 
-export const EventGuestListEditInvitationsList = ({ invitationsList, deleteInvitation }) => (
+export const EventGuestListEditInvitationsList = ({
+  invitationsList,
+  removeInvitation,
+}) => (
   <div className="EventGuestListEditItem-invitations">
-    <For each="invitation" index="idx" of={invitationsList}>
+    <For each="invitation" index="idx" of={sortBy(invitationsList, ['name'])}>
       <div key={idx} className="EventGuestListEditItem-invitations-item">
         {invitation.name}
         <Icon
-          onClick={deleteInvitation(invitation.eventId, invitation.id)}
+          onClick={() => removeInvitation(invitation)}
           name="remove"
           className="EventGuestListEditItem-invitations-item-remove"
         />
@@ -24,16 +24,8 @@ export const EventGuestListEditInvitationsList = ({ invitationsList, deleteInvit
 );
 
 EventGuestListEditInvitationsList.propTypes = {
-  invitationsList: PropTypes.object,
-  deleteInvitation: PropTypes.func,
+  invitationsList: PropTypes.array,
+  removeInvitation: PropTypes.func,
 };
 
-export default connect(() => ({}), dispatch => ({
-  deleteInvitation: (eventId, invitationId) => () => {
-    const title = 'Tem certeza que deseja remover o nome da lista?';
-    const onConfirm = () => dispatch(removeInvitation(eventId, invitationId));
-    const confirmTrigger = { color: 'red', icon: 'trash' };
-
-    dispatch(dialogConfirm(title, onConfirm, { confirmTrigger }));
-  },
-}))(EventGuestListEditInvitationsList);
+export default EventGuestListEditInvitationsList;

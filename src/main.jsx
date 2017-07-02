@@ -1,19 +1,18 @@
 import React from 'react';
 import { render } from 'react-dom';
 import moment from 'moment';
-import { Router, browserHistory } from 'react-router';
 
+import { Router, browserHistory } from 'react-router';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
-
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
-import config from '~/src/config';
-import makeRoutes from '~/src/routes';
-import rootReducer from '~/src/toakee-core/ducks';
+import rootReducer from '~/src/ducks';
 
-import StoreProvider from '~/src/components/store-provider';
+import config from '~/src/config';
+import { getToken } from '~/src/utils/session';
+import makeRoutes from '~/src/routes';
 
 if (process.env.BROWSER) {
   require('~/src/scss/base.scss');
@@ -24,11 +23,19 @@ if (process.env.BROWSER) {
 
 moment.locale('pt-br');
 
-const apolloClient = new ApolloClient({
-  networkInterface: createNetworkInterface({
-    uri: config.GRAPHQL_URI,
-  }),
-});
+const networkInterface = createNetworkInterface({ uri: config.GRAPHQL_URI });
+
+networkInterface.use([{
+  applyMiddleware: (req, next) => {
+    if (getToken()) {
+      const authorization = `Bearer ${getToken()}`;
+      req.options.headers = Object.assign(req.options.headers || {}, { authorization });
+    }
+    next();
+  },
+}]);
+
+const apolloClient = new ApolloClient({ networkInterface });
 
 const createStoreWithMiddleware = applyMiddleware(
   thunkMiddleware,
@@ -38,9 +45,7 @@ const reduxStore = createStoreWithMiddleware(rootReducer);
 
 const app = (
   <ApolloProvider store={reduxStore} client={apolloClient}>
-    <StoreProvider>
-      <Router history={browserHistory} routes={makeRoutes()} />
-    </StoreProvider>
+    <Router history={browserHistory} routes={makeRoutes()} />
   </ApolloProvider>
 );
 

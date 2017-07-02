@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { Link } from 'react-router';
 import { keys } from 'lodash';
 
-import { closeDashboard } from '~/src/toakee-core/ducks/dashboard';
+import { closeDashboard } from '~/src/ducks/dashboard';
 
 const buildClasses = ({ open }) => classNames('DashboardMenuItem', {
   'DashboardMenuItem--open': open,

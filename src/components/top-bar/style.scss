@@ -3,46 +3,16 @@
 @import '../../scss/variables';
 @import '../../scss/colors';
 
-.TopBar.header {
-  position: fixed;
-  padding: $spacer;
-  background-color: $white;
-  @include box-shadow(0 0 $spacer*2 $black26);
-
-  .TopBar-avatar {
-    z-index: 1;
-  }
-
-  .mdl-navigation__link {
-    color: $black54;
-    text-transform: uppercase;
-  }
-
-  .mdl-layout__header-row {
-    padding-left: $spacer*5;
-  }
-
-  .mdl-menu__item {
-    width: 100%;
-  }
-
-  &-action.mdl-button {
-    margin-left: $spacer*3;
-    width: $spacer*20;
-    height: $spacer*6;
-    font-weight: 400;
-    line-height: $spacer*6;
-  }
-
+.TopBar {
   .Logo {
     width: $spacer*20;
   }
 }
 
 @include media("<tablet") {
-  .TopBar.header {
-    .mdl-layout__header-row {
-      padding-left: $spacer*2;
+  .TopBar {
+    .Logo {
+      width: $spacer*16;
     }
   }
 }

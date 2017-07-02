@@ -6,10 +6,10 @@ import Dialog from '~/src/components/dialog';
 require('./style.scss');
 
 const Logged = ({ children }) => (
-  <div className="Logged mdl-layout mdl-layout--fixed-header mdl-js-layout">
+  <div className="Logged">
     <TopBar />
     <Dialog />
-    <main className="main mdl-layout__content">
+    <main className="main">
       {children}
     </main>
   </div>
