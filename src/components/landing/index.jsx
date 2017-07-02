@@ -4,9 +4,13 @@ import moment from 'moment';
 import BannerCarousel from '~/src/components/banner-carousel';
 import EventList from '~/src/components/event-list';
 
+import { homeCategories } from '~/src/constants';
+
 if (process.env.BROWSER) {
   require('./style.scss');
 }
+
+declare var category;
 
 const Landing = () => (
   <div className="Landing">
@@ -24,10 +28,14 @@ const Landing = () => (
         start={moment().add(1, 'days').startOf('day')}
         end={moment().endOf('isoWeek')}
       />
-      <EventList
-        title="Eventos futuros"
-        start={moment().add(1, 'week').startOf('isoWeek')}
-      />
+      <For each="category" of={Object.keys(homeCategories)}>
+        <EventList
+          key={category}
+          title={category}
+          start={moment().startOf('day')}
+          categoryIds={[homeCategories[category]]}
+        />
+      </For>
     </div>
   </div>
 );

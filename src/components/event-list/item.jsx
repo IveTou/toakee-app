@@ -64,7 +64,7 @@ EventListItem.propTypes = {
   slug: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   place: PropTypes.object,
-  start: PropTypes.object,
+  start: PropTypes.string,
   flyer: PropTypes.string,
 };
 
