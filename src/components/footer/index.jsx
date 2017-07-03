@@ -1,5 +1,9 @@
 import React from 'react';
+
 import { Button, Image } from 'semantic-ui-react';
+import FacebookProvider, { Page } from 'react-facebook';
+
+import { FACEBOOK_APP_ID, FACEBOOK_PAGE_URI } from '~/src/config';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -9,6 +13,9 @@ const Footer = () => (
   <footer className="Footer mdl-mini-footer">
     <div className="Footer-row">
       <div className="Footer-row-col social">
+        <FacebookProvider appId={FACEBOOK_APP_ID}>
+          <Page href={FACEBOOK_PAGE_URI} tabs smallHeader adaptContainerWidth />
+        </FacebookProvider>
       </div>
       
       <div className="Footer-row-divider" />
