@@ -38,8 +38,6 @@
       height:auto;
     }
 
-    
-
     ul {
       list-style-type:none;
       
@@ -113,6 +111,14 @@
     padding: $spacer*2;
 
     .Image {
+      margin: $spacer*2 auto;
+      transition: .5s ease;
+
+      &:hover {
+        opacity: 1;
+        -webkit-transform: rotate(-20deg);
+        transform: rotate(-20deg);
+      }
     }
   }
 }
