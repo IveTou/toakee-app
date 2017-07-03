@@ -1,10 +1,137 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/variables';
 @import '../../scss/colors';
 
 .Footer {
-  background-color: $black87;
+  background-image: linear-gradient(to top, #9933cc 30%, rgba(241, 151, 40, 0.7) 80%, rgba(0, 0, 0, 0) 100%);
+  color: white;
+  padding: 36px 24px;
+  text-align: center;
+  margin: auto;
 
-  &-logo {
+  &-row {
+    display: flex;
     text-align: center;
-    width: 100%;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    align-items: stretch;
+    
+    &:after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+
+    &-col {
+      float: left;
+      padding: 32px;
+      min-width: 264px;
+
+      &.social {
+        width: 100%;
+      }
+    }
+  
+    &-divider {
+      border-right:1px solid darkgrey;
+      border-left:1px solid lightgrey;
+      height:auto;
+    }
+
+    
+
+    ul {
+      list-style-type:none;
+      
+      .Button {
+        background-color: rgba(130, 53, 53, 0);
+        color: white;
+        border: none;
+
+        span {
+          cursor: pointer;
+          display: inline-block;
+          position: relative;
+          transition: 0.5s;
+
+          &:after {
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+          }
+        }
+
+        &:hover {
+          color: white;
+          background-color: rgba(130, 53, 53, 0);
+          span {
+            padding-right: 25px;
+            &:after {
+              opacity: 1;
+              right: 0;
+            }
+          }
+        }
+        
+        &.about{
+          span{
+            &:after {
+              content: '\2665';
+            }
+          }
+        }
+
+        &.terms{
+          span{
+            &:after {
+              content: '\00bb';
+            }
+          }
+        }
+
+        &.signup{
+          span{
+            &:after {
+              content: 'o/';
+            }
+          }
+        }
+        
+      }
+    }
+  }
+
+  hr { 
+    width: 70%;
+    margin: 16px auto;
+    align: center;
+  }
+
+  &-bottom {
+    padding: 16px;
+  }
+}
+
+@include media("<tablet"){
+  .Footer{
+    &-row {
+      display: inline;
+
+      &-col {    
+        width: 100%;
+        margin: 0 auto;
+        padding: 8px;  
+      }
+
+      .divider{
+        display: none;
+      }
+    }
+
+    hr {
+      display: none;
+    }
   }
 }
