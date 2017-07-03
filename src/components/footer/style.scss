@@ -3,9 +3,9 @@
 @import '../../scss/colors';
 
 .Footer {
-  background-image: linear-gradient(to top, #9933cc 30%, rgba(241, 151, 40, 0.7) 80%, rgba(0, 0, 0, 0) 100%);
-  color: white;
-  padding: 36px 24px;
+  background-image: linear-gradient(to top, #9933cc 30%, rgba(241, 151, 40, 0.7) 80%, #{$transparent} 100%);
+  color: $white;
+  padding: $spacer*4 $spacer*3;
   text-align: center;
   margin: auto;
 
@@ -24,8 +24,8 @@
 
     &-col {
       float: left;
-      padding: 32px;
-      min-width: 264px;
+      padding: $spacer*4;
+      min-width: $spacer*35;
 
       &.social {
         width: 100%;
@@ -33,8 +33,8 @@
     }
   
     &-divider {
-      border-right:1px solid darkgrey;
-      border-left:1px solid lightgrey;
+      border-right: 1px solid $gray600;
+      border-left: 1px solid $gray100;
       height:auto;
     }
 
@@ -44,8 +44,8 @@
       list-style-type:none;
       
       .Button {
-        background-color: rgba(130, 53, 53, 0);
-        color: white;
+        background-color: $transparent;
+        color: $white;
         border: none;
 
         span {
@@ -58,16 +58,16 @@
             position: absolute;
             opacity: 0;
             top: 0;
-            right: -20px;
+            right: $spacer*-3;
             transition: 0.5s;
           }
         }
 
         &:hover {
-          color: white;
-          background-color: rgba(130, 53, 53, 0);
+          color: $white;
+          background-color: $transparent;
           span {
-            padding-right: 25px;
+            padding-right: $spacer*3;
             &:after {
               opacity: 1;
               right: 0;
@@ -105,12 +105,15 @@
 
   hr { 
     width: 70%;
-    margin: 16px auto;
+    margin: $spacer*2 auto;
     align: center;
   }
 
   &-bottom {
-    padding: 16px;
+    padding: $spacer*2;
+
+    .Image {
+    }
   }
 }
 
@@ -122,7 +125,7 @@
       &-col {    
         width: 100%;
         margin: 0 auto;
-        padding: 8px;  
+        padding: $spacer;  
       }
 
       .divider{
