@@ -46,7 +46,8 @@
     &-divider {
       border-right: 1px solid $gray600;
       border-left: 1px solid $gray100;
-      height:auto;
+      height: $spacer*40;
+      margin: auto;
     }
 
     ul {
@@ -122,7 +123,7 @@
 
     .Form {
       #form-textarea {
-        max-height: $spacer*5;
+        max-height: $spacer*3;
       }
     }
 
