@@ -41,9 +41,6 @@
         }
       }
 
-      &.form {
-      }
-
     }
   
     &-divider {
@@ -170,6 +167,8 @@
         }
 
         &.social {
+        width: 100%;
+
           .header {
             margin: $spacer*4 auto $spacer*3;
           }
