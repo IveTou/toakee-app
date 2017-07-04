@@ -23,13 +23,27 @@
     }
 
     &-col {
-      float: left;
-      padding: $spacer*4;
-      min-width: $spacer*35;
+      padding: $spacer*2;
+      min-width: $spacer*30;
+      margin: $spacer*2 auto;
 
       &.social {
-        width: 100%;
+        width: 35%;
+
+        .header {
+          margin: auto auto $spacer*8;
+        }
       }
+
+      &.about {
+        .header {
+          margin: auto auto $spacer*8;
+        }
+      }
+
+      &.form {
+      }
+
     }
   
     &-divider {
@@ -40,65 +54,81 @@
 
     ul {
       list-style-type:none;
-      
-      .Button {
-        background-color: $transparent;
-        color: $white;
-        border: none;
+    }
+    
+    .Button {
+      background-color: $transparent;
+      color: $white;
+      border: none;
 
-        span {
-          cursor: pointer;
-          display: inline-block;
-          position: relative;
+      span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+
+        &:after {
+          position: absolute;
+          opacity: 0;
+          top: 0;
+          right: $spacer*-3;
           transition: 0.5s;
+        }
+      }
 
+      &:hover {
+        color: $white;
+        background-color: $transparent;
+        
+        span {
+          padding-right: $spacer*3;
           &:after {
-            position: absolute;
-            opacity: 0;
-            top: 0;
-            right: $spacer*-3;
-            transition: 0.5s;
+            opacity: 1;
+            right: 0;
           }
         }
-
-        &:hover {
-          color: $white;
-          background-color: $transparent;
-          span {
-            padding-right: $spacer*3;
-            &:after {
-              opacity: 1;
-              right: 0;
-            }
-          }
-        }
+      }
         
-        &.about{
-          span{
-            &:after {
-              content: '\2665';
-            }
+      &.about {
+        span {
+          &:after {
+            content: '\2665';
           }
         }
+      }
 
-        &.terms{
-          span{
-            &:after {
-              content: '\00bb';
-            }
+      &.terms {
+        span {
+          &:after {
+            content: '\00bb';
           }
         }
+      }
 
-        &.signup{
-          span{
-            &:after {
-              content: 'o/';
-            }
+      &.signup {
+        span {
+          &:after {
+            content: 'o/';
           }
         }
-        
+      }
+ 
+      &.submit {
+        border:  1px solid $white;
+        span {
+          &:after {
+            content: '\2709';
+          }
+        }
+      } 
+    }
+
+    .Form {
+      #form-textarea {
+        max-height: $spacer*5;
       }
     }
+
   }
 
   hr { 
@@ -131,7 +161,25 @@
       &-col {    
         width: 100%;
         margin: 0 auto;
-        padding: $spacer;  
+        padding: $spacer;
+
+        &.about {
+          .header {
+            margin: $spacer*4 auto $spacer*3;
+          }
+        }
+
+        &.social {
+          .header {
+            margin: $spacer*4 auto $spacer*3;
+          }
+        }
+
+        &.form {
+          .header {
+            margin: $spacer*4 auto $spacer*3;
+          }
+        }
       }
 
       .divider{
