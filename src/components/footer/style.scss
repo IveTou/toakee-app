@@ -4,56 +4,11 @@
 
 .Footer {
   background-image: linear-gradient(to top, #9933cc 30%, rgba(241, 151, 40, 0.7) 80%, #{$transparent} 100%);
-  color: $white;
-  padding: $spacer*4 $spacer*3;
-  text-align: center;
-  margin: auto;
-
-  &-row {
-    display: flex;
+    color: white;
+    padding: 36px 24px;
     text-align: center;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    align-items: stretch;
-    
-    &:after {
-      content: "";
-      clear: both;
-      display: table;
-    }
+    margin: auto;
 
-    &-col {
-      padding: $spacer*2;
-      min-width: $spacer*30;
-      margin: $spacer*2 auto;
-
-      &.social {
-        width: 35%;
-
-        .header {
-          margin: auto auto $spacer*8;
-        }
-      }
-
-      &.about {
-        .header {
-          margin: auto auto $spacer*8;
-        }
-      }
-
-    }
-  
-    &-divider {
-      border-right: 1px solid $gray600;
-      border-left: 1px solid $gray100;
-      height: $spacer*40;
-      margin: auto;
-    }
-
-    ul {
-      list-style-type:none;
-    }
-    
     .Button {
       background-color: $transparent;
       color: $white;
@@ -121,34 +76,6 @@
       } 
     }
 
-    .Form {
-      #form-textarea {
-        max-height: $spacer*3;
-      }
-    }
-
-  }
-
-  hr { 
-    width: 70%;
-    margin: $spacer*2 auto;
-    align: center;
-  }
-
-  &-bottom {
-    padding: $spacer*2;
-
-    .Image {
-      margin: $spacer*2 auto;
-      transition: .5s ease;
-
-      &:hover {
-        opacity: 1;
-        -webkit-transform: rotate(-20deg);
-        transform: rotate(-20deg);
-      }
-    }
-  }
 }
 
 @include media("<tablet"){
@@ -182,9 +109,6 @@
         }
       }
 
-      .divider{
-        display: none;
-      }
     }
 
     hr {
