@@ -3,115 +3,102 @@
 @import '../../scss/colors';
 
 .Footer {
-  background-image: linear-gradient(to top, #9933cc 30%, rgba(241, 151, 40, 0.7) 80%, #{$transparent} 100%);
-    color: white;
-    padding: 36px 24px;
-    text-align: center;
-    margin: auto;
+  background-image: linear-gradient(to top, #9933cc 30%, rgba(241, 151, 40, 0.7) 90%, #{$transparent} 100%);
+  color: white;
+  padding: 36px 24px;
+  text-align: center;
+  margin: auto;
 
-    .Button {
-      background-color: $transparent;
-      color: $white;
-      border: none;
-
-      span {
-        cursor: pointer;
-        display: inline-block;
-        position: relative;
-        transition: 0.5s;
-
-        &:after {
-          position: absolute;
-          opacity: 0;
-          top: 0;
-          right: $spacer*-3;
-          transition: 0.5s;
-        }
-      }
-
-      &:hover {
-        color: $white;
-        background-color: $transparent;
-        
-        span {
-          padding-right: $spacer*3;
-          &:after {
-            opacity: 1;
-            right: 0;
-          }
-        }
-      }
-        
-      &.about {
-        span {
-          &:after {
-            content: '\2665';
-          }
-        }
-      }
-
-      &.terms {
-        span {
-          &:after {
-            content: '\00bb';
-          }
-        }
-      }
-
-      &.signup {
-        span {
-          &:after {
-            content: 'o/';
-          }
-        }
-      }
- 
-      &.submit {
-        border:  1px solid $white;
-        span {
-          &:after {
-            content: '\2709';
-          }
-        }
-      } 
+  .Button {
+    background-color: $transparent;
+    color: $white;
+    border: none;
+    
+    &:not(.submit) {
+      margin: $spacer auto !important;
     }
+
+    span {
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      transition: 0.5s;
+
+      &:after {
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: $spacer*-3;
+        transition: 0.5s;
+      }
+    }
+
+    &:hover {
+      color: $white;
+      background-color: $transparent;
+        
+      span {
+        padding-right: $spacer*3;
+        &:after {
+          opacity: 1;
+          right: 0;
+        }
+      }
+    }
+        
+    &.about {
+      span {
+        &:after {
+          content: '\2665';
+        }
+      }
+    }
+
+    &.terms {
+      span {
+        &:after {
+          content: '\00bb';
+        }
+      }
+    }
+
+    &.signup {
+      span {
+        &:after {
+          content: 'o/';
+        }
+      }
+    }
+ 
+    &.submit {
+      border:  1px solid $white;
+      span {
+        &:after {
+          content: '\2709';
+        }
+      }
+    } 
+  }
+  
+  .Image {
+    transition: .5s ease;
+
+    &:hover {
+      opacity: 1;
+      -webkit-transform: rotate(-20deg);
+      transform: rotate(-20deg);
+    }
+  }
 
 }
 
 @include media("<tablet"){
   .Footer{
-    &-row {
-      display: inline;
-
-      &-col {    
-        width: 100%;
-        margin: 0 auto;
-        padding: $spacer;
-
-        &.about {
-          .header {
-            margin: $spacer*4 auto $spacer*3;
-          }
-        }
-
-        &.social {
-        width: 100%;
-
-          .header {
-            margin: $spacer*4 auto $spacer*3;
-          }
-        }
-
-        &.form {
-          .header {
-            margin: $spacer*4 auto $spacer*3;
-          }
-        }
-      }
-
+    &-col {    
+      width: 100% !important;
     }
 
-    hr {
+    .Divider {
       display: none;
     }
   }

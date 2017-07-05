@@ -12,7 +12,7 @@ if (process.env.BROWSER) {
 const Footer = () => (
   <footer className="Footer mdl-mini-footer">
     <Grid columns={3} relaxed>
-      <Grid.Column>
+      <Grid.Column className="Footer-col">
         <Divider horizontal inverted >Seja Nosso Amigo!</Divider>
         <Segment basic>
           <FacebookProvider appId={FACEBOOK_APP_ID}>
@@ -20,33 +20,32 @@ const Footer = () => (
           </FacebookProvider>
         </Segment>
       </Grid.Column>
-      <Grid.Column>
+      <Grid.Column className="Footer-col">
         <Divider horizontal inverted >Sobre Nós</Divider>
         <Segment basic>
           <Button.Group vertical>
-            <Button basic size="large" className="Button about"><span>Quem somos</span></Button>
-            <Button basic size="large" className="Button terms"><span>Termos de Uso</span></Button>
-            <Button basic size="large" className="Button signup"><span>Cadastre-se</span></Button>
+            <Button size="large" className="Button about"><span>Quem somos</span></Button>
+            <Button size="large" className="Button terms"><span>Termos de Uso</span></Button>
+            <Button size="large" className="Button signup"><span>Cadastre-se</span></Button>
           </Button.Group>
         </Segment>
       </Grid.Column>
-      <Grid.Column>
-        <Divider horizontal inverted >Sobre Nós</Divider>
+      <Grid.Column className="Footer-col">
+        <Divider horizontal inverted >Contato</Divider>
         <Segment basic>
           <Form inverted className="Form" size="large">
             <Form.Input
               required
               className="Form-input"
-              label="E-mail"
-              placeholder="visitante@dominio.com"
+              placeholder="E-mail"
             />
             <Form.Field
               required
               className="Form-field" 
               id="form-textarea"
               control={TextArea} 
-              label="Mensagem"
               placeholder="Digite aqui sua mensagem"
+              rows={2}
             />
             <Message
               success
@@ -68,7 +67,7 @@ const Footer = () => (
         </Segment>
       </Grid.Column>
     </Grid>
-    <Divider clearing/>
+    <Divider className="Divider" clearing/>
     <Segment basic>
       <Image
         className="Image" 
