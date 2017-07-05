@@ -2,7 +2,7 @@
 @import '../../scss/variables';
 @import '../../scss/colors';
 
-.BannerImage {  
+.BannerImage {
   height: $spacer*30;
   background-position: center;
   background-repeat: no-repeat;
@@ -33,7 +33,7 @@
       right: $spacer*2;
     }
   }
-  
+
   .custom-dots {
     position: absolute;
     bottom: 0;
@@ -42,7 +42,7 @@
     padding: 0;
     list-style: none;
     text-align: center;
-  
+
     li {
       position: relative;
       display: inline-block;
@@ -55,7 +55,7 @@
       &.slick-active {
         button {
           background-color: $gray800;
-          height: $spacer*2.5;                                                                               
+          height: $spacer*2.5;
           width: $spacer*2.5;
           opacity: 1;
           -webkit-transition: width .3s;
@@ -81,7 +81,7 @@
         -webkit-transition: width .3s;
         transition: width .3s;
 
-        &:hover, 
+        &:hover,
         &:focus {
           outline: none;
           opacity: 1;
@@ -95,6 +95,7 @@
   .BannerImage {
     height: $spacer*25;
     width: 100%;
+    background-size: contain;
   }
 
   .BannerCarousel {
@@ -102,7 +103,7 @@
       display: none !important;
     }
   }
-  
+
   .custom-dots {
     display: none !important;
   }
