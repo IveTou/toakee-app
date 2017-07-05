@@ -1,4 +1,6 @@
 import React, { PropTypes } from 'react';
+import TrackingAPI from '~/src/toakee-core/apis/tracking';
+
 import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
@@ -44,6 +46,7 @@ export class Login extends React.Component {
     if (!errors) {
       this.props.login(form)
         .then(partial(this.onSuccess, 'login'))
+        .then(() => TrackingAPI.track('Login Trigger', 'Guest'))
         .catch(this.props.alert);
     }
   }
@@ -53,6 +56,7 @@ export class Login extends React.Component {
 
     this.props.socialLogin({ network: upperCase(network), token })
       .then(partial(this.onSuccess, 'socialLogin'))
+      .then(() => TrackingAPI.track('Social Login Trigger', 'Guest'))
       .catch(this.props.alert);
   }
 
