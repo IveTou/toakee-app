@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Grid, Segment, Divider, Button, Image, Form, Input, TextArea, Message } from 'semantic-ui-react';
+import { Grid, Segment, Divider, Button, Image, Form, Message } from 'semantic-ui-react';
 import FacebookProvider, { Page } from 'react-facebook';
 
 import { FACEBOOK_APP_ID, FACEBOOK_PAGE_URI } from '~/src/config';
@@ -34,16 +34,17 @@ const Footer = () => (
         <Divider horizontal inverted >Contato</Divider>
         <Segment basic>
           <Form inverted className="Form" size="large">
-            <Form.Input
+            <Form.Field
               required
+              control="input"
               className="Form-input"
               placeholder="E-mail"
             />
             <Form.Field
               required
-              className="Form-field" 
+              className="Form-field"
               id="form-textarea"
-              control={TextArea} 
+              control="textarea"
               placeholder="Digite aqui sua mensagem"
               rows={2}
             />
@@ -54,23 +55,23 @@ const Footer = () => (
             />
             <Message
               error
-              header='Algum erro ocorreu'
-              content='Por favor, cheque sua conexão ou tente mais tarde.'
+              header="Algum erro ocorreu"
+              content="Por favor, cheque sua conexão ou tente mais tarde."
             />
             <Form.Checkbox
-              inline
-              label='Quero receber e-mails com sugestões, promoções e novidades.'
               required
+              inline
+              label="Quero receber e-mails com sugestões, promoções e novidades."
             />
             <Button size="large" className="Button submit"><span>Enviar</span></Button>
           </Form>
         </Segment>
       </Grid.Column>
     </Grid>
-    <Divider className="Divider" clearing/>
+    <Divider className="Divider" clearing />
     <Segment basic>
       <Image
-        className="Image" 
+        className="Image"
         src="http://res.cloudinary.com/toakeeassets/image/upload/s--4-qYLsm3--/v1499001957/core/site/icon-x64.png"
         size="mini"
         alt="Toakee.com"

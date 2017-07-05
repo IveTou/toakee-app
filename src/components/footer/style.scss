@@ -24,12 +24,19 @@
       position: relative;
       transition: 0.5s;
 
-      &:after {
+      &:before, &:after {
         position: absolute;
         opacity: 0;
         top: 0;
-        right: $spacer*-3;
         transition: 0.5s;
+      }
+
+      &:before {
+        left: $spacer*-4;
+      }
+
+      &:after {
+        right: $spacer*-4;
       }
     }
 
@@ -38,17 +45,25 @@
       background-color: $transparent;
         
       span {
-        padding-right: $spacer*3;
+        &:before {
+          opacity: 1;
+          left: $spacer*-3;
+        }
         &:after {
           opacity: 1;
-          right: 0;
+          right: $spacer*-3;
         }
       }
+    }
+    
+    &:focus {
+      color: $white;
+      background-color: $transparent;
     }
         
     &.about {
       span {
-        &:after {
+        &:before, &:after {
           content: '\2665';
         }
       }
@@ -56,6 +71,10 @@
 
     &.terms {
       span {
+        &:before {
+          content: '\00ab'
+        }
+
         &:after {
           content: '\00bb';
         }
@@ -74,7 +93,8 @@
       border:  1px solid $white;
       span {
         &:after {
-          content: '\2709';
+          content: '\27A2';
+          right: $spacer*-2;
         }
       }
     } 
