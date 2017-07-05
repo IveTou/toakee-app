@@ -1,8 +1,8 @@
-query EventList($start: Date, $end: Date, $skip: Int, $limit: Int) {
+query EventList($start: Date, $end: Date, $skip: Int, $categoryIds: [String], $limit: Int) {
   viewer {
     id
 
-    events(start: $start, end: $end, skip: $skip, limit: $limit) {
+    events(start: $start, end: $end, categoryIds: $categoryIds, skip: $skip, limit: $limit) {
       id
       slug
       title
