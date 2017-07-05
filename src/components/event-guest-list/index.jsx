@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import { Input, Icon } from 'semantic-ui-react';
+import { flatMap } from 'lodash';
 
 import { changeInvitationsFilter } from '~/src/ducks/invitations';
 import {
@@ -9,6 +10,7 @@ import {
   toggleDashboard as _toggleDashboard,
 } from '~/src/ducks/dashboard';
 import { generateGuestListPdf } from '~/src/utils/pdf';
+import { mapGuestListToInvitations } from '~/src/utils/mappers';
 import Header from '~/src/components/header';
 
 import EventGuestListList from './list';
@@ -26,7 +28,8 @@ class EventGuestList extends React.Component {
   render() {
     const { filter, viewer, toggleAttendanceStatus, toggleDashboard, changeFilter } = this.props;
     const { event } = viewer || {};
-    const { invitations } = event || {};
+    const { guestLists = [] } = event || {};
+    const invitations = flatMap(guestLists, mapGuestListToInvitations);
 
     const total = (invitations || []).length;
     const confirmed = (invitations || [])
@@ -102,7 +105,9 @@ const injectSetAttendanceStatusMutation = graphql(setAttendanceStatusMutation, {
         update: (store, { data: { setAttendanceStatus } }) => {
           const data = store.readQuery({ query, variables: { eventSlug } });
 
-          data.viewer.event.invitations
+          data.viewer.event.guestLists
+            .find(({ id }) => id === invitation.guestList.id)
+            .invitations
             .find(({ id }) => id === invitation.id)
             .status = setAttendanceStatus ? newStatus : status;
 
