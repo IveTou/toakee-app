@@ -4,6 +4,9 @@ npm-debug.log
 
 public/js/bundle.js
 public/css/bundle.css
+public/main*.js
+public/style*.css
+public/vendor*.js
 
 dist
 

@@ -4,7 +4,6 @@ import { Icon, Card, Image } from 'semantic-ui-react';
 
 import { fullDateFormat, timeFormat } from '~/src/utils/moment';
 
-
 import query from './graphql';
 
 if (process.env.BROWSER) {
@@ -23,9 +22,9 @@ const EventPage = ({ viewer = {} }) => {
           <Image alt={flyerAlt} className="EventPage-header-flyer-img" src={flyer} />
         </Card>
         <div className="EventPage-header-right">
-          <div className="EventPage-header-right-title">
+          <h1 className="EventPage-header-right-title">
             {title}
-          </div>
+          </h1>
           <If condition={place}>
             <div className="EventPage-header-right-place">
               {place.name}

@@ -77,10 +77,10 @@ EventList.propTypes = {
 };
 
 export default graphql(query, {
-  options: ({ start, end }) => ({
-    variables: { start, end, skip: 0, limit: FEED_LIMIT },
+  options: ({ start, end, categoryIds }) => ({
+    variables: { start, end, skip: 0, categoryIds, limit: FEED_LIMIT },
   }),
-  props: ({ data: { viewer, fetchMore } }) => ({
+  props: ({ data: { viewer, fetchMore }, ownProps: { categoryIds } }) => ({
     viewer,
     loadMore: () => {
       const start = new Date(viewer.events[viewer.events.length - 1].start);
@@ -89,7 +89,7 @@ export default graphql(query, {
         .length;
 
       return fetchMore({
-        variables: { start: viewer.events[viewer.events.length - 1].start, skip },
+        variables: { start: viewer.events[viewer.events.length - 1].start, categoryIds, skip },
         updateQuery: (previousResult, { fetchMoreResult }) => (
           !fetchMoreResult
             ? previousResult

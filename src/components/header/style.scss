@@ -4,6 +4,8 @@
 @import '../../scss/colors';
 
 .Header {
+  position: relative;
+
   &-title {
     color: $white;
     background-color: $orange;

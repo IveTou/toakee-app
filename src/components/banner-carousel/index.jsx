@@ -1,7 +1,7 @@
 import React from 'react';
 import Slider from 'react-slick';
 
-import banners from '~/src/banners';
+import { banners } from '~/src/constants';
 
 import Arrow from './arrow';
 import BannerImage from './banner-image';
