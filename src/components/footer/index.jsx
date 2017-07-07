@@ -3,6 +3,8 @@ import React from 'react';
 import { Grid, Segment, Divider, Button, Image, Form, Message } from 'semantic-ui-react';
 import FacebookProvider, { Page } from 'react-facebook';
 
+import MailingAPI from '~/src/toakee-core/apis/mailing';
+
 import { FACEBOOK_APP_ID, FACEBOOK_PAGE_URI } from '~/src/config';
 
 if (process.env.BROWSER) {
@@ -10,13 +12,14 @@ if (process.env.BROWSER) {
 }
 
 class Footer extends React.Component {
-  state = { email: '', message: '', };
+  state = { email: '', message: '' };
 
   handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     const { email, message } = this.state;
-    //Do something
+    MailingAPI.send(email, message);
+    //this.setState({ email: '', message: '' });
   }
 
   render() {

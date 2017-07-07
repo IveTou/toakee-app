@@ -39,30 +39,30 @@ const helper = sendgrid.mail;
 const sg = sendgrid(SENDGRID_API_KEY);
 
 app.post('/send-email', (req, res) => {
-  const { from, content } = req.body;
+  const { from, message } = req.body;
 
-  return res.json({ ok: true });
-});
+  const fromEmail = new helper.Email(from);
+  const toEmail = new helper.Email(SUPPORT_EMAIL);
+  const subject = 'Mailing Test';
+  const content = new helper.Content('text/plain', message);
+  const mail = new helper.Mail(fromEmail, subject, toEmail, content);
 
-  var fromEmail= new helper.Email('test@example.com');
-  var toEmail = new helper.Email(SUPPORT_EMAIL);
-  var subject = 'Mailing Test';
-  var content = new helper.Content('text/plain', 'and easy to do anywhere, even with Node.js');
-  var mail = new helper.Mail(fromEmail, subject, toEmail, content);
-
-  var request = sg.emptyRequest({
+  const request = sg.emptyRequest({
     method: 'POST',
     path: '/v3/mail/send',
-    body: mail.toJSON()
+    body: mail.toJSON(),
   });
 
-sg.API(request, function (error, response) {
-  if (error) {
-    console.log('Error response received');
-  }
-  console.log(response.statusCode);
-  console.log(response.body);
-  console.log(response.headers);
+  sg.API(request, function (error, response) {
+    if (error) {
+      console.log('Error response received');
+    }
+    console.log(response.statusCode);
+    console.log(response.body);
+    console.log(response.headers);
+  });
+
+  return res.json({ ok: true });
 });
 
 app.post('/events/track', (req, res) => {
