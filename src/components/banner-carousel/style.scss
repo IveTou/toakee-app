@@ -2,11 +2,40 @@
 @import '../../scss/variables';
 @import '../../scss/colors';
 
-.BannerImage {
+.BannerImage {  
   height: $spacer*30;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+
+  &-content {
+    white-space: normal;
+    overflow: hidden;
+    line-height: normal;
+    margin: auto;
+    width: 80%;
+    height: 100%;
+    color: $white;
+    padding: $spacer*2;
+    text-align: left;
+    text-shadow: 0 0 5px $gray;
+    font-weight: bolder;
+    
+    &-title {
+        padding: $spacer*2 0; 
+        font-size: $spacer*4;
+        min-height: 50%;
+        overflow: hidden;
+      }
+
+     &-sub {
+        padding: 0 auto $spacer;
+        font-size: $spacer*3;
+        min-height: 40%;
+        width: 70%;
+        overflow: hidden;
+      }
+  }
 }
 
 .BannerCarousel {
@@ -17,20 +46,26 @@
 
   .slick-list {
     box-shadow: 0 0 $spacer $black;
+    border-radius: $spacer;
   }
 
   .button {
     top: 45%;
     position: absolute;
     z-index: 10;
-    box-shadow: 0 0 $spacer*2 $black;
+    box-shadow: 0 0 $spacer $black;
     display: block !important;
 
     &.slick-prev {
       left: $spacer*2;
     }
+
     &.slick-next {
       right: $spacer*2;
+    }
+
+    &:hover {
+      box-shadow: 0 0 $spacer $black;
     }
   }
 
@@ -93,14 +128,35 @@
 
 @include media("<tablet") {
   .BannerImage {
-    height: $spacer*25;
+    height: $spacer*20;
     width: 100%;
-    background-size: contain;
+
+    &-content {
+      margin: 0;
+      padding: $spacer;
+      width: 100%;
+      height: 100%;
+
+      &-title {
+        padding: 0;
+        font-size: $spacer*3;
+      }
+      &-sub {
+        font-size: $spacer*2;
+        min-height: 35%;
+        padding: 0;
+        width: 100%;
+      }
+    }
   }
 
   .BannerCarousel {
     .button {
       display: none !important;
+    }
+
+    .slick-list {
+      border-radius: 0;
     }
   }
 
