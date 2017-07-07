@@ -7,14 +7,15 @@ query EventGuestList($eventSlug: String) {
       title
       slug
 
-      invitations {
+      guestLists {
         id
         name
-        normalizedName
-        status
 
-        guestList {
+        invitations {
+          id
           name
+          normalizedName
+          status
         }
       }
     }
