@@ -2,7 +2,7 @@
 @import '../../scss/variables';
 @import '../../scss/colors';
 
-.BannerImage {  
+.BannerImage {
   height: $spacer*30;
   background-position: center;
   background-repeat: no-repeat;
@@ -20,17 +20,17 @@
     text-align: left;
     text-shadow: 1px 1px 1px $gray600;
     font-weight: bolder;
-    
+ 
     &-title {
-        padding: $spacer*2 0; 
-        font-size: $spacer*4;
+        padding: $spacer*2 0;
+        font-size: 32px;
         min-height: 50%;
         overflow: hidden;
       }
 
      &-sub {
         padding: 0 auto $spacer;
-        font-size: $spacer*3;
+        font-size: 24px;
         min-height: 40%;
         width: 70%;
         overflow: hidden;
@@ -46,7 +46,7 @@
 
   .slick-list {
     box-shadow: 0 0 $spacer $black;
-    border-radius: $spacer;
+    border-radius: 8px;
   }
 
   .button {
@@ -65,7 +65,7 @@
     }
 
     &:hover {
-      box-shadow: 0 0 $spacer $black;
+      box-shadow: 0 0 8px $black;
     }
   }
 
@@ -139,10 +139,10 @@
 
       &-title {
         padding: 0;
-        font-size: $spacer*3;
+        font-size: 24px;
       }
       &-sub {
-        font-size: $spacer*2;
+        font-size: 16px;
         min-height: 35%;
         padding: 0;
         width: 100%;
