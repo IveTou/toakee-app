@@ -1,14 +1,14 @@
 import express from 'express';
 import nunjucks from 'nunjucks';
-import nodemailer from 'nodemailer';
 import bodyParser from 'body-parser';
+import sendgrid from 'sendgrid';
 import fs from 'fs';
 
 import MixpanelClient from './clients/mixpanel';
 
 import config from './config';
 
-const { PORT, SUPPORT_EMAIL } = config;
+const { PORT, SUPPORT_EMAIL, SENDGRID_API_KEY } = config;
 const devMode = process.env.NODE_ENV !== 'production';
 
 const app = express();
@@ -35,22 +35,34 @@ nunjucks.configure('src/templates', {
   express: app,
 });
 
-const transporter = nodemailer.createTransport({
-  service: 'Gmail',
-  auth: {
-    user: 'pkgo.red@gmail.com',
-    pass: 'pikachu12345',
-  },
-});
+const helper = sendgrid.mail;
+const sg = sendgrid(SENDGRID_API_KEY);
 
 app.post('/send-email', (req, res) => {
-  const { name, email, subject, body: text } = req.body;
-  const from = `${name} <${email}>`;
-
-  transporter.sendMail({ to: SUPPORT_EMAIL, from, subject, text });
-  transporter.close();
+  const { from, content } = req.body;
 
   return res.json({ ok: true });
+});
+
+  var fromEmail= new helper.Email('test@example.com');
+  var toEmail = new helper.Email(SUPPORT_EMAIL);
+  var subject = 'Mailing Test';
+  var content = new helper.Content('text/plain', 'and easy to do anywhere, even with Node.js');
+  var mail = new helper.Mail(fromEmail, subject, toEmail, content);
+
+  var request = sg.emptyRequest({
+    method: 'POST',
+    path: '/v3/mail/send',
+    body: mail.toJSON()
+  });
+
+sg.API(request, function (error, response) {
+  if (error) {
+    console.log('Error response received');
+  }
+  console.log(response.statusCode);
+  console.log(response.body);
+  console.log(response.headers);
 });
 
 app.post('/events/track', (req, res) => {
