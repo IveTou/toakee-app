@@ -20,7 +20,7 @@
     text-align: left;
     text-shadow: 1px 1px 1px $gray600;
     font-weight: bolder;
- 
+
     &-title {
         padding: $spacer*2 0;
         font-size: 32px;
@@ -46,7 +46,7 @@
 
   .slick-list {
     box-shadow: 0 0 $spacer $black;
-    border-radius: 8px;
+    border-radius: 5px;
   }
 
   .button {

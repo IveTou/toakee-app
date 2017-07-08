@@ -7,6 +7,7 @@ export default {
     ? 'http://localhost:4000/graphql'
     : 'https://graphql-api.herokuapp.com/graphql',
   ASSETS_BASE_URI: 'http://res.cloudinary.com/toakeeassets/image/upload/s--Ug65JuU_--/v1494199755',
+  ASSETS_BANNERS_PATH: 'core/site/banners',
   FACEBOOK_APP_ID: '1848071472114729',
   INSTAGRAM_APP_ID: 'e054e2eab38043d78abd577d5800d994',
   RECAPTCHA_SITE_KEY: '6LcbbxsUAAAAAEpNul2MOigAfpvpWVF0hN_ZMfBj',
