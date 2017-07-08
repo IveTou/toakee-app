@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Grid, Segment, Divider, Button, Image, Form, Message } from 'semantic-ui-react';
+import { Grid, Segment, Divider, Button, Image, Form } from 'semantic-ui-react';
 import FacebookProvider, { Page } from 'react-facebook';
 
 import MailingAPI from '~/src/toakee-core/apis/mailing';
@@ -12,21 +12,42 @@ if (process.env.BROWSER) {
 }
 
 class Footer extends React.Component {
-  state = { email: '', message: '' };
+  state = { email: '', message: '', counter: 'restam 200 caracteres', emailError: true };
 
-  handleChange = (e, { name, value }) => this.setState({ [name]: value })
+  handleValidation = (name, value) => {
+    if (name === 'email') {
+      const reg = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
+      this.setState({ emailError: !reg.test(value) });
+      return true;
+    } else if (200 - value.length >= 0) {
+      this.setState({ counter: `restam ${200 - value.length} caracteres` });
+      return true;
+    }
+    return false;
+  }
+
+  handleChange = (e, { name, value }) => {
+    if (this.handleValidation(name, value)) {
+      this.setState({ [name]: value });
+    }
+  }
 
   handleSubmit = (e) => {
-    const { email, message } = this.state;
-    MailingAPI.send(email, message);
-    //this.setState({ email: '', message: '' });
+    const { email, message, emailError } = this.state;
+    if (!emailError) {
+      MailingAPI.send(email, message);
+      this.setState({ email: '', message: '' });
+    } else {
+      console.log('email error');
+    }
+    e.preventDefault();
   }
 
   render() {
-    const { email, message } = this.state;
+    const { email, message, counter } = this.state;
 
     return (
-      <footer className="Footer mdl-mini-footer">
+      <footer className="Footer">
         <Grid columns={3} relaxed>
           <Grid.Column className="Footer-col">
             <Divider horizontal inverted >Seja Nosso Amigo!</Divider>
@@ -66,16 +87,7 @@ class Footer extends React.Component {
                   value={message}
                   onChange={this.handleChange}
                 />
-                <Message
-                  success
-                  header="Mensagem enviada com sucesso"
-                  content="Obrigado por entrar em contato. Nos vemos em breve!"
-                />
-                <Message
-                  error
-                  header="Algum erro ocorreu"
-                  content="Por favor, cheque sua conexão ou tente mais tarde."
-                />
+                <label className="placeholder">{counter}</label>
                 <Form.Checkbox
                   required
                   inline
