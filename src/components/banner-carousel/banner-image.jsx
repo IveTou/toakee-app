@@ -6,7 +6,7 @@ const BannerImage = ({ title, subtitle, img, url, ...slickProps }) => (
     <div className="BannerImage" style={{ backgroundImage: `url(${img})` }}>
       <div className="BannerImage-content">
         <div className="BannerImage-content-title">{title}</div>
-        <div className="BannerImage-content-sub">{subtitle}</div>
+        <div className="BannerImage-content-subtitle">{subtitle}</div>
       </div>
     </div>
   </Link>
