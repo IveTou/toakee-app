@@ -1,18 +1,23 @@
 import React from 'react';
-
 import { Grid, Segment, Divider, Button, Image, Form } from 'semantic-ui-react';
 import FacebookProvider, { Page } from 'react-facebook';
 
 import MailingAPI from '~/src/toakee-core/apis/mailing';
-
 import { FACEBOOK_APP_ID, FACEBOOK_PAGE_URI } from '~/src/config';
+
+import { validateSignUp } from './validation';
 
 if (process.env.BROWSER) {
   require('./style.scss');
 }
 
 class Footer extends React.Component {
-  state = { email: '', message: '', counter: 'restam 200 caracteres', emailError: true };
+  state = {
+    email: '',
+    message: '',
+    counter: 'restam 200 caracteres',
+    errors: {},
+  };
 
   handleValidation = (name, value) => {
     if (name === 'email') {
@@ -33,14 +38,29 @@ class Footer extends React.Component {
   }
 
   handleSubmit = (e) => {
-    const { email, message, emailError } = this.state;
-    if (!emailError) {
+    e.preventDefault();
+
+    const { email, message, errors } = this.state;
+    if (!errors) {
       MailingAPI.send(email, message);
       this.setState({ email: '', message: '' });
     } else {
       console.log('email error');
     }
-    e.preventDefault();
+  }
+
+  renderErrorIcon(input, icon) {
+    const { [input]: errors } = this.state.errors;
+    const defaultIcon = <Icon link name="warning" color="red" />;
+
+    return errors && (
+      <Popup
+        trigger={icon || defaultIcon}
+        content={errors[0]}
+        position="top center"
+        hideOnScroll
+      />
+    );
   }
 
   render() {
@@ -70,31 +90,33 @@ class Footer extends React.Component {
           <Grid.Column className="Footer-col">
             <Divider horizontal inverted >Contato</Divider>
             <Segment basic>
-              <Form inverted className="Form" size="large" onSubmit={this.handleSubmit}>
-                <Form.Input
-                  required
-                  placeholder="E-mail"
-                  name="email"
-                  value={email}
-                  onChange={this.handleChange}
-                />
-                <Form.TextArea
-                  required
-                  id="form-textarea"
-                  placeholder="Digite aqui sua mensagem"
-                  rows={2}
-                  name="message"
-                  value={message}
-                  onChange={this.handleChange}
-                />
-                <label className="placeholder">{counter}</label>
-                <Form.Checkbox
-                  required
-                  inline
-                  label="Quero receber e-mails com sugestões, promoções e novidades."
-                />
-                <Button size="large" className="Button submit"><span>Enviar</span></Button>
-              </Form>
+              <Form.Group widths="equal">
+                <Form inverted className="Form" size="large" onSubmit={this.handleSubmit}>
+                  <Form.Input
+                    required
+                    placeholder="E-mail"
+                    name="email"
+                    value={email}
+                    onChange={this.handleChange}
+                  />
+                  <Form.TextArea
+                    required
+                    id="form-textarea"
+                    placeholder="Digite aqui sua mensagem"
+                    rows={2}
+                    name="message"
+                    value={message}
+                    onChange={this.handleChange}
+                  />
+                  <label className="placeholder">{counter}</label>
+                  <Form.Checkbox
+                    required
+                    inline
+                    label="Quero receber e-mails com sugestões, promoções e novidades."
+                  />
+                  <Button size="large" className="Button submit"><span>Enviar</span></Button>
+                </Form>
+              </Form.Group>
             </Segment>
           </Grid.Column>
         </Grid>
