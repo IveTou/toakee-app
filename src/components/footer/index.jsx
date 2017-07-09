@@ -1,11 +1,11 @@
 import React from 'react';
-import { Grid, Segment, Divider, Button, Image, Form } from 'semantic-ui-react';
+import { Grid, Segment, Divider, Button, Image, Form, Icon, Popup } from 'semantic-ui-react';
 import FacebookProvider, { Page } from 'react-facebook';
+import { pick, omit } from 'lodash';
 
+import { ASSETS_BASE_URI, FACEBOOK_APP_ID, FACEBOOK_PAGE_URI } from '~/src/config';
+import { validateContact } from '~/src/components/auth-wrapper/validation';
 import MailingAPI from '~/src/toakee-core/apis/mailing';
-import { FACEBOOK_APP_ID, FACEBOOK_PAGE_URI } from '~/src/config';
-
-import { validateSignUp } from './validation';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -19,33 +19,33 @@ class Footer extends React.Component {
     errors: {},
   };
 
-  handleValidation = (name, value) => {
-    if (name === 'email') {
-      const reg = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
-      this.setState({ emailError: !reg.test(value) });
-      return true;
-    } else if (200 - value.length >= 0) {
-      this.setState({ counter: `restam ${200 - value.length} caracteres` });
-      return true;
-    }
-    return false;
-  }
-
   handleChange = (e, { name, value }) => {
-    if (this.handleValidation(name, value)) {
-      this.setState({ [name]: value });
+    if(name == 'message') {
+      if (200 - value.length >= 0) {
+        this.setState({
+          [name]: value,
+          errors: omit(this.state.erros, name),
+          counter: `restam ${200 - value.length} caracteres`,
+        });
+      }
+    } else {
+      this.setState({
+        [name]: value,
+        errors: omit(this.state.erros, name),
+      });
     }
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const { email, message, errors } = this.state;
-    if (!errors) {
-      MailingAPI.send(email, message);
-      this.setState({ email: '', message: '' });
-    } else {
-      console.log('email error');
+    const form = pick(this.state, ['email']);
+    const errors = validateContact(form);
+    this.setState({errors: errors || {} });
+
+    if(!errors) {
+      MailingAPI.send(form.email, form.message);
+      this.setState({ email: '', message: '', counter: 'restam 200 caracteres' })
     }
   }
 
@@ -98,6 +98,8 @@ class Footer extends React.Component {
                     name="email"
                     value={email}
                     onChange={this.handleChange}
+                    icon={this.renderErrorIcon('email')}
+                    error={!!this.state.errors.email}
                   />
                   <Form.TextArea
                     required
@@ -114,7 +116,7 @@ class Footer extends React.Component {
                     inline
                     label="Quero receber e-mails com sugestões, promoções e novidades."
                   />
-                  <Button size="large" className="Button submit"><span>Enviar</span></Button>
+                  <Button basic inverted size="large" content="Enviar"/>
                 </Form>
               </Form.Group>
             </Segment>
@@ -124,7 +126,7 @@ class Footer extends React.Component {
         <Segment basic>
           <Image
             className="Image"
-            src="http://res.cloudinary.com/toakeeassets/image/upload/s--4-qYLsm3--/v1499001957/core/site/icon-x64.png"
+            src={`${ASSETS_BASE_URI}/core/site/icon-x64.png`}
             size="mini"
             alt="Toakee.com"
             centered

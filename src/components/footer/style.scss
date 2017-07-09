@@ -20,7 +20,7 @@
     background-color: $transparent;
     color: $white;
     border: none;
-    
+
     &:not(.submit) {
       margin: $spacer auto !important;
     }
@@ -50,7 +50,7 @@
     &:hover {
       color: $white;
       background-color: $transparent;
-        
+
       span {
         &:before {
           opacity: 1;
@@ -62,12 +62,12 @@
         }
       }
     }
-    
+
     &:focus {
       color: $white;
       background-color: $transparent;
     }
-        
+
     &.about {
       span {
         &:before, &:after {
@@ -95,18 +95,9 @@
         }
       }
     }
- 
-    &.submit {
-      border:  1px solid $white;
-      span {
-        &:after {
-          content: '\27A2';
-          right: $spacer*-2;
-        }
-      }
-    } 
+
   }
-  
+
   .Image {
     transition: .5s ease;
 
@@ -121,7 +112,7 @@
 
 @include media("<tablet"){
   .Footer{
-    &-col {    
+    &-col {
       width: 100% !important;
     }
 
