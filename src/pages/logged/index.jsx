@@ -14,19 +14,13 @@ const query = gql`
   query { viewer { id, firstName, photo, isPromoter } }
 `;
 
-const tracking = once(id => TrackingAPI.track('Logged Page View', id));
+const trackLoggedPageView = once(id => TrackingAPI.track('Logged Page View', id));
 
 export class Logged extends React.Component {
-  componentWillMount(){
-    console.log('Will mount');
-    console.log(this.props.viewer);
-  }
 
   componentWillReceiveProps({ viewer }) {
-    if (viewer.size) {
-      console.log('Will receive props');
-      console.log(viewer);
-      //tracking(viewer.id);
+    if (viewer) {
+      trackLoggedPageView(viewer.id);
     }
   }
 
@@ -46,7 +40,6 @@ export class Logged extends React.Component {
 Logged.propTypes = {
   children: PropTypes.node,
   viewer: PropTypes.object,
-  dispatch: PropTypes.func,
 };
 
 export default graphql(query, {

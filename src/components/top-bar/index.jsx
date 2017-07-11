@@ -1,6 +1,4 @@
 import React, { PropTypes } from 'react';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
 import autoBind from 'react-autobind';
 import { browserHistory, Link } from 'react-router';
 import { Menu, Dropdown, Image, Label, Icon, Button } from 'semantic-ui-react';
