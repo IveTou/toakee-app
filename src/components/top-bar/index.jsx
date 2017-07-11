@@ -1,18 +1,22 @@
 import React, { PropTypes } from 'react';
-import TrackingAPI from '~/src/toakee-core/apis/tracking';
-import { connect } from 'react-redux';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 import autoBind from 'react-autobind';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
+import { Menu, Dropdown, Image, Label, Icon, Button } from 'semantic-ui-react';
 
-import Button from '~/src/components/button';
+import { isLogged, logout } from '~/src/utils/session';
+import TrackingAPI from '~/src/toakee-core/apis/tracking';
+
 import Logo from '~/src/components/logo';
-
-import { isLogged } from '~/src/utils/session';
-import { logout } from '~/src/toakee-core/ducks/auth';
 
 if (process.env.BROWSER) {
   require('./style.scss');
 }
+
+const query = gql`
+  query { viewer { id, firstName, photo, isPromoter } }
+`;
 
 export class TopBar extends React.Component {
   constructor(props) {
@@ -21,7 +25,7 @@ export class TopBar extends React.Component {
   }
 
   logout() {
-    this.props.dispatch(logout());
+    logout();
     browserHistory.push('/redirect');
   }
 
@@ -30,52 +34,64 @@ export class TopBar extends React.Component {
     browserHistory.push('/login');
   }
 
-  render() {
+  signUp() {
+    TrackingAPI.track('Landing SignUp Trigger', 'Guest');
+    browserHistory.push('/cadastrar');
+  }
+
+  renderAvatar() {
     const { viewer } = this.props;
-    const avatar = viewer.get('data').size
-      ? viewer.get('data').get('photo')
-      : null;
+
+    if (!viewer) {
+      return <Icon name="user" circular size="large" color="grey" />;
+    }
+
+    return viewer.photo
+      ? <Image src={viewer.photo} size="mini" shape="circular" />
+      : <Label circular size="big">{viewer.firstName[0]}</Label>;
+  }
+
+  render() {
+    const { viewer = {} } = this.props;
 
     return (
-      <header className="TopBar header mdl-layout__header">
-        <div className="mdl-layout__header-row">
-          <span className="mdl-layout-title">
-            <Logo />
-          </span>
-          <div className="mdl-layout-spacer" />
+      <Menu fixed="top" className="TopBar" borderless>
+        <Menu.Item>
+          <Logo />
+        </Menu.Item>
+        <Menu.Menu position="right">
           <Choose>
             <When condition={isLogged()}>
-              <Button
-                className="TopBar-avatar"
-                id="TopBar-avatar"
-                icon="user"
-                avatar={avatar}
-                fab
-              />
-              <ul
-                className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-                htmlFor="TopBar-avatar"
-              >
-                <button onClick={this.logout} className="mdl-menu__item">
-                  Sair
-                </button>
-              </ul>
+              <Dropdown item trigger={this.renderAvatar()} icon={null}>
+                <Dropdown.Menu>
+                  <If condition={viewer.isPromoter}>
+                    <Dropdown.Item as={Link} to={{ pathname: '/dashboard' }}>
+                      Meus eventos
+                    </Dropdown.Item>
+                  </If>
+                  <Dropdown.Item onClick={this.logout}>Sair</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </When>
             <Otherwise>
-              <Button onClick={this.login} className="header-action" label="Entrar" raised ripple accent />
+              <Menu.Item>
+                <Button.Group>
+                  <Button onClick={this.login} basic>Entrar</Button>
+                  <Button onClick={this.signUp} color="orange">Cadastrar</Button>
+                </Button.Group>
+              </Menu.Item>
             </Otherwise>
           </Choose>
-        </div>
-      </header>
+        </Menu.Menu>
+      </Menu>
     );
   }
 }
 
 TopBar.propTypes = {
   viewer: PropTypes.object,
-  dispatch: PropTypes.func,
 };
 
-export default connect(
-  ({ viewer }) => ({ viewer }),
-)(TopBar);
+export default graphql(query, {
+  props: ({ data: { viewer } }) => ({ viewer }),
+})(TopBar);

@@ -4,70 +4,36 @@
 
 .EventGuestListEdit {
   &-lists {
-    padding: $spacer*6;
-  }
-}
-
-.EventGuestListEditItem,
-.EventGuestListEditNewItem {
-  &.mdl-card {
-    vertical-align: top;
-    display: inline-block;
-    width: $spacer*30;
-    padding: $spacer*2;
-    overflow: visible;
-    margin: 0 $spacer $spacer*2;
-    font-size: 12px;
+    padding: $spacer*3;
   }
 }
 
 .EventGuestListEditItem {
-  &-name input {
-    color: $orange;
-    font-size: 14px;
-    text-transform: uppercase;
-
-    &:hover {
-      background-color: $orange100;
-    }
-
-    &:focus {
-      text-transform: none;
-    }
+  .ui.form textarea {
+    width: calc(100% - #{$spacer*6});
   }
 
   &-invitations {
+    margin-top: $spacer;
     max-height: $spacer*10;
     overflow: auto;
 
     &-item {
-      margin-bottom: $spacer;
+      cursor: default;
+      margin: 0 $spacer $spacer 0;
+
+      &:hover {
+        background-color: $orange100;
+      }
+
+      &-remove {
+        float: right;
+        cursor: pointer;
+      }
     }
   }
 
   &-input {
-    margin: $spacer 0;
-
-    @include placeholder {
-      color: $black26;
-    }
-
-    input {
-      padding: 0;
-      border: 0;
-    }
-
-    i {
-      margin-left: $spacer/2;
-      cursor: pointer;
-    }
-
-    textarea {
-      border-radius: 3px;
-      border-color: $gray100;
-      width: calc(100% - #{$spacer*6});
-    }
-
     &.addNames {
       .Button {
         padding: 0 $spacer;
@@ -77,40 +43,14 @@
       }
     }
 
-    &.editing {
-      input {
-        background-color: $orange100;
-      }
-      a {
-        display: none;
-      }
-
-      .EventGuestListEditItem-input-field {
-        background-color: $orange100;
-      }
-      .EventGuestListEditItem-input-editingButtons {
-        display: initial;
-      }
-    }
-
     &-editingButtons {
-      display: none;
       margin-left: $spacer/2;
+      cursor: pointer;
+      font-size: 14px;
     }
 
     a {
       text-decoration: none;
-    }
-
-    &-field:hover {
-      background-color: $orange100;
-    }
-
-    &.TimePicker {
-      select {
-        font-size: 12px;
-        color: $black54;
-      }
     }
   }
 }
@@ -119,21 +59,6 @@
   .EventGuestListEditNewItem-input {
     @include placeholder {
       color: $black26;
-    }
-
-    &.TimePicker {
-      display: inline-block;
-      width: calc(50% - #{$spacer*2});
-      padding: $spacer;
-      text-align: center;
-
-      &:first-child {
-        margin-right: 4%;
-      }
-
-      select {
-        font-size: 14px;
-      }
     }
 
     label {

@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
+import { graphql } from 'react-apollo';
 import autoBind from 'react-autobind';
 import VisibilitySensor from 'react-visibility-sensor';
 
 import { ease } from '~/src/utils/animation';
-import { fetchEvents } from '~/src/toakee-core/ducks/events';
 import EventListItem from './item';
 import EventListArrow from './arrow';
+import query from './graphql';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -17,33 +17,19 @@ const FEED_LIMIT = 10;
 class EventList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { lastEventId: null };
+    this.state = { hasMore: true, fetchingMore: false };
     autoBind(this);
   }
 
-  componentWillMount() {
-    const { start, end } = this.props;
-    this.props.dispatch(fetchEvents({ start, end, limit: FEED_LIMIT }));
-  }
-
-  shouldFetchMore() {
-    const { events } = this.props;
-    const lastEvent = events[events.length - 1];
-    return this.state.lastEventId !== lastEvent.id;
-  }
-
   fetchEvents() {
-    const { events, end } = this.props;
-    const lastEvent = events[events.length - 1];
-    if (this.shouldFetchMore()) {
-      this.setState({
-        lastEventId: lastEvent.id,
-      }, () => {
-        const { start } = lastEvent;
-        const skip = events
-          .filter(e => e.start.getTime() === start.getTime())
-          .length;
-        this.props.dispatch(fetchEvents({ start, end, skip, limit: FEED_LIMIT }));
+    if (!this.state.fetchingMore) {
+      this.setState({ fetchingMore: true }, () => {
+        this.props.loadMore().then(({ data: { viewer } }) => {
+          this.setState({
+            fetchingMore: false,
+            hasMore: !(viewer && viewer.events && !viewer.events.length),
+          });
+        });
       });
     }
   }
@@ -59,26 +45,29 @@ class EventList extends React.Component {
   }
 
   render() {
-    const { title, events } = this.props;
+    const { title, viewer = {} } = this.props;
+    const { events = [], eventCount } = viewer;
 
     const node = this._listDOM || {};
     const hideLeftArrow = !node.scrollLeft;
     const hideRightArrow =
       node.scrollLeft + node.offsetWidth >= node.scrollWidth
-      && !this.shouldFetchMore();
+      && !this.state.hasMore;
 
     declare var event;
     declare var idx;
     return !!events.length && (
       <div className="EventList">
-        <div className="EventList-title">{title}</div>
+        <div className="EventList-title">{title} ({eventCount})</div>
         <div className="EventList-list" ref={(dom) => { this._listDOM = dom; }}>
           <EventListArrow direction="left" onClick={() => this.scroll(-1)} hide={hideLeftArrow} />
           <EventListArrow direction="right" onClick={() => this.scroll(1)} hide={hideRightArrow} />
           <For each="event" index="idx" of={events}>
             <EventListItem key={idx} {...event} />
           </For>
-          <VisibilitySensor onChange={isVisible => (isVisible && this.fetchEvents())} />
+          <If condition={this.state.hasMore}>
+            <VisibilitySensor onChange={isVisible => (isVisible && this.fetchEvents())} />
+          </If>
           <div className="EventList-list-end" />
         </div>
       </div>
@@ -88,16 +77,38 @@ class EventList extends React.Component {
 
 EventList.propTypes = {
   title: PropTypes.string,
-  events: PropTypes.array,
-  start: PropTypes.object,
-  end: PropTypes.object,
-  dispatch: PropTypes.func,
+  loadMore: PropTypes.func,
+  viewer: PropTypes.object,
 };
 
-export default connect(({ events }, { start, end }) => ({
-  events: events
-    .get('data')
-    .filter(e => start.isSameOrBefore(e.start) && (!end || end.isSameOrAfter(e.start)))
-    .sort((a, b) => a.start - b.start)
-    .toArray(),
-}))(EventList);
+export default graphql(query, {
+  options: ({ start, end, categoryIds }) => ({
+    variables: { start, end, skip: 0, categoryIds, limit: FEED_LIMIT },
+  }),
+  props: ({ data: { viewer, fetchMore }, ownProps: { categoryIds } }) => ({
+    viewer,
+    loadMore: () => {
+      const start = new Date(viewer.events[viewer.events.length - 1].start);
+      const skip = viewer.events
+        .filter(e => start.getTime() === new Date(e.start).getTime())
+        .length;
+
+      return fetchMore({
+        variables: { start: viewer.events[viewer.events.length - 1].start, categoryIds, skip },
+        updateQuery: (previousResult, { fetchMoreResult }) => (
+          !fetchMoreResult
+            ? previousResult
+            : {
+              viewer: {
+                ...previousResult.viewer,
+                events: [
+                  ...previousResult.viewer.events,
+                  ...fetchMoreResult.viewer.events,
+                ],
+              },
+            }
+        ),
+      });
+    },
+  }),
+})(EventList);

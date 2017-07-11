@@ -1,0 +1,23 @@
+query EventGuestList($eventSlug: String) {
+  viewer {
+    id
+
+    event(slug: $eventSlug) {
+      id
+      title
+      slug
+
+      guestLists {
+        id
+        name
+
+        invitations {
+          id
+          name
+          normalizedName
+          status
+        }
+      }
+    }
+  }
+}

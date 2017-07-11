@@ -1,11 +1,14 @@
 import React, { PropTypes } from 'react';
+
 import { connect } from 'react-redux';
 import { once } from 'lodash';
 
 import { fetchViewer } from '~/src/toakee-core/ducks/viewer';
 
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
+
 import TopBar from '~/src/components/top-bar';
+import Dialog from '~/src/components/dialog';
 
 require('./style.scss');
 
@@ -25,9 +28,10 @@ export class Logged extends React.Component {
 
   render() {
     return (
-      <div className="Logged mdl-layout mdl-layout--fixed-header mdl-js-layout">
+      <div className="Logged">
         <TopBar viewer={this.props.viewer} />
-        <main className="main mdl-layout__content">
+        <Dialog />
+        <main className="main">
           {this.props.children}
         </main>
       </div>

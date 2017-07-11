@@ -1,21 +1,32 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
 @import '../../scss/variables';
 @import '../../scss/colors';
 @import '../../scss/mixins';
 
 .DashboardMenu {
   position: fixed;
-  height: calc(100% - #{$spacer*10});
+  height: calc(100% - #{$topbar-height});
   width: $spacer*40;
   @include box-shadow(0 $spacer/4 $spacer/2 $black26);
 
   &-header {
     position: relative;
-    padding: $spacer*4;
+    padding: $spacer*4 $spacer*2;
     text-align: center;
     font-size: 18px;
     font-weight: bold;
     text-transform: uppercase;
     border-bottom: 2px solid $gray100;
+
+    &-icon.icon {
+      float: left;
+      cursor: pointer;
+      display: none;
+    }
+
+    &-title {
+      margin-left: $spacer*-2;
+    }
   }
 
   &-events {
@@ -38,6 +49,7 @@
         display: table-cell;
         padding: $spacer*2;
         width: $spacer*6;
+        box-sizing: initial;
 
         img {
           width: 100%;
@@ -101,3 +113,34 @@
   }
 }
 
+@include media("<tablet") {
+  .DashboardMenu {
+    margin-left: -100%;
+    transition: margin-left .28s ease-out;
+
+    &-header {
+      padding: $spacer*2;
+
+      &-icon.icon {
+        display: block;
+      }
+    }
+
+    &-open {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+
+  .DashboardContent {
+    width: 100%;
+    margin-left: 0;
+    transition: margin-left .28s ease-out;
+    overflow-x: hidden;
+  }
+
+  .DashboardMenu-open +
+  .DashboardContent {
+    margin-left: 100%;
+  }
+}

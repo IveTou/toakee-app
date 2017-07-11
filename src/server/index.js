@@ -2,17 +2,22 @@ import express from 'express';
 import nunjucks from 'nunjucks';
 import nodemailer from 'nodemailer';
 import bodyParser from 'body-parser';
+import fs from 'fs';
 
 import MixpanelClient from './clients/mixpanel';
 
 import config from './config';
 
 const { PORT, SUPPORT_EMAIL } = config;
+const devMode = process.env.NODE_ENV !== 'production';
 
 const app = express();
-app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const aWeek = 1000 * 60 * 60 * 24 * 7;
+const staticOptions = devMode ? {} : { maxage: aWeek };
+app.use(express.static('public', staticOptions));
 
 const whiteList = ['toakee.com', 'toakee.com.br'];
 app.use((req, res, next) => {
@@ -55,15 +60,19 @@ app.post('/events/track', (req, res) => {
   return res.json({ ok: true });
 });
 
-app.get('/termos-de-uso', (_, res) => {
-  res.render('termos-de-uso.html');
-});
-
 app.get('/social-login', (_, res) => {
   res.render('social-login.html');
 });
 
-app.get('*', (_, res) => { res.render('index.html'); });
+const assets = devMode
+  ? { main: { js: 'main.js', css: 'style.css' }, vendor: { js: 'vendor.js' } }
+  : JSON.parse(fs.readFileSync('assets.json'));
+
+app.get('/termos-de-uso', (_, res) => {
+  res.render('termos-de-uso.html', { assets });
+});
+
+app.get('*', (_, res) => { res.render('index.html', { assets }); });
 
 // eslint-disable-next-line no-console
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
