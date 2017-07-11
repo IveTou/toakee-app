@@ -1,4 +1,6 @@
 import React from 'react';
+
+import { Link } from 'react-router';
 import { Grid, Segment, Divider, Button, Image, Form, Icon, Popup } from 'semantic-ui-react';
 import FacebookProvider, { Page } from 'react-facebook';
 import { pick, omit } from 'lodash';
@@ -16,6 +18,7 @@ class Footer extends React.Component {
     email: '',
     message: '',
     counter: 'restam 200 caracteres',
+    subscribe: false,
     errors: {},
   };
 
@@ -36,16 +39,20 @@ class Footer extends React.Component {
     }
   }
 
+  handleCheckboxChange = (e, { name, checked }) => {
+    this.setState({ 'subscribe': checked });
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const form = pick(this.state, ['email']);
-    const errors = validateContact(form);
+    const form = pick(this.state, ['email', 'message', 'subscribe']);
+    const errors = validateContact(pick(form, ['email']));
     this.setState({errors: errors || {} });
 
     if(!errors) {
       MailingAPI.send(form.email, form.message);
-      this.setState({ email: '', message: '', counter: 'restam 200 caracteres' })
+      this.setState({ email: '', message: '', counter: 'restam 200 caracteres', })
     }
   }
 
@@ -68,24 +75,23 @@ class Footer extends React.Component {
 
     return (
       <footer className="Footer">
-        <Grid columns={3} relaxed>
+        <Grid columns={2} relaxed>
           <Grid.Column className="Footer-col">
-            <Divider horizontal inverted >Seja Nosso Amigo!</Divider>
+            <Divider horizontal inverted >Estamos Aqui!</Divider>
             <Segment basic>
               <FacebookProvider appId={FACEBOOK_APP_ID}>
                 <Page href={FACEBOOK_PAGE_URI} tabs smallHeader adaptContainerWidth />
               </FacebookProvider>
             </Segment>
-          </Grid.Column>
-          <Grid.Column className="Footer-col">
-            <Divider horizontal inverted >Sobre Nós</Divider>
-            <Segment basic>
-              <Button.Group vertical>
-                <Button size="large" className="Button about"><span>Quem somos</span></Button>
-                <Button size="large" className="Button terms"><span>Termos de Uso</span></Button>
-                <Button size="large" className="Button signup"><span>Cadastre-se</span></Button>
-              </Button.Group>
-            </Segment>
+              <Link to={{ pathname: '/'  }}>
+                <Icon circular className="Icon facebook" name='facebook' />
+              </Link>
+              <Link to={{ pathname: '/'  }}>
+                <Icon circular className="Icon instagram" name='instagram' />
+              </Link>
+              <Link to={{ pathname: '/'  }}>
+                <Icon circular className="Icon linkedin" name='linkedin' />
+              </Link>
           </Grid.Column>
           <Grid.Column className="Footer-col">
             <Divider horizontal inverted >Contato</Divider>
@@ -112,9 +118,11 @@ class Footer extends React.Component {
                   />
                   <label className="placeholder">{counter}</label>
                   <Form.Checkbox
-                    required
                     inline
+                    className="Form-checkbox"
                     label="Quero receber e-mails com sugestões, promoções e novidades."
+                    name="checkbox"
+                    onChange={this.handleCheckboxChange}
                   />
                   <Button basic inverted size="large" content="Enviar"/>
                 </Form>
@@ -131,7 +139,10 @@ class Footer extends React.Component {
             alt="Toakee.com"
             centered
           />
-          <Segment basic>Copyright &copy; 2017 Toakee. Todos os direitos reservados.</Segment>
+            <Link className="Link about" to={{ pathname: '/'  }}><span>Quem somos</span></Link>
+            <Link className="Link terms" to={{ pathname: '/' }}><span>Termos de Uso</span></Link>
+            <Link className="Link signup" to={{ pathname: '/cadastrar' }}><span>Cadastre-se</span></Link>
+          <Segment className="Copyright" basic>Copyright &copy; 2017 Toakee. Todos os direitos reservados.</Segment>
         </Segment>
       </footer>
     );
