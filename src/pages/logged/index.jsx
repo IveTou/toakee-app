@@ -1,9 +1,7 @@
 import React, { PropTypes } from 'react';
-
-import { connect } from 'react-redux';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 import { once } from 'lodash';
-
-import { fetchViewer } from '~/src/toakee-core/ducks/viewer';
 
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 
@@ -12,17 +10,23 @@ import Dialog from '~/src/components/dialog';
 
 require('./style.scss');
 
+const query = gql`
+  query { viewer { id, firstName, photo, isPromoter } }
+`;
+
 const tracking = once(id => TrackingAPI.track('Logged Page View', id));
 
 export class Logged extends React.Component {
-
-  componentWillMount() {
-    this.props.dispatch(fetchViewer());
+  componentWillMount(){
+    console.log('Will mount');
+    console.log(this.props.viewer);
   }
 
   componentWillReceiveProps({ viewer }) {
     if (viewer.size) {
-      tracking(viewer.id);
+      console.log('Will receive props');
+      console.log(viewer);
+      //tracking(viewer.id);
     }
   }
 
@@ -45,6 +49,6 @@ Logged.propTypes = {
   dispatch: PropTypes.func,
 };
 
-export default connect(
-  ({ viewer }) => ({ viewer: viewer.get('data') }),
-)(Logged);
+export default graphql(query, {
+  props: ({ data: { viewer } }) => ({ viewer }),
+})(Logged);

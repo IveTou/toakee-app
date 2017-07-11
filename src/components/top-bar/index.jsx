@@ -14,10 +14,6 @@ if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-const query = gql`
-  query { viewer { id, firstName, photo, isPromoter } }
-`;
-
 export class TopBar extends React.Component {
   constructor(props) {
     super(props);
@@ -92,6 +88,4 @@ TopBar.propTypes = {
   viewer: PropTypes.object,
 };
 
-export default graphql(query, {
-  props: ({ data: { viewer } }) => ({ viewer }),
-})(TopBar);
+export default TopBar;
