@@ -2,6 +2,8 @@ query EventList($start: Date, $end: Date, $skip: Int, $categoryIds: [String], $l
   viewer {
     id
 
+    eventCount(start: $start, end: $end, categoryIds: $categoryIds)
+
     events(start: $start, end: $end, categoryIds: $categoryIds, skip: $skip, limit: $limit) {
       id
       slug
