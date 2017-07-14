@@ -71,21 +71,6 @@ class Footer extends React.Component {
     );
   }
 
-  renderMailSendMessage(input, icon) {
-    return (
-      <Popup
-        trigger={}
-        content="E-mail enviado!"
-        on='click'
-        open={this.state.isOpen}
-        onClose={this.handleClose}
-        onOpen={this.handleOpen}
-        position='top right'
-        hideOnScroll
-      />
-    );
-  }
-
   render() {
     const { email, message, counter, loading } = this.state;
 
@@ -96,18 +81,18 @@ class Footer extends React.Component {
             <Divider horizontal inverted >Estamos Aqui!</Divider>
             <Segment basic>
               <FacebookProvider appId={FACEBOOK_APP_ID}>
-                <Page href={FACEBOOK_PAGE_URI} tabs smallHeader adaptContainerWidth />
+                <Page href={FACEBOOK_PAGE_URI} tabs="true" smallHeader adaptContainerWidth />
               </FacebookProvider>
             </Segment>
-              <Link to={{ pathname: '/'  }}>
+              <a className="Link" href="https://www.facebook.com/eu.toakee">
                 <Icon circular className="Icon facebook" name='facebook' />
-              </Link>
-              <Link to={{ pathname: '/'  }}>
+              </a>
+              <a className="Link" href="https://www.instagram.com/eu.toakee">
                 <Icon circular className="Icon instagram" name='instagram' />
-              </Link>
-              <Link to={{ pathname: '/'  }}>
+              </a>
+              <a className="Link" href="https://linkedin.com/company/toakee">
                 <Icon circular className="Icon linkedin" name='linkedin' />
-              </Link>
+              </a>
           </Grid.Column>
           <Grid.Column className="Footer-col">
             <Divider horizontal inverted >Contato</Divider>
@@ -152,7 +137,6 @@ class Footer extends React.Component {
                     disabled={loading}
                     size="large"
                     content="Enviar"
-                    icon={this.renderMailSendMessage('loading')}
                   />
                 </Form>
               </Form.Group>
