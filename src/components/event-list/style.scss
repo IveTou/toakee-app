@@ -42,7 +42,7 @@
       &-background.image img {
         @include drag(none);
         width: 100%;
-        height: 160px;
+        height: $spacer*25;
         object-fit: cover;
       }
 
