@@ -1,6 +1,4 @@
 import React, { PropTypes } from 'react';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
 import autoBind from 'react-autobind';
 import { browserHistory, Link } from 'react-router';
 import { Menu, Dropdown, Image, Label, Icon, Button } from 'semantic-ui-react';
@@ -13,10 +11,6 @@ import Logo from '~/src/components/logo';
 if (process.env.BROWSER) {
   require('./style.scss');
 }
-
-const query = gql`
-  query { viewer { id, firstName, photo, isPromoter } }
-`;
 
 export class TopBar extends React.Component {
   constructor(props) {
@@ -92,6 +86,4 @@ TopBar.propTypes = {
   viewer: PropTypes.object,
 };
 
-export default graphql(query, {
-  props: ({ data: { viewer } }) => ({ viewer }),
-})(TopBar);
+export default TopBar;
