@@ -17,16 +17,21 @@ const FEED_LIMIT = 10;
 class EventList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hasMore: true };
+    this.state = { hasMore: true, fetchingMore: false };
     autoBind(this);
   }
 
   fetchEvents() {
-    this.props.loadMore().then(({ data: { viewer } }) => {
-      if (viewer && viewer.events && !viewer.events.length) {
-        this.setState({ hasMore: false });
-      }
-    });
+    if (!this.state.fetchingMore) {
+      this.setState({ fetchingMore: true }, () => {
+        this.props.loadMore().then(({ data: { viewer } }) => {
+          this.setState({
+            fetchingMore: false,
+            hasMore: !(viewer && viewer.events && !viewer.events.length),
+          });
+        });
+      });
+    }
   }
 
   scroll(direction) {
@@ -41,7 +46,7 @@ class EventList extends React.Component {
 
   render() {
     const { title, viewer = {} } = this.props;
-    const { events = [] } = viewer;
+    const { events = [], eventCount } = viewer;
 
     const node = this._listDOM || {};
     const hideLeftArrow = !node.scrollLeft;
@@ -53,7 +58,7 @@ class EventList extends React.Component {
     declare var idx;
     return !!events.length && (
       <div className="EventList">
-        <div className="EventList-title">{title}</div>
+        <div className="EventList-title">{title} ({eventCount})</div>
         <div className="EventList-list" ref={(dom) => { this._listDOM = dom; }}>
           <EventListArrow direction="left" onClick={() => this.scroll(-1)} hide={hideLeftArrow} />
           <EventListArrow direction="right" onClick={() => this.scroll(1)} hide={hideRightArrow} />

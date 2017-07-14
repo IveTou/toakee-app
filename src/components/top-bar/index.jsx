@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import autoBind from 'react-autobind';
+import { once } from 'lodash';
 import { browserHistory, Link } from 'react-router';
 import { Menu, Dropdown, Image, Label, Icon, Button } from 'semantic-ui-react';
 
@@ -14,6 +15,8 @@ if (process.env.BROWSER) {
   require('./style.scss');
 }
 
+const trackPageView = once((metric, id) => TrackingAPI.track(metric, id));
+
 const query = gql`
   query { viewer { id, firstName, photo, isPromoter } }
 `;
@@ -22,6 +25,14 @@ export class TopBar extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
+  }
+
+  componentWillReceiveProps({ viewer }) {
+    if (!isLogged()) {
+      trackPageView('Unlogged Page View', 'Guest');
+    } else if (viewer) {
+      trackPageView('Logged Page View', viewer.id);
+    }
   }
 
   logout() {

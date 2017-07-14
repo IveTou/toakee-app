@@ -36,6 +36,10 @@ const Landing = () => (
           categoryIds={[homeCategories[category]]}
         />
       </For>
+      <EventList
+        title="Eventos futuros"
+        start={moment().add(1, 'week').startOf('isoWeek')}
+      />
     </div>
   </div>
 );
