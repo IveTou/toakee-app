@@ -15,7 +15,7 @@ if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-const trackPageView = once((name, id) => TrackingAPI.track(name, id));
+const trackPageView = once((metric, id) => TrackingAPI.track(metric, id));
 
 const query = gql`
   query { viewer { id, firstName, photo, isPromoter } }
