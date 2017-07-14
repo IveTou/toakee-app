@@ -19,6 +19,7 @@
   .Icon {
     background-color: $gray300;
     color: $footer-color;
+    opacity: 0.8;
     font-size: $spacer*3;
     margin: auto $spacer*2;
     transition: 0.5s;
@@ -26,16 +27,18 @@
     &:hover {
       background-color: $orange600;
       color: $gray300;
+      opacity: 1;
     }
   }
 
   .Form {
-    max-width: $spacer*50;
+    max-width: $spacer*39;
     margin: auto;
 
     &-checkbox {
       margin: 24px auto !important;
     }
+
   }
 
   .Image {

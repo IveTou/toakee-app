@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import { Link } from 'react-router';
 import { Grid, Segment, Divider, Button, Image, Form, Icon, Popup } from 'semantic-ui-react';
@@ -19,6 +19,7 @@ class Footer extends React.Component {
     message: '',
     counter: 'restam 200 caracteres',
     subscribe: false,
+    loading: false,
     errors: {},
   };
 
@@ -48,10 +49,10 @@ class Footer extends React.Component {
 
     const form = pick(this.state, ['email', 'message', 'subscribe']);
     const errors = validateContact(pick(form, ['email']));
-    this.setState({errors: errors || {} });
+    this.setState({errors: errors || {}, loading: true });
 
     if(!errors) {
-      MailingAPI.send(form.email, form.message);
+      MailingAPI.send(form.email, form.message, form.subscribe);
       this.setState({ email: '', message: '', counter: 'restam 200 caracteres', })
     }
   }
@@ -70,8 +71,23 @@ class Footer extends React.Component {
     );
   }
 
+  renderMailSendMessage(input, icon) {
+    return (
+      <Popup
+        trigger={}
+        content="E-mail enviado!"
+        on='click'
+        open={this.state.isOpen}
+        onClose={this.handleClose}
+        onOpen={this.handleOpen}
+        position='top right'
+        hideOnScroll
+      />
+    );
+  }
+
   render() {
-    const { email, message, counter } = this.state;
+    const { email, message, counter, loading } = this.state;
 
     return (
       <footer className="Footer">
@@ -97,7 +113,11 @@ class Footer extends React.Component {
             <Divider horizontal inverted >Contato</Divider>
             <Segment basic>
               <Form.Group widths="equal">
-                <Form inverted className="Form" size="large" onSubmit={this.handleSubmit}>
+                <Form
+                  inverted
+                  className="Form"
+                  size="large"
+                  onSubmit={this.handleSubmit}>
                   <Form.Input
                     required
                     placeholder="E-mail"
@@ -124,7 +144,16 @@ class Footer extends React.Component {
                     name="checkbox"
                     onChange={this.handleCheckboxChange}
                   />
-                  <Button basic inverted size="large" content="Enviar"/>
+                  <Button
+                    basic
+                    inverted
+                    name="submit"
+                    loading={loading}
+                    disabled={loading}
+                    size="large"
+                    content="Enviar"
+                    icon={this.renderMailSendMessage('loading')}
+                  />
                 </Form>
               </Form.Group>
             </Segment>
@@ -148,5 +177,9 @@ class Footer extends React.Component {
     );
   }
 }
+
+Footer.propTypes = {
+  dispatch: PropTypes.func,
+};
 
 export default Footer;

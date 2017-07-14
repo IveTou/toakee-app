@@ -53,13 +53,14 @@ app.post('/send-email', (req, res) => {
     body: mail.toJSON(),
   });
 
-  sg.API(request, function (error, response) {
-    if (error) {
+  sg.API(request, function (err, res) {
+    if (err) {
       console.log('Error response received');
+      return res.json({ ok: false });
     }
-    console.log(response.statusCode);
-    console.log(response.body);
-    console.log(response.headers);
+    console.log(res.statusCode);
+    console.log(res.body);
+    console.log(res.headers);
   });
 
   return res.json({ ok: true });
