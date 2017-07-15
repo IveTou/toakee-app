@@ -5,11 +5,12 @@ import { Grid, Segment, Divider, Button, Image, Form, Icon, Popup } from 'semant
 import FacebookProvider, { Page } from 'react-facebook';
 import { omit, pick } from 'lodash';
 
-import { ASSETS_BASE_URI, FACEBOOK_APP_ID, FACEBOOK_PAGE_URI } from '~/src/config';
 import { validateContact } from '~/src/components/auth-wrapper/validation';
+import { isLogged } from '~/src/utils/session';
 
-import { isLogged } from '~/src/utils/session'
 import MailingAPI from '~/src/toakee-core/apis/mailing';
+
+import { ASSETS_BASE_URI, FACEBOOK_APP_ID, FACEBOOK_PAGE_URI } from '~/src/config';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -22,11 +23,13 @@ class Footer extends React.Component {
     counter: 'restam 200 caracteres',
     subscribe: false,
     loading: false,
+    popupShown: false,
+    popupContent: '',
     errors: {},
   };
 
   handleChange = (e, { name, value }) => {
-    if(name == 'message') {
+    if (name === 'message') {
       if (200 - value.length >= 0) {
         this.setState({
           [name]: value,
@@ -43,7 +46,7 @@ class Footer extends React.Component {
   }
 
   handleCheckboxChange = (e, { name, checked }) => {
-    this.setState({ 'subscribe': checked });
+    this.setState({ [name]: checked });
   }
 
   handleSubmit = (e) => {
@@ -51,23 +54,41 @@ class Footer extends React.Component {
 
     const form = pick(this.state, ['email', 'message', 'subscribe']);
     const errors = validateContact(pick(form, ['email']));
-    this.setState({errors: errors || {}, loading: true });
 
-    if(!errors) {
+    this.setState({ errors: errors || {} });
+
+    if (!errors) {
+      this.setState({ loading: true });
       MailingAPI.send(form.email, form.message, form.subscribe)
         .then(() => {
-          console.log('success');
           this.setState({
             email: '',
             message: '',
             counter: 'restam 200 caracteres',
             loading: false,
+            popupShown: true,
+            popupContent: 'E-mail enviado!',
           });
         })
         .catch(() => {
-          console.log('failed');
+          this.setState({
+            loading: false,
+            popupShown: true,
+            popupContent: 'Erro ao enviar e-mail. Tente novamente.',
+          });
         });
     }
+  }
+
+  handlePopupMount = () => {
+    this.timeout = setTimeout(() => {
+      this.setState({ popupShown: false });
+    }, 2500);
+  }
+
+  handlePopupClose = () => {
+    this.setState({ popupShown: false });
+    clearTimeout(this.timeout);
   }
 
   renderErrorIcon(input, icon) {
@@ -85,7 +106,7 @@ class Footer extends React.Component {
   }
 
   render() {
-    const { email, message, counter, loading } = this.state;
+    const { email, message, counter, loading, popupShown, popupContent } = this.state;
 
     return (
       <footer className="Footer">
@@ -97,15 +118,15 @@ class Footer extends React.Component {
                 <Page href={FACEBOOK_PAGE_URI} tabs="true" smallHeader adaptContainerWidth />
               </FacebookProvider>
             </Segment>
-              <a className="Link" href="https://www.facebook.com/eu.toakee">
-                <Icon circular className="Icon facebook" name='facebook' />
-              </a>
-              <a className="Link" href="https://www.instagram.com/eu.toakee">
-                <Icon circular className="Icon instagram" name='instagram' />
-              </a>
-              <a className="Link" href="https://linkedin.com/company/toakee">
-                <Icon circular className="Icon linkedin" name='linkedin' />
-              </a>
+            <a className="Link" href="https://www.facebook.com/eu.toakee">
+              <Icon circular className="Icon facebook" name="facebook" />
+            </a>
+            <a className="Link" href="https://www.instagram.com/eu.toakee">
+              <Icon circular className="Icon instagram" name="instagram" />
+            </a>
+            <a className="Link" href="https://linkedin.com/company/toakee">
+              <Icon circular className="Icon linkedin" name="linkedin" />
+            </a>
           </Grid.Column>
           <Grid.Column className="Footer-col">
             <Divider horizontal inverted >Contato</Divider>
@@ -115,7 +136,8 @@ class Footer extends React.Component {
                   inverted
                   className="Form"
                   size="large"
-                  onSubmit={this.handleSubmit}>
+                  onSubmit={this.handleSubmit}
+                >
                   <Form.Input
                     required
                     placeholder="E-mail"
@@ -142,14 +164,24 @@ class Footer extends React.Component {
                     name="checkbox"
                     onChange={this.handleCheckboxChange}
                   />
-                  <Button
-                    basic
-                    inverted
-                    name="submit"
-                    loading={loading}
-                    disabled={loading}
-                    size="large"
-                    content="Enviar"
+                  <Popup
+                    trigger={
+                      <Button
+                        basic
+                        inverted
+                        name="submit"
+                        loading={loading}
+                        disabled={loading}
+                        size="large"
+                        content="Enviar"
+                      />
+                    }
+                    content={popupContent}
+                    open={popupShown}
+                    onClose={this.handlePopupClose}
+                    onMount={this.handlePopupMount}
+                    position="top right"
+                    hideOnScroll
                   />
                 </Form>
               </Form.Group>
@@ -165,7 +197,7 @@ class Footer extends React.Component {
             alt="Toakee.com"
             centered
           />
-          <Link className="Link about" to={{ pathname: '/'  }}>
+          <Link className="Link about" to={{ pathname: '/' }}>
             <span>Quem somos</span>
           </Link>
           <Link className="Link terms" to={{ pathname: '/' }}>

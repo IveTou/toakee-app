@@ -54,11 +54,10 @@ app.post('/send-email', (req, res) => {
   });
 
   sg.API(request, (err, response) => {
-    if (response.statusCode == '202') {
+    if (response.statusCode === '202') {
       return res.json({ ok: true });
-    } else {
-      return res.json({ ok: false });
     }
+    return res.json({ ok: false });
   });
 });
 
