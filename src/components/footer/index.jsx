@@ -3,10 +3,12 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { Grid, Segment, Divider, Button, Image, Form, Icon, Popup } from 'semantic-ui-react';
 import FacebookProvider, { Page } from 'react-facebook';
-import { pick, omit } from 'lodash';
+import { pick } from 'lodash';
 
 import { ASSETS_BASE_URI, FACEBOOK_APP_ID, FACEBOOK_PAGE_URI } from '~/src/config';
 import { validateContact } from '~/src/components/auth-wrapper/validation';
+
+import { isLogged } from '~/src/utils/session'
 import MailingAPI from '~/src/toakee-core/apis/mailing';
 
 if (process.env.BROWSER) {
@@ -152,10 +154,22 @@ class Footer extends React.Component {
             alt="Toakee.com"
             centered
           />
-            <Link className="Link about" to={{ pathname: '/'  }}><span>Quem somos</span></Link>
-            <Link className="Link terms" to={{ pathname: '/' }}><span>Termos de Uso</span></Link>
-            <Link className="Link signup" to={{ pathname: '/cadastrar' }}><span>Cadastre-se</span></Link>
-          <Segment className="Copyright" basic>Copyright &copy; 2017 Toakee. Todos os direitos reservados.</Segment>
+          <Link className="Link about" to={{ pathname: '/'  }}>
+            <span>Quem somos</span>
+          </Link>
+          <Link className="Link terms" to={{ pathname: '/' }}>
+            <span>Termos de Uso</span>
+          </Link>
+          <Choose>
+            <When condition={!isLogged()}>
+              <Link className="Link signup" to={{ pathname: '/cadastrar' }}>
+                <span>Cadastre-se</span>
+              </Link>
+            </When>
+          </Choose>
+          <Segment className="Copyright" basic>
+            Copyright &copy; 2017 Toakee. Todos os direitos reservados.
+          </Segment>
         </Segment>
       </footer>
     );
