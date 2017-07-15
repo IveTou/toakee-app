@@ -43,7 +43,7 @@ app.post('/send-email', (req, res) => {
 
   const fromEmail = new helper.Email(from);
   const toEmail = new helper.Email(SUPPORT_EMAIL);
-  const subject = 'Mailing Test';
+  const subject = 'Customer Contact';
   const content = new helper.Content('text/plain', message);
   const mail = new helper.Mail(fromEmail, subject, toEmail, content);
 
@@ -53,12 +53,7 @@ app.post('/send-email', (req, res) => {
     body: mail.toJSON(),
   });
 
-  sg.API(request, (err, response) => {
-    if (response.statusCode === '202') {
-      return res.json({ ok: true });
-    }
-    return res.json({ ok: false });
-  });
+  sg.API(request, (_, { statusCode }) => res.json({ ok: statusCode === '202' }));
 });
 
 app.post('/events/track', (req, res) => {

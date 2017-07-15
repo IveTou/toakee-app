@@ -7,40 +7,35 @@ import { omit, pick } from 'lodash';
 
 import { validateContact } from '~/src/components/auth-wrapper/validation';
 import { isLogged } from '~/src/utils/session';
-
 import MailingAPI from '~/src/toakee-core/apis/mailing';
-
 import { ASSETS_BASE_URI, FACEBOOK_APP_ID, FACEBOOK_PAGE_URI } from '~/src/config';
 
 if (process.env.BROWSER) {
   require('./style.scss');
 }
 
+const MESSAGE_LIMIT = 200;
+
+const initialState = (extra) => ({
+  email: '',
+  message: '',
+  counter: 0,
+  subscribe: false,
+  loading: false,
+  popupShown: false,
+  popupContent: '',
+  ...extra,
+})
+
 class Footer extends React.Component {
-  state = {
-    email: '',
-    message: '',
-    counter: 'restam 200 caracteres',
-    subscribe: false,
-    loading: false,
-    popupShown: false,
-    popupContent: '',
-    errors: {},
-  };
+  state =  initialState({ errors: {} });
 
   handleChange = (e, { name, value }) => {
-    if (name === 'message') {
-      if (200 - value.length >= 0) {
-        this.setState({
-          [name]: value,
-          errors: omit(this.state.erros, name),
-          counter: `restam ${200 - value.length} caracteres`,
-        });
-      }
-    } else {
+    if (name !== 'message' || value.length <= MESSAGE_LIMIT) {
       this.setState({
         [name]: value,
-        errors: omit(this.state.erros, name),
+        errors: omit(this.state.errors, name),
+        counter: name === 'message' ? value.length : this.state.counter,
       });
     }
   }
@@ -53,7 +48,7 @@ class Footer extends React.Component {
     e.preventDefault();
 
     const form = pick(this.state, ['email', 'message', 'subscribe']);
-    const errors = validateContact(pick(form, ['email']));
+    const errors = validateContact(form);
 
     this.setState({ errors: errors || {} });
 
@@ -61,14 +56,11 @@ class Footer extends React.Component {
       this.setState({ loading: true });
       MailingAPI.send(form.email, form.message, form.subscribe)
         .then(() => {
-          this.setState({
-            email: '',
-            message: '',
-            counter: 'restam 200 caracteres',
+          this.setState(initialState({
             loading: false,
             popupShown: true,
-            popupContent: 'E-mail enviado!',
-          });
+            popupContent: 'Enviado!',
+          }));
         })
         .catch(() => {
           this.setState({
@@ -111,7 +103,7 @@ class Footer extends React.Component {
     return (
       <footer className="Footer">
         <Grid columns={2} relaxed>
-          <Grid.Column className="Footer-col">
+          <Grid.Column className="Footer-column">
             <Divider horizontal inverted >Estamos Aqui!</Divider>
             <Segment basic>
               <FacebookProvider appId={FACEBOOK_APP_ID}>
@@ -128,13 +120,13 @@ class Footer extends React.Component {
               <Icon circular className="Icon linkedin" name="linkedin" />
             </a>
           </Grid.Column>
-          <Grid.Column className="Footer-col">
+          <Grid.Column className="Footer-column">
             <Divider horizontal inverted >Contato</Divider>
             <Segment basic>
               <Form.Group widths="equal">
                 <Form
                   inverted
-                  className="Form"
+                  className="Footer-form"
                   size="large"
                   onSubmit={this.handleSubmit}
                 >
@@ -149,17 +141,18 @@ class Footer extends React.Component {
                   />
                   <Form.TextArea
                     required
-                    id="form-textarea"
                     placeholder="Digite aqui sua mensagem"
                     rows={2}
                     name="message"
                     value={message}
                     onChange={this.handleChange}
                   />
-                  <label className="placeholder">{counter}</label>
+                  <label className="Footer-form-placeholder">
+                    Restam apenas {MESSAGE_LIMIT - counter} caracteres.
+                  </label>
                   <Form.Checkbox
                     inline
-                    className="Form-checkbox"
+                    className="Footer-form-checkbox"
                     label="Quero receber e-mails com sugestões, promoções e novidades."
                     name="checkbox"
                     onChange={this.handleCheckboxChange}
@@ -188,29 +181,27 @@ class Footer extends React.Component {
             </Segment>
           </Grid.Column>
         </Grid>
-        <Divider className="Divider" clearing />
+        <Divider className="Footer-divider" clearing />
         <Segment basic>
           <Image
-            className="Image"
+            className="Footer-image"
             src={`${ASSETS_BASE_URI}/core/site/icon-x64.png`}
             size="mini"
             alt="Toakee.com"
             centered
           />
-          <Link className="Link about" to={{ pathname: '/' }}>
+          <Link className="Link Footer-about" to={{ pathname: '/' }}>
             <span>Quem somos</span>
           </Link>
-          <Link className="Link terms" to={{ pathname: '/' }}>
+          <Link className="Link Footer-terms" to={{ pathname: '/' }}>
             <span>Termos de Uso</span>
           </Link>
-          <Choose>
-            <When condition={!isLogged()}>
-              <Link className="Link signup" to={{ pathname: '/cadastrar' }}>
-                <span>Cadastre-se</span>
-              </Link>
-            </When>
-          </Choose>
-          <Segment className="Copyright" basic>
+          <If condition={!isLogged()}>
+            <Link className="Link Footer-signup" to={{ pathname: '/cadastrar' }}>
+              <span>Cadastre-se</span>
+            </Link>
+          </If>
+          <Segment className="Footer-copyright" basic>
             Copyright &copy; 2017 Toakee. Todos os direitos reservados.
           </Segment>
         </Segment>
