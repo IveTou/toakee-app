@@ -12,6 +12,7 @@ const Unlogged = ({ children }) => (
     <main className="main">
       {children}
     </main>
+    <Footer />
   </div>
 );
 

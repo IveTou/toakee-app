@@ -53,17 +53,13 @@ app.post('/send-email', (req, res) => {
     body: mail.toJSON(),
   });
 
-  sg.API(request, function (err, res) {
-    if (err) {
-      console.log('Error response received');
+  sg.API(request, (err, response) => {
+    if (response.statusCode == '202') {
+      return res.json({ ok: true });
+    } else {
       return res.json({ ok: false });
     }
-    console.log(res.statusCode);
-    console.log(res.body);
-    console.log(res.headers);
   });
-
-  return res.json({ ok: true });
 });
 
 app.post('/events/track', (req, res) => {

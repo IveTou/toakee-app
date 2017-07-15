@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { Grid, Segment, Divider, Button, Image, Form, Icon, Popup } from 'semantic-ui-react';
 import FacebookProvider, { Page } from 'react-facebook';
-import { pick } from 'lodash';
+import { omit, pick } from 'lodash';
 
 import { ASSETS_BASE_URI, FACEBOOK_APP_ID, FACEBOOK_PAGE_URI } from '~/src/config';
 import { validateContact } from '~/src/components/auth-wrapper/validation';
@@ -54,8 +54,19 @@ class Footer extends React.Component {
     this.setState({errors: errors || {}, loading: true });
 
     if(!errors) {
-      MailingAPI.send(form.email, form.message, form.subscribe);
-      this.setState({ email: '', message: '', counter: 'restam 200 caracteres', })
+      MailingAPI.send(form.email, form.message, form.subscribe)
+        .then(() => {
+          console.log('success');
+          this.setState({
+            email: '',
+            message: '',
+            counter: 'restam 200 caracteres',
+            loading: false,
+          });
+        })
+        .catch(() => {
+          console.log('failed');
+        });
     }
   }
 

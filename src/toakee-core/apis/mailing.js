@@ -8,15 +8,17 @@ class MailingAPI extends BaseAPI {
       body: {
         from: props.from,
         message: props.message,
+        subscribe: props.subscribe,
       },
       json: true,
     });
   }
 
-  send(a, b) {
-    this.post('/send-email', {
+  send(a, b, c) {
+    return this.post('/send-email', {
       from: a,
       message: b,
+      subscribe: c,
     });
   }
 }
