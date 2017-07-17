@@ -39,12 +39,16 @@ const helper = sendgrid.mail;
 const sg = sendgrid(SENDGRID_API_KEY);
 
 app.post('/send-email', (req, res) => {
-  const { from, message } = req.body;
+  const { from, name, message, subscribe } = req.body;
 
-  const fromEmail = new helper.Email(from);
+  const mailBody = subscribe ?
+    `<h2>Inscrever-se</h2><p>${message}</p>` :
+    `<h2>Não Inscrever-se</h2><p>${message}</p>`;
+
+  const fromEmail = new helper.Email(from, name);
   const toEmail = new helper.Email(SUPPORT_EMAIL);
   const subject = 'Customer Contact';
-  const content = new helper.Content('text/plain', message);
+  const content = new helper.Content('text/html', mailBody);
   const mail = new helper.Mail(fromEmail, subject, toEmail, content);
 
   const request = sg.emptyRequest({
