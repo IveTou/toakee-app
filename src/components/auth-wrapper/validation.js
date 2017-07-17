@@ -45,10 +45,3 @@ export const validateLogin = obj => validate(obj, {
   username: { presence },
   password: { presence },
 });
-
-export const validateContact = obj => validate(obj, {
-  email: {
-    presence,
-    email: { message: 'O email não parece válido.' },
-  },
-});

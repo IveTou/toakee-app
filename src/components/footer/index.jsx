@@ -5,10 +5,11 @@ import { Grid, Segment, Divider, Button, Image, Form, Icon, Popup } from 'semant
 import FacebookProvider, { Page } from 'react-facebook';
 import { omit, pick } from 'lodash';
 
-import { validateContact } from '~/src/components/auth-wrapper/validation';
 import { isLogged } from '~/src/utils/session';
 import MailingAPI from '~/src/toakee-core/apis/mailing';
 import { ASSETS_BASE_URI, FACEBOOK_APP_ID, FACEBOOK_PAGE_URI } from '~/src/config';
+
+import { validateContact } from './validation';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -16,7 +17,7 @@ if (process.env.BROWSER) {
 
 const MESSAGE_LIMIT = 200;
 
-const initialState = (extra) => ({
+const initialState = extra => ({
   email: '',
   message: '',
   counter: 0,
@@ -25,10 +26,10 @@ const initialState = (extra) => ({
   popupShown: false,
   popupContent: '',
   ...extra,
-})
+});
 
 class Footer extends React.Component {
-  state =  initialState({ errors: {} });
+  state = initialState({ errors: {} });
 
   handleChange = (e, { name, value }) => {
     if (name !== 'message' || value.length <= MESSAGE_LIMIT) {
