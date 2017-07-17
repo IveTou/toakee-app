@@ -18,13 +18,15 @@ if (process.env.BROWSER) {
 const MESSAGE_LIMIT = 200;
 
 const initialState = extra => ({
+  name: '',
   email: '',
   message: '',
   counter: 0,
   subscribe: false,
   loading: false,
-  popupShown: false,
-  popupContent: '',
+  formDisabled: false,
+  buttonContent: 'Enviar',
+  buttonColor: '',
   ...extra,
 });
 
@@ -54,34 +56,32 @@ class Footer extends React.Component {
     this.setState({ errors: errors || {} });
 
     if (!errors) {
-      this.setState({ loading: true });
+      this.setState({ loading: true, formDisabled: true });
       MailingAPI.send(form.email, form.message, form.subscribe)
         .then(() => {
           this.setState(initialState({
             loading: false,
-            popupShown: true,
-            popupContent: 'Enviado!',
+            buttonColor: 'green',
+            formDisabled: true,
+            buttonContent: 'Enviado!',
           }));
         })
         .catch(() => {
           this.setState({
             loading: false,
-            popupShown: true,
-            popupContent: 'Erro ao enviar e-mail. Tente novamente.',
+            buttonColor: 'red',
+            formDisabled: true,
+            buttonContent: 'Erro ao enviar e-mail. Tente novamente.',
           });
-        });
+        })
+        .then(() => this.initCountdown());
     }
   }
 
-  handlePopupMount = () => {
+  initCountdown = () => {
     this.timeout = setTimeout(() => {
-      this.setState({ popupShown: false });
-    }, 2500);
-  }
-
-  handlePopupClose = () => {
-    this.setState({ popupShown: false });
-    clearTimeout(this.timeout);
+      this.setState(initialState());
+    }, 15000);
   }
 
   renderErrorIcon(input, icon) {
@@ -99,7 +99,16 @@ class Footer extends React.Component {
   }
 
   render() {
-    const { email, message, counter, loading, popupShown, popupContent } = this.state;
+    const {
+      name,
+      email,
+      message,
+      counter,
+      loading,
+      formDisabled,
+      buttonContent,
+      buttonColor,
+    } = this.state;
 
     return (
       <footer className="Footer">
@@ -128,15 +137,26 @@ class Footer extends React.Component {
                 <Form
                   inverted
                   className="Footer-form"
-                  size="large"
+                  size="small"
                   onSubmit={this.handleSubmit}
                 >
+                  <Form.Input
+                    required
+                    placeholder="Como gostaria de ser chamado?"
+                    name="name"
+                    value={name}
+                    onChange={this.handleChange}
+                    disabled={formDisabled}
+                    icon={this.renderErrorIcon('name')}
+                    error={!!this.state.errors.email}
+                  />
                   <Form.Input
                     required
                     placeholder="E-mail"
                     name="email"
                     value={email}
                     onChange={this.handleChange}
+                    disabled={formDisabled}
                     icon={this.renderErrorIcon('email')}
                     error={!!this.state.errors.email}
                   />
@@ -147,6 +167,7 @@ class Footer extends React.Component {
                     name="message"
                     value={message}
                     onChange={this.handleChange}
+                    disabled={formDisabled}
                   />
                   <label className="Footer-form-placeholder">
                     Restam apenas {MESSAGE_LIMIT - counter} caracteres.
@@ -157,25 +178,17 @@ class Footer extends React.Component {
                     label="Quero receber e-mails com sugestões, promoções e novidades."
                     name="checkbox"
                     onChange={this.handleCheckboxChange}
+                    disabled={formDisabled}
                   />
-                  <Popup
-                    trigger={
-                      <Button
-                        basic
-                        inverted
-                        name="submit"
-                        loading={loading}
-                        disabled={loading}
-                        size="large"
-                        content="Enviar"
-                      />
-                    }
-                    content={popupContent}
-                    open={popupShown}
-                    onClose={this.handlePopupClose}
-                    onMount={this.handlePopupMount}
-                    position="top right"
-                    hideOnScroll
+                  <Button
+                    basic
+                    inverted
+                    color={buttonColor}
+                    name="submit"
+                    loading={loading}
+                    size="large"
+                    content={buttonContent}
+                    disabled={formDisabled}
                   />
                 </Form>
               </Form.Group>
