@@ -1,21 +1,17 @@
 import BaseAPI from './base';
 
 class MailingAPI extends BaseAPI {
-  post(path, { from, message, subscribe }) {
+  post(path, { from, name, message, subscribe }) {
     return this.rp({
       method: 'POST',
       uri: path,
-      body: { from, message, subscribe },
+      body: { from, name, message, subscribe },
       json: true,
     });
   }
 
-  send(from, message, subscribe) {
-    return this.post('/send-email', {
-      from: from,
-      message: message,
-      subscribe: subscribe,
-    });
+  send(from, name, message, subscribe) {
+    return this.post('/send-email', { from, name, message, subscribe });
   }
 }
 

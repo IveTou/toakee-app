@@ -50,14 +50,14 @@ class Footer extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const form = pick(this.state, ['email', 'message', 'subscribe']);
+    const form = pick(this.state, ['name', 'email', 'message', 'subscribe']);
     const errors = validateContact(form);
 
     this.setState({ errors: errors || {} });
 
     if (!errors) {
       this.setState({ loading: true, formDisabled: true });
-      MailingAPI.send(form.email, form.message, form.subscribe)
+      MailingAPI.send(form.email, form.name, form.message, form.subscribe)
         .then(() => {
           this.setState(initialState({
             loading: false,
@@ -121,13 +121,13 @@ class Footer extends React.Component {
               </FacebookProvider>
             </Segment>
             <a className="Link" href="https://www.facebook.com/eu.toakee">
-              <Icon circular className="Icon facebook" name="facebook" />
+              <Icon circular className="Icon facebook" name="facebook" size="big" />
             </a>
             <a className="Link" href="https://www.instagram.com/eu.toakee">
-              <Icon circular className="Icon instagram" name="instagram" />
+              <Icon circular className="Icon instagram" name="instagram" size="big" />
             </a>
             <a className="Link" href="https://linkedin.com/company/toakee">
-              <Icon circular className="Icon linkedin" name="linkedin" />
+              <Icon circular className="Icon linkedin" name="linkedin" size="big" />
             </a>
           </Grid.Column>
           <Grid.Column className="Footer-column">
@@ -136,23 +136,23 @@ class Footer extends React.Component {
               <Form.Group widths="equal">
                 <Form
                   inverted
-                  className="Footer-form"
+                  className="Footer-form fields"
                   size="small"
                   onSubmit={this.handleSubmit}
                 >
                   <Form.Input
                     required
-                    placeholder="Como gostaria de ser chamado?"
+                    placeholder="Como te chamaremos?"
                     name="name"
                     value={name}
                     onChange={this.handleChange}
                     disabled={formDisabled}
                     icon={this.renderErrorIcon('name')}
-                    error={!!this.state.errors.email}
+                    error={!!this.state.errors.name}
                   />
                   <Form.Input
                     required
-                    placeholder="E-mail"
+                    placeholder="Qual o seu e-mail?"
                     name="email"
                     value={email}
                     onChange={this.handleChange}
@@ -183,6 +183,7 @@ class Footer extends React.Component {
                   <Button
                     basic
                     inverted
+                    className="Footer-form-submit"
                     color={buttonColor}
                     name="submit"
                     loading={loading}
