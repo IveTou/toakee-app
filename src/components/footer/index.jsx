@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import { Grid, Segment, Divider, Button, Image, Form, Icon, Popup } from 'semantic-ui-react';
 import FacebookProvider, { Page } from 'react-facebook';
 import { omit, pick } from 'lodash';
+import autoBind from 'react-autobind';
 
 import { isLogged } from '~/src/utils/session';
 import MailingAPI from '~/src/toakee-core/apis/mailing';
@@ -31,9 +32,13 @@ const initialState = extra => ({
 });
 
 class Footer extends React.Component {
-  state = initialState({ errors: {} });
+  constructor(props) {
+    super(props);
+    this.state = initialState({ errors: {} });
+    autoBind(this);
+  }
 
-  handleChange = (e, { name, value }) => {
+  handleChange(e, { name, value }) {
     if (name !== 'message' || value.length <= MESSAGE_LIMIT) {
       this.setState({
         [name]: value,
@@ -43,11 +48,11 @@ class Footer extends React.Component {
     }
   }
 
-  handleCheckboxChange = (e, { name, checked }) => {
+  handleCheckboxChange(e, { name, checked }) {
     this.setState({ [name]: checked });
   }
 
-  handleSubmit = (e) => {
+  handleSubmit(e) {
     e.preventDefault();
 
     const form = pick(this.state, ['name', 'email', 'message', 'subscribe']);
@@ -74,14 +79,12 @@ class Footer extends React.Component {
             buttonContent: 'Erro ao enviar e-mail. Tente novamente.',
           });
         })
-        .then(() => this.initCountdown());
+        .then(this.initCountdown);
     }
   }
 
-  initCountdown = () => {
-    this.timeout = setTimeout(() => {
-      this.setState(initialState());
-    }, 15000);
+  initCountdown() {
+    setTimeout(() => this.setState(initialState()), 15000);
   }
 
   renderErrorIcon(input, icon) {
@@ -120,14 +123,14 @@ class Footer extends React.Component {
                 <Page href={FACEBOOK_PAGE_URI} tabs="true" smallHeader adaptContainerWidth />
               </FacebookProvider>
             </Segment>
-            <a className="Link" href="https://www.facebook.com/eu.toakee">
-              <Icon circular className="Icon facebook" name="facebook" size="big" />
+            <a href="https://www.facebook.com/eu.toakee">
+              <Icon circular name="facebook" size="big" />
             </a>
-            <a className="Link" href="https://www.instagram.com/eu.toakee">
-              <Icon circular className="Icon instagram" name="instagram" size="big" />
+            <a href="https://www.instagram.com/eu.toakee">
+              <Icon circular name="instagram" size="big" />
             </a>
-            <a className="Link" href="https://linkedin.com/company/toakee">
-              <Icon circular className="Icon linkedin" name="linkedin" size="big" />
+            <a href="https://linkedin.com/company/toakee">
+              <Icon circular name="linkedin" size="big" />
             </a>
           </Grid.Column>
           <Grid.Column className="Footer-column">
@@ -205,14 +208,14 @@ class Footer extends React.Component {
             alt="Toakee.com"
             centered
           />
-          <Link className="Link Footer-about" to={{ pathname: '/' }}>
+          <Link className="Footer-link about" to={{ pathname: '/' }}>
             <span>Quem somos</span>
           </Link>
-          <Link className="Link Footer-terms" to={{ pathname: '/' }}>
+          <Link className="Footer-link terms" to={{ pathname: '/' }}>
             <span>Termos de Uso</span>
           </Link>
           <If condition={!isLogged()}>
-            <Link className="Link Footer-signup" to={{ pathname: '/cadastrar' }}>
+            <Link className="Footer-link signup" to={{ pathname: '/cadastrar' }}>
               <span>Cadastre-se</span>
             </Link>
           </If>

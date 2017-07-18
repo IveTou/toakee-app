@@ -9,13 +9,12 @@ $footer-color: #1d1d1d;
   color: $gray100;
   padding: $spacer*4 $spacer*3;
   text-align: center;
-  margin: auto;
 
-  .Icon {
+  .icon {
     background-color: $gray300;
     color: $footer-color;
     opacity: 0.8;
-    margin: auto $spacer*2;
+    margin: 0 $spacer*2;
     transition: 0.5s;
 
     &:hover {
@@ -31,13 +30,9 @@ $footer-color: #1d1d1d;
       margin: auto;
     }
 
-    &-checkbox {
-      margin-bottom: $spacer;
-    }
-
     &-placeholder {
       float: right;
-      margin: $spacer*-1 auto $spacer;
+      margin: $spacer*-1 0 $spacer;
       font-size: 12px;
       opacity: 0.8;
     }
@@ -47,7 +42,7 @@ $footer-color: #1d1d1d;
     }
   }
 
-  &-about {
+  .aboutus {
     span {
       &:before, &:after {
         content: '\2665';
@@ -55,7 +50,7 @@ $footer-color: #1d1d1d;
     }
   }
 
-  &-terms {
+  .terms {
     span {
       &:before {
         content: '\00ab'
@@ -67,7 +62,7 @@ $footer-color: #1d1d1d;
     }
   }
 
-  &-signup {
+  .signup {
     span {
       &:after {
         content: 'o/';
@@ -86,7 +81,7 @@ $footer-color: #1d1d1d;
     }
   }
 
-  .Link {
+  &-link {
     background-color: $transparent;
     color: $white;
 
@@ -97,7 +92,8 @@ $footer-color: #1d1d1d;
       position: relative;
       transition: 0.5s;
 
-      &:before, &:after {
+      &:before,
+      &:after {
         position: absolute;
         opacity: 0;
         top: 0;

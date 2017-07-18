@@ -11,13 +11,8 @@ export const validateContact = obj => validate(obj, {
     length: {
       minimum: 2,
       maximum: 14,
-      tooShort: 'Seu nome  precisa ter no mínimo 2.',
+      tooShort: 'Seu nome precisa ter no mínimo 2 caracteres.',
       tooLong: 'Seu nome não pode conter mais de 14 caracteres.',
-    },
-    format: {
-      pattern: '[a-zÀ-ú]+',
-      message: 'Utilize apenas letras.',
-      flags: 'i',
     },
   },
   email: {
