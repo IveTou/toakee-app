@@ -127,7 +127,6 @@ $footer-color: #1d1d1d;
         }
       }
     }
-
   }
 
   &-copyright {
@@ -138,7 +137,7 @@ $footer-color: #1d1d1d;
 }
 
 @include media("<tablet") {
-  .Footer{
+  .Footer {
     &-column {
       width: 100% !important;
     }
