@@ -24,12 +24,16 @@ const initialState = extra => ({
   message: '',
   counter: 0,
   subscribe: false,
-  loading: false,
-  formDisabled: false,
-  buttonContent: 'Enviar',
-  buttonColor: '',
+  formState: 0,
   ...extra,
 });
+
+const FormState = {
+  IDLE: 0,
+  LOADING: 1,
+  DONE: 2,
+  ERROR: 3,
+};
 
 class Footer extends React.Component {
   constructor(props) {
@@ -61,23 +65,13 @@ class Footer extends React.Component {
     this.setState({ errors: errors || {} });
 
     if (!errors) {
-      this.setState({ loading: true, formDisabled: true });
+      this.setState({ formState: FormState.LOADING });
       MailingAPI.send(form.email, form.name, form.message, form.subscribe)
         .then(() => {
-          this.setState(initialState({
-            loading: false,
-            buttonColor: 'green',
-            formDisabled: true,
-            buttonContent: 'Enviado!',
-          }));
+          this.setState({ formState: FormState.DONE });
         })
         .catch(() => {
-          this.setState({
-            loading: false,
-            buttonColor: 'red',
-            formDisabled: true,
-            buttonContent: 'Erro ao enviar e-mail. Tente novamente.',
-          });
+          this.setState({ formState: FormState.ERROR });
         })
         .then(this.initCountdown);
     }
@@ -107,16 +101,31 @@ class Footer extends React.Component {
       email,
       message,
       counter,
-      loading,
-      formDisabled,
-      buttonContent,
-      buttonColor,
+      formState,
     } = this.state;
+
+    const buttonState = {
+      [FormState.LOADING]: true,
+    }[formState] || false;
+
+    const buttonColor = {
+      [FormState.DONE]: 'green',
+      [FormState.ERROR]: 'red',
+    }[formState] || '';
+
+    const buttonContent = {
+      [FormState.IDLE]: 'Enviar',
+      [FormState.LOADING]: 'Enviando...',
+      [FormState.DONE]: 'Enviado!',
+      [FormState.ERROR]: 'Um erro ocorreu, tente novamente',
+    }[formState];
+
+    const triggerDisabled = !!this.state.formState;
 
     return (
       <footer className="Footer">
         <Grid columns={2} relaxed>
-          <Grid.Column className="Footer-column">
+          <Grid.Column className="Footer-column social">
             <Divider horizontal inverted >Estamos Aqui!</Divider>
             <Segment basic>
               <FacebookProvider appId={FACEBOOK_APP_ID}>
@@ -136,10 +145,10 @@ class Footer extends React.Component {
           <Grid.Column className="Footer-column">
             <Divider horizontal inverted >Contato</Divider>
             <Segment basic>
-              <Form.Group widths="equal">
+              <Form.Group>
                 <Form
                   inverted
-                  className="Footer-form fields"
+                  className="Footer-form"
                   size="small"
                   onSubmit={this.handleSubmit}
                 >
@@ -149,7 +158,7 @@ class Footer extends React.Component {
                     name="name"
                     value={name}
                     onChange={this.handleChange}
-                    disabled={formDisabled}
+                    disabled={triggerDisabled}
                     icon={this.renderErrorIcon('name')}
                     error={!!this.state.errors.name}
                   />
@@ -159,7 +168,7 @@ class Footer extends React.Component {
                     name="email"
                     value={email}
                     onChange={this.handleChange}
-                    disabled={formDisabled}
+                    disabled={triggerDisabled}
                     icon={this.renderErrorIcon('email')}
                     error={!!this.state.errors.email}
                   />
@@ -170,7 +179,7 @@ class Footer extends React.Component {
                     name="message"
                     value={message}
                     onChange={this.handleChange}
-                    disabled={formDisabled}
+                    disabled={triggerDisabled}
                   />
                   <label className="Footer-form-placeholder">
                     Restam apenas {MESSAGE_LIMIT - counter} caracteres.
@@ -181,7 +190,7 @@ class Footer extends React.Component {
                     label="Quero receber e-mails com sugestões, promoções e novidades."
                     name="checkbox"
                     onChange={this.handleCheckboxChange}
-                    disabled={formDisabled}
+                    disabled={triggerDisabled}
                   />
                   <Button
                     basic
@@ -189,10 +198,10 @@ class Footer extends React.Component {
                     className="Footer-form-submit"
                     color={buttonColor}
                     name="submit"
-                    loading={loading}
+                    loading={buttonState}
                     size="large"
                     content={buttonContent}
-                    disabled={formDisabled}
+                    disabled={triggerDisabled}
                   />
                 </Form>
               </Form.Group>
