@@ -111,7 +111,7 @@ class Footer extends React.Component {
     const buttonColor = {
       [FormState.DONE]: 'green',
       [FormState.ERROR]: 'red',
-    }[formState] || '';
+    }[formState] || null;
 
     const buttonContent = {
       [FormState.IDLE]: 'Enviar',
