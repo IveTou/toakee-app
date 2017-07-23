@@ -1,11 +1,9 @@
 @import 'node_modules/include-media/dist/_include-media.scss';
-@import '../../scss/mixins';
 @import '../../scss/variables';
-@import '../../scss/colors';
 
 .TopBar {
   .Logo {
-    width: $spacer*20;
+    width: $spacer*17;
   }
 }
 
