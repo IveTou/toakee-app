@@ -67,12 +67,8 @@ class Footer extends React.Component {
     if (!errors) {
       this.setState({ formState: FormState.LOADING });
       MailingAPI.send(form.email, form.name, form.message, form.subscribe)
-        .then(() => {
-          this.setState({ formState: FormState.DONE });
-        })
-        .catch(() => {
-          this.setState({ formState: FormState.ERROR });
-        })
+        .then(() => this.setState({ formState: FormState.DONE }))
+        .catch(() => this.setState({ formState: FormState.ERROR }))
         .then(this.initCountdown);
     }
   }
@@ -103,10 +99,6 @@ class Footer extends React.Component {
       counter,
       formState,
     } = this.state;
-
-    const buttonState = {
-      [FormState.LOADING]: true,
-    }[formState] || false;
 
     const buttonColor = {
       [FormState.DONE]: 'green',
@@ -198,7 +190,7 @@ class Footer extends React.Component {
                     className="Footer-form-submit"
                     color={buttonColor}
                     name="submit"
-                    loading={buttonState}
+                    loading={formState === FormState.LOADING}
                     size="large"
                     content={buttonContent}
                     disabled={triggerDisabled}
