@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { graphql } from 'react-apollo';
-import { Icon, Card, Image } from 'semantic-ui-react';
+import { Icon, Card, Image, Grid } from 'semantic-ui-react';
 
 import { fullDateFormat, timeFormat } from '~/src/utils/moment';
 
@@ -17,56 +17,61 @@ const EventPage = ({ viewer = {} }) => {
 
   return (
     <div className="EventPage">
-      <div className="EventPage-header">
-        <Card className="EventPage-header-flyer">
-          <Image alt={flyerAlt} className="EventPage-header-flyer-img" src={flyer} />
-        </Card>
-        <div className="EventPage-header-right">
-          <h1 className="EventPage-header-right-title">
-            {title}
-          </h1>
-          <If condition={place}>
-            <div className="EventPage-header-right-place">
-              {place.name}
+      <Grid columns={2}>
+        <Grid.Column className="EventPage-flyer" mobile={16} tablet={6} computer={6}>
+          <Card>
+            <Image alt={flyerAlt} className="EventPage-flyer-img" src={flyer} />
+          </Card>
+        </Grid.Column>
+
+        <Grid.Column className="EventPage-details" mobile={16} tablet={10} computer={10}>
+          <div className="EventPage-details-header">
+            <h1 className="EventPage-details-header-title">
+              {title}
+            </h1>
+            <If condition={place}>
+              <div className="EventPage-details-header-place">
+                {place.name}
+              </div>
+            </If>
+          </div>
+
+          <div className="EventPage-details-info">
+            <If condition={start}>
+              <div className="EventPage-details-info-item">
+                <Icon name="calendar" />
+                <span>{fullDateFormat(start)}</span>
+              </div>
+              <div className="EventPage-details-info-item">
+                <Icon name="clock" />
+                <span>{timeFormat(start)}</span>
+              </div>
+            </If>
+            <If condition={place && place.address}>
+              <div className="EventPage-details-info-item">
+                <Icon name="marker" />
+                <span>{place.address}</span>
+              </div>
+            </If>
+            <If condition={price}>
+              <div className="EventPage-details-info-item">
+                <Icon name="dollar" />
+                <span>{price}</span>
+              </div>
+            </If>
+          </div>
+
+          <div className="EventPage-details-body">
+            <div className="EventPage-details-body-description">
+              <div className="EventPage-details-body-title">Descrição</div>
+              <div
+                className="EventPage-details-body-content"
+                dangerouslySetInnerHTML={{ __html: description }}
+              />
             </div>
-          </If>
-        </div>
-      </div>
-
-      <div className="EventPage-info">
-        <If condition={start}>
-          <div className="EventPage-info-item">
-            <Icon name="calendar" />
-            <span>{fullDateFormat(start)}</span>
           </div>
-          <div className="EventPage-info-item">
-            <Icon name="clock" />
-            <span>{timeFormat(start)}</span>
-          </div>
-        </If>
-        <If condition={place && place.address}>
-          <div className="EventPage-info-item">
-            <Icon name="marker" />
-            <span>{place.address}</span>
-          </div>
-        </If>
-        <If condition={price}>
-          <div className="EventPage-info-item">
-            <Icon name="dollar" />
-            <span>{price}</span>
-          </div>
-        </If>
-      </div>
-
-      <div className="EventPage-body">
-        <div className="EventPage-body-description">
-          <div className="EventPage-body-title">Descrição</div>
-          <div
-            className="EventPage-body-content"
-            dangerouslySetInnerHTML={{ __html: description }}
-          />
-        </div>
-      </div>
+        </Grid.Column>
+      </Grid>
     </div>
   );
 };
