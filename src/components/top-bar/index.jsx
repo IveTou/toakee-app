@@ -11,10 +11,6 @@ import TrackingAPI from '~/src/toakee-core/apis/tracking';
 
 import Logo from '~/src/components/logo';
 
-if (process.env.BROWSER) {
-  require('./style.scss');
-}
-
 const trackPageView = once((metric, id) => TrackingAPI.track(metric, id));
 
 const query = gql`

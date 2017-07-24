@@ -53,6 +53,7 @@
     "classnames": "^2.2.5",
     "concurrently": "^3.1.0",
     "css-loader": "^0.26.1",
+    "device": "^0.3.8",
     "eslint": "^3.13.1",
     "eslint-config-airbnb": "^14.0.0",
     "eslint-import-resolver-babel-module": "^2.2.1",
@@ -96,7 +97,8 @@
     "style-loader": "^0.13.1",
     "smoothit": "^1.0.6",
     "webpack": "^2.3.2",
-    "validate.js": "^0.11.1"
+    "validate.js": "^0.11.1",
+    "yamlparser": "0.0.2"
   },
   "devDependencies": {
     "babel": "^6.5.2",
