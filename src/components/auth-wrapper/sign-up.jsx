@@ -41,10 +41,6 @@ export class SignUp extends React.Component {
     };
   }
 
-  componentDidMount() {
-    window.scrollTo(0, 0);
-  }
-
   onChange(e, { name, value }) {
     this.setState({
       [name]: value,

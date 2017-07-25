@@ -5,16 +5,20 @@ import Footer from '~/src/components/footer';
 
 require('./style.scss');
 
-const Unlogged = ({ children }) => (
-  <div className="Unlogged">
-    <TopBar />
-    <Snackbar />
-    <main className="main">
-      {children}
-    </main>
-    <Footer />
-  </div>
-);
+const Unlogged = ({ children }) => {
+  const goTop = () => window.scrollTo(0, 0);
+
+  return (
+    <div className="Unlogged">
+      <TopBar />
+      <Snackbar />
+      <main className="main">
+        {children} {goTop()}
+      </main>
+      <Footer />
+    </div>
+  );
+};
 
 Unlogged.propTypes = {
   children: PropTypes.node,
