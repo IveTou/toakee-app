@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 
 import TopBar from '~/src/components/top-bar';
 import Dialog from '~/src/components/dialog';
+import Footer from '~/src/components/footer';
 
 require('./style.scss');
 
@@ -12,6 +13,7 @@ const Logged = ({ children }) => (
     <main className="main">
       {children}
     </main>
+    <Footer />
   </div>
 );
 

@@ -1,14 +1,14 @@
 import express from 'express';
 import nunjucks from 'nunjucks';
-import nodemailer from 'nodemailer';
 import bodyParser from 'body-parser';
+import sendgrid from 'sendgrid';
 import fs from 'fs';
 
 import MixpanelClient from './clients/mixpanel';
 
 import config from './config';
 
-const { PORT, SUPPORT_EMAIL } = config;
+const { PORT, SUPPORT_EMAIL, SENDGRID_API_KEY } = config;
 const devMode = process.env.NODE_ENV !== 'production';
 
 const app = express();
@@ -35,22 +35,29 @@ nunjucks.configure('src/templates', {
   express: app,
 });
 
-const transporter = nodemailer.createTransport({
-  service: 'Gmail',
-  auth: {
-    user: 'pkgo.red@gmail.com',
-    pass: 'pikachu12345',
-  },
-});
+const helper = sendgrid.mail;
+const sg = sendgrid(SENDGRID_API_KEY);
 
 app.post('/send-email', (req, res) => {
-  const { name, email, subject, body: text } = req.body;
-  const from = `${name} <${email}>`;
+  const { from, name, message, subscribe } = req.body;
 
-  transporter.sendMail({ to: SUPPORT_EMAIL, from, subject, text });
-  transporter.close();
+  const mailBody = subscribe ?
+    `<h2>Inscrever-se</h2><p>${message}</p>` :
+    `<h2>Não Inscrever-se</h2><p>${message}</p>`;
 
-  return res.json({ ok: true });
+  const fromEmail = new helper.Email(from, name);
+  const toEmail = new helper.Email(SUPPORT_EMAIL);
+  const subject = 'Customer Contact';
+  const content = new helper.Content('text/html', mailBody);
+  const mail = new helper.Mail(fromEmail, subject, toEmail, content);
+
+  const request = sg.emptyRequest({
+    method: 'POST',
+    path: '/v3/mail/send',
+    body: mail.toJSON(),
+  });
+
+  sg.API(request, (_, { statusCode }) => res.json({ ok: statusCode === '202' }));
 });
 
 app.post('/events/track', (req, res) => {

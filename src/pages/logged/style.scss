@@ -3,7 +3,7 @@
 
 .Logged {
   .main {
-    padding-top: $topbar-height;
+    padding: $topbar-height 0 $spacer*2;
     height: 100%;
     width: 100%;
   }
