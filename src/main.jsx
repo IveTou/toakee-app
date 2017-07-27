@@ -43,7 +43,11 @@ const reduxStore = createStoreWithMiddleware(rootReducer);
 
 const app = (
   <ApolloProvider store={reduxStore} client={apolloClient}>
-    <Router history={browserHistory} routes={makeRoutes()} />
+    <Router
+      onUpdate={() => window.scrollTo(0, 0)}
+      history={browserHistory}
+      routes={makeRoutes()}
+    />
   </ApolloProvider>
 );
 
