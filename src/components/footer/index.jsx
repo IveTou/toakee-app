@@ -180,7 +180,7 @@ class Footer extends React.Component {
                     inline
                     className="Footer-form-checkbox"
                     label="Quero receber e-mails com sugestões, promoções e novidades."
-                    name="checkbox"
+                    name="subscribe"
                     onChange={this.handleCheckboxChange}
                     disabled={triggerDisabled}
                   />
