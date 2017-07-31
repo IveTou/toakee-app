@@ -1,0 +1,6 @@
+query SearchQuery($term: String) {
+  search(term: $term) {
+    title,
+    flyer
+  }
+}
