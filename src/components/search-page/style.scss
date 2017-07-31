@@ -1,0 +1,17 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/variables';
+@import '../../scss/colors';
+
+.SearchPage {
+  padding-top: $spacer*3;
+
+  &-title {
+    margin: 0 $spacer*2 $spacer*2;
+    padding-bottom: $spacer;
+    color: $black87;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-bottom: 1px solid $gray300;
+  }
+}

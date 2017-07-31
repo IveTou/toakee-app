@@ -4,6 +4,10 @@ import { upperFirst } from 'lodash';
 import moment from 'moment';
 import { Card, Image, Icon } from 'semantic-ui-react';
 
+if (process.env.BROWSER) {
+  require('./style.scss');
+}
+
 const renderLabel = (start) => {
   if (!start
     || moment().endOf('day').isBefore(start)
@@ -23,34 +27,34 @@ const renderLabel = (start) => {
   return { color: 'orange', content, ribbon: true };
 };
 
-const EventListItem = ({ slug, title, place, flyer, start }) => {
+const EventCard = ({ event: { slug, title, place, flyer, start } }) => {
   const time = moment(start);
 
   return (
-    <Link className="EventListItem" to={{ pathname: `/evento/${slug}` }}>
+    <Link className="EventCard" to={{ pathname: `/evento/${slug}` }}>
       <Card>
         <If condition={flyer}>
           <Image
-            className="EventListItem-background"
+            className="EventCard-background"
             label={renderLabel(time)}
             alt={`flyer do ${title}`}
             src={flyer}
           />
         </If>
         <Card.Content>
-          <Card.Header>{title}</Card.Header>
+          <Card.Header><span title={title}>{title}</span></Card.Header>
           <Card.Meta>{place.name}</Card.Meta>
         </Card.Content>
-        <Card.Content className="EventListItem-details" extra>
-          <div className="EventListItem-details-calendar">
-            <div className="EventListItem-details-calendar-month">
+        <Card.Content className="EventCard-details" extra>
+          <div className="EventCard-details-calendar">
+            <div className="EventCard-details-calendar-month">
               {time.format('MMM')}
             </div>
-            <div className="EventListItem-details-calendar-day">
+            <div className="EventCard-details-calendar-day">
               {time.format('DD')}
             </div>
           </div>
-          <div className="EventListItem-details-timeAndPlace">
+          <div className="EventCard-details-timeAndPlace">
             <div><Icon name="clock" />{time.format('HH')}h</div>
             <div><Icon name="marker" />{place.address}</div>
           </div>
@@ -60,12 +64,14 @@ const EventListItem = ({ slug, title, place, flyer, start }) => {
   );
 };
 
-EventListItem.propTypes = {
-  slug: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  place: PropTypes.object,
-  start: PropTypes.string,
-  flyer: PropTypes.string,
+EventCard.propTypes = {
+  event: PropTypes.shape({
+    slug: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    place: PropTypes.object,
+    start: PropTypes.string,
+    flyer: PropTypes.string,
+  }),
 };
 
-export default EventListItem;
+export default EventCard;

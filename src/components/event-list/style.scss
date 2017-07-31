@@ -5,7 +5,6 @@
 
 .EventList {
   margin-bottom: $spacer*3;
-
   &-title {
     margin: 0 $spacer*2 $spacer*2;
     padding-bottom: $spacer;
@@ -20,68 +19,6 @@
     overflow-x: hidden;
     margin-left: $spacer*-1;
     white-space: nowrap;
-
-    .EventListItem {
-      margin: $spacer 0 $spacer $spacer*3;
-      max-width: $spacer*30;
-      display: inline-block;
-
-      &:hover .card {
-        box-shadow: 0 0 0 1px #D4D4D5, 0 2px 4px 0 rgba(34, 36, 38, .12), 0 2px 10px 0 rgba(34, 36, 38, .15), 0 2px 0 0 #F2711C;
-      }
-
-      .header {
-        overflow: hidden;
-      }
-
-      &-link {
-        text-decoration: none;
-      }
-
-      &-background,
-      &-background.image img {
-        @include drag(none);
-        width: 100%;
-        height: $spacer*25;
-        object-fit: cover;
-      }
-
-      &-details {
-        &.content {
-          padding: 0;
-          overflow: hidden;
-        }
-
-        &-calendar {
-          color: $black54;
-          text-align: center;
-          font-weight: bold;
-          padding: 0 $spacer;
-          border-right: 1px solid rgba(0,0,0,.05);
-          display: inline-block;
-          vertical-align: middle;
-
-          &-month {
-            font-size: 12px;
-            text-transform: uppercase;
-          }
-
-          &-day {
-            font-weight: 300;
-            font-size: 26px;
-            padding: $spacer 0;
-          }
-        }
-
-        &-timeAndPlace {
-          width: calc(100% - #{$spacer*7});
-          padding: 0 $spacer;
-          display: inline-block;
-          vertical-align: middle;
-          overflow: hidden;
-        }
-      }
-    }
 
     .EventListArrow {
       position: absolute;
@@ -141,29 +78,6 @@
 
     &-list {
       overflow-x: auto;
-
-      .EventListItem {
-        width: 100%;
-
-        &-background,
-        &-background.image img {
-          height: $spacer*16;
-        }
-
-        &-content {
-          &-title {
-            height: $spacer*5;
-
-            &-text {
-              font-size: 13px;
-            }
-          }
-
-          &-time {
-            font-size: 12px;
-          }
-        }
-      }
 
       .EventListArrow {
         display: none;

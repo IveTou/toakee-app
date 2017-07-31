@@ -94,10 +94,10 @@
     "sass-loader": "^4.1.1",
     "semantic-ui-react": "^0.68.3",
     "slick-carousel": "^1.6.0",
-    "style-loader": "^0.13.1",
     "smoothit": "^1.0.6",
-    "webpack": "^2.3.2",
+    "style-loader": "0.13.1",
     "validate.js": "^0.11.1",
+    "webpack": "2.3.2",
     "yamlparser": "0.0.2"
   },
   "devDependencies": {

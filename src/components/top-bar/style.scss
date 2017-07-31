@@ -1,0 +1,9 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
+
+@include media("<tablet") {
+  .TopBar {
+    .search {
+      display: none;
+    }
+  }
+}

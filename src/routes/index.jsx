@@ -16,10 +16,12 @@ import EventGuestList from '~/src/components/event-guest-list';
 import EventGuestListEdit from '~/src/components/event-guest-list-edit';
 import Dashboard from '~/src/components/dashboard';
 import DashboardRoot from '~/src/components/dashboard/root';
+import SearchPage from '~/src/components/search-page';
 
 const loggedRoutes = (
   <Route path="/" component={Logged}>
     <IndexRoute component={EventFeed} />
+    <Route path="/search" component={SearchPage} />
     <Route path="/dashboard" component={Dashboard}>
       <IndexRoute component={DashboardRoot} />
       <Route path="/dashboard/:slug/lista" component={EventGuestList} />
@@ -33,6 +35,7 @@ const loggedRoutes = (
 const unloggedRoutes = (
   <Route path="/" component={Unlogged}>
     <IndexRoute component={Landing} />
+    <Route path="/search" component={SearchPage} />
     <Route path="/evento/:slug" component={EventPage} />
     <Route component={AuthWrapper}>
       <Route path="/login" component={Login} />
