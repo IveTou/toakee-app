@@ -4,7 +4,8 @@ import autoBind from 'react-autobind';
 import VisibilitySensor from 'react-visibility-sensor';
 
 import { ease } from '~/src/utils/animation';
-import EventListItem from './item';
+import EventCard from '~/src/components/event-card';
+
 import EventListArrow from './arrow';
 import query from './graphql';
 
@@ -63,7 +64,7 @@ class EventList extends React.Component {
           <EventListArrow direction="left" onClick={() => this.scroll(-1)} hide={hideLeftArrow} />
           <EventListArrow direction="right" onClick={() => this.scroll(1)} hide={hideRightArrow} />
           <For each="event" index="idx" of={events}>
-            <EventListItem key={idx} {...event} />
+            <EventCard key={idx} event={event} />
           </For>
           <If condition={this.state.hasMore}>
             <VisibilitySensor onChange={isVisible => (isVisible && this.fetchEvents())} />

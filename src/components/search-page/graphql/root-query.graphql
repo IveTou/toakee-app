@@ -1,0 +1,12 @@
+query Search($query: String!, $start: Date, $end: Date) {
+  search(query: $query, start: $start, end: $end) {
+    id
+    slug
+    title
+    flyer
+    start
+    end
+
+    place { id, name, address }
+  }
+}

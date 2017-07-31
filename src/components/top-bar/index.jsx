@@ -1,25 +1,21 @@
 import React, { PropTypes } from 'react';
 import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
 import autoBind from 'react-autobind';
-import { once } from 'lodash';
+import { once, debounce } from 'lodash';
 import { browserHistory, Link } from 'react-router';
-import { Menu, Dropdown, Image, Label, Icon, Button } from 'semantic-ui-react';
+import { Menu, Dropdown, Image, Label, Icon, Button, Search } from 'semantic-ui-react';
 
 import { isLogged, logout } from '~/src/utils/session';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
-
 import Logo from '~/src/components/logo';
+
+import query from './graphql';
 
 if (process.env.BROWSER) {
   require('./style.scss');
 }
 
 const trackPageView = once((metric, id) => TrackingAPI.track(metric, id));
-
-const query = gql`
-  query { viewer { id, firstName, photo, isPromoter } }
-`;
 
 export class TopBar extends React.Component {
   constructor(props) {
@@ -32,6 +28,22 @@ export class TopBar extends React.Component {
       trackPageView('Unlogged Page View', 'Guest');
     } else if (viewer) {
       trackPageView('Logged Page View', viewer.id);
+    }
+  }
+
+  onSearch(e, q) {
+    const currentLocation = browserHistory.getCurrentLocation();
+    const pathname = q ? '/search' : '/';
+    const method = currentLocation.pathname === pathname
+      ? browserHistory.replace
+      : browserHistory.push;
+
+    if (e.type === 'focus') {
+      if (e.target.value && !currentLocation.pathname !== '/search') {
+        method({ pathname: '/search', query: { q: e.target.value } });
+      }
+    } else {
+      method({ pathname, query: q ? { q } : {} });
     }
   }
 
@@ -70,6 +82,15 @@ export class TopBar extends React.Component {
         <Menu.Item>
           <Logo />
         </Menu.Item>
+        <Menu.Menu position="right">
+          <Menu.Item>
+            <Search
+              onSearchChange={debounce(this.onSearch, 300)}
+              open={false}
+              onFocus={this.onSearch}
+            />
+          </Menu.Item>
+        </Menu.Menu>
         <Menu.Menu position="right">
           <Choose>
             <When condition={isLogged()}>

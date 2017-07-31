@@ -9,9 +9,8 @@
 
 @include media("<tablet") {
   .TopBar {
-    .Logo {
-      width: $spacer*16;
+    .search {
+      display: none;
     }
   }
 }
-

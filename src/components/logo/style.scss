@@ -1,5 +1,9 @@
 @import '../../scss/variables';
 
 .Logo {
-  width: $spacer*25;
+  width: $spacer*20;
+
+  &--small {
+    width: $spacer*4;
+  }
 }

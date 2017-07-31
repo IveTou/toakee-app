@@ -1,0 +1,3 @@
+query {
+  viewer { id, firstName, photo, isPromoter }
+}
