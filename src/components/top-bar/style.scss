@@ -1,9 +1,19 @@
 @import 'node_modules/include-media/dist/_include-media.scss';
 
-.TopBar.ui.menu {
-  background: rgba(255, 255, 255, 0);
-  border: 0;
-  box-shadow: 0;
+.TopBar {
+  &.ui.menu {
+    border: 0;
+    box-shadow: none;
+    transition: .3s ease;
+
+    &.transparent {
+      background: rgba(255, 255, 255, 0);
+    }
+
+    &.opaque {
+      background: rgba(255, 255, 255, 1);
+    }
+  }
 }
 
 @include media("<tablet") {

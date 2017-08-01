@@ -31,6 +31,10 @@ export class TopBar extends React.Component {
     }
   }
 
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
   onSearch(e, q) {
     const currentLocation = browserHistory.getCurrentLocation();
     const pathname = q ? '/search' : '/';
@@ -45,6 +49,10 @@ export class TopBar extends React.Component {
     } else {
       method({ pathname, query: q ? { q } : {} });
     }
+  }
+
+  handleScroll() {
+    console.log('Scrolling');
   }
 
   logout() {
@@ -78,7 +86,7 @@ export class TopBar extends React.Component {
     const { viewer = {} } = this.props;
 
     return (
-      <Menu fixed="top" className="TopBar" borderless>
+      <Menu fixed="top" className="TopBar transparent" borderless>
         <Menu.Item>
           <Logo />
         </Menu.Item>
