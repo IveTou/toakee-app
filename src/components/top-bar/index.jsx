@@ -20,7 +20,12 @@ const trackPageView = once((metric, id) => TrackingAPI.track(metric, id));
 export class TopBar extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { opacity: 'transparent' };
     autoBind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
   }
 
   componentWillReceiveProps({ viewer }) {
@@ -29,10 +34,6 @@ export class TopBar extends React.Component {
     } else if (viewer) {
       trackPageView('Logged Page View', viewer.id);
     }
-  }
-
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
   }
 
   onSearch(e, q) {
@@ -52,7 +53,8 @@ export class TopBar extends React.Component {
   }
 
   handleScroll() {
-    console.log('Scrolling');
+    const opacity = window.scrollY > 300 ? 'opaque' : 'transparent';
+    this.setState({ opacity });
   }
 
   logout() {
@@ -84,9 +86,10 @@ export class TopBar extends React.Component {
 
   render() {
     const { viewer = {} } = this.props;
+    const { opacity } = this.state;
 
     return (
-      <Menu fixed="top" className="TopBar transparent" borderless>
+      <Menu fixed="top" className={`TopBar ${opacity}`} borderless>
         <Menu.Item>
           <Logo />
         </Menu.Item>
@@ -116,7 +119,7 @@ export class TopBar extends React.Component {
             <Otherwise>
               <Menu.Item>
                 <Button.Group>
-                  <Button onClick={this.login} basic inverted>Entrar</Button>
+                  <Button onClick={this.login} basic>Entrar</Button>
                   <Button onClick={this.signUp} color="orange">Cadastrar</Button>
                 </Button.Group>
               </Menu.Item>

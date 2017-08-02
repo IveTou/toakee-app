@@ -1,23 +1,53 @@
 @import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/variables';
+@import '../../scss/colors';
 
 .TopBar {
   &.ui.menu {
+    background: $white0;
     border: 0;
     box-shadow: none;
-    transition: .3s ease;
+    transition: .75s ease;
 
-    &.transparent {
-      background: rgba(255, 255, 255, 0);
+    .item {
+      min-width: $spacer*24;
+    }
+
+    .Logo {
+      width: $spacer*20;
+      transition: .75s ease;
     }
 
     &.opaque {
-      background: rgba(255, 255, 255, 1);
+      background: $white;
+
+      .Logo {
+        width: $spacer*11;
+      }
     }
   }
 }
 
 @include media("<tablet") {
   .TopBar {
+    &.ui.menu {
+      background: $white;
+
+      .item {
+        min-width: auto;
+      }
+
+      .Logo {
+        width: $spacer*5;
+      }
+
+      &.opaque {
+        .Logo {
+          width: $spacer*5;
+        }
+      }
+    }
+
     .search {
       display: none;
     }
