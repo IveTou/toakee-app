@@ -4,12 +4,13 @@
 
 .TopBar {
   &.ui.menu {
+    max-height: $topbar-height;
     background: $white0;
     border: 0;
     box-shadow: none;
     transition: .75s ease;
 
-    .item {
+    .item.logo {
       min-width: $spacer*24;
     }
 
@@ -18,11 +19,11 @@
       transition: .75s ease;
     }
 
-    &.opaque {
+    &.TopBar--opaque {
       background: $white;
 
       .Logo {
-        width: $spacer*11;
+        width: $spacer*15;
       }
     }
   }
@@ -42,7 +43,7 @@
         width: $spacer*5;
       }
 
-      &.opaque {
+      &.TopBar--opaque {
         .Logo {
           width: $spacer*5;
         }

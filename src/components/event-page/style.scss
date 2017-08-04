@@ -3,7 +3,7 @@
 @import '../../scss/colors';
 
 .EventPage {
-  margin-top: $spacer*2;
+  margin-top: $topbar-height + $spacer*2;
 
   &-flyer {
     .ui.card {
@@ -80,6 +80,8 @@
 
 @include media("<tablet") {
   .EventPage {
+    margin-top: $spacer*2;
+
     &-flyer .ui.card {
       width: calc(100% - #{$spacer*2});
       margin-left: $spacer;

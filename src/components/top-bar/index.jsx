@@ -4,6 +4,7 @@ import autoBind from 'react-autobind';
 import { once, debounce } from 'lodash';
 import { browserHistory, Link } from 'react-router';
 import { Menu, Dropdown, Image, Label, Icon, Button, Search } from 'semantic-ui-react';
+import classNames from 'classnames';
 
 import { isLogged, logout } from '~/src/utils/session';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
@@ -20,7 +21,7 @@ const trackPageView = once((metric, id) => TrackingAPI.track(metric, id));
 export class TopBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { opacity: 'transparent' };
+    this.state = { opaque: isLogged() };
     autoBind(this);
   }
 
@@ -53,8 +54,10 @@ export class TopBar extends React.Component {
   }
 
   handleScroll() {
-    const opacity = window.scrollY > 300 ? 'opaque' : 'transparent';
-    this.setState({ opacity });
+    if (!isLogged()) {
+      const opaque = window.scrollY > 75;
+      this.setState({ opaque });
+    }
   }
 
   logout() {
@@ -86,11 +89,12 @@ export class TopBar extends React.Component {
 
   render() {
     const { viewer = {} } = this.props;
-    const { opacity } = this.state;
+    const { opaque } = this.state;
+    const classes = classNames('TopBar', { 'TopBar--opaque': opaque });
 
     return (
-      <Menu fixed="top" className={`TopBar ${opacity}`} borderless>
-        <Menu.Item>
+      <Menu fixed="top" className={classes} borderless>
+        <Menu.Item className="logo">
           <Logo />
         </Menu.Item>
         <Menu.Menu position="right">
