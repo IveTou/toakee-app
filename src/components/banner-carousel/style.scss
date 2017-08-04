@@ -49,19 +49,41 @@
     border-radius: 5px;
   }
 
+  .slick-slider {
+    &:hover {
+     .button {
+        opacity: 1;
+
+        &.slick{
+          &-prev {
+            left: $spacer*2;
+          }
+
+          &-next {
+            right: $spacer*2;
+          }
+        }
+      }
+    }
+  }
+
   .button {
     top: 45%;
     position: absolute;
     z-index: 10;
     box-shadow: 0 0 8px $black;
     display: block !important;
+    opacity: 0;
+    transition: .5s ease;
 
-    &.slick-prev {
-      left: $spacer*2;
-    }
+    &.slick{
+      &-prev {
+        left: $spacer*-2;
+      }
 
-    &.slick-next {
-      right: $spacer*2;
+      &-next {
+        right: $spacer*-2;
+      }
     }
 
     &:hover {
