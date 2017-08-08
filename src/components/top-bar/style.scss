@@ -15,16 +15,17 @@
     }
 
     .Logo {
-      width: $spacer*20;
       transition: .75s ease;
+      content: url(#{$assets-base-uri}/core/site/logo-white.png);
     }
+  }
 
-    &.TopBar--opaque {
-      background: $white;
+  &--opaque.ui.menu {
+    background: $white;
 
-      .Logo {
-        width: $spacer*15;
-      }
+    .Logo {
+      width: $spacer*15;
+      content: url(#{$assets-base-uri}/core/site/logo.png);
     }
   }
 }
@@ -35,18 +36,19 @@
       background: $white;
       box-shadow: 0 1px 2px 0 $gray50;
 
-      .item {
-        min-width: auto;
+      .item.logo {
+        min-width: $spacer*8;
       }
 
       .Logo {
-        width: $spacer*5;
+        width: $spacer*4;
+        content: url(#{$assets-base-uri}/core/site/logo-x64.png);
       }
+    }
 
-      &.TopBar--opaque {
-        .Logo {
-          width: $spacer*5;
-        }
+    &--opaque.ui.menu {
+      .Logo {
+        width: $spacer*4;
       }
     }
 
