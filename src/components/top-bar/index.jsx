@@ -55,7 +55,7 @@ export class TopBar extends React.Component {
 
   handleScroll() {
     if (!isLogged()) {
-      const opaque = window.scrollY > 75;
+      const opaque = window.scrollY > 80;
       this.setState({ opaque });
     }
   }
@@ -90,7 +90,8 @@ export class TopBar extends React.Component {
   render() {
     const { viewer = {} } = this.props;
     const { opaque } = this.state;
-    const classes = classNames('TopBar', { 'TopBar--opaque': opaque });
+    const isRoot = location.pathname === '/';
+    const classes = classNames('TopBar', { 'TopBar--opaque': opaque || !isRoot });
 
     return (
       <Menu fixed="top" className={classes} borderless>
