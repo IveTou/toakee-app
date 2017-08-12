@@ -49,9 +49,9 @@ export class TopBar extends React.Component {
     }
   }
 
-  handleUpdate = (e, { calculations }) => this.setState({
-    transparent: this.props.transparent && !calculations.topPassed,
-  });
+  handleUpdate (_, { calculations }) {
+    this.setState({transparent: this.props.transparent && !calculations.topPassed,});
+  }
 
   logout() {
     logout();
