@@ -11,7 +11,7 @@ if (process.env.BROWSER) {
 
 const logoImg = deviceInfo.isDesktop
   ? `${config.ASSETS_BASE_URI}/core/site/logo.png`
-  : '/imgs/topbar-logo.png';
+  : `${config.ASSETS_BASE_URI}/core/site/logo-x64.png`;
 
 const classes = classNames('Logo', { 'Logo--small': !deviceInfo.isDesktop });
 

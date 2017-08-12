@@ -3,9 +3,16 @@
 
 .Unlogged {
   .main {
-    padding: $topbar-height 0 $spacer*2;
+    padding: 0 0 $spacer*2;
     height: 100%;
     width: 100%;
   }
 }
 
+@include media("<tablet") {
+  .Unlogged {
+    .main {
+      padding: $topbar-height 0 $spacer*2;
+    }
+  }
+}

@@ -2,6 +2,7 @@
 
 .Logo {
   width: $spacer*20;
+  transition: .8s ease;
 
   &--small {
     width: $spacer*4;
