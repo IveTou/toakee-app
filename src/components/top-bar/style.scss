@@ -5,55 +5,49 @@
 .TopBar {
   &.ui.menu {
     max-height: $topbar-height;
-    background: $white0;
-    border: 0;
-    box-shadow: none;
-    transition: .75s ease;
+    background: $white;
+    box-shadow: 0 1px 2px 0 $gray50;
 
     .item.logo {
-      min-width: $spacer*24;
-    }
-
-    .Logo {
-      transition: .75s ease;
-      content: url(#{$assets-base-uri}/core/site/logo-white.png);
-    }
-  }
-
-  &--opaque.ui.menu {
-    background: $white;
-
-    .Logo {
-      width: $spacer*15;
-      content: url(#{$assets-base-uri}/core/site/logo.png);
-    }
-  }
-}
-
-@include media("<tablet") {
-  .TopBar {
-    &.ui.menu {
-      background: $white;
-      box-shadow: 0 1px 2px 0 $gray50;
-
-      .item.logo {
-        min-width: $spacer*8;
-      }
-
-      .Logo {
-        width: $spacer*4;
-        content: url(#{$assets-base-uri}/core/site/logo-x64.png);
-      }
-    }
-
-    &--opaque.ui.menu {
-      .Logo {
-        width: $spacer*4;
-      }
+      min-width: $spacer*8;
     }
 
     .search {
       display: none;
+    }
+  }
+
+}
+
+@include media(">tablet") {
+  .TopBar {
+    &.ui.menu {
+      border: 0;
+      box-shadow: none;
+      transition: .8s ease;
+
+      .item.logo {
+        min-width: $spacer*24;
+      }
+
+      .Logo {
+        transition: .8s ease;
+      }
+
+      .search {
+        display: block;
+      }
+    }
+  }
+
+  .TopBar {
+    &--transparent.ui.menu {
+      background: $transparent;
+
+      .Logo {
+        width: $spacer*24;
+        content: url(#{$assets-base-uri}/core/site/logo-white.png);
+      }
     }
   }
 }

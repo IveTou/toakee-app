@@ -1,5 +1,12 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
 @import '../../scss/variables';
 
 .Logo {
   width: $spacer*20;
+  content: url(#{$assets-base-uri}/core/site/logo-x64.png);
+}
+
+@include media("<=tablet") {
+  width: $spacer*4;
+  content: url(#{$assets-base-uri}/core/site/logo.png);
 }
