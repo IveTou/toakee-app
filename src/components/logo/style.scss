@@ -3,10 +3,9 @@
 
 .Logo {
   width: $spacer*20;
-  content: url(#{$assets-base-uri}/core/site/logo-x64.png);
-}
+  transition: .8s ease;
 
-@include media("<=tablet") {
-  width: $spacer*4;
-  content: url(#{$assets-base-uri}/core/site/logo.png);
+  &--small {
+    width: $spacer*4;
+  }
 }

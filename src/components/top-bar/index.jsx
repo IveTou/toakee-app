@@ -50,7 +50,7 @@ export class TopBar extends React.Component {
   }
 
   handleUpdate = (e, { calculations }) => this.setState({
-    transparent: this.props.transparent && !calculations.topPassed
+    transparent: this.props.transparent && !calculations.topPassed,
   });
 
   logout() {
@@ -132,6 +132,7 @@ export class TopBar extends React.Component {
 
 TopBar.propTypes = {
   viewer: PropTypes.object,
+  transparent: PropTypes.bool,
 };
 
 export default graphql(query, {

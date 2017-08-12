@@ -7,7 +7,7 @@ require('./style.scss');
 
 const Unlogged = ({ children }) => (
   <div className="Unlogged">
-    <TopBar transparent={ location.pathname === '/' } />
+    <TopBar transparent={location.pathname === '/'} />
     <Snackbar />
     <main className="main">
       {children}
