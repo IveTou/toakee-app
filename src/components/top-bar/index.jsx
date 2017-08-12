@@ -25,7 +25,9 @@ export class TopBar extends React.Component {
     autoBind(this);
   }
 
-  componentWillReceiveProps({ viewer }) {
+  componentWillReceiveProps({ viewer, transparent }) {
+    this.setState({ transparent });
+
     if (!isLogged()) {
       trackPageView('Unlogged Page View', 'Guest');
     } else if (viewer) {
