@@ -20,10 +20,6 @@
       }
     }
   }
-
-  &:not(&--transparent) ~ .main {
-    padding-top: $topbar-height;
-  }
 }
 
 @include media(">tablet") {
