@@ -44,7 +44,6 @@
       background: $transparent;
 
       .Logo {
-        width: $spacer*24;
         content: url(#{$assets-base-uri}/core/site/logo-white.png);
       }
     }

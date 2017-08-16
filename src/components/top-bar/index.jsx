@@ -111,7 +111,7 @@ export class TopBar extends React.Component {
               <Otherwise>
                 <Menu.Item>
                   <Button.Group>
-                    <Button onClick={this.login} basic>Entrar</Button>
+                    <Button onClick={this.login} basic inverted={transparent}>Entrar</Button>
                     <Button onClick={this.signUp} color="orange">Cadastrar</Button>
                   </Button.Group>
                 </Menu.Item>
