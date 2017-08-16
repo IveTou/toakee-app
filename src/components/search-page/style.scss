@@ -2,8 +2,8 @@
 @import '../../scss/variables';
 @import '../../scss/colors';
 
-.SearchPage {
-  padding-top: $spacer*3;
+.SearchPageResults {
+  padding: $spacer*3 0;
 
   &-title {
     margin: 0 $spacer*2 $spacer*2;

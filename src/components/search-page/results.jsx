@@ -9,8 +9,8 @@ import query from './graphql';
 declare var event;
 
 const SearchPageResults = ({ title, search }) => (
-  <div className="SearchPage">
-    <h3 className="SearchPage-title">{title}</h3>
+  <div className="SearchPageResults">
+    <h3 className="SearchPageResults-title">{title}</h3>
     <Card.Group>
       <For each="event" of={search || []}>
         <EventCard key={event.id} event={event} />
