@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { graphql } from 'react-apollo';
 import autoBind from 'react-autobind';
-import { once, debounce } from 'lodash';
+import { once } from 'lodash';
 import { browserHistory, Link } from 'react-router';
 import { Menu, Dropdown, Image, Label, Icon, Button, Search, Visibility } from 'semantic-ui-react';
 import classNames from 'classnames';
@@ -77,7 +77,6 @@ export class TopBar extends React.Component {
     const { viewer = {} } = this.props;
     const { transparent } = this.state;
     const classes = classNames('TopBar', { 'TopBar--transparent': transparent });
-    const searchDefaultValue = browserHistory.getCurrentLocation().query.q;
 
     return (
       <Visibility className={classes} onUpdate={this.handleUpdate}>
@@ -88,7 +87,7 @@ export class TopBar extends React.Component {
           <Menu.Menu position="right">
             <Menu.Item>
               <Search
-                ref={(node) => { this._searchInput = node; } }
+                ref={(node) => { this._searchInput = node; }}
                 open={false}
                 onFocus={this.onSearch}
                 input={{ icon: 'search', onKeyPress: this.onSearch }}

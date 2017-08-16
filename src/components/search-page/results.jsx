@@ -10,7 +10,7 @@ declare var event;
 
 const SearchPageResults = ({ loading, title, search, hideOnEmpty }) => (
   <div className="SearchPageResults">
-    <If condition={!hideOnEmpty || search && search.length}>
+    <If condition={!hideOnEmpty || (search && search.length)}>
       <h3 className="SearchPageResults-title">{title}</h3>
     </If>
     <Choose>
@@ -24,7 +24,7 @@ const SearchPageResults = ({ loading, title, search, hideOnEmpty }) => (
       <When condition={!loading && !hideOnEmpty}>
         <div className="SearchPageResults-notFound">
           <div className="SearchPageResults-notFound-shrug">¯\_(ツ)_/¯</div>
-          <div className="SearchPageResults-notFound-separator"></div>
+          <div className="SearchPageResults-notFound-separator" />
           <div className="SearchPageResults-notFound-text">
             Não encontramos nenhum evento com esse nome.
           </div>
@@ -38,6 +38,7 @@ SearchPageResults.propTypes = {
   title: PropTypes.string,
   search: PropTypes.array,
   hideOnEmpty: PropTypes.boolean,
+  loading: PropTypes.boolean,
 };
 
 export default graphql(query, {
