@@ -14,4 +14,40 @@
     text-transform: uppercase;
     border-bottom: 1px solid $gray300;
   }
+
+  &-notFound {
+    display: table;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+    margin: $spacer*18 0;
+
+    &:before {
+      content: '';
+      width: $spacer*35;
+      height: $spacer*35;
+      background-color: $black03;
+      position: absolute;
+      transform: translate(-50%, -40%);
+      border-radius: 100%;
+      z-index: -1;
+    }
+
+    &-shrug {
+      font-size: 64px;
+      color: $orange;
+      display: table-row;
+    }
+
+    &-separator {
+      display: table-row;
+      height: $spacer*5;
+    }
+
+    &-text {
+      font-size: 26px;
+      color: $black26;
+      display: table-row;
+    }
+  }
 }

@@ -11,7 +11,7 @@ if (process.env.BROWSER) {
 const SearchPage = ({ location }) => (
   <div className="SearchPage">
     <SearchPageResults
-      title="Eventos futuros"
+      title={`Termo buscado: ${location.query.q}`}
       start={moment().startOf('day')}
       query={location.query.q}
     />
@@ -19,6 +19,7 @@ const SearchPage = ({ location }) => (
       title="Eventos anteriores"
       end={moment().startOf('day')}
       query={location.query.q}
+      hideOnEmpty
     />
   </div>
 );
