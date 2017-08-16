@@ -26,6 +26,7 @@ export class TopBar extends React.Component {
   }
 
   componentWillReceiveProps({ viewer, transparent }) {
+    this._searchInput.setValue(browserHistory.getCurrentLocation().query.q || '');
     this.setState({ transparent });
 
     if (!isLogged()) {
@@ -35,19 +36,9 @@ export class TopBar extends React.Component {
     }
   }
 
-  onSearch(e, q) {
-    const currentLocation = browserHistory.getCurrentLocation();
-    const pathname = q ? '/search' : '/';
-    const method = currentLocation.pathname === pathname
-      ? browserHistory.replace
-      : browserHistory.push;
-
-    if (e.type === 'focus') {
-      if (e.target.value && !currentLocation.pathname !== '/search') {
-        method({ pathname: '/search', query: { q: e.target.value } });
-      }
-    } else {
-      method({ pathname, query: q ? { q } : {} });
+  onSearch(e) {
+    if (e.key === 'Enter') {
+      browserHistory.push({ pathname: '/search', query: { q: e.target.value } });
     }
   }
 
@@ -86,19 +77,21 @@ export class TopBar extends React.Component {
     const { viewer = {} } = this.props;
     const { transparent } = this.state;
     const classes = classNames('TopBar', { 'TopBar--transparent': transparent });
+    const searchDefaultValue = browserHistory.getCurrentLocation().query.q;
 
     return (
-      <Visibility onUpdate={this.handleUpdate}>
-        <Menu fixed="top" className={classes} borderless>
+      <Visibility className={classes} onUpdate={this.handleUpdate}>
+        <Menu fixed="top" borderless>
           <Menu.Item className="logo">
             <Logo />
           </Menu.Item>
           <Menu.Menu position="right">
             <Menu.Item>
               <Search
-                onSearchChange={debounce(this.onSearch, 300)}
+                ref={(node) => { this._searchInput = node; } }
                 open={false}
                 onFocus={this.onSearch}
+                input={{ icon: 'search', onKeyPress: this.onSearch }}
               />
             </Menu.Item>
           </Menu.Menu>
