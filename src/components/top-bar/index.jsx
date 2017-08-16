@@ -38,11 +38,7 @@ export class TopBar extends React.Component {
 
   onSearch(e) {
     if (e.key === 'Enter') {
-      const method = browserHistory.getCurrentLocation().pathname === '/search'
-        ? browserHistory.replace
-        : browserHistory.push;
-
-      method({ pathname: '/search', query: { q: e.target.value } });
+      browserHistory.push({ pathname: '/search', query: { q: e.target.value } });
     }
   }
 
