@@ -11,6 +11,7 @@ import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import Logo from '~/src/components/logo';
 
 import query from './graphql';
+import { deviceInfo } from '~/src/utils/device-info';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -111,7 +112,13 @@ export class TopBar extends React.Component {
               <Otherwise>
                 <Menu.Item>
                   <Button.Group>
-                    <Button onClick={this.login} basic inverted={transparent}>Entrar</Button>
+                    <Button
+                      onClick={this.login}
+                      basic
+                      inverted={deviceInfo.isDesktop && transparent}
+                     >
+                      Entrar
+                    </Button>
                     <Button onClick={this.signUp} color="orange">Cadastrar</Button>
                   </Button.Group>
                 </Menu.Item>

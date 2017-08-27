@@ -6,7 +6,6 @@
   .ui.menu {
     max-height: $topbar-height;
     background: $white;
-    box-shadow: 0 1px 2px 0 $gray50;
 
     .item.logo {
       min-width: $spacer*8;
@@ -29,8 +28,6 @@
 @include media(">tablet") {
   .TopBar {
     .ui.menu {
-      border: 0;
-      box-shadow: none;
       transition: .8s ease;
 
       .item.logo {
@@ -45,6 +42,8 @@
 
   .TopBar {
     &--transparent .ui.menu {
+      box-shadow: none;
+      border: 0;
       background: $transparent;
 
       .search {
