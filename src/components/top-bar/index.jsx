@@ -115,11 +115,18 @@ export class TopBar extends React.Component {
                     <Button
                       onClick={this.login}
                       basic
+                      color={classNames({ orange: !transparent || !deviceInfo.isDesktop })}
                       inverted={deviceInfo.isDesktop && transparent}
                     >
                       Entrar
                     </Button>
-                    <Button onClick={this.signUp} color="orange">Cadastrar</Button>
+                    <Button
+                      className="signin"
+                      onClick={this.signUp}
+                      color="orange"
+                    >
+                      Cadastrar
+                    </Button>
                   </Button.Group>
                 </Menu.Item>
               </Otherwise>
