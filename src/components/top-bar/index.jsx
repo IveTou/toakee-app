@@ -7,11 +7,11 @@ import { Menu, Dropdown, Image, Label, Icon, Button, Search, Visibility } from '
 import classNames from 'classnames';
 
 import { isLogged, logout } from '~/src/utils/session';
+import { deviceInfo } from '~/src/utils/device-info';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import Logo from '~/src/components/logo';
 
 import query from './graphql';
-import { deviceInfo } from '~/src/utils/device-info';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -116,7 +116,7 @@ export class TopBar extends React.Component {
                       onClick={this.login}
                       basic
                       inverted={deviceInfo.isDesktop && transparent}
-                     >
+                    >
                       Entrar
                     </Button>
                     <Button onClick={this.signUp} color="orange">Cadastrar</Button>
