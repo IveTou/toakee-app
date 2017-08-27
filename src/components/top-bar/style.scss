@@ -15,8 +15,12 @@
     .search {
       display: none;
 
-      input:focus {
-        border-color: $orange;
+      input {
+        background: $transparent;
+
+        &:focus {
+          border-color: $orange;
+        }
       }
     }
   }
@@ -42,6 +46,20 @@
   .TopBar {
     &--transparent .ui.menu {
       background: $transparent;
+
+      .search {
+        input {
+          border-color: $white;
+
+          &:focus {
+            border-color: $white;
+          }
+        }
+
+        i {
+          color: $white;
+        }
+      }
 
       .Logo {
         content: url(#{$assets-base-uri}/core/site/logo-white.png);
