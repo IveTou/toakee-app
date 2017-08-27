@@ -22,6 +22,9 @@
         }
       }
     }
+    .button.signin {
+      display: none;
+    }
   }
 }
 
@@ -35,6 +38,10 @@
       }
 
       .search {
+        display: block;
+      }
+
+      .button.signin {
         display: block;
       }
     }
