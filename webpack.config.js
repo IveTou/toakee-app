@@ -4,6 +4,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const AssetsPlugin = require('assets-webpack-plugin');
 
 const devMode = process.env.NODE_ENV !== 'production';
+const extractTextPlugin =
+  new ExtractTextPlugin(devMode ? 'style.css' : 'style.[contenthash].css');
 
 module.exports = {
   entry: ['./src/main.jsx'],
@@ -20,9 +22,22 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        use: ExtractTextPlugin.extract({
+        exclude: /node_modules/,
+        use: extractTextPlugin.extract({
           fallback: 'style-loader',
           use: ['css-loader', 'sass-loader'],
+          publicPath: './public/css',
+        }),
+      },
+      {
+        test: /\.s?css$/,
+        include: /node_modules/,
+        use: extractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [{
+            loader: 'css-loader',
+            options: { importLoaders: true, modules: true },
+          }],
           publicPath: './public/css',
         }),
       },
@@ -39,7 +54,7 @@ module.exports = {
         BROWSER: JSON.stringify(true),
       },
     }),
-    new ExtractTextPlugin(devMode ? 'style.css' : 'style.[contenthash].css'),
+    extractTextPlugin,
     new AssetsPlugin({ filename: 'assets.json', prettyPrint: true }),
     new webpack.optimize.CommonsChunkPlugin({
       name: ['vendor'],

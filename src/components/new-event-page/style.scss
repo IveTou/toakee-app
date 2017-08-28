@@ -1,0 +1,103 @@
+@import '../../scss/variables';
+@import '../../scss/colors';
+
+.NewEventPage {
+  margin-top: $topbar-height;
+
+  &-basics {
+    background-color: $orange;
+
+    &-content {
+      margin: $spacer*4 0;
+
+      .header {
+        text-align: center;
+      }
+
+      .card {
+        margin: auto;
+        max-width: 80%;
+        width: $spacer*52;
+      }
+
+      input[type="file"] {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+      }
+
+      input[list="time"] {
+        padding-right: 0 !important;
+      }
+
+      .content {
+        padding: $spacer*2;
+        border-bottom: 1px solid $black06;
+      }
+
+      &-flyer {
+        border: 8px dashed $black12;
+        padding: $spacer*7 $spacer*9;
+        text-align: center;
+
+        .field {
+          height: 0.1px;
+          margin: 0 !important;
+        }
+
+        i.icon.grey {
+          color: $black12 !important;
+        }
+      }
+
+      &-date {
+        .fields {
+          align-items: flex-end;
+        }
+      }
+    }
+  }
+
+  &-details {
+    padding: $spacer*9 $spacer*4;
+
+    &-description {
+      select {
+        padding: 3px !important;
+      }
+
+      .DraftEditor-root {
+        font-family: sans-serif;
+      }
+    }
+
+    &-categories,
+    &-prices,
+    &-confirmation {
+      margin-top: $spacer*4;
+    }
+
+    &-categories {
+      .button {
+        margin: 0 $spacer $spacer 0;
+      }
+    }
+
+    &-prices {
+      .rdtPicker {
+        right: 0;
+      }
+    }
+
+    &-confirmation {
+      text-align: center;
+
+      .button {
+        width: $spacer*40;
+      }
+    }
+  }
+}
