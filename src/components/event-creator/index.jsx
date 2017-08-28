@@ -53,7 +53,7 @@ class EventCreator extends React.Component {
             onDrop={this.onImageDrop}
           >
             <If condition={hasFile}>
-              <Image src={this.state.uploadedFileUrl} size="huge"/>
+              <Image src={this.state.uploadedFileUrl} size="huge" />
             </If>
             <label>Drop an image or click to select a file to upload.</label>
           </Dropzone>
@@ -61,9 +61,9 @@ class EventCreator extends React.Component {
         <Grid.Column width={8}>
           <If condition={hasFile}>
             <div>
-              <Header as='h4'>File Name</Header>
+              <Header as="h4">File Name</Header>
               <label>{this.state.uploadedFile.name}</label>
-              <Header as='h4'>File URL</Header>
+              <Header as="h4">File URL</Header>
               <label>{this.state.uploadedFileUrl}</label>
             </div>
           </If>
