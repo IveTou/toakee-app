@@ -14,6 +14,7 @@ import EventFeed from '~/src/components/event-feed';
 import EventPage from '~/src/components/event-page';
 import EventGuestList from '~/src/components/event-guest-list';
 import EventGuestListEdit from '~/src/components/event-guest-list-edit';
+import EventCreator from '~/src/components/event-creator';
 import Dashboard from '~/src/components/dashboard';
 import DashboardRoot from '~/src/components/dashboard/root';
 import SearchPage from '~/src/components/search-page';
@@ -37,6 +38,7 @@ const unloggedRoutes = (
     <IndexRoute component={Landing} />
     <Route path="/search" component={SearchPage} />
     <Route path="/evento/:slug" component={EventPage} />
+    <Route path="/criar-evento" component={EventCreator} />
     <Route component={AuthWrapper}>
       <Route path="/login" component={Login} />
       <Route path="/cadastrar" component={SignUp} />

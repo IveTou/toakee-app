@@ -1,0 +1,25 @@
+@import '../../scss/variables';
+
+.EventCreator {
+  &.ui.grid {
+    margin: $topbar-height + $spacer*2 $spacer*20;
+
+    .DropZone {
+      width: 300px;
+      height: 300px;
+      border-width: 6px;
+      border-color: rgb(242, 113, 28);
+      border-style: dashed;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      label {
+        position: absolute;
+        font-weight: 600;
+        font-size: small;
+      }
+    }
+  }
+}
