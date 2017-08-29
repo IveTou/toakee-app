@@ -23,10 +23,10 @@ class EventCreator extends React.Component {
     this.setState({ uploadedFile: files[0] });
   }
 
-  handleImageUpload(e, { file }) {
+  handleImageUpload() {
     const upload = request.post(`${CLOUDINARY_API_URI}/upload`)
       .field('upload_preset', UPLOAD_FLYER_PRESET)
-      .field('file', file)
+      .field('file', this.state.uploadedFile)
       .end((err, response) => {
         if (err) {
           console.error(err);
@@ -73,7 +73,6 @@ class EventCreator extends React.Component {
             <Button
               inverted
               color="orange"
-              file={uploadedFile}
               onClick={this.handleImageUpload}
             >
               Upload
