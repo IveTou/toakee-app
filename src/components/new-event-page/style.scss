@@ -20,17 +20,12 @@
         width: $spacer*52;
       }
 
-      input[type="file"] {
-        width: 0.1px;
-        height: 0.1px;
-        opacity: 0;
-        overflow: hidden;
-        position: absolute;
-        z-index: -1;
-      }
-
       input[list="time"] {
         padding-right: 0 !important;
+      }
+
+      .file {
+        display: none;
       }
 
       .content {
@@ -42,6 +37,7 @@
         border: 8px dashed $black12;
         padding: $spacer*7 $spacer*9;
         text-align: center;
+        cursor: pointer;
 
         .field {
           height: 0.1px;
@@ -50,6 +46,10 @@
 
         i.icon.grey {
           color: $black12 !important;
+        }
+
+        .ui.image {
+          opacity: 0.7;
         }
       }
 

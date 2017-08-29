@@ -1,10 +1,14 @@
 import React from 'react';
-import { Grid, Card, Header, Form, Icon, Button } from 'semantic-ui-react';
+import { Grid, Card, Header, Form, Icon, Image, Button } from 'semantic-ui-react';
 import DateTime from 'react-datetime';
 import { range, xor, includes } from 'lodash';
+import Dropzone from 'react-dropzone';
 import RichTextEditor from 'react-rte/lib/RichTextEditor';
+import request from 'superagent';
 import autoBind from 'react-autobind';
 import moment from 'moment';
+
+import config from '~/src/config';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -15,6 +19,7 @@ declare var minute;
 declare var category;
 declare var index;
 
+const { CLOUDINARY_API_URI, UPLOAD_FLYER_PRESET } = config;
 const addZero = number => `${number < 10 ? '0' : ''}${number}`;
 const categories = [
   { label: 'Balada', id: '590a1820cbf3d0000f704f1d', color: 'black' },
@@ -39,12 +44,18 @@ class NewEventPage extends React.Component {
       description: RichTextEditor.createEmptyValue(),
       selectedCategories: [],
       prices: [{ type: '', value: '' }],
+      file: '',
+      uploadedFile: '',
     };
     autoBind(this);
   }
 
   onChange(name, value) {
     this.setState({ [name]: value });
+  }
+
+  onImageDrop(files) {
+    this.setState({ file: files[0] });
   }
 
   onChangePrice(e) {
@@ -75,7 +86,9 @@ class NewEventPage extends React.Component {
   }
 
   render() {
-    const { description, prices, selectedCategories } = this.state;
+    const { description, prices, selectedCategories, file, uploadedFile } = this.state;
+    const hasFile = file !== '';
+    const hadUploaded = uploadedFile !== '';
 
     return (
       <div className="NewEventPage">
@@ -87,18 +100,25 @@ class NewEventPage extends React.Component {
                   <Header as="h2" inverted>Novo evento</Header>
                   <Card>
                     <Card.Content>
-                      <div className="NewEventPage-basics-content-flyer">
-                        <Form.Input type="file" id="flyerInput" />
-                        <label htmlFor="flyerInput">
-                          <Icon name="plus circle" size="massive" color="grey" />
-                          <div className="NewEventPage-basics-content-flyer-text">
-                            Clique para adicionar um banner ao seu evento
-                          </div>
-                        </label>
-                      </div>
+                      <Dropzone
+                        className="NewEventPage-basics-content-flyer"
+                        multiple={false}
+                        accept="image/*"
+                        onDrop={this.onImageDrop}
+                    >
+                        <If condition={hasFile}>
+                          <Image src={file.preview} size="massive" />
+                        </If>
+
+                        <Icon name="plus circle" size="massive" color="grey" />
+                        <div className="NewEventPage-basics-content-flyer-text">
+                          Clique para adicionar um banner ao seu evento
+                        </div>
+                      </Dropzone>
                     </Card.Content>
                     <Card.Content>
-                      <Form.Input placeholder="Nome do evento" />
+                      <Form.Input className="file" id="flyerInput" />
+                      <Form.Input name="name" placeholder="Nome do evento" />
                       <Form.Input placeholder="Local do evento" />
                     </Card.Content>
                     <Card.Content className="NewEventPage-basics-content-date">
