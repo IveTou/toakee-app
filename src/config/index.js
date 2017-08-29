@@ -6,8 +6,8 @@ export default {
   GRAPHQL_URI: devMode
     ? 'http://localhost:4000/graphql'
     : 'https://graphql-api.herokuapp.com/graphql',
-  UPLOAD_BANNER_PRESET: 'event-flyer',
-  UPLOAD_URL: 'https://api.cloudinary.com/v1_1/toakeeassets/upload',
+  UPLOAD_FLYER_PRESET: 'event-flyer',
+  CLOUDINARY_API_URI: 'https://api.cloudinary.com/v1_1/toakeeassets/image',
   ASSETS_BASE_URI: 'http://res.cloudinary.com/toakeeassets/image/upload/s--Ug65JuU_--/v1494199755',
   FACEBOOK_PAGE_URI: 'https://www.facebook.com/eutoakee/',
   ASSETS_BANNERS_PATH: 'core/site/banners',

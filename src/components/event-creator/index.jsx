@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Header, Image } from 'semantic-ui-react';
+import { Button, Grid, Header, Image } from 'semantic-ui-react';
 import autoBind from 'react-autobind';
 import Dropzone from 'react-dropzone';
 import request from 'superagent';
@@ -10,38 +10,38 @@ if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-const { UPLOAD_URL, UPLOAD_BANNER_PRESET } = config;
+const { CLOUDINARY_API_URI, UPLOAD_FLYER_PRESET } = config;
 
 class EventCreator extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { uploadedFileUrl: '' };
+    this.state = { uploadedFileUrl: '', uploadedFile: '' };
     autoBind(this);
   }
 
   onImageDrop(files) {
     this.setState({ uploadedFile: files[0] });
-    this.handleImageUpload(files[0]);
   }
 
-  handleImageUpload(files) {
-    const upload = request.post(UPLOAD_URL)
-      .field('upload_preset', UPLOAD_BANNER_PRESET)
-      .field('file', files);
+  handleImageUpload(e, { file }) {
+    const upload = request.post(`${CLOUDINARY_API_URI}/upload`)
+      .field('upload_preset', UPLOAD_FLYER_PRESET)
+      .field('file', file)
+      .end((err, response) => {
+        if (err) {
+          console.error(err);
+        }
 
-    upload.end((err, response) => {
-      if (err) {
-        console.error(err);
-      }
-
-      if (response.body.secure_url !== '') {
-        this.setState({ uploadedFileUrl: response.body.secure_url });
-      }
-    });
+        if (response.body.secure_url !== '') {
+          this.setState({ uploadedFileUrl: response.body.secure_url });
+        }
+      });
   }
 
   render() {
-    const hasFile = this.state.uploadedFileUrl !== '';
+    const { uploadedFileUrl, uploadedFile } = this.state;
+    const hasFile = uploadedFile !== '';
+    const wasUploaded = uploadedFileUrl !== '';
 
     return (
       <Grid className="EventCreator">
@@ -53,19 +53,31 @@ class EventCreator extends React.Component {
             onDrop={this.onImageDrop}
           >
             <If condition={hasFile}>
-              <Image src={this.state.uploadedFileUrl} size="huge" />
+              <Image src={uploadedFile.preview} size="huge" />
             </If>
             <label>Drop an image or click to select a file to upload.</label>
           </Dropzone>
         </Grid.Column>
         <Grid.Column width={8}>
-          <If condition={hasFile}>
+          <If condition={wasUploaded}>
             <div>
               <Header as="h4">File Name</Header>
-              <label>{this.state.uploadedFile.name}</label>
+              <label>{uploadedFile.name}</label>
               <Header as="h4">File URL</Header>
-              <label>{this.state.uploadedFileUrl}</label>
+              <label>{uploadedFileUrl}</label>
+              <div>
+              </div>
             </div>
+          </If>
+          <If condition={hasFile}>
+            <Button
+              inverted
+              color="orange"
+              file={uploadedFile}
+              onClick={this.handleImageUpload}
+            >
+              Upload
+            </Button>
           </If>
         </Grid.Column>
       </Grid>
