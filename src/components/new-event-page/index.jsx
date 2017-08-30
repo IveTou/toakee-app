@@ -70,7 +70,7 @@ class NewEventPage extends React.Component {
 
   onConfirmation(e) {
     e.preventDefault();
-    const upload = request.post(`${CLOUDINARY_API_URI}/upload`)
+    request.post(`${CLOUDINARY_API_URI}/upload`)
       .field('upload_preset', UPLOAD_FLYER_PRESET)
       .field('file', this.state.file)
       .end((err, response) => {
