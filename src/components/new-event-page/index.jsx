@@ -87,7 +87,6 @@ class NewEventPage extends React.Component {
 
   render() {
     const { description, prices, selectedCategories, file, uploadedFile } = this.state;
-    const hasFile = file !== '';
     const hadUploaded = uploadedFile !== '';
 
     return (
@@ -105,14 +104,13 @@ class NewEventPage extends React.Component {
                         multiple={false}
                         accept="image/*"
                         onDrop={this.onImageDrop}
-                    >
-                        <If condition={hasFile}>
-                          <Image src={file.preview} size="massive" />
-                        </If>
-
-                        <Icon name="plus circle" size="massive" color="grey" />
-                        <div className="NewEventPage-basics-content-flyer-text">
-                          Clique para adicionar um banner ao seu evento
+                      >
+                        <Image src={file.preview} />
+                        <div className="NewEventPage-basics-content-flyer-message">
+                          <Icon name="plus circle" size="massive" color="grey" />
+                          <div>
+                            Clique para adicionar um banner ao seu evento
+                          </div>
                         </div>
                       </Dropzone>
                     </Card.Content>

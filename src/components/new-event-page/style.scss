@@ -34,9 +34,12 @@
       }
 
       &-flyer {
-        border: 8px dashed $black12;
-        padding: $spacer*7 $spacer*9;
+        border: 8px dashed $black26;
         text-align: center;
+        padding: 15%;
+        position: relative;
+        max-height: $spacer*48;
+        width: 100%;
         cursor: pointer;
 
         .field {
@@ -45,11 +48,17 @@
         }
 
         i.icon.grey {
-          color: $black12 !important;
+          color: $black54 !important;
         }
 
         .ui.image {
-          opacity: 0.7;
+          opacity: .6;
+          max-height: -webkit-fill-available;
+          position: absolute;
+          top: 0;
+          left: 0;
+          display: block !important;
+          z-index: 0;
         }
       }
 
