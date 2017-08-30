@@ -8,7 +8,7 @@ const extractTextPlugin =
   new ExtractTextPlugin(devMode ? 'style.css' : 'style.[contenthash].css');
 
 module.exports = {
-  entry: ['./src/main.jsx'],
+  entry: ['babel-polyfill', './src/main.jsx'],
   output: {
     path: path.join(__dirname, '/public'),
     filename: devMode ? '[name].js' : '[name].[chunkhash].js',

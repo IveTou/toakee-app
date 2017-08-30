@@ -4,9 +4,8 @@ import DateTime from 'react-datetime';
 import { range, xor, includes } from 'lodash';
 import Dropzone from 'react-dropzone';
 import RichTextEditor from 'react-rte/lib/RichTextEditor';
-import request from 'superagent';
 import autoBind from 'react-autobind';
-import moment from 'moment';
+import request from '~/src/utils/superagent-promise';
 
 import config from '~/src/config';
 
@@ -44,8 +43,7 @@ class NewEventPage extends React.Component {
       description: RichTextEditor.createEmptyValue(),
       selectedCategories: [],
       prices: [{ type: '', value: '' }],
-      file: '',
-      uploadedFile: '',
+      flyer: '',
     };
     autoBind(this);
   }
@@ -54,33 +52,27 @@ class NewEventPage extends React.Component {
     this.setState({ [name]: value });
   }
 
-  onImageDrop(files) {
-    this.setState({ file: files[0] });
-  }
-
   onChangePrice(e) {
     const { name, value } = e.target;
     const [idx, attr] = name.split(':');
-    this.state.prices[parseInt(idx, 10)][attr] = moment.isMoment(value)
-      ? value.format('DD/MM/YY')
-      : value;
+    this.state.prices[parseInt(idx, 10)][attr] = value;
 
     this.forceUpdate();
   }
 
-  onConfirmation(e) {
+  async onFlyerDrop([flyer]) {
+    this.setState({ flyer });
+  }
+
+  async onSubmit(e) {
     e.preventDefault();
-    request.post(`${CLOUDINARY_API_URI}/upload`)
+
+    const { url } = await request.post(`${CLOUDINARY_API_URI}/upload`)
       .field('upload_preset', UPLOAD_FLYER_PRESET)
-      .field('file', this.state.file)
-      .end((err, response) => {
-        if (err) {
-          console.error(err);
-        }
-        if (response.body.secure_url !== '') {
-          this.setState({ uploadedFile: response.body.secure_url });
-        }
-    });
+      .field('file', this.state.flyer)
+      .then(req => req.body);
+
+    console.log(url);
   }
 
   toggleCategory(e, id) {
@@ -101,27 +93,27 @@ class NewEventPage extends React.Component {
   }
 
   render() {
-    const { description, prices, selectedCategories, file, uploadedFile } = this.state;
-    const hasFile = file !== '';
-
+    const { description, prices, selectedCategories, flyer } = this.state;
     return (
       <div className="NewEventPage">
-        <Form>
+        <Form onSubmit={this.onSubmit}>
           <Grid>
             <Grid.Row>
               <Grid.Column tablet={16} computer={8} className="NewEventPage-basics">
                 <div className="NewEventPage-basics-content">
                   <Header as="h2" inverted>Novo evento</Header>
                   <Card>
+                    <If condition={flyer.preview}>
+                      <Image src={flyer.preview} className="NewEventPage-basics-content-flyer" />
+                    </If>
                     <Card.Content>
                       <Dropzone
-                        className="NewEventPage-basics-content-flyer"
+                        className="NewEventPage-basics-content-dropzone"
                         multiple={false}
                         accept="image/*"
-                        onDrop={this.onImageDrop}
+                        onDrop={this.onFlyerDrop}
                       >
-                        <Image src={file.preview} />
-                        <div className="NewEventPage-basics-content-flyer-message">
+                        <div className="NewEventPage-basics-content-dropzone-message">
                           <Icon name="plus circle" size="massive" color="grey" />
                           <div>
                             Clique para adicionar um banner ao seu evento
@@ -130,7 +122,7 @@ class NewEventPage extends React.Component {
                       </Dropzone>
                     </Card.Content>
                     <Card.Content>
-                      <Form.Input className="file" id="flyerInput" content={uploadedFile} />
+                      <Form.Input className="file" id="flyerInput" content={flyer.path} />
                       <Form.Input name="name" placeholder="Nome do evento" />
                       <Form.Input placeholder="Local do evento" />
                     </Card.Content>
@@ -256,11 +248,7 @@ class NewEventPage extends React.Component {
                   </div>
 
                   <div className="NewEventPage-details-confirmation">
-                    <Button
-                      onClick={this.onConfirmation}
-                      disabled={!hasFile}
-                      color="green"
-                    >
+                    <Button color="green">
                       Cadastrar
                     </Button>
                   </div>

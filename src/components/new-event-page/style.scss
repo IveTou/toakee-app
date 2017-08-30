@@ -34,7 +34,13 @@
       }
 
       &-flyer {
-        border: 8px dashed $black26;
+        &.ui.image {
+          height: $spacer*38;
+        }
+      }
+
+      &-dropzone {
+        border: 8px dashed $black12;
         text-align: center;
         padding: 15%;
         position: relative;
@@ -48,19 +54,22 @@
         }
 
         i.icon.grey {
-          color: $black54 !important;
-        }
-
-        .ui.image {
-          opacity: .6;
-          max-height: -webkit-fill-available;
-          position: absolute;
-          top: 0;
-          left: 0;
-          display: block !important;
-          z-index: 0;
+          color: $black12 !important;
         }
       }
+
+      &-flyer + .content {
+        padding: 0 !important;
+      }
+
+      &-flyer + .content &-dropzone {
+        position: absolute;
+        top: $spacer;
+        left: $spacer;
+        width: calc(100% - #{$spacer*2});
+        opacity: 0;
+      }
+
 
       &-date {
         .fields {
