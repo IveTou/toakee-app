@@ -68,6 +68,21 @@ class NewEventPage extends React.Component {
     this.forceUpdate();
   }
 
+  onConfirmation(e) {
+    e.preventDefault();
+    const upload = request.post(`${CLOUDINARY_API_URI}/upload`)
+      .field('upload_preset', UPLOAD_FLYER_PRESET)
+      .field('file', this.state.file)
+      .end((err, response) => {
+        if (err) {
+          console.error(err);
+        }
+        if (response.body.secure_url !== '') {
+          this.setState({ uploadedFile: response.body.secure_url });
+        }
+    });
+  }
+
   toggleCategory(e, id) {
     e.preventDefault();
     this.setState({ selectedCategories: xor(this.state.selectedCategories, [id]) });
@@ -87,7 +102,7 @@ class NewEventPage extends React.Component {
 
   render() {
     const { description, prices, selectedCategories, file, uploadedFile } = this.state;
-    const hadUploaded = uploadedFile !== '';
+    const hasFile = file !== '';
 
     return (
       <div className="NewEventPage">
@@ -115,7 +130,7 @@ class NewEventPage extends React.Component {
                       </Dropzone>
                     </Card.Content>
                     <Card.Content>
-                      <Form.Input className="file" id="flyerInput" />
+                      <Form.Input className="file" id="flyerInput" content={uploadedFile} />
                       <Form.Input name="name" placeholder="Nome do evento" />
                       <Form.Input placeholder="Local do evento" />
                     </Card.Content>
@@ -241,7 +256,13 @@ class NewEventPage extends React.Component {
                   </div>
 
                   <div className="NewEventPage-details-confirmation">
-                    <Button color="green">Cadastrar</Button>
+                    <Button
+                      onClick={this.onConfirmation}
+                      disabled={!hasFile}
+                      color="green"
+                    >
+                      Cadastrar
+                    </Button>
                   </div>
                 </div>
               </Grid.Column>
