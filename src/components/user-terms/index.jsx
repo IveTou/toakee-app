@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Grid, Header, List, Menu, Sticky } from 'semantic-ui-react';
 import autoBind from 'react-autobind';
+import { deviceInfo } from '~/src/utils/device-info';
 
 import intro from './intro.js';
 import general from './general.js';
@@ -34,12 +35,22 @@ class UserTerms extends React.Component {
     return section.map(item => <List.Item as='li'>{item}</List.Item>);
   }
 
+  renderIntro() {
+    return (
+      <div className="intro">
+        <Header as="h1">Toakee - Termos de Uso</Header>
+        <List>{this.renderList(intro)}</List>
+      </div>
+    );
+  }
+
   render() {
     const { contextRef, activeItem } = this.state;
 
     return (
       <div className="UserTerms" ref={this.handleContextRef}>
         <Grid columns={2} relaxed>
+          <If condition={!deviceInfo.isDesktop}>{this.renderIntro()}</If>
           <Grid.Column className="UserTerms-menu">
             <Menu pointing secondary vertical color="orange">
               <Menu.Item
@@ -86,10 +97,7 @@ class UserTerms extends React.Component {
           </Grid.Column>
           <Grid.Column className="UserTerms-text">
             <Container text>
-              <div className="intro">
-                <Header as="h1">Toakee - Termos de Uso</Header>
-                <List>{this.renderList(intro)}</List>
-              </div>
+              <If condition={deviceInfo.isDesktop}>{this.renderIntro()}</If>
               <div className="general">
                 <Header as="h2">Termos Gerais</Header>
                 <List as='ol'>{this.renderList(general)}</List>
