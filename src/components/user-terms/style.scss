@@ -2,4 +2,27 @@
 
 .UserTerms {
   margin: $topbar-height + $spacer*4;
+
+  &-menu {
+    max-width: 20%;
+
+    .ui.menu {
+      .item {
+        line-height: normal;
+      }
+    }
+  }
+
+  &-text {
+    width: 80% !important;
+
+    .ui.text.container {
+      max-width: none !important;
+      padding: 0 $spacer*10;
+    }
+
+    * {
+      margin-bottom: $spacer*3;
+    }
+  }
 }
