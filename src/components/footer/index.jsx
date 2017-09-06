@@ -214,6 +214,9 @@ class Footer extends React.Component {
               <span>Cadastre-se</span>
             </Link>
           </If>
+          <Link className="Footer-link terms" to={{ pathname: '/termos-de-uso' }}>
+            <span>Termos de Uso</span>
+          </Link>
           <Segment className="Footer-copyright" basic>
             Copyright &copy; 2017 Toakee. Todos os direitos reservados.
           </Segment>
