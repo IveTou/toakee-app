@@ -1,0 +1,63 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/variables';
+
+.UseTerms {
+  margin: $topbar-height + $spacer*4 $spacer*4;
+
+  .intro {
+    text-align: justify;
+  }
+
+  &-menu {
+    max-width: 20%;
+
+    .ui.menu {
+      .item {
+        line-height: normal;
+      }
+    }
+  }
+
+  &-text {
+    width: 80% !important;
+
+    .ui.text.container {
+      max-width: 100% !important;
+      padding: 0 $spacer*10;
+    }
+
+    * {
+      margin-bottom: $spacer*3;
+      text-align: justify;
+    }
+  }
+}
+
+@include media("<tablet") {
+  .UseTerms {
+    margin: $spacer 0;
+
+    .intro {
+      padding: $spacer  $spacer*4;
+    }
+
+    &-menu {
+      max-width: 100%;
+
+      .ui.menu {
+        width: 100%;
+        font-size: initial
+      }
+    }
+
+    .column {
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0;
+
+      .ui.text.container {
+        padding: 0;
+      }
+    }
+  }
+}
