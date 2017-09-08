@@ -40,7 +40,7 @@ class UseTerms extends React.Component {
 
   renderIntro() {
     return (
-      <div className="intro">
+      <div className="intro" id="intro">
         <Header as="h1">Toakee - Termos de Uso</Header>
         <List>{this.renderList(intro)}</List>
       </div>
@@ -57,44 +57,50 @@ class UseTerms extends React.Component {
           <Grid.Column className="UseTerms-menu">
             <Menu pointing secondary vertical color="orange">
               <Menu.Item
-                name='intro'
+                name="intro"
+                href="#intro"
                 active={activeItem === 'intro'}
                 onClick={this.handleItemClick}
               />
               <Menu.Item
-                name='Termos Gerais'
+                href="#general"
+                name="Termos Gerais"
                 active={activeItem === 'Termos Gerais'}
                 onClick={this.handleItemClick}
               />
-              <Link href="#conditions">
-                <Menu.Item
-                  name='Condições de Uso'
-                  active={activeItem === 'Condições de Uso'}
-                  onClick={this.handleItemClick}
-                />
-              </Link>
               <Menu.Item
-                name='Cadastro e Gestão de Eventos'
+                href="#conditions"
+                name="Condições de Uso"
+                active={activeItem === 'Condições de Uso'}
+                onClick={this.handleItemClick}
+              />
+              <Menu.Item
+                href="#management"
+                name="Cadastro e Gestão de Eventos"
                 active={activeItem === 'Cadastro e Gestão de Eventos'}
                 onClick={this.handleItemClick}
               />
               <Menu.Item
-                name='Política de Encerramento de Conta'
+                href="#account"
+                name="Política de Encerramento de Conta"
                 active={activeItem === 'Política de Encerramento de Conta'}
                 onClick={this.handleItemClick}
               />
               <Menu.Item
-                name='Limitação de Responsabilidade'
+                href="#responsibility"
+                name="Limitação de Responsabilidade"
                 active={activeItem === 'Limitação de Responsabilidade'}
                 onClick={this.handleItemClick}
               />
               <Menu.Item
-                name='Indenização'
+                href="#compensation"
+                name="Indenização"
                 active={activeItem === 'Indenização'}
                 onClick={this.handleItemClick}
               />
               <Menu.Item
-                name='Consentimento'
+                href="#agreement"
+                name="Consentimento"
                 active={activeItem === 'Consentimento'}
                 onClick={this.handleItemClick}
               />
@@ -103,7 +109,7 @@ class UseTerms extends React.Component {
           <Grid.Column className="UseTerms-text">
             <Container text>
               <If condition={deviceInfo.isDesktop}>{this.renderIntro()}</If>
-              <div className="general">
+              <div className="general" id="general">
                 <Header as="h2">Termos Gerais</Header>
                 <List as='ol'>{this.renderList(general)}</List>
               </div>
@@ -111,23 +117,23 @@ class UseTerms extends React.Component {
                 <Header as="h2">Condições de Uso</Header>
                 <List as='ol'>{this.renderList(conditions)}</List>
               </div>
-              <div className="management">
+              <div className="management" id="management">
                 <Header as="h2">Cadastro e Geração de Eventos</Header>
                 <List as='ol'>{this.renderList(management)}</List>
               </div>
-              <div className="account">
+              <div className="account" id="account">
                 <Header as="h2">Política de Encerramento de Conta</Header>
                 <List as='ol'>{this.renderList(account)}</List>
               </div>
-              <div className="responsibility">
+              <div className="responsibility" id="responsibility">
                 <Header as="h2">Limitação de Responsabilidade</Header>
                 <List as='ol'>{this.renderList(responsibility)}</List>
               </div>
-              <div className="compensation">
+              <div className="compensation" id="compensation">
                 <Header as="h2">Indenização</Header>
                 <List as='ol'>{this.renderList(compensation)}</List>
               </div>
-              <div className="agreement">
+              <div className="agreement" id="agreement">
                 <Header as="h2">Consentimento</Header>
                 <List as='ol'>{this.renderList(agreement)}</List>
               </div>
