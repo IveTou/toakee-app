@@ -40,7 +40,7 @@ class UseTerms extends React.Component {
 
   renderIntro() {
     return (
-      <Element name="intro" className="element">
+      <Element name="intro" className="element intro">
         <Header as="h1">Toakee - Termos de Uso</Header>
         <List>{this.renderList(intro)}</List>
       </Element>
