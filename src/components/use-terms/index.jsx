@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Link } from 'react-router';
+import { Link, Element } from 'react-scroll';
 import { Container, Grid, Header, List, Menu, Sticky } from 'semantic-ui-react';
 import autoBind from 'react-autobind';
 
@@ -40,10 +40,10 @@ class UseTerms extends React.Component {
 
   renderIntro() {
     return (
-      <div className="intro" id="intro">
+      <Element name="intro" className="element">
         <Header as="h1">Toakee - Termos de Uso</Header>
         <List>{this.renderList(intro)}</List>
-      </div>
+      </Element>
     );
   }
 
@@ -56,87 +56,95 @@ class UseTerms extends React.Component {
           <If condition={!deviceInfo.isDesktop}>{this.renderIntro()}</If>
           <Grid.Column className="UseTerms-menu">
             <Menu pointing secondary vertical color="orange">
-              <Menu.Item
-                name="intro"
-                href="#intro"
-                active={activeItem === 'intro'}
-                onClick={this.handleItemClick}
-              />
-              <Menu.Item
-                href="#general"
-                name="Termos Gerais"
-                active={activeItem === 'Termos Gerais'}
-                onClick={this.handleItemClick}
-              />
-              <Menu.Item
-                href="#conditions"
-                name="Condições de Uso"
-                active={activeItem === 'Condições de Uso'}
-                onClick={this.handleItemClick}
-              />
-              <Menu.Item
-                href="#management"
-                name="Cadastro e Gestão de Eventos"
-                active={activeItem === 'Cadastro e Gestão de Eventos'}
-                onClick={this.handleItemClick}
-              />
-              <Menu.Item
-                href="#account"
-                name="Política de Encerramento de Conta"
-                active={activeItem === 'Política de Encerramento de Conta'}
-                onClick={this.handleItemClick}
-              />
-              <Menu.Item
-                href="#responsibility"
-                name="Limitação de Responsabilidade"
-                active={activeItem === 'Limitação de Responsabilidade'}
-                onClick={this.handleItemClick}
-              />
-              <Menu.Item
-                href="#compensation"
-                name="Indenização"
-                active={activeItem === 'Indenização'}
-                onClick={this.handleItemClick}
-              />
-              <Menu.Item
-                href="#agreement"
-                name="Consentimento"
-                active={activeItem === 'Consentimento'}
-                onClick={this.handleItemClick}
-              />
+              <Link to="intro" smooth={true} offset={-100} duration={500}>
+                <Menu.Item
+                  name="Intro"
+                  active={activeItem === 'Intro'}
+                  onClick={this.handleItemClick}
+                />
+              </Link>
+              <Link to="general" smooth={true} offset={-100} duration={500}>
+                <Menu.Item
+                  name="Termos Gerais"
+                  active={activeItem === 'Termos Gerais'}
+                  onClick={this.handleItemClick}
+                />
+              </Link>
+              <Link to="conditions" smooth={true} offset={-100} duration={500}>
+                <Menu.Item
+                  name="Condições de Uso"
+                  active={activeItem === 'Condições de Uso'}
+                  onClick={this.handleItemClick}
+                />
+              </Link>
+              <Link to="management" smooth={true} offset={-100} duration={500}>
+                <Menu.Item
+                  name="Cadastro e Gestão de Eventos"
+                  active={activeItem === 'Cadastro e Gestão de Eventos'}
+                  onClick={this.handleItemClick}
+                />
+              </Link>
+              <Link to="account" smooth={true} offset={-100} duration={500}>
+                <Menu.Item
+                  name="Política de Encerramento de Conta"
+                  active={activeItem === 'Política de Encerramento de Conta'}
+                  onClick={this.handleItemClick}
+                />
+              </Link>
+              <Link to="responsibility" smooth={true} offset={-100} duration={500}>
+                <Menu.Item
+                  name="Limitação de Responsabilidade"
+                  active={activeItem === 'Limitação de Responsabilidade'}
+                  onClick={this.handleItemClick}
+                />
+              </Link>
+              <Link to="management" smooth={true} offset={-100} duration={500}>
+                <Menu.Item
+                  name="Indenização"
+                  active={activeItem === 'Indenização'}
+                  onClick={this.handleItemClick}
+                />
+              </Link>
+              <Link to="agreement" smooth={true} offset={-100} duration={500}>
+                <Menu.Item
+                  name="Consentimento"
+                  active={activeItem === 'Consentimento'}
+                  onClick={this.handleItemClick}
+                />
+              </Link>
             </Menu>
           </Grid.Column>
           <Grid.Column className="UseTerms-text">
             <Container text>
               <If condition={deviceInfo.isDesktop}>{this.renderIntro()}</If>
-              <div className="general" id="general">
+              <Element name="general" className="element">
                 <Header as="h2">Termos Gerais</Header>
                 <List as='ol'>{this.renderList(general)}</List>
-              </div>
-              <div className="conditions" id="conditions">
+              </Element>
+              <Element name="conditions" className="element">
                 <Header as="h2">Condições de Uso</Header>
                 <List as='ol'>{this.renderList(conditions)}</List>
-              </div>
-              <div className="management" id="management">
+              </Element>
+              <Element name="management" className="element">
                 <Header as="h2">Cadastro e Geração de Eventos</Header>
                 <List as='ol'>{this.renderList(management)}</List>
-              </div>
-              <div className="account" id="account">
+              </Element>
+              <Element name="account" className="element">
                 <Header as="h2">Política de Encerramento de Conta</Header>
                 <List as='ol'>{this.renderList(account)}</List>
-              </div>
-              <div className="responsibility" id="responsibility">
+              </Element>
+              <Element name="responsibility" className="element">
                 <Header as="h2">Limitação de Responsabilidade</Header>
                 <List as='ol'>{this.renderList(responsibility)}</List>
-              </div>
-              <div className="compensation" id="compensation">
+              </Element>
+              <Element name="compensation" className="element">
                 <Header as="h2">Indenização</Header>
                 <List as='ol'>{this.renderList(compensation)}</List>
-              </div>
-              <div className="agreement" id="agreement">
+              </Element>
+              <Element name="agreement" className="element">
                 <Header as="h2">Consentimento</Header>
                 <List as='ol'>{this.renderList(agreement)}</List>
-              </div>
+              </Element>
             </Container>
           </Grid.Column>
         </Grid>
