@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
 
-import BannerCarousel from '~/src/components/banner-carousel';
 import EventList from '~/src/components/event-list';
 
 import { homeCategories } from '~/src/constants';
@@ -14,9 +13,6 @@ declare var category;
 
 const Landing = () => (
   <div className="Landing">
-    <div className="Landing-banner">
-      <BannerCarousel />
-    </div>
     <div className="Landing-lists">
       <EventList
         title="Próximos Eventos"
