@@ -3,15 +3,7 @@ import BaseAPI from './base';
 
 class TrackingAPI extends BaseAPI {
   post(path, eventName, props) {
-    return this.rp({
-      method: 'POST',
-      uri: path,
-      body: {
-        name: eventName,
-        props,
-      },
-      json: true,
-    });
+    return super.post(path).send({ name: eventName, props }).end();
   }
 
   track(eventName, pid) {

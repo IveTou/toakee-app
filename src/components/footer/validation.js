@@ -6,11 +6,6 @@ validate.options = { fullMessages: false };
 const presence = true;
 
 export const validateContact = obj => validate(obj, {
-  name: {
-    presence,
-  },
-  email: {
-    presence,
-    email: { message: 'O email não parece válido.' },
-  },
+  name: { presence },
+  email: { presence, email: { message: 'O email não parece válido.' } },
 });

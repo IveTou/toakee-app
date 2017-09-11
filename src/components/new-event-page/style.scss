@@ -4,6 +4,10 @@
 .NewEventPage {
   margin-top: $topbar-height;
 
+  .row {
+    padding-bottom: 0 !important;
+  }
+
   &-basics {
     background-color: $orange;
 
@@ -18,6 +22,11 @@
         margin: auto;
         max-width: 80%;
         width: $spacer*52;
+
+        & > .content {
+          padding: $spacer*2;
+          border-bottom: 1px solid $black06;
+        }
       }
 
       input[list="time"] {
@@ -26,11 +35,6 @@
 
       .file {
         display: none;
-      }
-
-      .content {
-        padding: $spacer*2;
-        border-bottom: 1px solid $black06;
       }
 
       &-flyer {
@@ -70,6 +74,14 @@
         opacity: 0;
       }
 
+      .search .results.visible:after {
+        content: '';
+        height: $spacer*3;
+        text-align: right;
+        display: block;
+        border-top: 1px solid $black06;
+        background: url(/imgs/powered_by_google_on_white.png) no-repeat center right;
+      }
 
       &-date {
         .fields {

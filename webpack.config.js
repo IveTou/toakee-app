@@ -20,6 +20,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
       },
+      { test: /\.json$/, loader: 'json-loader' },
       {
         test: /\.s?css$/,
         exclude: /node_modules/,

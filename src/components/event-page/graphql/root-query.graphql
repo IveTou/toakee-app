@@ -11,6 +11,7 @@ query EventPage($slug: String) {
       end
       description
       price
+      prices { description, value }
       directions
       place { id, name, coordinates, address, city { name } },
     }
