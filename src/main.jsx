@@ -16,7 +16,7 @@ import makeRoutes from '~/src/routes';
 
 if (process.env.BROWSER) {
   require('~/src/scss/base.scss');
-  require('slick-carousel/slick/slick.css');
+  require('~/node_modules/slick-carousel/slick/slick.css');
   require('react-rte/lib/RichTextEditor.css');
 }
 
