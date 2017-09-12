@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Link, Element } from 'react-scroll';
-import { Container, Grid, Header, List, Menu, Sticky } from 'semantic-ui-react';
+import { Container, Grid, Header, List, Menu } from 'semantic-ui-react';
 import autoBind from 'react-autobind';
 
 import { deviceInfo } from '~/src/utils/device-info';
@@ -19,23 +19,21 @@ if (process.env.BROWSER) {
   require('./style.scss');
 }
 
+declare var clause;
+
 class UseTerms extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { activeItem: 'intro'};
+    this.state = { activeItem: 'intro' };
     autoBind(this);
   }
 
-  handleContextRef (contextRef) {
-    this.setState({ contextRef });
-  }
-
-  handleItemClick (e, { name }) {
+  handleItemClick(e, { name }) {
     this.setState({ activeItem: name });
   }
 
   renderList(section) {
-    return section.map(item => <List.Item as='li'>{item}</List.Item>);
+    return section.map(item => <List.Item as="li">{item}</List.Item>);
   }
 
   renderIntro() {
@@ -48,103 +46,47 @@ class UseTerms extends React.Component {
   }
 
   render() {
-    const { contextRef, activeItem } = this.state;
+    const { activeItem } = this.state;
+    const sections = [
+      { name: 'Introdução', to: 'intro', content: intro },
+      { name: 'Termos Gerais', to: 'general', content: general },
+      { name: 'Condições de Uso', to: 'conditions', content: conditions },
+      { name: 'Cadastro e Gestão de Eventos', to: 'management', content: management },
+      { name: 'Política de Encerramento de Conta', to: 'account', content: account },
+      { name: 'Limitação de Responsabilidade', to: 'responsibility', content: responsibility },
+      { name: 'Indenização', to: 'compensation', content: compensation },
+      { name: 'Consentimento', to: 'agreement', content: agreement },
+    ];
 
     return (
-      <div className="UseTerms" ref={this.handleContextRef}>
+      <div className="UseTerms">
         <Grid columns={2} relaxed>
           <If condition={!deviceInfo.isDesktop}>{this.renderIntro()}</If>
           <Grid.Column className="UseTerms-menu">
             <Menu pointing secondary vertical color="orange">
-              <Link to="intro" smooth={true} offset={-100} duration={500}>
-                <Menu.Item
-                  name="Intro"
-                  active={activeItem === 'Intro'}
-                  onClick={this.handleItemClick}
-                />
-              </Link>
-              <Link to="general" smooth={true} offset={-100} duration={500}>
-                <Menu.Item
-                  name="Termos Gerais"
-                  active={activeItem === 'Termos Gerais'}
-                  onClick={this.handleItemClick}
-                />
-              </Link>
-              <Link to="conditions" smooth={true} offset={-100} duration={500}>
-                <Menu.Item
-                  name="Condições de Uso"
-                  active={activeItem === 'Condições de Uso'}
-                  onClick={this.handleItemClick}
-                />
-              </Link>
-              <Link to="management" smooth={true} offset={-100} duration={500}>
-                <Menu.Item
-                  name="Cadastro e Gestão de Eventos"
-                  active={activeItem === 'Cadastro e Gestão de Eventos'}
-                  onClick={this.handleItemClick}
-                />
-              </Link>
-              <Link to="account" smooth={true} offset={-100} duration={500}>
-                <Menu.Item
-                  name="Política de Encerramento de Conta"
-                  active={activeItem === 'Política de Encerramento de Conta'}
-                  onClick={this.handleItemClick}
-                />
-              </Link>
-              <Link to="responsibility" smooth={true} offset={-100} duration={500}>
-                <Menu.Item
-                  name="Limitação de Responsabilidade"
-                  active={activeItem === 'Limitação de Responsabilidade'}
-                  onClick={this.handleItemClick}
-                />
-              </Link>
-              <Link to="management" smooth={true} offset={-100} duration={500}>
-                <Menu.Item
-                  name="Indenização"
-                  active={activeItem === 'Indenização'}
-                  onClick={this.handleItemClick}
-                />
-              </Link>
-              <Link to="agreement" smooth={true} offset={-100} duration={500}>
-                <Menu.Item
-                  name="Consentimento"
-                  active={activeItem === 'Consentimento'}
-                  onClick={this.handleItemClick}
-                />
-              </Link>
+              <For each="clause" of={sections}>
+                <Link to={clause.to} smooth offset={-100} duration={500}>
+                  <Menu.Item
+                    name={clause.name}
+                    active={activeItem === clause.name}
+                    onClick={this.handleItemClick}
+                  />
+                </Link>
+              </For>
             </Menu>
           </Grid.Column>
           <Grid.Column className="UseTerms-text">
             <Container text>
-              <If condition={deviceInfo.isDesktop}>{this.renderIntro()}</If>
-              <Element name="general" className="element">
-                <Header as="h2">Termos Gerais</Header>
-                <List as='ol'>{this.renderList(general)}</List>
-              </Element>
-              <Element name="conditions" className="element">
-                <Header as="h2">Condições de Uso</Header>
-                <List as='ol'>{this.renderList(conditions)}</List>
-              </Element>
-              <Element name="management" className="element">
-                <Header as="h2">Cadastro e Geração de Eventos</Header>
-                <List as='ol'>{this.renderList(management)}</List>
-              </Element>
-              <Element name="account" className="element">
-                <Header as="h2">Política de Encerramento de Conta</Header>
-                <List as='ol'>{this.renderList(account)}</List>
-              </Element>
-              <Element name="responsibility" className="element">
-                <Header as="h2">Limitação de Responsabilidade</Header>
-                <List as='ol'>{this.renderList(responsibility)}</List>
-              </Element>
-              <Element name="compensation" className="element">
-                <Header as="h2">Indenização</Header>
-                <List as='ol'>{this.renderList(compensation)}</List>
-              </Element>
-              <Element name="agreement" className="element">
-                <Header as="h2">Consentimento</Header>
-                <List as='ol'>{this.renderList(agreement)}</List>
-              </Element>
+              <For each="clause" of={sections}>
+                <If condition={clause.to !== 'intro' || deviceInfo.isDesktop}>
+                  <Element name={clause.to} className="element">
+                    <Header as= {clause.to === 'intro' ? 'h1':'h2'}>{clause.name}</Header>
+                    <List as={clause.to == 'intro' ? '' : 'ol'}>
+                      {this.renderList(clause.content)}
+                    </List>
+                  </Element>
+                </If>
+              </For>
             </Container>
           </Grid.Column>
         </Grid>
