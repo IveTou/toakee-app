@@ -24,7 +24,7 @@ declare var clause;
 class UseTerms extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { activeItem: 'intro' };
+    this.state = { activeItem: 'Introdução' };
     autoBind(this);
   }
 
@@ -34,15 +34,6 @@ class UseTerms extends React.Component {
 
   renderList(section) {
     return section.map(item => <List.Item as="li">{item}</List.Item>);
-  }
-
-  renderIntro() {
-    return (
-      <Element name="intro" className="element intro">
-        <Header as="h1">Toakee - Termos de Uso</Header>
-        <List>{this.renderList(intro)}</List>
-      </Element>
-    );
   }
 
   render() {
@@ -61,7 +52,12 @@ class UseTerms extends React.Component {
     return (
       <div className="UseTerms">
         <Grid columns={2} relaxed>
-          <If condition={!deviceInfo.isDesktop}>{this.renderIntro()}</If>
+          <If condition={!deviceInfo.isDesktop}>
+            <Element name="intro" className="element intro">
+              <Header as="h1">Toakee - Termos de Uso</Header>
+              <List>{this.renderList(intro)}</List>
+            </Element>
+          </If>
           <Grid.Column className="UseTerms-menu">
             <Menu pointing secondary vertical color="orange">
               <For each="clause" of={sections}>
