@@ -6,17 +6,6 @@
   margin-top: $topbar-height + $spacer*2;
 
   &-flyer {
-    &:after {
-      content: '';
-      background-color: #ff6600;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      position: absolute;
-      opacity: .8;
-    }
-
     &-bg.ui {
       position: absolute;
       top: 0;
@@ -27,18 +16,8 @@
 
     .ui.card {
       padding: $spacer/2;
-      width: 60%;
-      margin: 5% 20%;
-      z-index: 1;
-
-      &:before {
-        content: '';
-        background-color: $orange;
-        width: 100%;
-        height: 100;
-        top: 0;
-        left: 0;
-      }
+      width: 100%;
+      margin: 0 3%;
     }
   }
 
