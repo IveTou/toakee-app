@@ -3,12 +3,13 @@ import nunjucks from 'nunjucks';
 import bodyParser from 'body-parser';
 import sendgrid from 'sendgrid';
 import fs from 'fs';
+import GooglePlaces from 'node-googleplaces';
 
 import MixpanelClient from './clients/mixpanel';
 
 import config from './config';
 
-const { PORT, SUPPORT_EMAIL, SENDGRID_API_KEY } = config;
+const { PORT, SUPPORT_EMAIL, SENDGRID_API_KEY, GOOGLE_PLACES_KEY } = config;
 const devMode = process.env.NODE_ENV !== 'production';
 
 const app = express();
@@ -33,6 +34,13 @@ app.use((req, res, next) => {
 nunjucks.configure('src/templates', {
   autoescape: true,
   express: app,
+});
+
+const placesApi = new GooglePlaces(GOOGLE_PLACES_KEY);
+
+app.get('/gapi/predict', (req, res) => {
+  const { input } = req.query;
+  placesApi.queryAutocomplete({ input }, (_, { body }) => res.json(body));
 });
 
 const helper = sendgrid.mail;
