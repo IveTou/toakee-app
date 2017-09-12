@@ -7,8 +7,9 @@ import { omit, pick } from 'lodash';
 import autoBind from 'react-autobind';
 
 import { isLogged } from '~/src/utils/session';
+import { assetsUrl } from '~/src/utils/url';
 import MailingAPI from '~/src/toakee-core/apis/mailing';
-import { ASSETS_BASE_URI, FACEBOOK_APP_ID, FACEBOOK_PAGE_URI } from '~/src/config';
+import { FACEBOOK_APP_ID, FACEBOOK_PAGE_URI } from '~/src/config';
 
 import { validateContact } from './validation';
 
@@ -204,7 +205,7 @@ class Footer extends React.Component {
         <Segment basic>
           <Image
             className="Footer-image"
-            src={`${ASSETS_BASE_URI}/core/site/logo-white-x64.png`}
+            src={assetsUrl('/core/site/icon-x64.png')}
             size="mini"
             alt="Toakee.com"
             centered
