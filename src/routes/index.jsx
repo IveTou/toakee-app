@@ -19,6 +19,8 @@ import Dashboard from '~/src/components/dashboard';
 import DashboardRoot from '~/src/components/dashboard/root';
 import SearchPage from '~/src/components/search-page';
 
+import EventPage2 from '~/src/components/event-page/new';
+
 const loggedRoutes = (
   <Route path="/" component={Logged}>
     <IndexRoute component={EventFeed} />
@@ -29,6 +31,7 @@ const loggedRoutes = (
       <Route path="/dashboard/:slug/editar-listas" component={EventGuestListEdit} />
     </Route>
     <Route path="/evento/novo" component={NewEventPage} />
+    <Route path="/evento2/:slug" component={EventPage2} />
     <Route path="/evento/:slug" component={EventPage} />
     <Route path="/redirect" onEnter={() => { window.location = '/'; }} />
   </Route>

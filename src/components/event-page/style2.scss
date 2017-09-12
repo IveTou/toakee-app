@@ -2,10 +2,37 @@
 @import '../../scss/variables';
 @import '../../scss/colors';
 
-.EventPage {
+.EventPage2 {
   margin-top: $topbar-height + $spacer*2;
 
+  .column .column {
+    height: calc(100vh - #{$topbar-height});
+    overflow-y: auto;
+  }
+
+  &-gallery {
+    .small.images {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      padding-left: 16px;
+
+      .image {
+        height: $spacer*19;
+        margin: 0;
+        cursor: pointer;
+      }
+    }
+  }
+
   &-flyer {
+    position: absolute !important;
+    transition: margin-left .5s ease;
+
+    &--right {
+      margin-left: calc(50% + #{$spacer*2 - 2px});
+    }
+
     &:after {
       content: '';
       background-color: #ff6600;
@@ -39,6 +66,13 @@
         top: 0;
         left: 0;
       }
+    }
+
+    &-trigger.ui {
+      display: block;
+      position: relative;
+      z-index: 1;
+      margin: $spacer*2 auto;
     }
   }
 
