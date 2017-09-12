@@ -30,13 +30,15 @@ export class EventPage extends React.Component {
     return (
       <div className="EventPage">
         <Grid columns={2}>
-          <Grid.Column className="EventPage-flyer" mobile={16} tablet={6} computer={6}>
+
+          <Grid.Column className="EventPage-flyer" mobile={16} tablet={8} computer={8}>
+            <Image alt={flyerAlt} className="EventPage-flyer-bg" src={flyer} />
             <Card>
               <Image alt={flyerAlt} className="EventPage-flyer-img" src={flyer} />
             </Card>
           </Grid.Column>
 
-          <Grid.Column className="EventPage-details" mobile={16} tablet={10} computer={10}>
+          <Grid.Column className="EventPage-details" mobile={16} tablet={8} computer={8}>
             <div className="EventPage-details-header">
               <h1 className="EventPage-details-header-title">
                 {title}
