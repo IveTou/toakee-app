@@ -41,6 +41,7 @@ export default class PlacesAutocomplete extends React.Component {
         results={this.state.results}
         onSearchChange={this.onSearchChange}
         onResultSelect={this.handleResultSelect}
+        noResultsMessage="Nenhum local encontrado."
       />
     );
   }
