@@ -3,6 +3,7 @@ import React from 'react';
 import { Link, Element } from 'react-scroll';
 import { Container, Grid, Header, List, Menu } from 'semantic-ui-react';
 import autoBind from 'react-autobind';
+import classNames from 'classnames';
 
 import { deviceInfo } from '~/src/utils/device-info';
 
@@ -76,8 +77,22 @@ class UseTerms extends React.Component {
               <For each="clause" of={sections}>
                 <If condition={clause.to !== 'intro' || deviceInfo.isDesktop}>
                   <Element name={clause.to} className="element">
-                    <Header as= {clause.to === 'intro' ? 'h1':'h2'}>{clause.name}</Header>
-                    <List as={clause.to == 'intro' ? '' : 'ol'}>
+                    <Header
+                      className="UseTerms-text-header"
+                      as={clause.to === 'intro' ? 'h1' : 'h2'}
+                    >
+                      {clause.name}
+                      <Link
+                        className={
+                          classNames('UseTerms-text-header', { top: clause.to !== 'intro' })
+                        }
+                        to="intro"
+                        smooth
+                        offset={-100}
+                        duration={500}
+                      />
+                    </Header>
+                    <List as={clause.to === 'intro' ? '' : 'ol'}>
                       {this.renderList(clause.content)}
                     </List>
                   </Element>

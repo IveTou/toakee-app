@@ -1,5 +1,7 @@
 @import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/colors';
 @import '../../scss/variables';
+
 
 .UseTerms {
   margin: $topbar-height + $spacer*4 $spacer*4;
@@ -30,6 +32,18 @@
       margin-bottom: $spacer*3;
       text-align: justify;
     }
+
+    &-header {
+      cursor: pointer;
+
+      &:hover {
+        .top:after {
+          padding-left: $spacer;
+          content: 'topo\261D';
+          color: $gray300;
+        }
+      }
+    }
   }
 }
 
@@ -46,7 +60,17 @@
 
       .ui.menu {
         width: 100%;
-        font-size: initial
+        font-size: initial;
+      }
+    }
+
+    &-text {
+      &-header {
+        .top:after {
+          padding-left: $spacer;
+          content: 'topo\261D';
+          color: $gray300;
+        }
       }
     }
 
