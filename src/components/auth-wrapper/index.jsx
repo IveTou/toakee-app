@@ -18,9 +18,11 @@ class AuthWrapper extends React.Component {
     autoBind(this);
   }
 
-  renderBackgrounds(){
+  renderBackgrounds() {
     return backgrounds.map(bg =>
-      <li><span style={{ backgroundImage: `url(${bg.url})`, animationDelay:bg.delay }}/></li>
+      <li>
+        <span style={{ backgroundImage: `url(${bg.url})`, animationDelay: bg.delay }} />
+      </li>
     );
   }
 
