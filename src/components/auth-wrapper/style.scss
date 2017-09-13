@@ -5,8 +5,11 @@
 
 .AuthWrapper {
   min-height: calc(100vh - #{$topbar-height});
-  background-color: $black06;
   padding: $spacer*10 $spacer*2 $spacer*3;
+  background-image: url(#{$assets-base-uri}/core/site/login-bg.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 
   &-content.card {
     margin: 0 auto;
