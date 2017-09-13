@@ -1,47 +1,16 @@
 import React, { PropTypes } from 'react';
 import { graphql } from 'react-apollo';
-import { Icon, Card, Image, Grid, Button } from 'semantic-ui-react';
+import { Icon, Card, Image, Grid, Button, Visibility } from 'semantic-ui-react';
 import Lightbox from 'react-images';
 import classNames from 'classnames';
+import autoBind from 'react-autobind';
 
+import { deviceInfo } from '~/src/utils/device-info';
 import { isLogged } from '~/src/utils/session';
 import { fullDateFormat, timeFormat } from '~/src/utils/moment';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 
 import query from './graphql';
-
-const images = [
-  { src: 'https://images.unsplash.com/photo-1470619549108-b85c56fe5be8?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1470619549108-b85c56fe5be8?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1471079502516-250c19af6928?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1454023492550-5696f8ff10e1?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1470854989922-5be2f7456d78?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1470317596697-cbdeda56f999?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1470619549108-b85c56fe5be8?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1471079502516-250c19af6928?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1454023492550-5696f8ff10e1?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1470854989922-5be2f7456d78?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1470317596697-cbdeda56f999?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1471079502516-250c19af6928?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1454023492550-5696f8ff10e1?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1470854989922-5be2f7456d78?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1470317596697-cbdeda56f999?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1470619549108-b85c56fe5be8?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1471079502516-250c19af6928?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1454023492550-5696f8ff10e1?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1470854989922-5be2f7456d78?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1470317596697-cbdeda56f999?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1470619549108-b85c56fe5be8?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1470619549108-b85c56fe5be8?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1471079502516-250c19af6928?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1454023492550-5696f8ff10e1?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1470854989922-5be2f7456d78?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1470317596697-cbdeda56f999?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1471079502516-250c19af6928?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1454023492550-5696f8ff10e1?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1470854989922-5be2f7456d78?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-  { src: 'https://images.unsplash.com/photo-1470317596697-cbdeda56f999?dpr=2&auto=format&w=1024&h=1024', width: 500, height: 500 },
-];
 
 if (process.env.BROWSER) {
   require('./style2.scss');
@@ -57,7 +26,10 @@ export class EventPage2 extends React.Component {
       lightboxIsOpen: false,
       galleryIsVisible: false,
       currentImage: 0,
+      releaseFlyer: false,
+      loadGallery: false,
     };
+    autoBind(this);
   }
 
   componentWillReceiveProps({ viewer }) {
@@ -68,38 +40,72 @@ export class EventPage2 extends React.Component {
     }
   }
 
+  toggleGallery() {
+    if (deviceInfo.isMobile) {
+      this.props.router.push(`/evento/${this.props.viewer.event.slug}/photos`);
+    } else {
+      this.setState({ loadGallery: true, galleryIsVisible: !this.state.galleryIsVisible });
+    }
+  }
+
+  handleClickPrev() {
+    this.openPhoto(this.state.currentImage - 1);
+  }
+
+  handleClickNext() {
+    this.openPhoto(this.state.currentImage + 1);
+  }
+
+  openPhoto(idx) {
+    this.setState({ lightboxIsOpen: true, currentImage: idx });
+  }
+
+  closeLightBox() {
+    this.setState({ lightboxIsOpen: false });
+  }
+
+  handleVisibility(_, { calculations: { bottomPassed, bottomVisible } }) {
+    if ((bottomPassed || bottomVisible) !== this.state.releaseFlyer) {
+      this.setState({ releaseFlyer: bottomPassed || bottomVisible });
+    }
+  }
+
   render() {
+    const { galleryIsVisible, releaseFlyer, loadGallery } = this.state;
     const { viewer = {} } = this.props;
-    const { galleryIsVisible } = this.state;
     const { event = {} } = viewer;
-    const { title, description, place, start, price, flyer } = event;
+    const { title, description, place, start, price, flyer, photos = [] } = event;
     const flyerAlt = `Flyer do ${title || 'evento'}`;
-    const flyerClasses = classNames('EventPage2-flyer', {
-      'EventPage2-flyer--right': galleryIsVisible,
+
+    const classes = classNames('EventPage2', {
+      'EventPage2--viewGallery': galleryIsVisible,
+      'EventPage2--releaseFlyer': releaseFlyer,
     });
 
+
     return (
-      <div className="EventPage2">
+      <Visibility className={classes} onUpdate={this.handleVisibility}>
         <Grid columns={2}>
           <Grid.Column className="EventPage2-gallery" mobile={16} tablet={8} computer={8}>
             <Lightbox
-              images={images}
+              images={photos.map(src => ({ src }))}
               isOpen={this.state.lightboxIsOpen}
-              onClickPrev={() => this.setState({ currentImage: this.state.currentImage - 1 })}
-              onClickNext={() => this.setState({ currentImage: this.state.currentImage + 1 })}
-              onClose={() => this.setState({ lightboxIsOpen: false })}
-              onClickThumbnail={() => this.setState({ lightboxIsOpen: true })}
+              onClickPrev={this.handleClickPrev}
+              onClickNext={this.handleClickNext}
+              onClose={this.closeLightBox}
               currentImage={this.state.currentImage}
             />
-            <Image.Group size="small">
-              <For each="image" of={images} index="index">
-                <Image
-                  src={image.src}
-                  onClick={() => this.setState({ lightboxIsOpen: true, currentImage: index })}
-                  bordered
-                />
-              </For>
-            </Image.Group>
+            <If condition={loadGallery}>
+              <Image.Group size="small">
+                <For each="image" of={photos} index="index">
+                  <img
+                    className="ui image"
+                    style={{ backgroundImage: `url(${image})` }}
+                    onClick={() => this.openPhoto(index)}
+                  />
+                </For>
+              </Image.Group>
+            </If>
           </Grid.Column>
 
 
@@ -151,27 +157,31 @@ export class EventPage2 extends React.Component {
             </div>
           </Grid.Column>
 
-          <Grid.Column className={flyerClasses} mobile={16} tablet={8} computer={8}>
+          <Grid.Column className="EventPage2-flyer" mobile={16} tablet={8} computer={8}>
             <Image alt={flyerAlt} className="EventPage2-flyer-bg" src={flyer} />
             <Card>
               <Image alt={flyerAlt} className="EventPage2-flyer-img" src={flyer} />
             </Card>
-            <Button
-              className="EventPage2-flyer-trigger"
-              onClick={() => this.setState({ galleryIsVisible: !galleryIsVisible })}
-              inverted
-            >
-              Ver fotos
-            </Button>
+            <If condition={photos.length}>
+              <Button
+                className="EventPage2-flyer-trigger"
+                onClick={this.toggleGallery}
+                size="big"
+                inverted
+              >
+                Ver {galleryIsVisible ? 'detalhes' : 'fotos'}
+              </Button>
+            </If>
           </Grid.Column>
         </Grid>
-      </div>
+      </Visibility>
     );
   }
 }
 
 EventPage2.propTypes = {
   viewer: PropTypes.object,
+  router: PropTypes.object,
 };
 
 export default graphql(query, {

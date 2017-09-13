@@ -20,6 +20,7 @@ import DashboardRoot from '~/src/components/dashboard/root';
 import SearchPage from '~/src/components/search-page';
 
 import EventPage2 from '~/src/components/event-page/new';
+import EventPhotos from '~/src/components/event-photos';
 
 const loggedRoutes = (
   <Route path="/" component={Logged}>
@@ -33,6 +34,7 @@ const loggedRoutes = (
     <Route path="/evento/novo" component={NewEventPage} />
     <Route path="/evento2/:slug" component={EventPage2} />
     <Route path="/evento/:slug" component={EventPage} />
+    <Route path="/evento/:slug/photos" component={EventPhotos} />
     <Route path="/redirect" onEnter={() => { window.location = '/'; }} />
   </Route>
 );

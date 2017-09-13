@@ -1,0 +1,33 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/variables';
+
+.EventPhotos {
+  padding-top: $spacer*2;
+
+  .header {
+    margin: $spacer*2;
+  }
+
+  .images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding-left: 16px;
+
+    .image {
+      width: $spacer*19;
+      height: $spacer*19;
+      margin: 0;
+      cursor: pointer;
+      background-size: cover;
+    }
+  }
+}
+
+
+@include media(">tablet") {
+  .EventPhotos {
+    margin-top: $topbar-height;
+  }
+}
+

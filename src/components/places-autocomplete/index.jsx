@@ -15,8 +15,8 @@ export default class PlacesAutocomplete extends React.Component {
     autoBind(this);
   }
 
-  async onSearchChange(e, input) {
-    const predictions = await GooglePlacesApi.predict(input);
+  async onSearchChange(e, { value }) {
+    const predictions = await GooglePlacesApi.predict(value);
     const results = predictions.map(p => ({
       title: p.structured_formatting.main_text,
       description: p.structured_formatting.secondary_text,
