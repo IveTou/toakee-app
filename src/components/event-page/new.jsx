@@ -42,7 +42,7 @@ export class EventPage2 extends React.Component {
 
   toggleGallery() {
     if (deviceInfo.isMobile) {
-      this.props.router.push(`/evento/${this.props.viewer.event.slug}/photos`);
+      this.props.router.push(`/evento/${this.props.viewer.event.slug}/fotos`);
     } else {
       this.setState({ loadGallery: true, galleryIsVisible: !this.state.galleryIsVisible });
     }
