@@ -42,6 +42,7 @@ const unloggedRoutes = (
     <IndexRoute component={Landing} />
     <Route path="/search" component={SearchPage} />
     <Route path="/evento/:slug" component={EventPage} />
+    <Route path="/evento/:slug/fotos" component={EventPhotos} />
     <Route component={AuthWrapper}>
       <Route path="/login" component={Login} />
       <Route path="/cadastrar" component={SignUp} />
