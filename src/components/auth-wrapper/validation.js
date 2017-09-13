@@ -17,7 +17,7 @@ export const validateSignUp = obj => validate(obj, {
     length: {
       minimum: 6,
       maximum: 14,
-      tooShort: 'O usuário precisa ter no mínimo 4.',
+      tooShort: 'O usuário precisa ter no mínimo 6 caracteres.',
       tooLong: 'O usuário não pode conter mais de 14 caracteres.',
     },
     format: {

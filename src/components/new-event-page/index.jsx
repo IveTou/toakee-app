@@ -80,15 +80,19 @@ class NewEventPage extends React.Component {
   async onSubmit(e) {
     e.preventDefault();
 
-    const { startDate, startTime, endDate, endTime, description, prices } = this.state;
+    const {
+      startDate,
+      startTime,
+      endDate,
+      endTime,
+      description,
+      prices,
+      selectedCategories,
+    } = this.state;
 
     const form = {
-      ...pick(this.state, [
-        'flyer',
-        'title',
-        'place',
-        'selectedCategories',
-      ]),
+      ...pick(this.state, ['flyer', 'title', 'place']),
+      categories: selectedCategories.map(id => ({ id })),
       start: moment(startDate.format(`YYYY-MM-DD [${startTime}]`)),
       end: moment(endDate.format(`YYYY-MM-DD [${endTime}]`)),
       description: description.toString('html'),
@@ -350,7 +354,6 @@ class NewEventPage extends React.Component {
 NewEventPage.propTypes = {
   router: PropTypes.object,
 };
-
 
 export default graphql(createEventMutation, {
   props: ({ mutate }) => ({

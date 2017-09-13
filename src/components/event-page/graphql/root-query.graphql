@@ -13,7 +13,8 @@ query EventPage($slug: String) {
       price
       prices { description, value }
       directions
-      place { id, name, coordinates, address, city { name } },
+      place { id, name, coordinates, address, city { name } }
+      photos
     }
   }
 }
