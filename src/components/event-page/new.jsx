@@ -28,6 +28,7 @@ export class EventPage2 extends React.Component {
       currentImage: 0,
       releaseFlyer: false,
       loadGallery: false,
+      lastScrollTop: 0,
     };
     autoBind(this);
   }
@@ -44,7 +45,13 @@ export class EventPage2 extends React.Component {
     if (deviceInfo.isMobile) {
       this.props.router.push(`/evento/${this.props.viewer.event.slug}/fotos`);
     } else {
-      this.setState({ loadGallery: true, galleryIsVisible: !this.state.galleryIsVisible });
+      const { lastScrollTop, galleryIsVisible } = this.state;
+
+      this.setState({
+        loadGallery: true,
+        galleryIsVisible: !galleryIsVisible,
+        lastScrollTop: document.body.scrollTop,
+      }, () => { document.body.scrollTop = lastScrollTop; });
     }
   }
 
@@ -84,7 +91,7 @@ export class EventPage2 extends React.Component {
 
 
     return (
-      <Visibility className={classes} onUpdate={this.handleVisibility}>
+      <Visibility fireOnMount className={classes} onUpdate={this.handleVisibility}>
         <Grid columns={2}>
           <Grid.Column className="EventPage2-gallery" mobile={16} tablet={8} computer={8}>
             <Lightbox
