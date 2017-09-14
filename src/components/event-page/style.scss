@@ -4,6 +4,7 @@
 
 .EventPage {
   margin-top: $topbar-height + $spacer*2;
+  min-height: calc(100vh - #{$topbar-height + $spacer*4});
 
   &-flyer {
     &-bg.ui {

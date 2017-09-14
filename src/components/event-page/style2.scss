@@ -3,14 +3,36 @@
 @import '../../scss/colors';
 
 .EventPage2 {
-  margin-top: $topbar-height + $spacer*2;
+  margin-top: $spacer*2;
+  position: relative;
 
-  .column .column {
-    height: calc(100vh - #{$topbar-height});
-    overflow-y: auto;
+  &--viewGallery .EventPage2 {
+    &-flyer {
+      margin-left: calc(50% + #{$spacer*2 - 2px});
+    }
+
+    &-gallery {
+      height: auto;
+      overflow-y: auto;
+    }
+
+    &-details {
+      height: calc(100vh - #{$topbar-height});
+      overflow: hidden;
+    }
+  }
+
+  &--releaseFlyer .EventPage2 {
+    &-flyer {
+      position: absolute !important;
+      bottom: 0;
+    }
   }
 
   &-gallery {
+    height: calc(100vh - #{$topbar-height});
+    overflow-y: hidden;
+
     .small.images {
       display: flex;
       flex-wrap: wrap;
@@ -21,13 +43,15 @@
         height: $spacer*19;
         margin: 0;
         cursor: pointer;
+        background-size: cover;
       }
     }
   }
 
   &-flyer {
-    position: absolute !important;
+    position: fixed !important;
     transition: margin-left .5s ease;
+    height: calc(100vh - #{$topbar-height});
 
     &--right {
       margin-left: calc(50% + #{$spacer*2 - 2px});
@@ -55,7 +79,7 @@
     .ui.card {
       padding: $spacer/2;
       width: 60%;
-      margin: 5% 20%;
+      margin: $spacer*3 20%;
       z-index: 1;
 
       &:before {
@@ -77,6 +101,8 @@
   }
 
   &-details {
+    min-height: calc(100vh - #{$topbar-height});
+
     &-header {
       padding: $spacer*2;
       border-left: 4px solid $orange;
@@ -142,17 +168,44 @@
 }
 
 @include media("<tablet") {
-  .EventPage {
-    margin-top: $spacer*2;
+  .EventPage2 {
 
-    &-flyer .ui.card {
-      width: calc(100% - #{$spacer*2});
-      margin-left: $spacer;
+    &-flyer {
+      position: absolute !important;
+
+      &-bg.ui,
+      &:after {
+        left: $spacer*2;
+      }
+
+      .ui.card {
+        width: 100%;
+        max-width: $spacer*60;
+      }
+
+      .ui.card,
+      &-trigger.ui {
+        margin-left: 50%;
+        transform: translateX(calc(#{$spacer*2} - 50%));
+      }
     }
 
     &-details-body-description {
       padding: $spacer;
     }
+
+    &--releaseFlyer .EventPage2-flyer {
+      bottom: auto;
+    }
+
+    &--viewGallery .EventPage2-flyer {
+      margin-left: 100%;
+    }
   }
 }
 
+@include media(">tablet") {
+  .EventPage2 {
+    margin-top: $topbar-height + $spacer*2;
+  }
+}

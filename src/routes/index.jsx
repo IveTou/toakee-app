@@ -11,7 +11,6 @@ import SignUp from '~/src/components/auth-wrapper/sign-up';
 import Logged from '~/src/pages/logged';
 import Landing from '~/src/components/landing';
 import EventFeed from '~/src/components/event-feed';
-import EventPage from '~/src/components/event-page';
 import NewEventPage from '~/src/components/new-event-page';
 import EventGuestList from '~/src/components/event-guest-list';
 import EventGuestListEdit from '~/src/components/event-guest-list-edit';
@@ -20,7 +19,8 @@ import DashboardRoot from '~/src/components/dashboard/root';
 import SearchPage from '~/src/components/search-page';
 import UseTerms from '~/src/components/use-terms';
 
-import EventPage2 from '~/src/components/event-page/new';
+import EventPage from '~/src/components/event-page/new';
+import EventPhotos from '~/src/components/event-photos';
 
 const loggedRoutes = (
   <Route path="/" component={Logged}>
@@ -33,8 +33,8 @@ const loggedRoutes = (
       <Route path="/dashboard/:slug/editar-listas" component={EventGuestListEdit} />
     </Route>
     <Route path="/evento/novo" component={NewEventPage} />
-    <Route path="/evento2/:slug" component={EventPage2} />
     <Route path="/evento/:slug" component={EventPage} />
+    <Route path="/evento/:slug/fotos" component={EventPhotos} />
     <Route path="/redirect" onEnter={() => { window.location = '/'; }} />
   </Route>
 );
@@ -45,6 +45,7 @@ const unloggedRoutes = (
     <Route path="/search" component={SearchPage} />
     <Route path="/termos-de-uso" component={UseTerms} />
     <Route path="/evento/:slug" component={EventPage} />
+    <Route path="/evento/:slug/fotos" component={EventPhotos} />
     <Route component={AuthWrapper}>
       <Route path="/login" component={Login} />
       <Route path="/cadastrar" component={SignUp} />

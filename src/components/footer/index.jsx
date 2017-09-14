@@ -205,7 +205,7 @@ class Footer extends React.Component {
         <Segment basic>
           <Image
             className="Footer-image"
-            src={assetsUrl('/core/site/icon-x64.png')}
+            src={assetsUrl('/core/site/logo-white-x64.png')}
             size="mini"
             alt="Toakee.com"
             centered

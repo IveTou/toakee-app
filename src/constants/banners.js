@@ -4,6 +4,12 @@ const { ASSETS_BASE_URI, ASSETS_BANNERS_PATH } = config;
 
 export default [
   {
+    title: '',
+    subtitle: '',// eslint-disable-line
+    img: `${ASSETS_BASE_URI}/${ASSETS_BANNERS_PATH}/banner-parada.jpg`,
+    url: '/evento/16-parada-lgbt-de-salvador-2017',
+  },
+  {
     title: 'Somos a peça que faltava no seu negócio.',
     subtitle: 'Seja nosso parceiro e descubra as vantagens de ter seus eventos no melhor guia de entretenimento.',// eslint-disable-line
     img: `${ASSETS_BASE_URI}/${ASSETS_BANNERS_PATH}/banner-parceria.jpg`,
