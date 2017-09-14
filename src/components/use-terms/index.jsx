@@ -22,6 +22,17 @@ if (process.env.BROWSER) {
 
 declare var clause;
 
+const sections = [
+  { name: 'Introdução', to: 'intro', content: intro },
+  { name: 'Termos Gerais', to: 'general', content: general },
+  { name: 'Condições de Uso', to: 'conditions', content: conditions },
+  { name: 'Cadastro e Gestão de Eventos', to: 'management', content: management },
+  { name: 'Política de Encerramento de Conta', to: 'account', content: account },
+  { name: 'Limitação de Responsabilidade', to: 'responsibility', content: responsibility },
+  { name: 'Indenização', to: 'compensation', content: compensation },
+  { name: 'Consentimento', to: 'agreement', content: agreement },
+];
+
 class UseTerms extends React.Component {
   constructor(props) {
     super(props);
@@ -39,16 +50,6 @@ class UseTerms extends React.Component {
 
   render() {
     const { activeItem } = this.state;
-    const sections = [
-      { name: 'Introdução', to: 'intro', content: intro },
-      { name: 'Termos Gerais', to: 'general', content: general },
-      { name: 'Condições de Uso', to: 'conditions', content: conditions },
-      { name: 'Cadastro e Gestão de Eventos', to: 'management', content: management },
-      { name: 'Política de Encerramento de Conta', to: 'account', content: account },
-      { name: 'Limitação de Responsabilidade', to: 'responsibility', content: responsibility },
-      { name: 'Indenização', to: 'compensation', content: compensation },
-      { name: 'Consentimento', to: 'agreement', content: agreement },
-    ];
 
     return (
       <div className="UseTerms">
