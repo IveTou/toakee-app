@@ -1,0 +1,71 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/variables';
+@import '../../scss/colors';
+
+.About {
+  &.column {
+    margin-top: $topbar-height;
+  }
+
+  &-banner {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(#{$assets-base-uri}/core/site/login-bg.jpg);
+    text-align: center;
+    color: $white;
+    padding-top: $spacer*15 !important;
+
+    &-text {
+      font-size: 30px;
+      font-weight: bold;
+      padding: 0 $spacer*3;
+      line-height: $spacer*4;
+
+      h1 {
+        font-size: 40px;
+        margin: 0;
+      }
+    }
+
+  }
+
+  &-description {
+    text-align: justify;
+
+    &.column {
+      padding: $spacer*2 $spacer*5 !important;
+    }
+
+    p {
+      color: $black;
+      font-size: medium;
+    }
+  }
+}
+
+@include media("<tablet") {
+  .About {
+    &.column {
+      margin-top: 0;
+    }
+
+    &-banner,
+    &-description {
+      width: 100% !important;
+    }
+
+    &-banner {
+      padding: $spacer*4 $spacer*2 !important;
+
+      &-text {
+        font-size: 20px;
+        line-height: $spacer*3;
+
+        h1 {
+          font-size: 30px;
+        }
+      }
+    }
+  }
+}

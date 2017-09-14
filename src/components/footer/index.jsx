@@ -210,6 +210,9 @@ class Footer extends React.Component {
             alt="Toakee.com"
             centered
           />
+          <Link className="Footer-link about" to={{ pathname: '/quem-somos' }}>
+            <span>Quem somos?</span>
+          </Link>
           <If condition={!isLogged()}>
             <Link className="Footer-link signup" to={{ pathname: '/cadastrar' }}>
               <span>Cadastre-se</span>
