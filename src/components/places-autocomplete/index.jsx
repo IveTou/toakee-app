@@ -27,7 +27,7 @@ export default class PlacesAutocomplete extends React.Component {
     this.setState({ predictions, results });
   }
 
-  handleResultSelect(e, { value }) {
+  handleResultSelect(e, { result: { value } }) {
     this.props.onResultSelect(e, {
       name: this.props.name,
       value: { googlePlacesId: value },

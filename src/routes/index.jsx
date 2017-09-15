@@ -18,6 +18,7 @@ import EventGuestListEdit from '~/src/components/event-guest-list-edit';
 import Dashboard from '~/src/components/dashboard';
 import DashboardRoot from '~/src/components/dashboard/root';
 import SearchPage from '~/src/components/search-page';
+import UseTerms from '~/src/components/use-terms';
 
 import EventPage from '~/src/components/event-page/new';
 import EventPhotos from '~/src/components/event-photos';
@@ -26,6 +27,7 @@ const loggedRoutes = (
   <Route path="/" component={Logged}>
     <IndexRoute component={EventFeed} />
     <Route path="/search" component={SearchPage} />
+    <Route path="/termos-de-uso" component={UseTerms} />
     <Route path="/dashboard" component={Dashboard}>
       <IndexRoute component={DashboardRoot} />
       <Route path="/dashboard/:slug/lista" component={EventGuestList} />
@@ -43,6 +45,7 @@ const unloggedRoutes = (
   <Route path="/" component={Unlogged}>
     <IndexRoute component={Landing} />
     <Route path="/search" component={SearchPage} />
+    <Route path="/termos-de-uso" component={UseTerms} />
     <Route path="/quem-somos" component={About} />
     <Route path="/evento/:slug" component={EventPage} />
     <Route path="/evento/:slug/fotos" component={EventPhotos} />
