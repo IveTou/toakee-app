@@ -4,22 +4,22 @@
 
 .About {
   &.column {
-    margin: $topbar-height 0;
+    margin: $topbar-height 0 0;
   }
 
   &-banner {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-image: url(#{$assets-base-uri}/core/site/login-bg.jpg);
     text-align: center;
     color: $white;
     padding-top: $spacer*15 !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-image: url(#{$assets-base-uri}/core/site/login-bg.jpg);
 
     &-text {
       font-size: 50px;
       font-weight: bold;
-      padding: 0 $spacer*3;
+      padding: 0 $spacer*2;
       line-height: $spacer*5;
 
       h1 {
@@ -58,16 +58,16 @@
     }
 
     &-banner {
-      padding: $spacer*4 $spacer*2 !important;
+      padding: $spacer*3 $spacer*2 !important;
       width: 100% !important;
 
       &-text {
-        font-size: 32px;
-        line-height: $spacer*4;
+        font-size: 24px;
+        line-height: $spacer*3;
 
         h1 {
-          font-size: 40px;
-          line-height: $spacer*4;
+          font-size: 32px;
+          line-height: $spacer*3;
         }
       }
     }
