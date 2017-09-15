@@ -1,5 +1,8 @@
 import React from 'react';
+import moment from 'moment';
 import { Grid, Header } from 'semantic-ui-react';
+
+import EventList from '~/src/components/event-list';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -44,6 +47,15 @@ const About = () => (
         compartilhados. Por esse motivo, ajudamos as pessoas a combinarem eventos com seus amigos,
         e a explorar o que está acontecendo à sua volta.
       </p>
+      <Header as="h3" color="orange">
+        A propósito, ainda não sabe o que fazer hoje? Lá vão algumas sugestões!
+      </Header>
+
+      <EventList
+        title=""
+        start={moment().startOf('day')}
+        end={moment().endOf('day')}
+      />
     </Grid.Column>
   </Grid>
 );
