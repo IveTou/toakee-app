@@ -4,7 +4,7 @@
 
 .About {
   &.column {
-    margin-top: $topbar-height;
+    margin: $topbar-height 0;
   }
 
   &-banner {
@@ -62,11 +62,12 @@
       width: 100% !important;
 
       &-text {
-        font-size: 20px;
-        line-height: $spacer*3;
+        font-size: 32px;
+        line-height: $spacer*4;
 
         h1 {
-          font-size: 30px;
+          font-size: 40px;
+          line-height: $spacer*4;
         }
       }
     }
@@ -74,10 +75,10 @@
     &-description {
       width: 100% !important;
 
+      .header,
       h3 {
         text-align: center;
       }
     }
-
   }
 }
