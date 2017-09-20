@@ -52,7 +52,7 @@ const About = () => (
       </Header>
 
       <EventList
-        title=""
+        title="Sugestões"
         start={moment().startOf('day')}
         end={moment().endOf('day')}
       />
