@@ -13,7 +13,7 @@ export default [
     title: 'Somos a peça que faltava no seu negócio.',
     subtitle: 'Seja nosso parceiro e descubra as vantagens de ter seus eventos no melhor guia de entretenimento.',// eslint-disable-line
     img: `${ASSETS_BASE_URI}/${ASSETS_BANNERS_PATH}/parceria.jpg`,
-    url: '/',
+    url: '/quem-somos',
   },
   {
     title: 'Saiba o que está rolando na cidade!',
