@@ -1,0 +1,84 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/variables';
+@import '../../scss/colors';
+
+.About {
+  &.column {
+    margin: $topbar-height 0 0;
+  }
+
+  &-banner {
+    text-align: center;
+    color: $white;
+    padding-top: $spacer*15 !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-image: url(#{$assets-base-uri}/core/site/login-bg.jpg);
+
+    &-text {
+      font-size: 50px;
+      font-weight: bold;
+      padding: 0 $spacer*2;
+      line-height: $spacer*5;
+
+      h1 {
+        font-size: 64px;
+        line-height: $spacer*8;
+        margin: 0;
+      }
+    }
+
+  }
+
+  &-description {
+    text-align: justify;
+
+    &.column {
+      padding: $spacer*2 $spacer*5 !important;
+    }
+
+    p {
+      color: $black;
+      font-size: medium;
+    }
+
+    .EventList {
+      &-title {
+        display: none;
+      }
+    }
+  }
+}
+
+@include media("<tablet") {
+  .About {
+    &.column {
+      margin-top: 0;
+    }
+
+    &-banner {
+      padding: $spacer*3 $spacer*2 !important;
+      width: 100% !important;
+
+      &-text {
+        font-size: 24px;
+        line-height: $spacer*3;
+
+        h1 {
+          font-size: 32px;
+          line-height: $spacer*3;
+        }
+      }
+    }
+
+    &-description {
+      width: 100% !important;
+
+      .header,
+      h3 {
+        text-align: center;
+      }
+    }
+  }
+}
