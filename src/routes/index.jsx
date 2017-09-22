@@ -10,6 +10,7 @@ import SignUp from '~/src/components/auth-wrapper/sign-up';
 
 import Logged from '~/src/pages/logged';
 import Landing from '~/src/components/landing';
+import About from '~/src/components/about';
 import EventFeed from '~/src/components/event-feed';
 import NewEventPage from '~/src/components/new-event-page';
 import EventGuestList from '~/src/components/event-guest-list';
@@ -17,6 +18,7 @@ import EventGuestListEdit from '~/src/components/event-guest-list-edit';
 import Dashboard from '~/src/components/dashboard';
 import DashboardRoot from '~/src/components/dashboard/root';
 import SearchPage from '~/src/components/search-page';
+import UseTerms from '~/src/components/use-terms';
 
 import EventPage from '~/src/components/event-page/new';
 import EventPhotos from '~/src/components/event-photos';
@@ -25,11 +27,13 @@ const loggedRoutes = (
   <Route path="/" component={Logged}>
     <IndexRoute component={EventFeed} />
     <Route path="/search" component={SearchPage} />
+    <Route path="/termos-de-uso" component={UseTerms} />
     <Route path="/dashboard" component={Dashboard}>
       <IndexRoute component={DashboardRoot} />
       <Route path="/dashboard/:slug/lista" component={EventGuestList} />
       <Route path="/dashboard/:slug/editar-listas" component={EventGuestListEdit} />
     </Route>
+    <Route path="/quem-somos" component={About} />
     <Route path="/evento/novo" component={NewEventPage} />
     <Route path="/evento/:slug" component={EventPage} />
     <Route path="/evento/:slug/fotos" component={EventPhotos} />
@@ -41,7 +45,10 @@ const unloggedRoutes = (
   <Route path="/" component={Unlogged}>
     <IndexRoute component={Landing} />
     <Route path="/search" component={SearchPage} />
+    <Route path="/termos-de-uso" component={UseTerms} />
+    <Route path="/quem-somos" component={About} />
     <Route path="/evento/:slug" component={EventPage} />
+    <Route path="/evento/:slug/fotos" component={EventPhotos} />
     <Route component={AuthWrapper}>
       <Route path="/login" component={Login} />
       <Route path="/cadastrar" component={SignUp} />

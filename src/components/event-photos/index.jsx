@@ -59,8 +59,8 @@ export class EventPhotos extends React.Component {
         <Lightbox
           images={photos.map(src => ({ src }))}
           isOpen={this.state.lightboxIsOpen}
-          onClickPrev={this.handleClickNext}
-          onClickNext={this.handleClickPrev}
+          onClickPrev={this.handleClickPrev}
+          onClickNext={this.handleClickNext}
           onClose={this.closeLightBox}
           currentImage={this.state.currentImage}
         />
