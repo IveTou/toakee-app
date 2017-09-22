@@ -18,6 +18,9 @@
     background-image: url(#{$assets-base-uri}/core/site/login-bg.jpg);
 
     &-text {
+      position: sticky;
+      top: $topbar-height + $spacer*15;
+      margin-bottom: $spacer*15;
       font-size: 50px;
       font-weight: bold;
       padding: 0 $spacer*2;
@@ -55,7 +58,7 @@
 @include media("<tablet") {
   .About {
     &.column {
-      margin-top: 0;
+      margin: 0 !important;
       width: auto;
     }
 
@@ -64,6 +67,8 @@
       width: 100% !important;
 
       &-text {
+        position: static;
+        margin-bottom: 0;
         font-size: 24px;
         line-height: $spacer*3;
 
@@ -76,6 +81,10 @@
 
     &-description {
       width: 100% !important;
+
+      &.column {
+        padding: $spacer*2 $spacer*3 !important;
+      }
 
       .header,
       h3 {
