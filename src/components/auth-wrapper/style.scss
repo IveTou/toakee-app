@@ -26,7 +26,11 @@
     }
   }
 
-  .slideshow {
+  &.static {
+    background-image: url(#{$assets-base-uri}/core/site/login-bg.jpg);
+  }
+
+  &-slideshow {
     position: absolute;
     width: 100%;
     min-height: inherit;

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Card } from 'semantic-ui-react';
 import autoBind from 'react-autobind';
+import classNames from 'classnames';
 
 import { backgrounds } from '~/src/constants';
 
@@ -20,16 +21,19 @@ class AuthWrapper extends React.Component {
 
   renderBackgrounds() {
     return backgrounds.map(bg =>
-      <li>
-        <span style={{ backgroundImage: `url(${bg.url})`, animationDelay: bg.delay }} />
-      </li>
+      <li><span style={{ backgroundImage: `url(${bg.url})`, animationDelay: bg.delay }} /></li>
     );
   }
 
   render() {
+    const isLogin = location.pathname === '/login';
     return (
-      <div className="AuthWrapper">
-        <ul className="slideshow">{this.renderBackgrounds()}</ul>
+      <div className={classNames('AuthWrapper', { static: isLogin })}>
+        <If condition={!isLogin}>
+          <ul className={classNames('AuthWrapper-slideshow')}>
+            {this.renderBackgrounds()}
+          </ul>
+        </If>
         <Card className="AuthWrapper-content">
           <Card.Content>
             {this.props.children}
