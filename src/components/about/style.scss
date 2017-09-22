@@ -5,12 +5,13 @@
 .About {
   &.column {
     margin: $topbar-height 0 0;
+    width: 100%;
   }
 
   &-banner {
     text-align: center;
     color: $white;
-    padding-top: $spacer*15 !important;
+    padding: $spacer*15 0 0 !important;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -20,7 +21,7 @@
       font-size: 50px;
       font-weight: bold;
       padding: 0 $spacer*2;
-      line-height: $spacer*5;
+      line-height: $spacer*6;
 
       h1 {
         font-size: 64px;
@@ -55,6 +56,7 @@
   .About {
     &.column {
       margin-top: 0;
+      width: auto;
     }
 
     &-banner {
