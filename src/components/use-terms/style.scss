@@ -16,7 +16,7 @@
     .ui.menu {
       position: sticky;
       top: $topbar-height +$spacer*4;
-      margin-bottom: 40px;
+      margin-bottom: $spacer*5;
 
       .item {
         line-height: normal;
