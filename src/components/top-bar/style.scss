@@ -15,7 +15,9 @@
       display: none;
 
       input {
-        background: $transparent;
+        background: $white30;
+        font-size: large;
+        padding: $spacer $spacer*2;
 
         &:focus {
           border-color: $orange;
@@ -39,6 +41,10 @@
 
       .search {
         display: block;
+
+        input {
+          color: $black54;
+        }
       }
 
       .button.signin {
@@ -62,6 +68,7 @@
       .search {
         input {
           border-color: $white;
+          color: $white;
 
           &:focus {
             border-color: $white;
