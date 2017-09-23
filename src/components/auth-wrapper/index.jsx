@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { Card } from 'semantic-ui-react';
-import autoBind from 'react-autobind';
 import classNames from 'classnames';
 
 import { backgrounds } from '~/src/constants';
@@ -13,36 +12,31 @@ if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-class AuthWrapper extends React.Component {
-  constructor(props) {
-    super(props);
-    autoBind(this);
-  }
+declare var background;
 
-  renderBackgrounds() {
-    return backgrounds.map(bg =>
-      <li><span style={{ backgroundImage: `url(${bg.url})`, animationDelay: bg.delay }} /></li>
-    );
-  }
-
-  render() {
-    const isLogin = location.pathname === '/login';
-    return (
-      <div className={classNames('AuthWrapper', { static: isLogin })}>
-        <If condition={!isLogin}>
-          <ul className={classNames('AuthWrapper-slideshow')}>
-            {this.renderBackgrounds()}
-          </ul>
-        </If>
-        <Card className="AuthWrapper-content">
-          <Card.Content>
-            {this.props.children}
-          </Card.Content>
-        </Card>
-      </div>
-    );
-  }
-}
+const AuthWrapper = ({ children }) => (
+  <div className={classNames('AuthWrapper', { static: location.pathname === '/login' })}>
+    <If condition={location.pathname !== '/login'}>
+      <ul className={classNames('AuthWrapper-slideshow')}>
+        <For each="background" of={backgrounds}>
+          <li>
+            <span
+              style={{
+                backgroundImage: `url(${background.url})`,
+                animationDelay: background.delay,
+              }}
+            />
+          </li>
+        </For>
+      </ul>
+    </If>
+    <Card className="AuthWrapper-content">
+      <Card.Content>
+        {children}
+      </Card.Content>
+    </Card>
+  </div>
+);
 
 AuthWrapper.propTypes = propTypes;
 
