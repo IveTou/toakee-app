@@ -12,14 +12,15 @@ if (process.env.BROWSER) {
   require('./style.scss');
 }
 
+declare var idx;
 declare var background;
 
 const AuthWrapper = ({ children }) => (
   <div className={classNames('AuthWrapper', { static: location.pathname === '/login' })}>
     <If condition={location.pathname !== '/login'}>
-      <ul className={classNames('AuthWrapper-slideshow')}>
-        <For each="background" of={backgrounds}>
-          <li>
+      <ul className="AuthWrapper-slideshow">
+        <For each="background" index="idx" of={backgrounds}>
+          <li key={idx}>
             <span
               style={{
                 backgroundImage: `url(${background.url})`,
