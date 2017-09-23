@@ -6,7 +6,6 @@
   .ui.menu {
     max-height: $topbar-height;
     background: $white;
-    box-shadow: 0 1px 2px 0 $gray50;
 
     .item.logo {
       min-width: $spacer*8;
@@ -15,9 +14,18 @@
     .search {
       display: none;
 
-      input:focus {
-        border-color: $orange;
+      input {
+        background: $white30;
+        font-size: large;
+        padding: $spacer $spacer*2;
+
+        &:focus {
+          border-color: $orange;
+        }
       }
+    }
+    .button.signin {
+      display: none;
     }
   }
 }
@@ -33,15 +41,44 @@
 
       .search {
         display: block;
+
+        input {
+          color: $black54;
+        }
+      }
+
+      .button.signin {
+        display: block;
+      }
+
+      .button.login {
+        background: $white !important;
       }
     }
   }
 
   .TopBar {
     &--transparent .ui.menu {
+      box-shadow: none;
+      border: 0;
       background: $transparent;
       box-shadow: none;
       border: 0;
+
+      .search {
+        input {
+          border-color: $white;
+          color: $white;
+
+          &:focus {
+            border-color: $white;
+          }
+        }
+
+        i {
+          color: $white;
+        }
+      }
 
       .Logo {
         content: url(#{$assets-base-uri}/core/site/logo-white.png);
