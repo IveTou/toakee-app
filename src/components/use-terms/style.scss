@@ -14,6 +14,10 @@
     max-width: 20%;
 
     .ui.menu {
+      position: sticky;
+      top: $topbar-height + $spacer*4;
+      margin-bottom: $spacer*5;
+
       .item {
         line-height: normal;
       }
@@ -34,18 +38,6 @@
       margin-bottom: $spacer*3;
       text-align: justify;
     }
-
-    &-header {
-      cursor: pointer;
-
-      &:hover {
-        .top:after {
-          padding-left: $spacer;
-          content: 'topo\261D';
-          color: $gray300;
-        }
-      }
-    }
   }
 }
 
@@ -65,6 +57,7 @@
           width: 100%;
           padding: 0;
           font-size: initial;
+          margin-bottom: 0;
         }
       }
     }
@@ -73,6 +66,7 @@
       &-header.header {
         text-align: initial;
         font-size: larger !important;
+        cursor: pointer;
 
         .top:after {
           padding-left: $spacer;
