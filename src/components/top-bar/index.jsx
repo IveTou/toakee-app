@@ -7,7 +7,6 @@ import { Menu, Dropdown, Image, Label, Icon, Button, Search, Visibility } from '
 import classNames from 'classnames';
 
 import { isLogged, logout } from '~/src/utils/session';
-import { deviceInfo } from '~/src/utils/device-info';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import Logo from '~/src/components/logo';
 
@@ -113,10 +112,10 @@ export class TopBar extends React.Component {
                 <Menu.Item>
                   <Button.Group>
                     <Button
+                      className="login"
                       onClick={this.login}
                       basic
-                      color={classNames({ orange: !transparent || !deviceInfo.isDesktop })}
-                      inverted={deviceInfo.isDesktop && transparent}
+                      color="orange"
                     >
                       Entrar
                     </Button>
