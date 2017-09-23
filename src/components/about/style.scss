@@ -4,23 +4,27 @@
 
 .About {
   &.column {
-    margin: $topbar-height 0 0;
+    margin: $topbar-height 0 0 !important;
+    width: 100%;
   }
 
   &-banner {
     text-align: center;
     color: $white;
-    padding-top: $spacer*15 !important;
+    padding: $spacer*15 0 0 !important;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     background-image: url(#{$assets-base-uri}/core/site/login-bg.jpg);
 
     &-text {
+      position: sticky;
+      top: $topbar-height + $spacer*15;
+      margin-bottom: $spacer*15;
       font-size: 50px;
       font-weight: bold;
       padding: 0 $spacer*2;
-      line-height: $spacer*5;
+      line-height: $spacer*6;
 
       h1 {
         font-size: 64px;
@@ -54,7 +58,8 @@
 @include media("<tablet") {
   .About {
     &.column {
-      margin-top: 0;
+      margin: 0 !important;
+      width: auto;
     }
 
     &-banner {
@@ -62,6 +67,8 @@
       width: 100% !important;
 
       &-text {
+        position: static;
+        margin-bottom: 0;
         font-size: 24px;
         line-height: $spacer*3;
 
@@ -74,6 +81,10 @@
 
     &-description {
       width: 100% !important;
+
+      &.column {
+        padding: $spacer*2 $spacer*3 !important;
+      }
 
       .header,
       h3 {
