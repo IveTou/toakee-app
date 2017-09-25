@@ -8,7 +8,7 @@
 
   &--viewGallery .EventPage {
     &-flyer {
-      margin-left: calc(50% + #{$spacer*2 - 2px});
+      margin-left: 50%;
     }
 
     &-gallery {
@@ -23,7 +23,7 @@
   }
 
   &-gallery {
-    height: calc(100vh - #{$topbar-height});
+    height: calc(100vh - #{$topbar-height + $spacer*2});
     overflow-y: hidden;
 
     .small.images {

@@ -10,6 +10,8 @@ import EventFeed from '~/src/pages/event-feed';
 import SearchPage from '~/src/pages/search';
 import Landing from '~/src/pages/landing';
 import Dashboard from '~/src/pages/dashboard';
+import UseTerms from '~/src/pages/use-terms';
+import About from '~/src/pages/about';
 
 import Login from '~/src/components/auth-wrapper/login';
 import SignUp from '~/src/components/auth-wrapper/sign-up';
@@ -37,6 +39,8 @@ const App = () => (
       <Route path="/evento/:slug" exact component={EventPage} />
       <Route path="/evento/:slug/fotos" component={EventPhotos} />
       <Route path="/dashboard" component={Dashboard} />
+      <Route path="/termos-de-uso" component={UseTerms} />
+      <Route path="/quem-somos" component={About} />
     </Switch>
   </div>
 );

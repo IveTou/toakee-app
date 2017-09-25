@@ -5,8 +5,10 @@
 
 .AuthWrapper {
   min-height: calc(100vh - #{$topbar-height});
-  background-color: $black06;
   padding: $spacer*10 $spacer*2 $spacer*3;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 
   &-content.card {
     margin: 0 auto;
@@ -21,6 +23,63 @@
     &:hover {
       color: $black87;
       text-decoration: underline;
+    }
+  }
+
+  &.static {
+    background-image: url(#{$assets-base-uri}/core/site/login-bg.jpg);
+  }
+
+  &-slideshow {
+    position: absolute;
+    width: 100%;
+    min-height: inherit;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+    &:after {
+      position: absolute;
+      width: 100%;
+      min-height: inherit;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      margin: 0;
+      padding: 0;
+      content: '';
+      background: transparent url(#{$assets-base-uri}/core/site/dot-pattern-bg.png) repeat top left;
+    }
+
+    li {
+      @keyframes imageAnimation {
+        0% { opacity: 0; animation-timing-function: ease-in; }
+        8% { opacity: 1; animation-timing-function: ease-out; }
+        30% {
+          opacity: 1;
+          transform: scale(1.05) translateY(-10px);
+        }
+        50% { opacity: 0 }
+        100% { opacity: 0 }
+      }
+
+      span {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        color: transparent;
+        background-size: cover;
+        background-position: 50% 50%;
+        background-repeat: none;
+        opacity: 0;
+        z-index: 0;
+        animation: imageAnimation 19s linear infinite;
+      }
     }
   }
 }

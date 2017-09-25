@@ -87,10 +87,6 @@ const assets = devMode
   ? { main: { js: 'main.js', css: 'style.css' }, vendor: { js: 'vendor.js' } }
   : JSON.parse(fs.readFileSync('assets.json'));
 
-app.get('/termos-de-uso', (_, res) => {
-  res.render('termos-de-uso.html', { assets });
-});
-
 exposeSSRRoutes(app, assets);
 
 // eslint-disable-next-line no-console
