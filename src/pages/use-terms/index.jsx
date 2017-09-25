@@ -23,7 +23,6 @@ if (process.env.BROWSER) {
 }
 
 declare var clause;
-declare var idx;
 
 const sections = [
   { name: 'Introdução', to: 'intro', content: intro },
@@ -48,6 +47,7 @@ class UseTerms extends React.Component {
   }
 
   renderList(section) {
+    // eslint-disable-next-line react/no-array-index-key
     return section.map((item, idx) => <List.Item key={idx} as="li">{item}</List.Item>);
   }
 
@@ -66,8 +66,8 @@ class UseTerms extends React.Component {
             </If>
             <Grid.Column className="UseTerms-menu">
               <Menu pointing secondary vertical color="orange">
-                <For index="idx" each="clause" of={sections}>
-                  <Link key={idx} to={clause.to} smooth offset={-100} duration={500}>
+                <For each="clause" of={sections}>
+                  <Link key={clause.to} to={clause.to} smooth offset={-100} duration={500}>
                     <Menu.Item
                       name={clause.name}
                       active={activeItem === clause.name}
@@ -79,9 +79,9 @@ class UseTerms extends React.Component {
             </Grid.Column>
             <Grid.Column className="UseTerms-text">
               <Container text>
-                <For index="idx" each="clause" of={sections}>
+                <For each="clause" of={sections}>
                   <If condition={clause.to !== 'intro' || deviceInfo.isDesktop}>
-                    <Element key={idx} name={clause.to} className="element">
+                    <Element key={clause.to} name={clause.to} className="element">
                       <Header
                         className="UseTerms-text-header"
                         as={clause.to === 'intro' ? 'h1' : 'h2'}
