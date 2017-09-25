@@ -22,7 +22,7 @@ const Landing = () => (
       <div className="Landing-lists">
         <EventList
           title="Próximos Eventos"
-          start={moment()}
+          start={moment().startOf('hour')}
           end={moment().endOf('day')}
         />
         <EventList
@@ -35,7 +35,7 @@ const Landing = () => (
           <EventList
             key={category}
             title={category}
-            start={moment()}
+            start={moment().startOf('hour')}
             categoryIds={[homeCategories[category]]}
           />
         </For>

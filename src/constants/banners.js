@@ -29,4 +29,4 @@ const banners = [
   },
 ];
 
-export default process.env.SSR ? [banners[0]] : banners;
+export default banners;
