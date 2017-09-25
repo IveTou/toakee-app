@@ -1,6 +1,6 @@
 import React from 'react';
 import autoBind from 'react-autobind';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import { recoverPassword } from '~/src/ducks/auth';
 

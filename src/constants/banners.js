@@ -2,7 +2,7 @@ import config from '~/src/config';
 
 const { ASSETS_BASE_URI, ASSETS_BANNERS_PATH } = config;
 
-export default [
+const banners = [
   {
     title: '',
     subtitle: '',// eslint-disable-line
@@ -28,3 +28,5 @@ export default [
     url: '/',
   },
 ];
+
+export default process.env.SSR ? [banners[0]] : banners;

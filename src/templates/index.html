@@ -17,9 +17,12 @@
     <link href="/css/loader.css" rel="stylesheet" />
   </head>
   <body>
-    <div id="app">
-      <div class="loader"></div>
-    </div>
+    {% if apolloContent %}
+      {{apolloContent | safe}}
+    {% else %}
+      <div id="app"><div class="loader"></div></div>
+    {% endif %}
+    <script>window.__APOLLO_STATE__ = {{apolloState | safe}};</script>
     <script type="text/javascript" src="/{{assets.vendor.js}}" charset="utf-8" async></script>
     <script type="text/javascript" src="/{{assets.main.js}}" charset="utf-8" async></script>
     <script src='https://www.google.com/recaptcha/api.js' async></script>

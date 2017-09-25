@@ -1,3 +1,0 @@
-mutation RemoveGuestList($eventId: String!, $guestListId: String!) {
-  removeGuestList(eventId: $eventId, guestListId: $guestListId)
-}

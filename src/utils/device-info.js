@@ -1,6 +1,6 @@
 import device from 'device';
 
-export const deviceInfo = (() => {
+export const deviceInfo = () => {
   const info = device(window.navigator.userAgent);
 
   return {
@@ -8,4 +8,4 @@ export const deviceInfo = (() => {
     isDesktop: info.is('desktop'),
     ...info,
   };
-})();
+};

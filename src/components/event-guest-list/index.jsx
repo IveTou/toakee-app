@@ -84,9 +84,9 @@ EventGuestList.propTypes = {
 };
 
 const injectData = graphql(query, {
-  options: ({ router }) => ({
+  options: ({ match }) => ({
     variables: {
-      eventSlug: router.params.slug,
+      eventSlug: match.params.slug,
     },
   }),
   props: ({ data: { viewer } }) => ({ viewer }),

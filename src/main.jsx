@@ -1,8 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
 import moment from 'moment';
+import { createBrowserHistory } from 'history';
 
-import { Router, browserHistory } from 'react-router';
+import { Router } from 'react-router-dom';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import { createStore, applyMiddleware } from 'redux';
@@ -12,7 +13,8 @@ import rootReducer from '~/src/ducks';
 
 import config from '~/src/config';
 import { getToken } from '~/src/utils/session';
-import makeRoutes from '~/src/routes';
+
+import App from './app';
 
 if (process.env.BROWSER) {
   require('~/src/scss/base.scss');
@@ -33,7 +35,10 @@ networkInterface.use([{
   },
 }]);
 
-const apolloClient = new ApolloClient({ networkInterface });
+const apolloClient = new ApolloClient({
+  initialState: window.__APOLLO_STATE__,
+  networkInterface,
+});
 
 const createStoreWithMiddleware = applyMiddleware(
   thunkMiddleware,
@@ -43,11 +48,9 @@ const reduxStore = createStoreWithMiddleware(rootReducer);
 
 const app = (
   <ApolloProvider store={reduxStore} client={apolloClient}>
-    <Router
-      onUpdate={() => window.scrollTo(0, 0)}
-      history={browserHistory}
-      routes={makeRoutes()}
-    />
+    <Router history={createBrowserHistory()}>
+      <App />
+    </Router>
   </ApolloProvider>
 );
 

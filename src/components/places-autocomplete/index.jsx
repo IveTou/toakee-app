@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { debounce } from 'lodash';
 import { Search } from 'semantic-ui-react';
 import autoBind from 'react-autobind';
 
@@ -39,7 +40,7 @@ export default class PlacesAutocomplete extends React.Component {
       <Search
         placeholder={this.props.placeholder}
         results={this.state.results}
-        onSearchChange={this.onSearchChange}
+        onSearchChange={debounce(this.onSearchChange, 200)}
         onResultSelect={this.handleResultSelect}
         noResultsMessage="Nenhum local encontrado."
       />

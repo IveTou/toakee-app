@@ -1,0 +1,205 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/variables';
+@import '../../scss/colors';
+
+.EventPage {
+  margin-top: $spacer*2;
+  position: relative;
+
+  &--viewGallery .EventPage {
+    &-flyer {
+      margin-left: calc(50% + #{$spacer*2 - 2px});
+    }
+
+    &-gallery {
+      height: auto;
+      overflow-y: auto;
+    }
+
+    &-details {
+      height: calc(100vh - #{$topbar-height});
+      overflow: hidden;
+    }
+  }
+
+  &-gallery {
+    height: calc(100vh - #{$topbar-height});
+    overflow-y: hidden;
+
+    .small.images {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      padding-left: 16px;
+
+      .image {
+        height: $spacer*19;
+        margin: 0;
+        cursor: pointer;
+        background-size: cover;
+      }
+    }
+  }
+
+  &-flyer {
+    position: absolute !important;
+    transition: margin-left .5s ease;
+    height: calc(100% - #{$spacer*2});
+
+    &--right {
+      margin-left: calc(50% + #{$spacer*2 - 2px});
+    }
+
+    &:after {
+      content: '';
+      background-color: #ff6600;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      position: absolute;
+      opacity: .5;
+    }
+
+    &-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+
+    .ui.card {
+      padding: $spacer/2;
+      width: 60%;
+      margin: $spacer*3 20%;
+      z-index: 1;
+      position: sticky;
+      top: $spacer*10;
+      margin-bottom: $spacer*10;
+
+      &:before {
+        content: '';
+        background-color: $orange;
+        width: 100%;
+        height: 100;
+        top: 0;
+        left: 0;
+      }
+    }
+
+    &-trigger.ui {
+      display: block;
+      position: sticky;
+      z-index: 1;
+      margin: $spacer*2 auto;
+      top: $spacer*50;
+    }
+  }
+
+  &-details {
+    min-height: calc(100vh - #{$topbar-height});
+
+    &-header {
+      padding: $spacer*2;
+      border-left: 4px solid $orange;
+
+      &-title {
+        color: $orange;
+      }
+
+      &-place {
+        font-size: 15px;
+        text-transform: uppercase;
+      }
+    }
+
+    &-info {
+      padding: $spacer*2;
+      color: $white;
+      font-weight: 300;
+      background-color: $orange;
+      position: relative;
+
+      &-item {
+        margin: $spacer 0;
+      }
+
+      &:before {
+        content: '';
+        position: absolute;
+        width: 300%;
+        top: 0;
+        left: -100%;
+        height: 100%;
+        z-index: -1;
+        background-color: $orange;
+      }
+
+      .Icon:before {
+        width: $spacer*2;
+        text-align: center;
+        margin-right: $spacer;
+        display: block;
+      }
+    }
+
+    &-body {
+      &-title {
+        color: $orange;
+        font-size: 18px;
+        text-transform: uppercase;
+      }
+
+      &-content {
+        margin-top: $spacer*2;
+      }
+
+      &-description {
+        padding: $spacer*2 0;
+        margin: $spacer*2;
+        text-align: justify;
+      }
+    }
+  }
+}
+
+@include media("<tablet") {
+  .EventPage {
+    &-flyer,
+    &-gallery {
+      height: calc(100vh - #{$spacer*20});
+    }
+
+    &-flyer {
+      position: absolute !important;
+
+      &-bg.ui,
+      &:after {
+        left: $spacer*2;
+      }
+
+      .ui.card {
+        width: 90%;
+        max-width: $spacer*60;
+        margin-left: 5%;
+      }
+    }
+
+    &-details-body-description {
+      padding: $spacer;
+    }
+
+    &--viewGallery .EventPage-flyer {
+      margin-left: 100%;
+    }
+  }
+}
+
+@include media(">tablet") {
+  .EventPage {
+    margin-top: $topbar-height + $spacer*2;
+  }
+}

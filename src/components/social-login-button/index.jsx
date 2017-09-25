@@ -70,4 +70,3 @@ export default class SocialLoginButton extends React.Component {
     );
   }
 }
-

@@ -53,10 +53,11 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         BROWSER: JSON.stringify(true),
+        NODE_ENV: JSON.stringify(devMode ? 'development' : 'production'),
       },
     }),
     extractTextPlugin,
-    new AssetsPlugin({ filename: 'assets.json', prettyPrint: true }),
+    new AssetsPlugin({ filename: 'assets.json' }),
     new webpack.optimize.CommonsChunkPlugin({
       name: ['vendor'],
     }),

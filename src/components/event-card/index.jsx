@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { upperFirst } from 'lodash';
 import moment from 'moment';
 import { Card, Image, Icon } from 'semantic-ui-react';
@@ -8,27 +8,24 @@ if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-const renderLabel = (start) => {
-  if (!start
-    || moment().endOf('day').isBefore(start)
-    || moment().subtract(4, 'hours').isAfter(start)
-  ) return null;
+const renderLabel = (start, end) => {
+  const now = moment();
 
-  let content;
-
-  if (moment().add(2, 'hours').isBefore(start)) {
-    content = 'Hoje';
-  } else if (moment().isBefore(start)) {
-    content = upperFirst(start.fromNow());
-  } else {
-    content = `Começou ${start.fromNow()}`;
+  if (end.isBefore(now) || start.isAfter(moment().add(4, 'hours'))) {
+    return null;
   }
 
-  return { color: 'orange', content, ribbon: true };
+  return {
+    content: start.isSameOrBefore(now) && end.isSameOrAfter(now)
+      ? 'Acontecendo agora'
+      : upperFirst(start.fromNow()),
+    color: 'orange',
+    ribbon: true,
+  };
 };
 
-const EventCard = ({ event: { slug, title, place, flyer, start } }) => {
-  const time = moment(start);
+const EventCard = ({ event: { slug, title, place, flyer, start, end } }) => {
+  const startMoment = moment(start);
 
   return (
     <Link className="EventCard" to={{ pathname: `/evento/${slug}` }}>
@@ -36,7 +33,7 @@ const EventCard = ({ event: { slug, title, place, flyer, start } }) => {
         <If condition={flyer}>
           <Image
             className="EventCard-background"
-            label={renderLabel(time)}
+            label={renderLabel(startMoment, moment(end))}
             alt={`flyer do ${title}`}
             src={flyer}
           />
@@ -48,14 +45,14 @@ const EventCard = ({ event: { slug, title, place, flyer, start } }) => {
         <Card.Content className="EventCard-details" extra>
           <div className="EventCard-details-calendar">
             <div className="EventCard-details-calendar-month">
-              {time.format('MMM')}
+              {startMoment.format('MMM')}
             </div>
             <div className="EventCard-details-calendar-day">
-              {time.format('DD')}
+              {startMoment.format('DD')}
             </div>
           </div>
           <div className="EventCard-details-timeAndPlace">
-            <div><Icon name="clock" />{time.format('HH')}h</div>
+            <div><Icon name="clock" />{startMoment.format('HH')}h</div>
             <div><Icon name="marker" />{place.address}</div>
           </div>
         </Card.Content>

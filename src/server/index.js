@@ -4,10 +4,13 @@ import bodyParser from 'body-parser';
 import sendgrid from 'sendgrid';
 import fs from 'fs';
 import GooglePlaces from 'node-googleplaces';
+import cookieParser from 'cookie-parser';
 
 import MixpanelClient from './clients/mixpanel';
 
 import config from './config';
+import { exposeSSRRoutes } from './ssr';
+
 
 const { PORT, SUPPORT_EMAIL, SENDGRID_API_KEY, GOOGLE_PLACES_KEY } = config;
 const devMode = process.env.NODE_ENV !== 'production';
@@ -15,6 +18,7 @@ const devMode = process.env.NODE_ENV !== 'production';
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 const aWeek = 1000 * 60 * 60 * 24 * 7;
 const staticOptions = devMode ? {} : { maxage: aWeek };
@@ -87,7 +91,7 @@ app.get('/termos-de-uso', (_, res) => {
   res.render('termos-de-uso.html', { assets });
 });
 
-app.get('*', (_, res) => { res.render('index.html', { assets }); });
+exposeSSRRoutes(app, assets);
 
 // eslint-disable-next-line no-console
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));

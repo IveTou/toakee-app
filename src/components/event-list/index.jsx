@@ -7,7 +7,7 @@ import { ease } from '~/src/utils/animation';
 import EventCard from '~/src/components/event-card';
 
 import EventListArrow from './arrow';
-import query from './graphql';
+import { query } from './graphql';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -83,8 +83,8 @@ EventList.propTypes = {
 };
 
 export default graphql(query, {
-  options: ({ start, end, categoryIds }) => ({
-    variables: { start, end, skip: 0, categoryIds, limit: FEED_LIMIT },
+  options: ({ start, end, categoryIds, strict }) => ({
+    variables: { start, end, skip: 0, categoryIds, limit: FEED_LIMIT, strict },
   }),
   props: ({ data: { viewer, fetchMore }, ownProps: { categoryIds } }) => ({
     viewer,
@@ -95,7 +95,12 @@ export default graphql(query, {
         .length;
 
       return fetchMore({
-        variables: { start: viewer.events[viewer.events.length - 1].start, categoryIds, skip },
+        variables: {
+          start: viewer.events[viewer.events.length - 1].start,
+          categoryIds,
+          skip,
+          strict: true,
+        },
         updateQuery: (previousResult, { fetchMoreResult }) => (
           !fetchMoreResult
             ? previousResult

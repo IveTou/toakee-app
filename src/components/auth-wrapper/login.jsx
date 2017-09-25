@@ -1,20 +1,21 @@
 import React, { PropTypes } from 'react';
-import TrackingAPI from '~/src/toakee-core/apis/tracking';
 
 import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { partial, upperCase, pick } from 'lodash';
 import autoBind from 'react-autobind';
 import { Form, Divider, Popup, Icon } from 'semantic-ui-react';
 
+import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import { alertGraphQLError } from '~/src/ducks/snackbar';
 import SocialLoginButton from '~/src/components/social-login-button';
 
-import { setToken, setSocialToken } from '~/src/utils/session';
+import { login, setSocialToken } from '~/src/utils/session';
 
 import { validateLogin } from './validation';
 import { loginMutation, socialLoginMutation } from './graphql';
+import AuthWrapper from './';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -32,8 +33,8 @@ export class Login extends React.Component {
   }
 
   onSuccess(mutation, response) {
-    setToken(response.data[mutation]);
-    this.props.router.push('/redirect');
+    login(response.data[mutation]);
+    this.props.history.push('/');
   }
 
   submit(e) {
@@ -77,39 +78,41 @@ export class Login extends React.Component {
     const { username, password } = this.state;
 
     return (
-      <div className="Login">
-        <Divider horizontal>Entre com</Divider>
-        <div className="Login-social">
-          <SocialLoginButton network="facebook" onReceiveToken={this.socialSubmit} />
+      <AuthWrapper>
+        <div className="Login">
+          <Divider horizontal>Entre com</Divider>
+          <div className="Login-social">
+            <SocialLoginButton network="facebook" onReceiveToken={this.socialSubmit} />
+          </div>
+          <Divider horizontal>ou</Divider>
+          <Form>
+            <Form.Input
+              type="email"
+              name="username"
+              placeholder="Usuário"
+              onChange={this.onChange}
+              value={username}
+              icon={this.renderErrorIcon('username')}
+              error={!!this.state.errors.username}
+            />
+            <Form.Input
+              type="password"
+              name="password"
+              placeholder="Senha"
+              onChange={this.onChange}
+              value={password}
+              icon={this.renderErrorIcon('password')}
+              error={!!this.state.errors.password}
+            />
+            <Form.Button color="orange" onClick={this.submit} fluid>
+              Entrar
+            </Form.Button>
+            <Link className="AuthWrapper-link" to={{ pathname: '/cadastrar' }}>
+              Não tenho cadastro
+            </Link>
+          </Form>
         </div>
-        <Divider horizontal>ou</Divider>
-        <Form>
-          <Form.Input
-            type="email"
-            name="username"
-            placeholder="Usuário"
-            onChange={this.onChange}
-            value={username}
-            icon={this.renderErrorIcon('username')}
-            error={!!this.state.errors.username}
-          />
-          <Form.Input
-            type="password"
-            name="password"
-            placeholder="Senha"
-            onChange={this.onChange}
-            value={password}
-            icon={this.renderErrorIcon('password')}
-            error={!!this.state.errors.password}
-          />
-          <Form.Button color="orange" onClick={this.submit} fluid>
-            Entrar
-          </Form.Button>
-          <Link className="AuthWrapper-link" to={{ pathname: '/cadastrar' }}>
-            Não tenho cadastro
-          </Link>
-        </Form>
-      </div>
+      </AuthWrapper>
     );
   }
 }
@@ -118,11 +121,11 @@ Login.propTypes = {
   login: PropTypes.func,
   socialLogin: PropTypes.func,
   alert: PropTypes.func,
-  router: PropTypes.object,
+  history: PropTypes.object,
 };
 
 Login.defaultProps = {
-  router: {},
+  history: {},
 };
 
 const injectLoginMutation = graphql(loginMutation, {
