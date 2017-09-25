@@ -2,6 +2,7 @@
   "presets": ["es2015", "stage-0", "react"],
   "sourceMaps": "inline",
   "plugins": [
+    "graphql-tag",
     "add-module-exports",
     "babel-root-import",
     "transform-class-properties",

@@ -1,6 +1,15 @@
-export const logout = () => localStorage.clear();
+import Cookie from 'js-cookie';
+
+export const logout = () => {
+  localStorage.clear();
+  Cookie.remove('token');
+};
+export const login = (token) => {
+  localStorage.setItem('token', token);
+  Cookie.set('token', token);
+};
+
 export const getToken = () => localStorage.getItem('token');
-export const setToken = token => localStorage.setItem('token', token);
 export const setSocialToken = (network, token) => {
   localStorage.setItem(`${network}Token`, token);
 };

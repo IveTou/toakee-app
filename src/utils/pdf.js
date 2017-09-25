@@ -1,4 +1,3 @@
-import JsPDF from 'jspdf';
 import { sortBy } from 'lodash';
 
 const FontSize = {
@@ -9,9 +8,10 @@ const FontSize = {
 };
 
 export const generateGuestListPdf = (event = {}, invitations = []) => {
+  const JSPDF = require('jspdf');
   const list = sortBy(invitations, ['normalizedName']);
 
-  const doc = new JsPDF('p', 'pt', 'a4');
+  const doc = new JSPDF('p', 'pt', 'a4');
 
   doc.setFontSize(FontSize.EVENT);
   doc.text(`Lista ${event.title || ''}`, 18, 56);

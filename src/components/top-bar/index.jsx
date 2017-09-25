@@ -2,15 +2,17 @@ import React, { PropTypes } from 'react';
 import { graphql } from 'react-apollo';
 import autoBind from 'react-autobind';
 import { once } from 'lodash';
-import { browserHistory, Link } from 'react-router';
+import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Menu, Dropdown, Image, Label, Icon, Button, Search, Visibility } from 'semantic-ui-react';
 import classNames from 'classnames';
+import qs from 'query-string';
 
 import { isLogged, logout } from '~/src/utils/session';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import Logo from '~/src/components/logo';
 
-import query from './graphql';
+import query from './queries';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -25,8 +27,8 @@ export class TopBar extends React.Component {
     autoBind(this);
   }
 
-  componentWillReceiveProps({ viewer, transparent }) {
-    this._searchInput.setValue(browserHistory.getCurrentLocation().query.q || '');
+  componentWillReceiveProps({ viewer, transparent, location }) {
+    this._searchInput.setValue(qs.parse(location.search).q || '');
     this.setState({ transparent });
 
     if (!isLogged()) {
@@ -38,7 +40,7 @@ export class TopBar extends React.Component {
 
   onSearch(e) {
     if (e.key === 'Enter') {
-      browserHistory.push({ pathname: '/search', query: { q: e.target.value } });
+      this.props.history.push({ pathname: '/search', search: `?q=${e.target.value}` });
     }
   }
 
@@ -48,29 +50,29 @@ export class TopBar extends React.Component {
 
   logout() {
     logout();
-    browserHistory.push('/redirect');
+    this.props.history.push('/');
   }
 
   login() {
     TrackingAPI.track('Landing Login Trigger', 'Guest');
-    browserHistory.push('/login');
+    this.props.history.push('/login');
   }
 
   signUp() {
     TrackingAPI.track('Landing SignUp Trigger', 'Guest');
-    browserHistory.push('/cadastrar');
+    this.props.history.push('/cadastrar');
   }
 
   renderAvatar() {
     const { viewer } = this.props;
 
-    if (!viewer) {
-      return <Icon name="user" circular size="large" color="grey" />;
+    if (viewer && viewer.id) {
+      return viewer.photo
+        ? <Image src={viewer.photo} size="mini" shape="circular" />
+        : <Label circular size="big">{viewer.firstName[0]}</Label>;
     }
 
-    return viewer.photo
-      ? <Image src={viewer.photo} size="mini" shape="circular" />
-      : <Label circular size="big">{viewer.firstName[0]}</Label>;
+    return <Icon name="user" circular size="large" color="grey" />;
   }
 
   render() {
@@ -96,7 +98,7 @@ export class TopBar extends React.Component {
           </Menu.Menu>
           <Menu.Menu position="right">
             <Choose>
-              <When condition={isLogged()}>
+              <When condition={!!viewer.id}>
                 <Dropdown item trigger={this.renderAvatar()} icon={null}>
                   <Dropdown.Menu>
                     <If condition={viewer.isPromoter}>
@@ -140,8 +142,10 @@ export class TopBar extends React.Component {
 TopBar.propTypes = {
   viewer: PropTypes.object,
   transparent: PropTypes.bool,
+  history: PropTypes.object,
+  location: PropTypes.object,
 };
 
 export default graphql(query, {
   props: ({ data: { viewer } }) => ({ viewer }),
-})(TopBar);
+})(withRouter(TopBar));

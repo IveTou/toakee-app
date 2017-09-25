@@ -51,7 +51,14 @@
     border-radius: 5px;
   }
 
+  .slick-slide {
+    width: 100%;
+  }
+
   .slick-slider {
+    height: $spacer*30;
+    overflow: hidden;
+
     &:hover {
      .button {
         opacity: 1;

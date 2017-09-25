@@ -2,15 +2,16 @@ import React, { PropTypes } from 'react';
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import autoBind from 'react-autobind';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Form, Icon, Divider, Popup } from 'semantic-ui-react';
 import { pick, omit } from 'lodash';
 
 import { alertGraphQLError } from '~/src/ducks/snackbar';
-import { setToken } from '~/src/utils/session';
+import { login } from '~/src/utils/session';
 
 import { validateSignUp } from './validation';
 import { signUpMutation } from './graphql';
+import AuthWrapper from './';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -58,8 +59,8 @@ export class SignUp extends React.Component {
     if (!errors) {
       this.props.signUp(form)
         .then(({ data: { signUp: token } }) => {
-          setToken(token);
-          this.props.router.push('/redirect');
+          login(token);
+          this.props.history.push('/');
         })
         .catch(this.props.alert);
     }
@@ -101,63 +102,65 @@ export class SignUp extends React.Component {
     const { firstName, lastName, username, email, password, passwordVisible } = this.state;
 
     return (
-      <div className="SignUp">
-        <Divider horizontal>Nova conta</Divider>
-        <Form onSubmit={this.onSubmit}>
-          <Form.Group widths="equal">
+      <AuthWrapper>
+        <div className="SignUp">
+          <Divider horizontal>Nova conta</Divider>
+          <Form onSubmit={this.onSubmit}>
+            <Form.Group widths="equal">
+              <Form.Input
+                placeholder="Nome"
+                name="firstName"
+                onChange={this.onChange}
+                value={firstName}
+                icon={this.renderErrorIcon('firstName')}
+                error={!!this.state.errors.firstName}
+              />
+              <Form.Input
+                placeholder="Sobrenome"
+                name="lastName"
+                onChange={this.onChange}
+                value={lastName}
+                icon={this.renderErrorIcon('lastName')}
+                error={!!this.state.errors.lastName}
+              />
+            </Form.Group>
             <Form.Input
-              placeholder="Nome"
-              name="firstName"
+              placeholder="Usuário"
+              name="username"
               onChange={this.onChange}
-              value={firstName}
-              icon={this.renderErrorIcon('firstName')}
-              error={!!this.state.errors.firstName}
+              value={username}
+              icon={this.renderErrorIcon('username')}
+              error={!!this.state.errors.username}
             />
             <Form.Input
-              placeholder="Sobrenome"
-              name="lastName"
+              type="email"
+              name="email"
+              placeholder="E-mail"
               onChange={this.onChange}
-              value={lastName}
-              icon={this.renderErrorIcon('lastName')}
-              error={!!this.state.errors.lastName}
+              value={email}
+              icon={this.renderErrorIcon('email')}
+              error={!!this.state.errors.email}
             />
-          </Form.Group>
-          <Form.Input
-            placeholder="Usuário"
-            name="username"
-            onChange={this.onChange}
-            value={username}
-            icon={this.renderErrorIcon('username')}
-            error={!!this.state.errors.username}
-          />
-          <Form.Input
-            type="email"
-            name="email"
-            placeholder="E-mail"
-            onChange={this.onChange}
-            value={email}
-            icon={this.renderErrorIcon('email')}
-            error={!!this.state.errors.email}
-          />
-          <Form.Input
-            type={passwordVisible ? 'text' : 'password'}
-            name="password"
-            placeholder="Senha"
-            onChange={this.onChange}
-            value={password}
-            error={!!this.state.errors.password}
-            icon={this.renderPasswordIcon()}
-          />
-          <Form.Button
-            content="Criar minha conta"
-            color="orange"
-            fluid
-          />
-          <Link className="AuthWrapper-link" to={{ pathname: '/login' }}>
-            Já possuo uma conta
-          </Link>
-        </Form>
-      </div>
+            <Form.Input
+              type={passwordVisible ? 'text' : 'password'}
+              name="password"
+              placeholder="Senha"
+              onChange={this.onChange}
+              value={password}
+              error={!!this.state.errors.password}
+              icon={this.renderPasswordIcon()}
+            />
+            <Form.Button
+              content="Criar minha conta"
+              color="orange"
+              fluid
+            />
+            <Link className="AuthWrapper-link" to={{ pathname: '/login' }}>
+              Já possuo uma conta
+            </Link>
+          </Form>
+        </div>
+      </AuthWrapper>
     );
   }
 }

@@ -1,7 +1,0 @@
-mutation UpdateGuestList(
-  $eventId: String!,
-  $guestListId: String!,
-  $patch: GuestListPatchInputType!
-) {
-  updateGuestList(eventId: $eventId, guestListId: $guestListId, patch: $patch)
-}

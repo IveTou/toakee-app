@@ -1,8 +1,0 @@
-mutation SetAttendanceStatusMutation(
-  $eventId: String!,
-  $invitationId: String!,
-  $status: GuestStatus!
-) {
-  setAttendanceStatusMutation(eventId: $eventId, invitationId: $invitationId, status: $status)
-}
-

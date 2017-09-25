@@ -1,0 +1,129 @@
+@import '../../scss/variables';
+@import '../../scss/colors';
+
+.NewEventPage {
+  margin-top: $topbar-height;
+
+  &-basics {
+    background-color: $orange;
+
+    &-content {
+      margin: $spacer*4 0;
+
+      .header {
+        text-align: center;
+      }
+
+      .card {
+        margin: auto;
+        max-width: 80%;
+        width: $spacer*52;
+
+        & > .content {
+          padding: $spacer*2;
+          border-bottom: 1px solid $black06;
+        }
+      }
+
+      input[list="time"] {
+        padding-right: 0 !important;
+      }
+
+      .file {
+        display: none;
+      }
+
+      &-flyer {
+        &.ui.image {
+          height: $spacer*38;
+        }
+      }
+
+      &-dropzone {
+        border: 8px dashed $black12;
+        text-align: center;
+        padding: 15%;
+        position: relative;
+        max-height: $spacer*48;
+        width: 100%;
+        cursor: pointer;
+
+        .field {
+          height: 0.1px;
+          margin: 0 !important;
+        }
+
+        i.icon.grey {
+          color: $black12 !important;
+        }
+      }
+
+      &-flyer + .content {
+        padding: 0 !important;
+      }
+
+      &-flyer + .content &-dropzone {
+        position: absolute;
+        top: $spacer;
+        left: $spacer;
+        width: calc(100% - #{$spacer*2});
+        opacity: 0;
+      }
+
+      .search .results.visible:after {
+        content: '';
+        height: $spacer*3;
+        text-align: right;
+        display: block;
+        border-top: 1px solid $black06;
+        background: url(/imgs/powered_by_google_on_white.png) no-repeat center right;
+      }
+
+      &-date {
+        .fields {
+          align-items: flex-end;
+        }
+      }
+    }
+  }
+
+  &-details {
+    padding: $spacer*9 $spacer*4;
+
+    &-description {
+      select {
+        padding: 3px !important;
+      }
+
+      .DraftEditor-root {
+        font-family: sans-serif;
+      }
+    }
+
+    &-categories,
+    &-prices,
+    &-confirmation {
+      margin-top: $spacer*4;
+    }
+
+    &-categories {
+      .button {
+        margin: 0 $spacer $spacer 0;
+      }
+    }
+
+    &-prices {
+      .rdtPicker {
+        right: 0;
+      }
+    }
+
+    &-confirmation {
+      text-align: center;
+
+      .button {
+        width: $spacer*40;
+      }
+    }
+  }
+}
