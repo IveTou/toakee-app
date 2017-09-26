@@ -18,7 +18,7 @@ declare var idx;
 declare var background;
 
 const AuthWrapper = ({ children }) => (
-  <DefaultLayout>
+  <DefaultLayout topbarTransparent>
     <div className={classNames('AuthWrapper', { static: location.pathname === '/login' })}>
       <If condition={location.pathname !== '/login'}>
         <ul className="AuthWrapper-slideshow">

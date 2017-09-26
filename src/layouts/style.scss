@@ -1,8 +1,14 @@
 @import '../scss/variables';
 
 .DefaultLayout {
-  &:not(.DefaultLayout--topbarTransparent) main {
+  main {
     margin-top: $topbar-height;
+  }
+
+  &--topbarTransparent{
+    main {
+      margin-top: 0;
+    }
   }
 }
 
