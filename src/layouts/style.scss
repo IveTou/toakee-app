@@ -1,3 +1,4 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
 @import '../scss/variables';
 
 .DefaultLayout {
@@ -12,3 +13,10 @@
   }
 }
 
+@include media("<tablet") {
+  .DefaultLayout {
+    main {
+      margin-top: $topbar-height;
+    }
+  }
+}
