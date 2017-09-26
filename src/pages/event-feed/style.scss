@@ -1,4 +1,10 @@
+@import '../../scss/variables';
+
 .EventFeed {
   height: 100%;
   background-color: lightblue;
+
+  &-content {
+    padding-top: $spacer*3;
+  }
 }

@@ -19,7 +19,6 @@ import Scroller from '~/src/components/scroller';
 
 import { userIsLogged } from '~/src/auth';
 
-
 const App = () => (
   <div>
     <Scroller />

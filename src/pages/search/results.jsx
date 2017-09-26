@@ -48,8 +48,8 @@ SearchPageResults.propTypes = {
 };
 
 export default graphql(query, {
-  options: ({ query: _query, start, end }) => ({
-    variables: { query: _query || '', start, end },
+  options: ({ q, start, end }) => ({
+    variables: { query: q || '', start, end },
   }),
   props: ({ data: { nextEvents, previousEvents, loading } }) => ({
     nextEvents,
