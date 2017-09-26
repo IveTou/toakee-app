@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-import { graphql, compose } from 'react-apollo';
+import { graphql, compose, withApollo } from 'react-apollo';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { partial, upperCase, pick } from 'lodash';
@@ -34,6 +34,7 @@ export class Login extends React.Component {
 
   onSuccess(mutation, response) {
     login(response.data[mutation]);
+    this.props.client.resetStore();
     this.props.history.push('/');
   }
 
@@ -150,4 +151,4 @@ export default connect(
   dispatch => ({
     alert: error => dispatch(alertGraphQLError(error)),
   }),
-)(LoginWithData);
+)(withApollo(LoginWithData));

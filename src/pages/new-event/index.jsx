@@ -8,6 +8,7 @@ import autoBind from 'react-autobind';
 import moment from 'moment';
 import RichTextEditor from 'react-rte/lib/RichTextEditor';
 
+import { withViewer } from '~/src/hocs';
 import DefaultLayout from '~/src/layouts/default';
 import PlacesAutocomplete from '~/src/components/places-autocomplete';
 import CloudinaryApi from '~/src/toakee-core/apis/cloudinary.js';
@@ -106,7 +107,10 @@ class NewEventPage extends React.Component {
     if (!errors) {
       const { url: flyerUrl } = await CloudinaryApi.uploadFlyer(this.state.flyer);
       const { data } = await this.props.createEvent({ ...form, flyer: flyerUrl });
-      this.props.history.push(`/evento/${data.createEvent.slug}`);
+      this.setState({ submitting: false });
+      if (!this.props.viewer.isAdmin) {
+        this.props.history.push(`/evento/${data.createEvent.slug}`);
+      }
     }
   }
 
@@ -362,5 +366,5 @@ export default graphql(createEventMutation, {
   props: ({ mutate }) => ({
     createEvent: variables => mutate({ variables }),
   }),
-})(NewEventPage);
+})(withViewer(NewEventPage));
 

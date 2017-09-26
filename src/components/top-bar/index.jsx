@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { graphql } from 'react-apollo';
+import { withApollo } from 'react-apollo';
 import autoBind from 'react-autobind';
 import { once } from 'lodash';
 import { withRouter } from 'react-router';
@@ -11,8 +11,7 @@ import qs from 'query-string';
 import { isLogged, logout } from '~/src/utils/session';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import Logo from '~/src/components/logo';
-
-import query from './queries';
+import { withViewer } from '~/src/hocs';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -50,6 +49,7 @@ export class TopBar extends React.Component {
 
   logout() {
     logout();
+    this.props.client.resetStore();
     this.props.history.push('/');
   }
 
@@ -144,8 +144,7 @@ TopBar.propTypes = {
   transparent: PropTypes.bool,
   history: PropTypes.object,
   location: PropTypes.object,
+  client: PropTypes.object,
 };
 
-export default graphql(query, {
-  props: ({ data: { viewer } }) => ({ viewer }),
-})(withRouter(TopBar));
+export default withApollo(withRouter(withViewer(TopBar)));

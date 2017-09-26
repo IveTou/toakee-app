@@ -102,7 +102,7 @@ export class SignUp extends React.Component {
     const { firstName, lastName, username, email, password, passwordVisible } = this.state;
 
     return (
-      <AuthWrapper>
+      <AuthWrapper slideshow>
         <div className="SignUp">
           <Divider horizontal>Nova conta</Divider>
           <Form onSubmit={this.onSubmit}>

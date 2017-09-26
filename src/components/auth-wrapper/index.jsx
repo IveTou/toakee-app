@@ -6,10 +6,6 @@ import { backgrounds } from '~/src/constants';
 
 import DefaultLayout from '~/src/layouts/default';
 
-const propTypes = {
-  children: PropTypes.node,
-};
-
 if (process.env.BROWSER) {
   require('./style.scss');
 }
@@ -17,10 +13,10 @@ if (process.env.BROWSER) {
 declare var idx;
 declare var background;
 
-const AuthWrapper = ({ children }) => (
+const AuthWrapper = ({ children, slideshow }) => (
   <DefaultLayout>
-    <div className={classNames('AuthWrapper', { static: location.pathname === '/login' })}>
-      <If condition={location.pathname !== '/login'}>
+    <div className={classNames('AuthWrapper', { static: !slideshow })}>
+      <If condition={slideshow}>
         <ul className="AuthWrapper-slideshow">
           <For each="background" index="idx" of={backgrounds}>
             <li key={idx}>
@@ -43,6 +39,9 @@ const AuthWrapper = ({ children }) => (
   </DefaultLayout>
 );
 
-AuthWrapper.propTypes = propTypes;
+AuthWrapper.propTypes = {
+  children: PropTypes.node,
+  slideshow: PropTypes.bool,
+};
 
 export default AuthWrapper;
