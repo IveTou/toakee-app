@@ -161,6 +161,7 @@
   .BannerImage {
     height: $spacer*20;
     width: 100%;
+    border-radius: 0;
 
     &-content {
       margin: 0;
@@ -183,6 +184,8 @@
   }
 
   .BannerCarousel {
+    height: $spacer*20;
+
     .button {
       display: none !important;
     }
