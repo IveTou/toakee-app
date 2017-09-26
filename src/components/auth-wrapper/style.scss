@@ -11,7 +11,7 @@
   background-size: cover;
 
   &-content.card {
-    margin: 0 auto;
+    margin: $spacer*8 auto 0 !important;
   }
 
   &-link {
@@ -87,5 +87,17 @@
 @include media("<tablet") {
   .AuthWrapper {
     padding-top: $spacer*3;
+
+    &-content.card {
+      margin: 0 auto !important;
+    }
+
+    &-slideshow {
+      height: 100%;
+
+      &:after {
+        height: 100%;
+      }
+    }
   }
 }

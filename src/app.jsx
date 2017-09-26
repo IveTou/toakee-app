@@ -16,11 +16,12 @@ import About from '~/src/pages/about';
 import Login from '~/src/components/auth-wrapper/login';
 import SignUp from '~/src/components/auth-wrapper/sign-up';
 import Scroller from '~/src/components/scroller';
+import ViewerProvider from '~/src/components/viewer-provider';
 
 import { userIsLogged } from '~/src/auth';
 
 const App = () => (
-  <div>
+  <ViewerProvider>
     <Scroller />
     <Switch>
       <ProtectedRoute
@@ -41,7 +42,7 @@ const App = () => (
       <Route path="/termos-de-uso" component={UseTerms} />
       <Route path="/quem-somos" component={About} />
     </Switch>
-  </div>
+  </ViewerProvider>
 );
 
 export default App;
