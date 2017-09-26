@@ -5,16 +5,12 @@ import EventList from '~/src/components/event-list';
 
 import { homeCategories } from '~/src/constants';
 
-if (process.env.BROWSER) {
-  require('./style.scss');
-}
-
 declare var category;
 
 const EventBox = () => (
   <div className="EventBox">
     <EventList
-      title="Hoje"
+      title="Próximos Eventos"
       start={moment().startOf('hour')}
       end={moment().endOf('day')}
     />
