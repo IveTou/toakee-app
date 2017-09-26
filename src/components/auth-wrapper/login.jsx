@@ -123,6 +123,7 @@ Login.propTypes = {
   socialLogin: PropTypes.func,
   alert: PropTypes.func,
   history: PropTypes.object,
+  client: PropTypes.object,
 };
 
 Login.defaultProps = {
