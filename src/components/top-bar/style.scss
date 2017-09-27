@@ -38,7 +38,6 @@
 
         input {
           color: $black54;
-          background: $black26;
           font-size: large;
           padding: $spacer $spacer*2;
         }
@@ -58,10 +57,21 @@
       box-shadow: none;
       border: 0;
 
+      .button.TopBar-login  {
+        &:not(:hover) {
+          background: $white96 !important;
+        }
+
+        &:hover {
+          background: $white !important;
+        }
+      }
+
       .search {
         input {
           border-color: $white;
           color: $white;
+          background: $black26;
 
           &:focus {
             border-color: $white;

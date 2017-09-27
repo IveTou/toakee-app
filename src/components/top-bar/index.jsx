@@ -117,6 +117,7 @@ export class TopBar extends React.Component {
                     <Menu.Item>
                       <Button.Group>
                         <Button
+                          className="TopBar-login"
                           onClick={this.login}
                           basic
                           color="orange"
