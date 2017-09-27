@@ -11,6 +11,10 @@
       min-width: $spacer*8;
     }
 
+    .search input:focus {
+      border-color: $orange;
+    }
+
     .menu {
       .item.desktop {
         display: none;
@@ -50,10 +54,6 @@
           background: $white30;
           font-size: large;
           padding: $spacer $spacer*2;
-
-          &:focus {
-            border-color: $orange;
-          }
         }
       }
 
