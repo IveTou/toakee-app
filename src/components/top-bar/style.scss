@@ -22,14 +22,6 @@
           width: 100%;
         }
       }
-
-      .item.desktop {
-        display: none;
-      }
-
-      .item.mobile {
-        padding: 0;
-      }
     }
   }
 }
@@ -41,16 +33,6 @@
 
       .item .logo {
         min-width: $spacer*28;
-      }
-
-      .menu {
-        .item.desktop {
-          display: block;
-        }
-
-        .item.mobile {
-          display: none;
-        }
       }
 
       .search {

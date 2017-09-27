@@ -8,6 +8,7 @@ import { Menu, Dropdown, Image, Label, Icon, Button, Search, Visibility } from '
 import classNames from 'classnames';
 import qs from 'query-string';
 
+import { deviceInfo } from '~/src/utils/device-info';
 import { isLogged, logout } from '~/src/utils/session';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import Logo from '~/src/components/logo';
@@ -96,7 +97,7 @@ export class TopBar extends React.Component {
               />
             </Menu.Item>
           </Menu.Menu>
-          <Menu.Menu position="right options">
+          <Menu.Menu position="right">
             <Choose>
               <When condition={!!viewer.id}>
                 <Dropdown item trigger={this.renderAvatar()} icon={null}>
@@ -111,32 +112,39 @@ export class TopBar extends React.Component {
                 </Dropdown>
               </When>
               <Otherwise>
-                <Menu.Item className="desktop">
-                  <Button.Group>
-                    <Button
-                      className="login"
-                      onClick={this.login}
-                      basic
-                      color="orange"
-                    >
-                      Entrar
-                    </Button>
-                    <Button
-                      className="signup"
-                      onClick={this.signUp}
-                      color="orange"
-                    >
-                      Cadastrar
-                    </Button>
-                  </Button.Group>
-                </Menu.Item>
-                <Menu.Item className="mobile">
-                  <Dropdown item icon="ellipsis vertical" simple>
-                    <Dropdown.Menu>
-                      <Dropdown.Item onClick={this.login}>Entrar</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </Menu.Item>
+                <Choose>
+                  <When condition={deviceInfo().isDesktop}>
+                    <Menu.Item>
+                      <Button.Group>
+                        <Button
+                          className="login"
+                          onClick={this.login}
+                          basic
+                          color="orange"
+                        >
+                          Entrar
+                        </Button>
+                        <Button
+                          className="signUp"
+                          onClick={this.signUp}
+                          color="orange"
+                        >
+                          Cadastrar
+                        </Button>
+                      </Button.Group>
+                    </Menu.Item>
+                  </When>
+                  <Otherwise>
+                    <Menu.Item>
+                      <Dropdown item icon="ellipsis vertical" simple>
+                        <Dropdown.Menu>
+                          <Dropdown.Item onClick={this.login}>Entrar</Dropdown.Item>
+                          <Dropdown.Item onClick={this.signUp}>Cadastrar</Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </Menu.Item>
+                  </Otherwise>
+                </Choose>
               </Otherwise>
             </Choose>
           </Menu.Menu>
