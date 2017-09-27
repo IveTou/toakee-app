@@ -117,7 +117,6 @@ export class TopBar extends React.Component {
                     <Menu.Item>
                       <Button.Group>
                         <Button
-                          className="login"
                           onClick={this.login}
                           basic
                           color="orange"
@@ -125,7 +124,6 @@ export class TopBar extends React.Component {
                           Entrar
                         </Button>
                         <Button
-                          className="signUp"
                           onClick={this.signUp}
                           color="orange"
                         >
