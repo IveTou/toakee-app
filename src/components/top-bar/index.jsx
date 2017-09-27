@@ -111,7 +111,7 @@ export class TopBar extends React.Component {
                 </Dropdown>
               </When>
               <Otherwise>
-                <Menu.Item>
+                <Menu.Item className="desktop">
                   <Button.Group>
                     <Button
                       className="login"
@@ -129,6 +129,14 @@ export class TopBar extends React.Component {
                       Cadastrar
                     </Button>
                   </Button.Group>
+                </Menu.Item>
+                <Menu.Item className="mobile">
+                  <Icon link name="search"/>
+                  <Dropdown item icon='ellipsis vertical' simple>
+                    <Dropdown.Menu>
+                      <Dropdown.Item onClick={this.login}>Entrar</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </Menu.Item>
               </Otherwise>
             </Choose>
