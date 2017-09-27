@@ -11,12 +11,15 @@
       min-width: $spacer*8;
     }
 
+    .menu .item{
+      width: 100%;
+    }
+
     .search {
       input:focus {
         border-color: $orange;
       }
 
-      .item,
       .input {
         width: 100%;
       }
