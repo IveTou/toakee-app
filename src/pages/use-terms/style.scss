@@ -22,6 +22,10 @@
         line-height: normal;
       }
     }
+
+    .vertical.menu {
+      width: 100% !important;
+    }
   }
 
   &-text {
@@ -29,8 +33,7 @@
 
     &.column {
       .text {
-        max-width: 100% !important;
-        padding: 0 $spacer*10;
+        padding: 0 $spacer;
       }
     }
 
@@ -57,7 +60,6 @@
       }
 
       .vertical.menu {
-        width: 100% !important;
         font-size: medium;
       }
     }
