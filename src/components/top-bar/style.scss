@@ -11,16 +11,14 @@
       min-width: $spacer*8;
     }
 
-    .search input:focus {
-      border-color: $orange;
-    }
+    .search {
+      input:focus {
+        border-color: $orange;
+      }
 
-    .menu {
-      &.search {
-        .item,
-        .input {
-          width: 100%;
-        }
+      .item,
+      .input {
+        width: 100%;
       }
     }
   }

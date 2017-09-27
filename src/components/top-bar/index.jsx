@@ -87,7 +87,7 @@ export class TopBar extends React.Component {
           <Menu.Item className="logo">
             <Logo />
           </Menu.Item>
-          <Menu.Menu position="right search">
+          <Menu.Menu position="right">
             <Menu.Item>
               <Search
                 ref={(node) => { this._searchInput = node; }}
