@@ -4,28 +4,22 @@
 
 .TopBar {
   .ui.menu {
-    min-height: $topbar-height;
+    height: $topbar-height;
     background: $white;
 
-    .item.logo {
+    .item .logo {
       min-width: $spacer*8;
     }
 
     .search {
-      display: none;
-
-      input {
-        background: $white30;
-        font-size: large;
-        padding: $spacer $spacer*2;
-
-        &:focus {
-          border-color: $orange;
-        }
+      input:focus {
+        border-color: $orange;
       }
-    }
-    .button.signin {
-      display: none;
+
+      .item,
+      .input {
+        width: 100%;
+      }
     }
   }
 }
@@ -35,7 +29,7 @@
     .ui.menu {
       transition: .8s ease;
 
-      .item.logo {
+      .item .logo {
         min-width: $spacer*28;
       }
 
@@ -44,11 +38,9 @@
 
         input {
           color: $black54;
+          font-size: 18px;
+          padding: $spacer $spacer*2;
         }
-      }
-
-      .button.signin {
-        display: block;
       }
 
       .button.login {
@@ -65,10 +57,21 @@
       box-shadow: none;
       border: 0;
 
+      .button.TopBar-login  {
+        &:not(:hover) {
+          background: $white96 !important;
+        }
+
+        &:hover {
+          background: $white !important;
+        }
+      }
+
       .search {
         input {
           border-color: $white;
           color: $white;
+          background: $black26;
 
           &:focus {
             border-color: $white;

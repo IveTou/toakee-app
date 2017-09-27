@@ -58,7 +58,7 @@ class UseTerms extends React.Component {
       <DefaultLayout>
         <div className="UseTerms">
           <Grid columns={2} relaxed>
-            <If condition={!deviceInfo.isDesktop}>
+            <If condition={!deviceInfo().isDesktop}>
               <Element name="intro" className="element intro">
                 <Header as="h1">Toakee - Termos de Uso</Header>
                 <List>{this.renderList(intro)}</List>
@@ -80,7 +80,7 @@ class UseTerms extends React.Component {
             <Grid.Column className="UseTerms-text">
               <Container text>
                 <For each="clause" of={sections}>
-                  <If condition={clause.to !== 'intro' || deviceInfo.isDesktop}>
+                  <If condition={clause.to !== 'intro' || deviceInfo().isDesktop}>
                     <Element key={clause.to} name={clause.to} className="element">
                       <Header
                         className="UseTerms-text-header"
