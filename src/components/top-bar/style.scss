@@ -7,10 +7,8 @@
     height: $topbar-height;
     background: $white;
 
-    .item {
-      .logo {
-        min-width: $spacer*8;
-      }
+    .item .logo {
+      min-width: $spacer*8;
     }
 
     .menu {
@@ -19,13 +17,7 @@
       }
 
       .item.mobile {
-        padding: auto 0;
-      }
-    }
-
-    .search {
-      i {
-        display: none;
+        padding: 0;
       }
     }
   }
@@ -36,10 +28,8 @@
     .ui.menu {
       transition: .8s ease;
 
-      .item {
-        .logo {
-          min-width: $spacer*28;
-        }
+      .item .logo {
+        min-width: $spacer*28;
       }
 
       .menu {
@@ -64,10 +54,6 @@
           &:focus {
             border-color: $orange;
           }
-        }
-
-        i {
-          display: block;
         }
       }
 

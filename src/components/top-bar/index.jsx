@@ -122,7 +122,7 @@ export class TopBar extends React.Component {
                       Entrar
                     </Button>
                     <Button
-                      className="signin"
+                      className="signup"
                       onClick={this.signUp}
                       color="orange"
                     >
@@ -131,8 +131,7 @@ export class TopBar extends React.Component {
                   </Button.Group>
                 </Menu.Item>
                 <Menu.Item className="mobile">
-                  <Icon link name="search"/>
-                  <Dropdown item icon='ellipsis vertical' simple>
+                  <Dropdown item icon="ellipsis vertical" simple>
                     <Dropdown.Menu>
                       <Dropdown.Item onClick={this.login}>Entrar</Dropdown.Item>
                     </Dropdown.Menu>
