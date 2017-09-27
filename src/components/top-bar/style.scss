@@ -16,6 +16,13 @@
     }
 
     .menu {
+      &.search {
+        .item,
+        .input {
+          width: 100%;
+        }
+      }
+
       .item.desktop {
         display: none;
       }
