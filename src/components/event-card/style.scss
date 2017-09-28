@@ -29,6 +29,10 @@
     object-fit: cover;
   }
 
+  .card .image img {
+    height: 100% !important;
+  }
+
   &-details {
     &.extra.content {
       padding: 0;
