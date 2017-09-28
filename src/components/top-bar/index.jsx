@@ -134,14 +134,12 @@ export class TopBar extends React.Component {
                     </Menu.Item>
                   </When>
                   <Otherwise>
-                    <Menu.Item>
-                      <Dropdown item icon="ellipsis vertical" simple>
-                        <Dropdown.Menu>
-                          <Dropdown.Item onClick={this.login}>Entrar</Dropdown.Item>
-                          <Dropdown.Item onClick={this.signUp}>Cadastrar</Dropdown.Item>
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </Menu.Item>
+                    <Dropdown item icon="ellipsis vertical" simple>
+                      <Dropdown.Menu>
+                        <Dropdown.Item onClick={this.login}>Entrar</Dropdown.Item>
+                        <Dropdown.Item onClick={this.signUp}>Cadastrar</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
                   </Otherwise>
                 </Choose>
               </Otherwise>
