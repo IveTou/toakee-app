@@ -12,6 +12,12 @@
 
   &-content.card {
     margin: $spacer*8 auto 0 !important;
+
+    .SignUp .form p {
+      font-size: 12px;
+      text-align: center;
+      color: $black54;
+    }
   }
 
   &-link {
@@ -19,6 +25,7 @@
     text-align: center;
     color: $black54;
     text-decoration: none;
+    padding: $spacer 0;
 
     &:hover {
       color: $black87;

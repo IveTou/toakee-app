@@ -155,6 +155,11 @@ export class SignUp extends React.Component {
               color="orange"
               fluid
             />
+            <p>
+              Ao criar uma conta, você está concordando com os nossos&nbsp;
+              <Link to={{ pathname: '/termos-de-uso' }}>Termos de Uso</Link>
+              .
+            </p>
             <Link className="AuthWrapper-link" to={{ pathname: '/login' }}>
               Já possuo uma conta
             </Link>
