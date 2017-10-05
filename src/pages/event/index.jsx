@@ -41,7 +41,7 @@ export class EventPage extends React.Component {
   }
 
   toggleGallery() {
-    if (deviceInfo.isMobile) {
+    if (deviceInfo().isMobile) {
       this.props.history.push(`/evento/${this.props.viewer.events[0].slug}/fotos`);
     } else {
       const { galleryIsVisible } = this.state;

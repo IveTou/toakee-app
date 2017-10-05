@@ -4,7 +4,7 @@
 .EventPhotos {
   padding-top: $spacer*2;
 
-  .header {
+  .ui.header {
     margin: $spacer*2;
   }
 
@@ -12,12 +12,13 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    padding-left: 16px;
+    padding: 0;
+    margin: 0;
 
-    .image {
-      width: $spacer*19;
-      height: $spacer*19;
-      margin: 0;
+    img.image {
+      width: $spacer*16;
+      height: $spacer*16;
+      margin: $spacer;
       cursor: pointer;
       background-size: cover;
     }

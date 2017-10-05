@@ -83,6 +83,10 @@
       background: $transparent;
       box-shadow: none;
 
+      img {
+        box-shadow: 0 0 12px $black87;
+      }
+
       button {
         border: 2px solid $white30;
         margin: $spacer*2 auto;
