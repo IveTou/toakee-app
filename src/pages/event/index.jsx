@@ -75,7 +75,7 @@ export class EventPage extends React.Component {
     const { galleryIsVisible, loadGallery } = this.state;
     const { viewer = {} } = this.props;
     const [event] = (viewer.events || []);
-    const { title, description, place, start, price, flyer, photos = [] } = event || {};
+    const { title, description, place, start, price, prices, flyer, photos = [] } = event || {};
     const flyerAlt = `Flyer do ${title || 'evento'}`;
 
     const classes = classNames('EventPage', { 'EventPage--viewGallery': galleryIsVisible });
@@ -135,12 +135,24 @@ export class EventPage extends React.Component {
                   <span>{place.address}</span>
                 </div>
               </If>
-              <If condition={price}>
-                <div className="EventPage-details-info-item">
-                  <Icon name="dollar" />
-                  <span>{price}</span>
-                </div>
-              </If>
+              <Choose>
+                <When condition={prices && !!prices.length}>
+                  <div className="EventPage-details-info-item mult">
+                    <Icon name="dollar" />
+                    <span>
+                      {prices.map(cost => `${cost.description}: ${cost.value}`).join(' | ')}
+                    </span>
+                  </div>
+                </When>
+                <Otherwise>
+                  <If condition={price}>
+                    <div className="EventPage-details-info-item solo">
+                      <Icon name="dollar" />
+                      <span>{price}</span>
+                    </div>
+                  </If>
+                </Otherwise>
+              </Choose>
             </div>
 
             <div className="EventPage-details-body">
@@ -163,7 +175,6 @@ export class EventPage extends React.Component {
               <Image alt={flyerAlt} className="EventPage-flyer-img" src={flyer} />
               <If condition={photos.length}>
                 <Button
-                  className="EventPage-flyer-trigger"
                   onClick={this.toggleGallery}
                   size="large"
                   color="orange"
