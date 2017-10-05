@@ -28,7 +28,6 @@ export class EventPage extends React.Component {
       galleryIsVisible: false,
       currentImage: 0,
       loadGallery: false,
-      lastScrollTop: 0,
     };
     autoBind(this);
   }
@@ -45,13 +44,12 @@ export class EventPage extends React.Component {
     if (deviceInfo.isMobile) {
       this.props.history.push(`/evento/${this.props.viewer.events[0].slug}/fotos`);
     } else {
-      const { lastScrollTop, galleryIsVisible } = this.state;
+      const { galleryIsVisible } = this.state;
 
       this.setState({
         loadGallery: true,
         galleryIsVisible: !galleryIsVisible,
-        lastScrollTop: document.body.scrollTop,
-      }, () => { document.body.scrollTop = lastScrollTop; });
+      }, () => { window.scrollTo(0, 0); });
     }
   }
 
