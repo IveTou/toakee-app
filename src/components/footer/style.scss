@@ -27,8 +27,8 @@ $footer-color: #1d1d1d;
   }
 
   &-form {
-    &.ui {
-      max-width: $spacer*38;
+    &.ui.form {
+      max-width: $spacer*50;
       margin: auto;
     }
 
