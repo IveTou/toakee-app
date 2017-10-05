@@ -161,17 +161,17 @@ export class EventPage extends React.Component {
             />
             <Card>
               <Image alt={flyerAlt} className="EventPage-flyer-img" src={flyer} />
+              <If condition={photos.length}>
+                <Button
+                  className="EventPage-flyer-trigger"
+                  onClick={this.toggleGallery}
+                  size="large"
+                  color="orange"
+                >
+                  Ver {galleryIsVisible ? 'detalhes' : 'fotos'}
+                </Button>
+              </If>
             </Card>
-            <If condition={photos.length}>
-              <Button
-                className="EventPage-flyer-trigger"
-                onClick={this.toggleGallery}
-                size="big"
-                inverted
-              >
-                Ver {galleryIsVisible ? 'detalhes' : 'fotos'}
-              </Button>
-            </If>
           </Grid.Column>
         </Grid>
       </DefaultLayout>
