@@ -19,6 +19,7 @@ if (process.env.BROWSER) {
 
 declare var image;
 declare var index;
+declare var value;
 
 export class EventPage extends React.Component {
   constructor(props) {
@@ -133,24 +134,16 @@ export class EventPage extends React.Component {
                   <span>{place.address}</span>
                 </div>
               </If>
-              <Choose>
-                <When condition={prices && !!prices.length}>
-                  <div className="EventPage-details-info-item mult">
-                    <Icon name="dollar" />
-                    <span>
-                      {prices.map(cost => `${cost.description}: ${cost.value}`).join(' | ')}
-                    </span>
-                  </div>
-                </When>
-                <Otherwise>
-                  <If condition={price}>
-                    <div className="EventPage-details-info-item solo">
-                      <Icon name="dollar" />
-                      <span>{price}</span>
-                    </div>
-                  </If>
-                </Otherwise>
-              </Choose>
+              <If condition={prices || (prices && !!prices.length)}>
+                <div className="EventPage-details-info-item">
+                  <Icon name="dollar" />
+                  <With
+                    value={price || prices.map(p => `${p.description}: ${p.value}`).join(' | ')}
+                  >
+                    <span>{value}</span>
+                  </With>
+                </div>
+              </If>
             </div>
 
             <div className="EventPage-details-body">
