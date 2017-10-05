@@ -28,7 +28,6 @@ export class EventPage extends React.Component {
       galleryIsVisible: false,
       currentImage: 0,
       loadGallery: false,
-      lastScrollTop: 0,
     };
     autoBind(this);
   }
@@ -42,16 +41,15 @@ export class EventPage extends React.Component {
   }
 
   toggleGallery() {
-    if (deviceInfo.isMobile) {
+    if (deviceInfo().isMobile) {
       this.props.history.push(`/evento/${this.props.viewer.events[0].slug}/fotos`);
     } else {
-      const { lastScrollTop, galleryIsVisible } = this.state;
+      const { galleryIsVisible } = this.state;
 
       this.setState({
         loadGallery: true,
         galleryIsVisible: !galleryIsVisible,
-        lastScrollTop: document.body.scrollTop,
-      }, () => { document.body.scrollTop = lastScrollTop; });
+      }, () => { window.scrollTo(0, 0); });
     }
   }
 
@@ -75,7 +73,7 @@ export class EventPage extends React.Component {
     const { galleryIsVisible, loadGallery } = this.state;
     const { viewer = {} } = this.props;
     const [event] = (viewer.events || []);
-    const { title, description, place, start, price, flyer, photos = [] } = event || {};
+    const { title, description, place, start, price, prices, flyer, photos = [] } = event || {};
     const flyerAlt = `Flyer do ${title || 'evento'}`;
 
     const classes = classNames('EventPage', { 'EventPage--viewGallery': galleryIsVisible });
@@ -135,10 +133,12 @@ export class EventPage extends React.Component {
                   <span>{place.address}</span>
                 </div>
               </If>
-              <If condition={price}>
+              <If condition={price || (prices && !!prices.length)}>
                 <div className="EventPage-details-info-item">
                   <Icon name="dollar" />
-                  <span>{price}</span>
+                  <span>
+                    {price || prices.map(p => `${p.description}: ${p.value}`).join(' | ')}
+                  </span>
                 </div>
               </If>
             </div>
@@ -161,17 +161,16 @@ export class EventPage extends React.Component {
             />
             <Card>
               <Image alt={flyerAlt} className="EventPage-flyer-img" src={flyer} />
+              <If condition={photos.length}>
+                <Button
+                  onClick={this.toggleGallery}
+                  size="large"
+                  color="orange"
+                >
+                  Ver {galleryIsVisible ? 'detalhes' : 'fotos'}
+                </Button>
+              </If>
             </Card>
-            <If condition={photos.length}>
-              <Button
-                className="EventPage-flyer-trigger"
-                onClick={this.toggleGallery}
-                size="big"
-                inverted
-              >
-                Ver {galleryIsVisible ? 'detalhes' : 'fotos'}
-              </Button>
-            </If>
           </Grid.Column>
         </Grid>
       </DefaultLayout>

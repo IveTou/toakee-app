@@ -59,44 +59,45 @@
     height: $spacer*30;
     overflow: hidden;
 
-    &:hover {
-     .button {
-        opacity: 1;
 
-        &.slick{
-          &-prev {
-            left: $spacer*2;
-          }
+    button {
+      transition: .5s ease;
+      top: 45%;
+      position: absolute;
+      z-index: 10;
+      box-shadow: 0 0 8px $black;
+      display: block !important;
+      opacity: 0;
 
-          &-next {
-            right: $spacer*2;
-          }
+      &.slick{
+        &-prev {
+          left: $spacer*-2;
         }
+
+        &-next {
+          right: $spacer*-2;
+        }
+      }
+
+      &:hover {
+        box-shadow: 0 0 8px $black;
       }
     }
   }
 
-  .button {
-    top: 45%;
-    position: absolute;
-    z-index: 10;
-    box-shadow: 0 0 8px $black;
-    display: block !important;
-    opacity: 0;
-    transition: .5s ease;
+  &:hover {
+    button {
+      opacity: 1;
 
-    &.slick{
-      &-prev {
-        left: $spacer*-2;
+      &.slick{
+        &-prev {
+          left: $spacer*2;
+        }
+
+        &-next {
+          right: $spacer*2;
+        }
       }
-
-      &-next {
-        right: $spacer*-2;
-      }
-    }
-
-    &:hover {
-      box-shadow: 0 0 8px $black;
     }
   }
 
