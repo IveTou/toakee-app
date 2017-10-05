@@ -8,6 +8,7 @@ import autoBind from 'react-autobind';
 
 import { isLogged } from '~/src/utils/session';
 import { assetsUrl } from '~/src/utils/url';
+import MailingAPI from '~/src/toakee-core/apis/mailing';
 import { FACEBOOK_APP_ID, FACEBOOK_PAGE_URI } from '~/src/config';
 
 import { validateContact } from './validation';
@@ -42,10 +43,6 @@ class Footer extends React.Component {
     autoBind(this);
   }
 
-  componendDidMount() {
-    this.mailingApi = require('~/src/toakee-core/apis/mailing');
-  }
-
   handleChange(e, { name, value }) {
     if (name !== 'message' || value.length <= MESSAGE_LIMIT) {
       this.setState({
@@ -70,7 +67,7 @@ class Footer extends React.Component {
 
     if (!errors) {
       this.setState({ formState: FormState.LOADING });
-      this.mailingApi.send(form.email, form.name, form.message, form.subscribe)
+      MailingAPI.send(form.email, form.name, form.message, form.subscribe)
         .then(() => this.setState({ formState: FormState.DONE }))
         .catch(() => this.setState({ formState: FormState.ERROR }))
         .then(this.initCountdown);
