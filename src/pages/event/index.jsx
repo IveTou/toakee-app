@@ -4,12 +4,15 @@ import { Icon, Card, Image, Grid, Button } from 'semantic-ui-react';
 import Lightbox from 'react-images';
 import classNames from 'classnames';
 import autoBind from 'react-autobind';
+import MetaTags from 'react-meta-tags';
 
 import DefaultLayout from '~/src/layouts/default';
 import { deviceInfo } from '~/src/utils/device-info';
 import { isLogged } from '~/src/utils/session';
 import { fullDateFormat, timeFormat } from '~/src/utils/moment';
+import FacebookProvider, { Like } from 'react-facebook';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
+import { FACEBOOK_APP_ID } from '~/src/config';
 
 import query from './graphql';
 
@@ -80,6 +83,12 @@ export class EventPage extends React.Component {
 
     return (
       <DefaultLayout>
+        <MetaTags>
+          <title>{title}</title>
+          <meta id="og-title" property="og:title" content={title} />
+          <meta id="og-description" name="og:description" content={description} />
+          <meta id="og-image" property="og:image" content={flyer} />
+        </MetaTags>
         <Grid columns={2} className={classes}>
           <Grid.Column className="EventPage-gallery" mobile={16} tablet={8} computer={8}>
             <Lightbox
@@ -141,6 +150,11 @@ export class EventPage extends React.Component {
                   </span>
                 </div>
               </If>
+              <div className="EventPage-details-info-social">
+                <FacebookProvider appId={FACEBOOK_APP_ID}>
+                  <Like href={location.href} tabs="true" colorScheme="dark" showFaces="true" share />
+                </FacebookProvider>
+              </div>
             </div>
 
             <div className="EventPage-details-body">
