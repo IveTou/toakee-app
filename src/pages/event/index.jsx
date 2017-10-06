@@ -88,6 +88,7 @@ export class EventPage extends React.Component {
           <meta id="og-title" property="og:title" content={title} />
           <meta id="og-description" name="og:description" content={description} />
           <meta id="og-image" property="og:image" content={flyer} />
+          <meta id="og-url" property="og:url" content={location.href} />
         </MetaTags>
         <Grid columns={2} className={classes}>
           <Grid.Column className="EventPage-gallery" mobile={16} tablet={8} computer={8}>
