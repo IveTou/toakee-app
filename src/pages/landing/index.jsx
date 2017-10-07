@@ -4,7 +4,6 @@ import DefaultLayout from '~/src/layouts/default';
 import BannerCarousel from '~/src/components/banner-carousel';
 import EventBox from '~/src/components/event-box';
 
-
 if (process.env.BROWSER) {
   require('./style.scss');
 }

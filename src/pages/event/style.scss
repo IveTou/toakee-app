@@ -3,7 +3,7 @@
 @import '../../scss/colors';
 
 .EventPage {
-  margin-top: $spacer*2;
+  margin-top: $spacer*2 !important;
   position: relative;
 
   &--viewGallery .EventPage {
@@ -132,6 +132,10 @@
         margin: $spacer 0;
       }
 
+      &-social {
+        margin-top: $spacer*2;
+      }
+
       &:before {
         content: '';
         position: absolute;
@@ -200,11 +204,5 @@
     &--viewGallery .EventPage-flyer {
       margin-left: 100%;
     }
-  }
-}
-
-@include media(">tablet") {
-  .EventPage {
-    margin-top: $topbar-height + $spacer*2;
   }
 }
