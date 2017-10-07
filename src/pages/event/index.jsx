@@ -10,9 +10,7 @@ import DefaultLayout from '~/src/layouts/default';
 import { deviceInfo } from '~/src/utils/device-info';
 import { isLogged } from '~/src/utils/session';
 import { fullDateFormat, timeFormat } from '~/src/utils/moment';
-import FacebookProvider, { Like } from 'react-facebook';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
-import { FACEBOOK_APP_ID } from '~/src/config';
 
 import query from './graphql';
 
@@ -70,6 +68,16 @@ export class EventPage extends React.Component {
 
   closeLightBox() {
     this.setState({ lightboxIsOpen: false });
+  }
+
+  fbShare() {
+    FB.ui({
+      display: 'popup',
+      method: 'share',
+      mobile_iframe: true,
+      hashtag: '#eutoakee',
+      href: location.href,
+    });
   }
 
   render() {
@@ -152,9 +160,13 @@ export class EventPage extends React.Component {
                 </div>
               </If>
               <div className="EventPage-details-info-social">
-                <FacebookProvider appId={FACEBOOK_APP_ID}>
-                  <Like href={location.href} tabs="true" colorScheme="dark" showFaces="true" share />
-                </FacebookProvider>
+                <Button
+                  onClick={this.fbShare}
+                  color="facebook"
+                  size="small"
+                  content="Compartilhar"
+                  icon="share"
+                />
               </div>
             </div>
 
