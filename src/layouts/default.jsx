@@ -23,11 +23,13 @@ const DefaultLayout = ({ children, topbarTransparent, hideFooter }) => (
       <meta
         id="og-description"
         name="og:description"
-        content="Encontre o melhor evento da sua vida!" />
+        content="Encontre o melhor evento da sua vida!"
+      />
       <meta
         id="og-image"
         property="og:image"
-        content="${config.ASSETS_BASE_URI}/core/site/login-bg.jpg" />
+        content={`${config.ASSETS_BASE_URI}/core/site/login-bg.jpg`}
+      />
       <meta id="og-url" property="og:url" content={location.href} />
     </MetaTags>
     <TopBar transparent={topbarTransparent} />
