@@ -8,7 +8,15 @@ if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-const renderLabel = (start, end) => {
+const renderLabel = (status, start, end) => {
+  if (status !== 'ACTIVE') {
+    return {
+      content: status === 'PENDING' ? 'Pendente de aprovação' : 'Reprovado',
+      color: status === 'PENDING' ? 'blue' : 'red',
+      ribbon: true,
+    };
+  }
+
   const now = moment();
 
   if (end.isBefore(now) || start.isAfter(moment().add(4, 'hours'))) {
@@ -24,7 +32,7 @@ const renderLabel = (start, end) => {
   };
 };
 
-const EventCard = ({ event: { slug, title, place, flyer, start, end } }) => {
+const EventCard = ({ event: { slug, title, place, flyer, start, end, status } }) => {
   const startMoment = moment(start);
 
   return (
@@ -33,7 +41,7 @@ const EventCard = ({ event: { slug, title, place, flyer, start, end } }) => {
         <If condition={flyer}>
           <Image
             className="EventCard-background"
-            label={renderLabel(startMoment, moment(end))}
+            label={renderLabel(status, startMoment, moment(end))}
             alt={`flyer do ${title}`}
             src={flyer}
           />

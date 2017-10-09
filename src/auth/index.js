@@ -1,3 +1,2 @@
-import { getToken } from '~/src/utils/session';
-
-export const userIsLogged = () => getToken();
+export const userIsLogged = ({ id }) => !!id;
+export const userIsAdmin = ({ isAdmin }) => isAdmin;
