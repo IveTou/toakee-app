@@ -82,6 +82,7 @@ class NewEventPage extends React.Component {
   async onSubmit(e) {
     e.preventDefault();
 
+    const { history, viewer: { isAdmin } } = this.props;
     const {
       startDate,
       startTime,
@@ -99,6 +100,7 @@ class NewEventPage extends React.Component {
       end: moment(endDate.format(`YYYY-MM-DD [${endTime}]`)),
       description: description.toString('html'),
       prices: prices.filter(p => p.description && p.value),
+      status: isAdmin ? 'ACTIVE' : 'PENDING',
     };
 
     const errors = validateNewEvent(form);
@@ -108,8 +110,8 @@ class NewEventPage extends React.Component {
       const { url: flyerUrl } = await CloudinaryApi.uploadFlyer(this.state.flyer);
       const { data } = await this.props.createEvent({ ...form, flyer: flyerUrl });
       this.setState({ submitting: false });
-      if (!this.props.viewer.isAdmin) {
-        this.props.history.push(`/evento/${data.createEvent.slug}`);
+      if (!isAdmin) {
+        history.push(`/evento/${data.createEvent.slug}`);
       }
     }
   }
@@ -359,7 +361,7 @@ class NewEventPage extends React.Component {
 }
 
 NewEventPage.propTypes = {
-  history: PropTypes.object,
+  createEvent: PropTypes.func,
 };
 
 export default graphql(createEventMutation, {
@@ -367,4 +369,3 @@ export default graphql(createEventMutation, {
     createEvent: variables => mutate({ variables }),
   }),
 })(withViewer(NewEventPage));
-

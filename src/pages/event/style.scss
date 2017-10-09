@@ -74,8 +74,8 @@
 
     .ui.card {
       padding: $spacer/2;
-      width: 60%;
-      margin: $spacer*3 20%;
+      max-width: 60%;
+      margin: $spacer*3 auto;
       z-index: 1;
       position: sticky;
       top: $spacer*20;
@@ -100,6 +100,10 @@
         height: 100;
         top: 0;
         left: 0;
+      }
+
+      .ui.image {
+        width: 100%;
       }
     }
   }

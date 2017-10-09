@@ -83,8 +83,8 @@ EventList.propTypes = {
 };
 
 export default graphql(query, {
-  options: ({ start, end, categoryIds, strict }) => ({
-    variables: { start, end, skip: 0, categoryIds, limit: FEED_LIMIT, strict },
+  options: ({ start, end, categoryIds, strict, status = 'ACTIVE' }) => ({
+    variables: { start, end, skip: 0, categoryIds, limit: FEED_LIMIT, strict, status },
   }),
   props: ({ data: { viewer, fetchMore }, ownProps: { categoryIds } }) => ({
     viewer,
