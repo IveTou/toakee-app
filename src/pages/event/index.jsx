@@ -79,7 +79,8 @@ export class EventPage extends React.Component {
   }
 
   renderModerationButtons() {
-    const { setStatus, event: { status: eventStatus } } = this.props;
+    const { setStatus, event } = this.props;
+    const { status: eventStatus } = event || {};
     const buttonProps = [
       { label: 'Esconder', color: 'blue', status: 'PENDING' },
       { label: 'Reprovar', color: 'red', status: 'REPROVED' },
