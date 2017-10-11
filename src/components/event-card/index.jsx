@@ -9,7 +9,7 @@ if (process.env.BROWSER) {
 }
 
 const renderLabel = (status, start, end) => {
-  if (status !== 'ACTIVE') {
+  if (status === 'PENDING' || status === 'REPROVED') {
     return {
       content: status === 'PENDING' ? 'Pendente de aprovação' : 'Reprovado',
       color: status === 'PENDING' ? 'blue' : 'red',
