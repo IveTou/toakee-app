@@ -3,6 +3,8 @@
 @import '../../scss/variables';
 @import '../../scss/colors';
 
+$event-list-height: $spacer*39;
+
 .EventList {
   margin-bottom: $spacer*3;
   &-title {
@@ -19,7 +21,7 @@
     overflow-x: hidden;
     margin-left: $spacer*-1;
     white-space: nowrap;
-    min-height: $spacer*39;
+    min-height: $event-list-height;
 
     .EventListArrow {
       position: absolute;
@@ -58,7 +60,8 @@
       }
     }
 
-    &-end {
+    &-sensor {
+      margin-left: $spacer*3;
       display: inline-block;
       height: 100%;
       width: $spacer*3;

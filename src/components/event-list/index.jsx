@@ -57,7 +57,7 @@ class EventList extends React.Component {
 
     declare var event;
     declare var idx;
-    return !!events.length && (
+    return !!eventCount && (
       <div className="EventList">
         <div className="EventList-title">{title} ({eventCount})</div>
         <div className="EventList-list" ref={(dom) => { this._listDOM = dom; }}>
@@ -67,9 +67,10 @@ class EventList extends React.Component {
             <EventCard key={idx} event={event} />
           </For>
           <If condition={this.state.hasMore}>
-            <VisibilitySensor onChange={isVisible => (isVisible && this.fetchEvents())} />
+            <div className="EventList-list-sensor">
+              <VisibilitySensor onChange={isVisible => (isVisible && this.fetchEvents())} />
+            </div>
           </If>
-          <div className="EventList-list-end" />
         </div>
       </div>
     );
@@ -83,24 +84,40 @@ EventList.propTypes = {
 };
 
 export default graphql(query, {
-  options: ({ start, end, categoryIds, strict, status = 'ACTIVE' }) => ({
-    variables: { start, end, skip: 0, categoryIds, limit: FEED_LIMIT, strict, status },
+  options: ({ start, end, categoryIds, strict, forceFetch, status = 'ACTIVE' }) => ({
+    variables: {
+      start,
+      end,
+      skip: 0,
+      categoryIds,
+      limit: FEED_LIMIT,
+      strict,
+      status,
+      skipList: !forceFetch,
+      skipCount: false,
+    },
   }),
-  props: ({ data: { viewer, fetchMore }, ownProps: { categoryIds } }) => ({
+  props: ({ data: { viewer, fetchMore }, ownProps: { categoryIds, start: _start } }) => ({
     viewer,
     loadMore: () => {
-      const start = new Date(viewer.events[viewer.events.length - 1].start);
-      const skip = viewer.events
-        .filter(e => start.getTime() === new Date(e.start).getTime())
+      const { events = [] } = viewer;
+      const eventStart = events.length && new Date(events[events.length - 1].start);
+      const start = (eventStart && _start.isBefore(eventStart))
+        ? eventStart
+        : _start;
+
+      const skip = events.length && events
+        .filter(e => eventStart.getTime() === new Date(e.start).getTime())
         .length;
 
+      const strict = !!events.length;
+      const skipCount = true;
+      const skipList  = false;
+
+      console.log({ start, categoryIds, skip, strict: true, skipCount, skipList });
+
       return fetchMore({
-        variables: {
-          start: viewer.events[viewer.events.length - 1].start,
-          categoryIds,
-          skip,
-          strict: true,
-        },
+        variables: { start, categoryIds, skip, strict, skipCount, skipList },
         updateQuery: (previousResult, { fetchMoreResult }) => (
           !fetchMoreResult
             ? previousResult
@@ -108,7 +125,7 @@ export default graphql(query, {
               viewer: {
                 ...previousResult.viewer,
                 events: [
-                  ...previousResult.viewer.events,
+                  ...(previousResult.viewer.events || []),
                   ...fetchMoreResult.viewer.events,
                 ],
               },

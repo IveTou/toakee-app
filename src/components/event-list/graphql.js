@@ -8,12 +8,19 @@ export const query = gql`
     $categoryIds: [String],
     $limit: Int,
     $strict: Boolean,
-    $status: EventStatus
+    $status: EventStatus,
+    $skipList: Boolean,
+    $skipCount: Boolean!
   ) {
     viewer {
       id
 
-      eventCount(start: $start, end: $end, categoryIds: $categoryIds, status: $status)
+      eventCount(
+        start: $start,
+        end: $end,
+        categoryIds: $categoryIds,
+        status: $status
+      ) @skip(if: $skipCount)
 
       events(
         start: $start,
@@ -23,6 +30,7 @@ export const query = gql`
         limit: $limit,
         strict: $strict,
         status: $status,
+        forceEmpty: $skipList,
       ) {
         id
         slug
