@@ -39,7 +39,7 @@ export const validateNewEvent = obj => validate(obj, {
   },
   title: { presence },
   place: { presence },
-  prices: prices => ({ prices: prices.length > 1 }),
+  prices: prices => ({ prices: prices && prices.length > 1 }),
   start: {
     presence,
     datetime: {

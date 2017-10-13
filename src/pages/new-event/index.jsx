@@ -103,7 +103,7 @@ class NewEventPage extends React.Component {
       end: moment(endDate.format(`YYYY-MM-DD [${endTime}]`)),
       description: description.toString('html'),
       price: prices.length > 1 ? undefined : price,
-      prices,
+      prices: prices.length === 1 ? undefined : prices,
       place: pick(place, ['googlePlacesId']),
       status: isAdmin ? 'ACTIVE' : 'PENDING',
     };
