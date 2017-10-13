@@ -18,12 +18,14 @@ import Login from '~/src/components/auth-wrapper/login';
 import SignUp from '~/src/components/auth-wrapper/sign-up';
 import Scroller from '~/src/components/scroller';
 import ViewerProvider from '~/src/components/viewer-provider';
+import Snackbar from '~/src/components/snackbar';
 
 import { userIsLogged, userIsAdmin } from '~/src/auth';
 
 const App = () => (
   <ViewerProvider>
     <Scroller />
+    <Snackbar />
     <Switch>
       <ProtectedRoute
         auth={userIsLogged}

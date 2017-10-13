@@ -1,14 +1,16 @@
 import React, { PropTypes } from 'react';
 import { graphql } from 'react-apollo';
+import { connect } from 'react-redux';
 import { Grid, Card, Header, Form, Icon, Image, Button, Popup } from 'semantic-ui-react';
 import DateTime from 'react-datetime';
-import { range, xor, includes, pick, omit } from 'lodash';
+import { range, xor, includes, pick } from 'lodash';
 import Dropzone from 'react-dropzone';
 import autoBind from 'react-autobind';
 import moment from 'moment';
 import RichTextEditor from 'react-rte/lib/RichTextEditor';
 import classNames from 'classnames';
 
+import { showSnackbar } from '~/src/ducks/snackbar';
 import { withViewer } from '~/src/hocs';
 import DefaultLayout from '~/src/layouts/default';
 import PlacesAutocomplete from '~/src/components/places-autocomplete';
@@ -64,10 +66,7 @@ class NewEventPage extends React.Component {
   }
 
   onChange(e, { name, value }) {
-    this.setState({
-      [name]: value,
-      errors: omit(this.state.errors, name),
-    });
+    this.setState({ [name]: value });
   }
 
   onChangePrice(e) {
@@ -94,16 +93,18 @@ class NewEventPage extends React.Component {
       selectedCategories,
       price,
       prices,
+      place,
     } = this.state;
 
     const form = {
-      ...pick(this.state, ['flyer', 'title', 'place']),
+      ...pick(this.state, ['flyer', 'title']),
       categories: selectedCategories.map(id => ({ id })),
       start: moment(startDate.format(`YYYY-MM-DD [${startTime}]`)),
       end: moment(endDate.format(`YYYY-MM-DD [${endTime}]`)),
       description: description.toString('html'),
       price: prices.length > 1 ? undefined : price,
       prices,
+      place: pick(place, ['googlePlacesId']),
       status: isAdmin ? 'ACTIVE' : 'PENDING',
     };
 
@@ -114,9 +115,12 @@ class NewEventPage extends React.Component {
       const { url: flyerUrl } = await CloudinaryApi.uploadFlyer(this.state.flyer);
       const { data } = await this.props.createEvent({ ...form, flyer: flyerUrl });
       this.setState({ submitting: false });
+      this.props.alertSuccess();
       if (!isAdmin) {
-        history.push(`/evento/${data.createEvent.slug}`);
+        setTimeout(() => history.push(`/evento/${data.createEvent.slug}`), 2000);
       }
+    } else {
+      this.props.alertError();
     }
   }
 
@@ -159,6 +163,12 @@ class NewEventPage extends React.Component {
       prices,
       selectedCategories,
       flyer = {},
+      place,
+      title,
+      startDate,
+      startTime,
+      endDate,
+      endTime,
     } = this.state;
     const priceErrors = (errors.prices || [{}])[0];
 
@@ -180,7 +190,7 @@ class NewEventPage extends React.Component {
                           <Dropzone
                             className={
                               classNames('NewEventPage-basics-content-dropzone', {
-                                'NewEventPage-basics-content-dropzone--error': errors.flyer
+                                'NewEventPage-basics-content-dropzone--error': errors.flyer,
                               })
                             }
                             multiple={false}
@@ -210,6 +220,7 @@ class NewEventPage extends React.Component {
                           <Form.Input
                             name="title"
                             placeholder="Título"
+                            value={title}
                             onChange={this.onChange}
                             error={!!errors.title}
                           />
@@ -219,9 +230,11 @@ class NewEventPage extends React.Component {
                             <Form.Input
                               name="place"
                               placeholder="Local"
+                              value={place.value}
                               control={PlacesAutocomplete}
-                              onResultSelect={this.onChange}
                               error={!!errors.place}
+                              onChange={this.onChange}
+                              onResultSelect={this.onChange}
                             />
                           </div>
                         </ErrorWrapper>
@@ -237,6 +250,7 @@ class NewEventPage extends React.Component {
                                 timeFormat={false}
                                 control={DateTime}
                                 width={10}
+                                value={startDate}
                                 onChange={t => (
                                   this.onChange({}, { name: 'startDate', value: t })
                                 )}
@@ -248,6 +262,7 @@ class NewEventPage extends React.Component {
                                 control="input"
                                 name="startTime"
                                 width={8}
+                                value={startTime}
                                 onChange={e => this.onChange(e, e.target)}
                                 error={!!errors.start}
                               />
@@ -263,6 +278,7 @@ class NewEventPage extends React.Component {
                                 control={DateTime}
                                 name="endDate"
                                 width={10}
+                                value={endDate}
                                 onChange={t => (
                                   this.onChange({}, { name: 'endDate', value: t })
                                 )}
@@ -275,6 +291,7 @@ class NewEventPage extends React.Component {
                                 name="endTime"
                                 width={8}
                                 onChange={e => this.onChange(e, e.target)}
+                                value={endTime}
                                 error={!!errors.end}
                               />
                             </Form.Group>
@@ -399,11 +416,25 @@ class NewEventPage extends React.Component {
 }
 
 NewEventPage.propTypes = {
-  createEvent: PropTypes.func,
+  alertError: PropTypes.func,
 };
 
-export default graphql(createEventMutation, {
+const NewEventPageWithMutation = graphql(createEventMutation, {
   props: ({ mutate }) => ({
     createEvent: variables => mutate({ variables }),
   }),
 })(withViewer(NewEventPage));
+
+export default connect(
+  () => ({}),
+  dispatch => ({
+    alertError: () => dispatch(showSnackbar({
+      message: 'Encontramos erros no formulário, verifique os campos em vermelho...',
+      color: 'red',
+    })),
+    alertSuccess: () => dispatch(showSnackbar({
+      message: 'Evento criado com sucesso!',
+      color: 'green',
+    })),
+  }),
+)(NewEventPageWithMutation);
