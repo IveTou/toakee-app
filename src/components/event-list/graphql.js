@@ -8,11 +8,12 @@ export const query = gql`
     $categoryIds: [String],
     $limit: Int,
     $strict: Boolean,
+    $status: EventStatus
   ) {
     viewer {
       id
 
-      eventCount(start: $start, end: $end, categoryIds: $categoryIds)
+      eventCount(start: $start, end: $end, categoryIds: $categoryIds, status: $status)
 
       events(
         start: $start,
@@ -21,6 +22,7 @@ export const query = gql`
         skip: $skip,
         limit: $limit,
         strict: $strict,
+        status: $status,
       ) {
         id
         slug
@@ -28,6 +30,7 @@ export const query = gql`
         flyer
         start
         end
+        status
 
         place { id, name, address }
       }

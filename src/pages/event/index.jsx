@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import { Icon, Card, Image, Grid, Button } from 'semantic-ui-react';
 import Lightbox from 'react-images';
 import classNames from 'classnames';
@@ -11,15 +11,13 @@ import { deviceInfo } from '~/src/utils/device-info';
 import { isLogged } from '~/src/utils/session';
 import { fullDateFormat, timeFormat } from '~/src/utils/moment';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
+import { withViewer } from '~/src/hocs';
 
-import query from './graphql';
+import query, { setEventStatusMutation } from './graphql';
 
 if (process.env.BROWSER) {
   require('./style.scss');
 }
-
-declare var image;
-declare var index;
 
 export class EventPage extends React.Component {
   constructor(props) {
@@ -80,14 +78,41 @@ export class EventPage extends React.Component {
     });
   }
 
+  renderModerationButtons() {
+    const { setStatus, event } = this.props;
+    const { status: eventStatus } = event || {};
+    const buttonProps = [
+      { label: 'Esconder', color: 'blue', status: 'PENDING' },
+      { label: 'Reprovar', color: 'red', status: 'REPROVED' },
+      { label: 'Aprovar', color: 'green', status: 'ACTIVE' },
+    ];
+
+    return buttonProps.map(({ label, color, status }) => (
+      <Button color={color} basic={status !== eventStatus} onClick={() => setStatus(status)}>
+        {label}
+      </Button>
+    ));
+  }
+
   render() {
     const { galleryIsVisible, loadGallery } = this.state;
-    const { viewer = {} } = this.props;
-    const [event] = (viewer.events || []);
-    const { title, description, place, start, price, prices, flyer, photos = [] } = event || {};
+    const { viewer = {}, event = {} } = this.props;
+    const {
+      title,
+      description,
+      place,
+      start,
+      flyer,
+      price,
+      prices = [],
+      photos = [],
+    } = event;
     const flyerAlt = `Flyer do ${title || 'evento'}`;
 
     const classes = classNames('EventPage', { 'EventPage--viewGallery': galleryIsVisible });
+
+    declare var image;
+    declare var index;
 
     return (
       <DefaultLayout>
@@ -188,6 +213,9 @@ export class EventPage extends React.Component {
             />
             <Card>
               <Image alt={flyerAlt} className="EventPage-flyer-img" src={flyer} />
+              <If condition={viewer.isAdmin}>
+                <Button.Group>{this.renderModerationButtons()}</Button.Group>
+              </If>
               <If condition={photos.length}>
                 <Button
                   onClick={this.toggleGallery}
@@ -206,13 +234,45 @@ export class EventPage extends React.Component {
 }
 
 EventPage.propTypes = {
+  event: PropTypes.object,
   viewer: PropTypes.object,
   history: PropTypes.object,
+  setStatus: PropTypes.func,
 };
 
-export default graphql(query, {
+const injectSetEventStatusMutation = graphql(setEventStatusMutation, {
+  props: ({ mutate, ownProps: { event } }) => ({
+    setStatus: (status) => {
+      const { slug, id: eventId } = event;
+
+      return mutate({
+        variables: { eventId, status },
+        update: (store, { data: { updateEvent } }) => {
+          const data = store.readQuery({ query, variables: { slug } });
+          if (updateEvent) {
+            data.event.status = status;
+          }
+
+          store.writeQuery({ query, data });
+        },
+        optimisticResponse: {
+          __typename: 'Mutation',
+          updateEvent: true,
+        },
+      });
+    },
+  }),
+});
+
+const injectData = graphql(query, {
   options: ({ match }) => ({
     variables: { slug: match.params.slug },
   }),
-  props: ({ data: { viewer } }) => ({ viewer }),
-})(EventPage);
+  props: ({ data: { event } }) => ({ event }),
+});
+
+export default compose(
+  injectData,
+  injectSetEventStatusMutation,
+)(withViewer(EventPage));
+

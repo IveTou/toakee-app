@@ -13,12 +13,15 @@ import ReactDOMServer from 'react-dom/server';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { pick } from 'lodash';
+import moment from 'moment';
 
 import '~/src/server/globals';
 import rootReducer from '~/src/ducks';
 import App from '~/src/app';
 
 import config from './config';
+
+moment.locale('pt-br');
 
 const createStoreWithMiddleware = applyMiddleware(
   thunkMiddleware,

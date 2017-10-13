@@ -11,6 +11,7 @@ export const createEventMutation = gql`
     $end: Date,
     $place: PlaceInput,
     $categories: [CategoryInput],
+    $status: EventStatus,
   ) {
     createEvent(
       title: $title,
@@ -22,8 +23,10 @@ export const createEventMutation = gql`
       end: $end,
       place: $place,
       categories: $categories,
+      status: $status,
     ) {
       slug,
+      status,
     }
   }
 `;

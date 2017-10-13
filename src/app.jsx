@@ -12,13 +12,14 @@ import Landing from '~/src/pages/landing';
 import Dashboard from '~/src/pages/dashboard';
 import UseTerms from '~/src/pages/use-terms';
 import About from '~/src/pages/about';
+import EventModeration from '~/src/pages/event-moderation';
 
 import Login from '~/src/components/auth-wrapper/login';
 import SignUp from '~/src/components/auth-wrapper/sign-up';
 import Scroller from '~/src/components/scroller';
 import ViewerProvider from '~/src/components/viewer-provider';
 
-import { userIsLogged } from '~/src/auth';
+import { userIsLogged, userIsAdmin } from '~/src/auth';
 
 const App = () => (
   <ViewerProvider>
@@ -29,6 +30,13 @@ const App = () => (
         component={EventFeed}
         path="/"
         redirectTo="/landing"
+        exact
+      />
+      <ProtectedRoute
+        auth={userIsAdmin}
+        component={EventModeration}
+        path="/moderacao"
+        redirectTo="/login"
         exact
       />
       <Route path="/landing" component={Landing} />
