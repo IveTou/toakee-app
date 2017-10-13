@@ -8,11 +8,10 @@ import { Menu, Dropdown, Image, Label, Icon, Button, Search, Visibility } from '
 import classNames from 'classnames';
 import qs from 'query-string';
 
-import { deviceInfo } from '~/src/utils/device-info';
 import { isLogged, logout } from '~/src/utils/session';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import Logo from '~/src/components/logo';
-import { withViewer } from '~/src/hocs';
+import { withInfo } from '~/src/hocs';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -113,7 +112,7 @@ export class TopBar extends React.Component {
               </When>
               <Otherwise>
                 <Choose>
-                  <When condition={deviceInfo().isDesktop}>
+                  <When condition={this.props.deviceInfo.is('desktop')}>
                     <Menu.Item>
                       <Button.Group>
                         <Button
@@ -157,6 +156,7 @@ TopBar.propTypes = {
   history: PropTypes.object,
   location: PropTypes.object,
   client: PropTypes.object,
+  deviceInfo: PropTypes.object,
 };
 
-export default withApollo(withRouter(withViewer(TopBar)));
+export default withApollo(withRouter(withInfo(TopBar, ['viewer', 'deviceInfo'])));

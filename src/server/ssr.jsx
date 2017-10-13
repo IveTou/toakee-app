@@ -31,8 +31,6 @@ const reduxStore = createStoreWithMiddleware(rootReducer);
 
 export const exposeSSRRoutes = (app, assets) => {
   app.get('*', (req, res) => {
-    window.navigator = { userAgent: req.headers['user-agent'] };
-
     const { token } = req.cookies;
     const headers = token ? { authorization: `Bearer ${token}` } : {};
     localStorage.getItem = () => token;
@@ -48,7 +46,7 @@ export const exposeSSRRoutes = (app, assets) => {
     const apolloApp = (
       <ApolloProvider client={client} store={reduxStore}>
         <StaticRouter location={req.url} context={{}}>
-          <App />
+          <App userAgent={req.headers['user-agent']} />
         </StaticRouter>
       </ApolloProvider>
     );

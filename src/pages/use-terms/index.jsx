@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import { Link, Element } from 'react-scroll';
 import { Container, Grid, Header, List, Menu } from 'semantic-ui-react';
@@ -6,8 +6,7 @@ import autoBind from 'react-autobind';
 import classNames from 'classnames';
 
 import DefaultLayout from '~/src/layouts/default';
-
-import { deviceInfo } from '~/src/utils/device-info';
+import { withInfo } from '~/src/hocs';
 
 import intro from './intro.js';
 import general from './general.js';
@@ -58,7 +57,7 @@ class UseTerms extends React.Component {
       <DefaultLayout>
         <div className="UseTerms">
           <Grid columns={2} relaxed>
-            <If condition={!deviceInfo().isDesktop}>
+            <If condition={!this.props.deviceInfo.is('desktop')}>
               <Element name="intro" className="element intro">
                 <Header as="h1">Toakee - Termos de Uso</Header>
                 <List>{this.renderList(intro)}</List>
@@ -80,7 +79,7 @@ class UseTerms extends React.Component {
             <Grid.Column className="UseTerms-text">
               <Container text>
                 <For each="clause" of={sections}>
-                  <If condition={clause.to !== 'intro' || deviceInfo().isDesktop}>
+                  <If condition={clause.to !== 'intro' || this.props.deviceInfo.is('desktop')}>
                     <Element key={clause.to} name={clause.to} className="element">
                       <Header
                         className="UseTerms-text-header"
@@ -112,4 +111,8 @@ class UseTerms extends React.Component {
   }
 }
 
-export default UseTerms;
+UseTerms.propTypes = {
+  deviceInfo: PropTypes.object,
+};
+
+export default withInfo(UseTerms, ['deviceInfo']);
