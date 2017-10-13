@@ -112,9 +112,7 @@ export default graphql(query, {
 
       const strict = !!events.length;
       const skipCount = true;
-      const skipList  = false;
-
-      console.log({ start, categoryIds, skip, strict: true, skipCount, skipList });
+      const skipList = false;
 
       return fetchMore({
         variables: { start, categoryIds, skip, strict, skipCount, skipList },
