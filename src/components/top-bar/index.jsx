@@ -40,7 +40,7 @@ export class TopBar extends React.Component {
 
   onSearch(e) {
     if (e.key === 'Enter') {
-      this.props.history.push({ pathname: '/search', search: `?q=${e.target.value}` });
+      this.props.history.push(`/search?q=${e.target.value}`);
     }
   }
 
@@ -103,7 +103,7 @@ export class TopBar extends React.Component {
                 <Dropdown item trigger={this.renderAvatar()} icon={null}>
                   <Dropdown.Menu>
                     <If condition={viewer.isPromoter}>
-                      <Dropdown.Item as={Link} to={{ pathname: '/dashboard' }}>
+                      <Dropdown.Item as={Link} to="/dashboard">
                         Meus eventos
                       </Dropdown.Item>
                     </If>

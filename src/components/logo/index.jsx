@@ -18,7 +18,7 @@ const logoImg = () => (
 const classes = () => classNames('Logo', { 'Logo--small': !deviceInfo().isDesktop });
 
 const Logo = () => (
-  <Link to={{ pathname: '/' }} >
+  <Link to="/">
     <img className={classes()} alt="toakee logo" src={logoImg()} />
   </Link>
 );

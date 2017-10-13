@@ -157,10 +157,10 @@ export class SignUp extends React.Component {
             />
             <p>
               Ao criar uma conta, você está concordando com os nossos&nbsp;
-              <Link to={{ pathname: '/termos-de-uso' }}>Termos de Uso</Link>
+              <Link to="/termos-de-uso">Termos de Uso</Link>
               .
             </p>
-            <Link className="AuthWrapper-link" to={{ pathname: '/login' }}>
+            <Link className="AuthWrapper-link" to="/login">
               Já possuo uma conta
             </Link>
           </Form>

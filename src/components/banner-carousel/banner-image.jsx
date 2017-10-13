@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router-dom';
 
 const BannerImage = ({ title, subtitle, img, url, ...slickProps }) => (
-  <Link {...slickProps} to={{ pathname: `${url}` }}>
+  <Link {...slickProps} to={url}>
     <div className="BannerImage" style={{ backgroundImage: `url(${img})` }}>
       <div className="BannerImage-content">
         <div className="BannerImage-content-title">{title}</div>
