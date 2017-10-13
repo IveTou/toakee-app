@@ -1,6 +1,6 @@
 import validate from 'validate.js';
 
-validate.validators.presence.options = { message: 'Favor preencher todos os dados.' };
+validate.validators.presence.options = { message: 'Favor preencher este campo.' };
 validate.options = { fullMessages: false };
 
 const presence = true;

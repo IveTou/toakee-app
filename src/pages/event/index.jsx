@@ -88,7 +88,12 @@ export class EventPage extends React.Component {
     ];
 
     return buttonProps.map(({ label, color, status }) => (
-      <Button color={color} basic={status !== eventStatus} onClick={() => setStatus(status)}>
+      <Button
+        key={label}
+        color={color}
+        basic={status !== eventStatus}
+        onClick={() => setStatus(status)}
+      >
         {label}
       </Button>
     ));

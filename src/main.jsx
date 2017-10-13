@@ -38,6 +38,7 @@ networkInterface.use([{
 const apolloClient = new ApolloClient({
   initialState: window.__APOLLO_STATE__,
   networkInterface,
+  shouldBatch: true,
 });
 
 const createStoreWithMiddleware = applyMiddleware(

@@ -8,6 +8,7 @@ $white: #fff;
 
 $green: #92b329;
 $orange: #ff6600;
+$red: #db2828;
 
 $white96: rgba($white, .96);
 $white30: rgba($white, .30);
@@ -35,6 +36,9 @@ $orange400: lighten($orange, 10%);
 $orange500: $orange;
 $orange600: darken($orange, 10%);
 $orange800: darken($orange, 30%);
+
+$red50: lighten($red, 45%);
+$red100: lighten($red, 40%);
 
 $transparent: rgba($white, 0);
 

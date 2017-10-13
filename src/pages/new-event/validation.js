@@ -16,7 +16,18 @@ validate.validators.file = (value = {}, options) => (
     : null
 );
 
-validate.validators.presence.options = { message: 'Favor preencher todos os dados.' };
+validate.validators.prices = (values = []) => (
+  values.reduce((errors, v, i) => (
+    (!v.value || !v.description)
+      ? {
+        ...errors,
+        [`${i}:value`]: !v.value && ['Favor preencher o valor'],
+        [`${i}:description`]: !v.description && ['Favor preencher a descrição'],
+      } : errors
+  ), {}) || null
+);
+
+validate.validators.presence.options = { message: 'Favor preencher este campo.' };
 validate.options = { fullMessages: false };
 
 const presence = true;
@@ -28,6 +39,7 @@ export const validateNewEvent = obj => validate(obj, {
   },
   title: { presence },
   place: { presence },
+  prices: prices => ({ prices: prices.length > 1 }),
   start: {
     presence,
     datetime: {
