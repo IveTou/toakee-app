@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import ProtectedRoute from '~/src/routes/protected';
