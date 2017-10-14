@@ -278,5 +278,6 @@ const injectData = graphql(query, {
 export default compose(
   injectData,
   injectSetEventStatusMutation,
-)(withInfo(EventPage, ['viewer', 'deviceInfo']));
+  withInfo(['viewer', 'deviceInfo']),
+)(EventPage);
 

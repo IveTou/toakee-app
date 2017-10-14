@@ -2,9 +2,11 @@ import React, { PropTypes } from 'react';
 import { graphql } from 'react-apollo';
 import autoBind from 'react-autobind';
 import VisibilitySensor from 'react-visibility-sensor';
+import { range } from 'lodash';
 
 import { ease } from '~/src/utils/animation';
 import EventCard from '~/src/components/event-card';
+import EventCardPlaceholder from '~/src/components/event-card/placeholder';
 
 import EventListArrow from './arrow';
 import { query } from './graphql';
@@ -56,6 +58,7 @@ class EventList extends React.Component {
       && !this.state.hasMore;
 
     declare var event;
+    declare var placeholder;
     declare var idx;
     return !!eventCount && (
       <div className="EventList">
@@ -67,9 +70,10 @@ class EventList extends React.Component {
             <EventCard key={idx} event={event} />
           </For>
           <If condition={this.state.hasMore}>
-            <div className="EventList-list-sensor">
-              <VisibilitySensor onChange={isVisible => (isVisible && this.fetchEvents())} />
-            </div>
+            <VisibilitySensor onChange={isVisible => (isVisible && this.fetchEvents())} />
+            <For each="placeholder" of={range(Math.min(5, eventCount - events.length))}>
+              <EventCardPlaceholder key={placeholder} />
+            </For>
           </If>
         </div>
       </div>

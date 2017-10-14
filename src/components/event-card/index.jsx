@@ -46,7 +46,7 @@ const EventCard = ({ event: { slug, title, place, flyer, start, end, status } })
             src={flyer}
           />
         </If>
-        <Card.Content>
+        <Card.Content className="EventCard-main">
           <Card.Header><span title={title}>{title}</span></Card.Header>
           <Card.Meta>{place.name}</Card.Meta>
         </Card.Content>

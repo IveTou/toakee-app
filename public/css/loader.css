@@ -1,13 +1,13 @@
-.loader,
-.loader:before,
-.loader:after {
+.Loader,
+.Loader:before,
+.Loader:after {
   background: #ff8200;
   -webkit-animation: load1 1s infinite ease-in-out;
   animation: load1 1s infinite ease-in-out;
   width: 1em;
   height: 4em;
 }
-.loader {
+.Loader {
   color: #ff8000;
   text-indent: -9999em;
   margin: 88px auto;
@@ -19,18 +19,18 @@
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
 }
-.loader:before,
-.loader:after {
+.Loader:before,
+.Loader:after {
   position: absolute;
   top: 0;
   content: '';
 }
-.loader:before {
+.Loader:before {
   left: -1.5em;
   -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s;
 }
-.loader:after {
+.Loader:after {
   left: 1.5em;
 }
 @-webkit-keyframes load1 {

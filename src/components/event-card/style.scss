@@ -3,6 +3,7 @@
 @import '../../scss/variables';
 @import '../../scss/colors';
 
+.EventCardPlaceholder,
 .EventCard {
   margin: $spacer 0 $spacer $spacer*3;
   max-width: $spacer*30;
@@ -35,10 +36,8 @@
   }
 
   &-details {
-    &.extra.content {
-      padding: 0;
-      overflow: hidden;
-    }
+    padding: 0 !important;
+    overflow: hidden;
 
     &-calendar {
       color: $black54;
@@ -71,13 +70,31 @@
   }
 }
 
+.EventCardPlaceholder {
+  position: relative;
+  z-index: 0;
+
+  .ui.card {
+    margin: 0;
+
+    * {
+      color: transparent !important;
+    }
+  }
+}
+
 @include media("<tablet") {
+  .EventCardPlaceholder,
   .EventCard {
     width: 100%;
 
     &-background,
     &-background.image img {
       height: $spacer*16;
+    }
+
+    &-main {
+      padding: $spacer !important;
     }
 
     &-content {

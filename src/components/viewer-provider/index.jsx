@@ -15,7 +15,7 @@ export class ViewerProvider extends React.Component {
 
 ViewerProvider.propTypes = {
   viewer: PropTypes.object,
-  loading: PropTypes.boolean,
+  loading: PropTypes.bool,
   children: React.PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,

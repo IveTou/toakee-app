@@ -12,8 +12,14 @@ const availableInfo = {
   deviceInfo: PropTypes.object,
 };
 
-export const withInfo = (Component, info) => {
+const infoHoc = (Component, info) => {
   const ComponentWithInfo = (props, contextProps) => <Component {...contextProps} {...props} />;
   ComponentWithInfo.contextTypes = pick(availableInfo, info);
   return ComponentWithInfo;
 };
+
+export const withInfo = (componentOrInfo, info) => (
+  info
+    ? infoHoc(componentOrInfo, info)
+    : Component => infoHoc(Component, componentOrInfo)
+);
