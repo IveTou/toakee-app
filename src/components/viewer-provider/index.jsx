@@ -9,12 +9,13 @@ export class ViewerProvider extends React.Component {
   }
 
   render() {
-    return <div>{this.props.children}</div>;
+    return this.props.loading ? <div className="loader" /> : <div>{this.props.children}</div>;
   }
 }
 
 ViewerProvider.propTypes = {
   viewer: PropTypes.object,
+  loading: PropTypes.boolean,
   children: React.PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
@@ -26,5 +27,5 @@ ViewerProvider.childContextTypes = {
 };
 
 export default graphql(query, {
-  props: ({ data: { viewer } }) => ({ viewer }),
+  props: ({ data: { viewer, loading } }) => ({ viewer, loading }),
 })(ViewerProvider);

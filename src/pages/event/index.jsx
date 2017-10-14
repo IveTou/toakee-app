@@ -7,7 +7,6 @@ import autoBind from 'react-autobind';
 import MetaTags from 'react-meta-tags';
 
 import DefaultLayout from '~/src/layouts/default';
-import { isLogged } from '~/src/utils/session';
 import { fullDateFormat, timeFormat } from '~/src/utils/moment';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import { withInfo } from '~/src/hocs';
@@ -31,7 +30,7 @@ export class EventPage extends React.Component {
   }
 
   componentWillReceiveProps({ viewer }) {
-    if (!isLogged()) {
+    if (!viewer.id) {
       TrackingAPI.track('Unlogged Event Page View', 'Guest');
     } else if (viewer) {
       TrackingAPI.track('Logged Event Page View', viewer.id);

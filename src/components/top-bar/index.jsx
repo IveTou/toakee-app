@@ -8,7 +8,7 @@ import { Menu, Dropdown, Image, Label, Icon, Button, Search, Visibility } from '
 import classNames from 'classnames';
 import qs from 'query-string';
 
-import { isLogged, logout } from '~/src/utils/session';
+import { logout } from '~/src/utils/session';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import Logo from '~/src/components/logo';
 import { withInfo } from '~/src/hocs';
@@ -30,7 +30,7 @@ export class TopBar extends React.Component {
     this._searchInput.setValue(qs.parse(location.search).q || '');
     this.setState({ transparent });
 
-    if (!isLogged()) {
+    if (!viewer.id) {
       trackPageView('Unlogged Page View', 'Guest');
     } else if (viewer) {
       trackPageView('Logged Page View', viewer.id);

@@ -33,7 +33,6 @@ export const exposeSSRRoutes = (app, assets) => {
   app.get('*', (req, res) => {
     const { token } = req.cookies;
     const headers = token ? { authorization: `Bearer ${token}` } : {};
-    localStorage.getItem = () => token;
 
     const client = new ApolloClient({
       ssrMode: true,

@@ -6,7 +6,7 @@ import FacebookProvider, { Page } from 'react-facebook';
 import { omit, pick } from 'lodash';
 import autoBind from 'react-autobind';
 
-import { isLogged } from '~/src/utils/session';
+import { withInfo } from '~/src/hocs';
 import { assetsUrl } from '~/src/utils/url';
 import MailingAPI from '~/src/toakee-core/apis/mailing';
 import { FACEBOOK_APP_ID, FACEBOOK_PAGE_URI } from '~/src/config';
@@ -216,7 +216,7 @@ class Footer extends React.Component {
           <Link className="Footer-link terms" to="/termos">
             <span>Termos de Uso</span>
           </Link>
-          <If condition={!isLogged()}>
+          <If condition={!this.props.viewer.id}>
             <Link className="Footer-link signup" to="/cadastrar">
               <span>Cadastre-se</span>
             </Link>
@@ -231,7 +231,7 @@ class Footer extends React.Component {
 }
 
 Footer.propTypes = {
-  dispatch: PropTypes.func,
+  viewer: PropTypes.object,
 };
 
-export default Footer;
+export default withInfo(Footer, ['viewer']);

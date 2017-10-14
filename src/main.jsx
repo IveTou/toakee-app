@@ -41,6 +41,8 @@ const apolloClient = new ApolloClient({
   shouldBatch: true,
 });
 
+window.ac = apolloClient;
+
 const createStoreWithMiddleware = applyMiddleware(
   thunkMiddleware,
 )(createStore);
