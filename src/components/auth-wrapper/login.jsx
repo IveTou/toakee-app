@@ -108,7 +108,7 @@ export class Login extends React.Component {
             <Form.Button color="orange" onClick={this.submit} fluid>
               Entrar
             </Form.Button>
-            <Link className="AuthWrapper-link" to={{ pathname: '/cadastrar' }}>
+            <Link className="AuthWrapper-link" to="/cadastrar">
               Não tenho cadastro
             </Link>
           </Form>

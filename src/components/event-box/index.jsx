@@ -13,12 +13,14 @@ const EventBox = () => (
       title="Próximos Eventos"
       start={moment().startOf('hour')}
       end={moment().endOf('day')}
+      forceFetch
     />
     <EventList
       title="Nesta semana"
       start={moment().add(1, 'days').startOf('day')}
       end={moment().endOf('isoWeek')}
       strict
+      forceFetch
     />
     <For each="category" of={Object.keys(homeCategories)}>
       <EventList

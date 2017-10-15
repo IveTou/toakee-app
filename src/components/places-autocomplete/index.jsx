@@ -16,8 +16,13 @@ export default class PlacesAutocomplete extends React.Component {
     autoBind(this);
   }
 
-  async onSearchChange(e, { value }) {
-    const predictions = await GooglePlacesApi.predict(value);
+  onSearchChange(e, { name, value }) {
+    debounce(() => this.fetchPlaces(value), 200)();
+    this.props.onChange(e, { name, value: { value } });
+  }
+
+  async fetchPlaces(query) {
+    const predictions = await GooglePlacesApi.predict(query);
     const results = predictions.map(p => ({
       title: p.structured_formatting.main_text,
       description: p.structured_formatting.secondary_text,
@@ -28,10 +33,10 @@ export default class PlacesAutocomplete extends React.Component {
     this.setState({ predictions, results });
   }
 
-  handleResultSelect(e, { result: { value } }) {
+  handleResultSelect(e, { result: { value, title } }) {
     this.props.onResultSelect(e, {
       name: this.props.name,
-      value: { googlePlacesId: value },
+      value: { googlePlacesId: value, value: title },
     });
   }
 
@@ -40,9 +45,11 @@ export default class PlacesAutocomplete extends React.Component {
       <Search
         placeholder={this.props.placeholder}
         results={this.state.results}
-        onSearchChange={debounce(this.onSearchChange, 200)}
+        onSearchChange={this.onSearchChange}
         onResultSelect={this.handleResultSelect}
         noResultsMessage="Nenhum local encontrado."
+        value={this.props.value}
+        name={this.props.name}
       />
     );
   }
@@ -50,8 +57,10 @@ export default class PlacesAutocomplete extends React.Component {
 
 PlacesAutocomplete.propTypes = {
   name: PropTypes.string,
+  value: PropTypes.string,
   placeholder: PropTypes.string,
   onResultSelect: PropTypes.func,
+  onChange: PropTypes.func,
 };
 
 PlacesAutocomplete.defaultProps = {

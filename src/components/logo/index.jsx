@@ -1,26 +1,25 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
 import config from '~/src/config';
-import { deviceInfo } from '~/src/utils/device-info';
+import { withInfo } from '~/src/hocs';
 
 if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-const logoImg = () => (
-  deviceInfo().isDesktop
+const Logo = ({ deviceInfo }) => {
+  const imgSrc = deviceInfo.is('desktop')
     ? `${config.ASSETS_BASE_URI}/core/site/logo.png`
-    : `${config.ASSETS_BASE_URI}/core/site/logo-x64.png`
-);
+    : `${config.ASSETS_BASE_URI}/core/site/logo-x64.png`;
+  const classes = classNames('Logo', { 'Logo--small': !deviceInfo.is('desktop') });
 
-const classes = () => classNames('Logo', { 'Logo--small': !deviceInfo().isDesktop });
+  return <Link to="/"><img className={classes} alt="toakee logo" src={imgSrc} /></Link>;
+};
 
-const Logo = () => (
-  <Link to={{ pathname: '/' }} >
-    <img className={classes()} alt="toakee logo" src={logoImg()} />
-  </Link>
-);
+Logo.propTypes = {
+  deviceInfo: PropTypes.object.isRequired,
+};
 
-export default Logo;
+export default withInfo(Logo, ['deviceInfo']);

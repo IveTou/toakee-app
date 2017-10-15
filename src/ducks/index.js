@@ -13,4 +13,3 @@ export default combineReducers({
   search,
   snackbar,
 });
-

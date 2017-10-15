@@ -1,16 +1,20 @@
 import React, { PropTypes } from 'react';
 import { graphql } from 'react-apollo';
+import { connect } from 'react-redux';
 import { Grid, Card, Header, Form, Icon, Image, Button, Popup } from 'semantic-ui-react';
 import DateTime from 'react-datetime';
-import { range, xor, includes, pick, omit } from 'lodash';
+import { range, xor, includes, pick } from 'lodash';
 import Dropzone from 'react-dropzone';
 import autoBind from 'react-autobind';
 import moment from 'moment';
 import RichTextEditor from 'react-rte/lib/RichTextEditor';
+import classNames from 'classnames';
 
+import { showSnackbar } from '~/src/ducks/snackbar';
 import { withViewer } from '~/src/hocs';
 import DefaultLayout from '~/src/layouts/default';
 import PlacesAutocomplete from '~/src/components/places-autocomplete';
+import ErrorWrapper from '~/src/components/error-wrapper';
 import CloudinaryApi from '~/src/toakee-core/apis/cloudinary.js';
 
 import { validateNewEvent } from './validation';
@@ -50,6 +54,7 @@ class NewEventPage extends React.Component {
       title: '',
       description: RichTextEditor.createEmptyValue(),
       selectedCategories: [],
+      price: '',
       prices: [{ description: '', value: '' }],
       place: {},
       startDate: moment(),
@@ -61,18 +66,14 @@ class NewEventPage extends React.Component {
   }
 
   onChange(e, { name, value }) {
-    this.setState({
-      [name]: value,
-      errors: omit(this.state.errors, name),
-    });
+    this.setState({ [name]: value });
   }
 
   onChangePrice(e) {
     const { name, value } = e.target;
     const [idx, attr] = name.split(':');
     this.state.prices[parseInt(idx, 10)][attr] = value;
-
-    this.forceUpdate();
+    this.setState({ price: this.state.prices[0].value });
   }
 
   async onFlyerDrop([flyer]) {
@@ -89,17 +90,21 @@ class NewEventPage extends React.Component {
       endDate,
       endTime,
       description,
-      prices,
       selectedCategories,
+      price,
+      prices,
+      place,
     } = this.state;
 
     const form = {
-      ...pick(this.state, ['flyer', 'title', 'place']),
+      ...pick(this.state, ['flyer', 'title']),
       categories: selectedCategories.map(id => ({ id })),
       start: moment(startDate.format(`YYYY-MM-DD [${startTime}]`)),
       end: moment(endDate.format(`YYYY-MM-DD [${endTime}]`)),
       description: description.toString('html'),
-      prices: prices.filter(p => p.description && p.value),
+      price: prices.length > 1 ? undefined : price,
+      prices: prices.length === 1 ? undefined : prices,
+      place: pick(place, ['googlePlacesId']),
       status: isAdmin ? 'ACTIVE' : 'PENDING',
     };
 
@@ -110,9 +115,12 @@ class NewEventPage extends React.Component {
       const { url: flyerUrl } = await CloudinaryApi.uploadFlyer(this.state.flyer);
       const { data } = await this.props.createEvent({ ...form, flyer: flyerUrl });
       this.setState({ submitting: false });
+      this.props.alertSuccess();
       if (!isAdmin) {
-        history.push(`/evento/${data.createEvent.slug}`);
+        setTimeout(() => history.push(`/evento/${data.createEvent.slug}`), 2000);
       }
+    } else {
+      this.props.alertError();
     }
   }
 
@@ -123,14 +131,13 @@ class NewEventPage extends React.Component {
 
   addPrice(e) {
     e.preventDefault();
-    this.setState({
-      prices: this.state.prices.concat({ description: '', value: '' }),
-    });
+    this.setState({ prices: this.state.prices.concat({ description: '', value: '' }) });
   }
 
   removePrice(e, idx) {
     e.preventDefault();
-    this.setState({ prices: this.state.prices.filter((_, i) => i !== idx) });
+    const prices = this.state.prices.filter((_, i) => i !== idx);
+    this.setState({ price: prices[0].value, prices });
   }
 
   renderErrorIcon(input, icon) {
@@ -152,10 +159,18 @@ class NewEventPage extends React.Component {
       errors,
       submitting,
       description,
+      price,
       prices,
       selectedCategories,
       flyer = {},
+      place,
+      title,
+      startDate,
+      startTime,
+      endDate,
+      endTime,
     } = this.state;
+    const priceErrors = (errors.prices || [{}])[0];
 
     return (
       <DefaultLayout>
@@ -171,19 +186,29 @@ class NewEventPage extends React.Component {
                         <Image src={flyer.preview} className="NewEventPage-basics-content-flyer" />
                       </If>
                       <Card.Content>
-                        <Dropzone
-                          className="NewEventPage-basics-content-dropzone"
-                          multiple={false}
-                          accept="image/*"
-                          onDrop={this.onFlyerDrop}
-                        >
-                          <div className="NewEventPage-basics-content-dropzone-message">
-                            <Icon name="plus circle" size="massive" color="grey" />
-                            <div>
-                              Clique para adicionar um banner ao seu evento
+                        <ErrorWrapper errors={errors.flyer}>
+                          <Dropzone
+                            className={
+                              classNames('NewEventPage-basics-content-dropzone', {
+                                'NewEventPage-basics-content-dropzone--error': errors.flyer,
+                              })
+                            }
+                            multiple={false}
+                            accept="image/*"
+                            onDrop={this.onFlyerDrop}
+                          >
+                            <div className="NewEventPage-basics-content-dropzone-message">
+                              <Icon
+                                name="plus circle"
+                                size="massive"
+                                color="grey"
+                              />
+                              <div>
+                                Clique para adicionar um banner ao seu evento
+                              </div>
                             </div>
-                          </div>
-                        </Dropzone>
+                          </Dropzone>
+                        </ErrorWrapper>
                       </Card.Content>
                       <Card.Content>
                         <Form.Input
@@ -191,76 +216,94 @@ class NewEventPage extends React.Component {
                           id="flyerInput"
                           content={flyer.path}
                         />
-                        <Form.Input
-                          name="title"
-                          placeholder="Título"
-                          onChange={this.onChange}
-                          icon={this.renderErrorIcon('title')}
-                          error={!!errors.title}
-                        />
-                        <Form.Input
-                          name="place"
-                          placeholder="Local"
-                          control={PlacesAutocomplete}
-                          onResultSelect={this.onChange}
-                          error={!!errors.place}
-                        />
+                        <ErrorWrapper errors={errors.title}>
+                          <Form.Input
+                            name="title"
+                            placeholder="Título"
+                            value={title}
+                            onChange={this.onChange}
+                            error={!!errors.title}
+                          />
+                        </ErrorWrapper>
+                        <ErrorWrapper errors={errors.place}>
+                          <div>
+                            <Form.Input
+                              name="place"
+                              placeholder="Local"
+                              value={place.value}
+                              control={PlacesAutocomplete}
+                              error={!!errors.place}
+                              onChange={this.onChange}
+                              onResultSelect={this.onChange}
+                            />
+                          </div>
+                        </ErrorWrapper>
                       </Card.Content>
                       <Card.Content className="NewEventPage-basics-content-date">
                         <Form.Group>
-                          <Form.Input
-                            label="Começa"
-                            inputProps={{ placeholder: 'Data' }}
-                            dateFormat="DD/MM/YY"
-                            timeFormat={false}
-                            control={DateTime}
-                            width={5}
-                            onChange={t => (
-                              this.onChange({}, { name: 'startDate', value: t })
-                            )}
-                            icon={this.renderErrorIcon('start')}
-                            error={!!errors.start}
-                          />
-                          <Form.Input
-                            list="time"
-                            placeholder="Hora"
-                            control="input"
-                            name="startTime"
-                            width={4}
-                            onChange={e => this.onChange(e, e.target)}
-                            error={!!errors.start}
-                          />
-                          <Form.Input
-                            label="Termina"
-                            inputProps={{ placeholder: 'Data' }}
-                            dateFormat="DD/MM/YY"
-                            timeFormat={false}
-                            control={DateTime}
-                            name="endDate"
-                            width={5}
-                            onChange={t => (
-                              this.onChange({}, { name: 'endDate', value: t })
-                            )}
-                            icon={this.renderErrorIcon('end')}
-                            error={!!errors.end}
-                          />
-                          <Form.Input
-                            list="time"
-                            placeholder="Hora"
-                            control="input"
-                            name="endTime"
-                            width={4}
-                            onChange={e => this.onChange(e, e.target)}
-                            error={!!errors.end}
-                          />
-                          <datalist id="time">
-                            <For each="hour" of={range(0, 24)}>
-                              <For each="minute" of={[0, 30]}>
-                                <option value={`${addZero(hour)}:${addZero(minute)}`} />
-                              </For>
-                            </For>
-                          </datalist>
+                          <ErrorWrapper errors={errors.start}>
+                            <Form.Group>
+                              <Form.Input
+                                label="Começa"
+                                inputProps={{ placeholder: 'Data' }}
+                                dateFormat="DD/MM/YY"
+                                timeFormat={false}
+                                control={DateTime}
+                                width={10}
+                                value={startDate}
+                                onChange={t => (
+                                  this.onChange({}, { name: 'startDate', value: t })
+                                )}
+                                error={!!errors.start}
+                              />
+                              <Form.Input
+                                list="time"
+                                placeholder="Hora"
+                                control="input"
+                                name="startTime"
+                                width={8}
+                                value={startTime}
+                                onChange={e => this.onChange(e, e.target)}
+                                error={!!errors.start}
+                              />
+                            </Form.Group>
+                          </ErrorWrapper>
+                          <ErrorWrapper errors={errors.end}>
+                            <Form.Group>
+                              <Form.Input
+                                label="Termina"
+                                inputProps={{ placeholder: 'Data' }}
+                                dateFormat="DD/MM/YY"
+                                timeFormat={false}
+                                control={DateTime}
+                                name="endDate"
+                                width={10}
+                                value={endDate}
+                                onChange={t => (
+                                  this.onChange({}, { name: 'endDate', value: t })
+                                )}
+                                error={!!errors.end}
+                              />
+                              <Form.Input
+                                list="time"
+                                placeholder="Hora"
+                                control="input"
+                                name="endTime"
+                                width={8}
+                                onChange={e => this.onChange(e, e.target)}
+                                value={endTime}
+                                error={!!errors.end}
+                              />
+                            </Form.Group>
+                          </ErrorWrapper>
                         </Form.Group>
+                        <datalist id="time">
+                          <For each="hour" of={range(0, 24)}>
+                            <For each="minute" of={[0, 30]}>
+                              <option value={`${addZero(hour)}:${addZero(minute)}`} />
+                            </For>
+                          </For>
+                        </datalist>
                       </Card.Content>
                     </Card>
                   </div>
@@ -296,52 +339,64 @@ class NewEventPage extends React.Component {
                       <Header as="h4">
                         <Icon name="dollar" color="orange" /> Preços
                       </Header>
-                      <For each="price" of={prices} index="index">
-                        <Form.Group key={index}>
+                      <Choose>
+                        <When condition={prices.length === 1}>
                           <Form.Input
-                            placeholder="Tipo"
-                            width={9}
-                            value={prices[index].description}
-                            name={`${index}:description`}
-                            onChange={this.onChangePrice}
-                          />
-                          <Form.Input
-                            list="priceTypes"
                             placeholder="Valor"
-                            control="input"
-                            width={7}
-                            value={prices[index].value}
-                            name={`${index}:value`}
+                            value={price}
+                            name="0:value"
                             onChange={this.onChangePrice}
                           />
-                          <datalist id="priceTypes">
-                            <option key="1kg" value="1kg Alimento" />
-                            <option key="2kg" value="2kg Alimento" />
-                            <option key="free" value="Gratuito" />
-                            <option key="anything" value="Pague quanto quiser" />
-                            <option key="food" value="Alimento não perecível" />
-                          </datalist>
-                          <Choose>
-                            <When condition={index === prices.length - 1}>
-                              <Button
-                                icon="plus"
-                                color="orange"
-                                circular
-                                basic
-                                onClick={this.addPrice}
-                              />
-                            </When>
-                            <Otherwise>
+                        </When>
+                        <Otherwise>
+                          <For each="price" of={prices} index="index">
+                            <Form.Group key={index}>
+                              <ErrorWrapper errors={priceErrors[`${index}:description`]}>
+                                <Form.Input
+                                  placeholder="Tipo"
+                                  width={9}
+                                  value={prices[index].description}
+                                  name={`${index}:description`}
+                                  onChange={this.onChangePrice}
+                                  error={priceErrors[`${index}:description`]}
+                                />
+                              </ErrorWrapper>
+                              <ErrorWrapper errors={priceErrors[`${index}:value`]}>
+                                <Form.Input
+                                  list="priceTypes"
+                                  placeholder="Valor"
+                                  control="input"
+                                  width={7}
+                                  value={prices[index].value}
+                                  name={`${index}:value`}
+                                  onChange={this.onChangePrice}
+                                  error={priceErrors[`${index}:value`]}
+                                />
+                              </ErrorWrapper>
+                              <datalist id="priceTypes">
+                                <option key="1kg" value="1kg Alimento" />
+                                <option key="2kg" value="2kg Alimento" />
+                                <option key="free" value="Gratuito" />
+                                <option key="anything" value="Pague quanto quiser" />
+                                <option key="food" value="Alimento não perecível" />
+                              </datalist>
                               <Button
                                 icon="minus"
                                 circular
                                 basic
                                 onClick={e => this.removePrice(e, index)}
                               />
-                            </Otherwise>
-                          </Choose>
-                        </Form.Group>
-                      </For>
+                            </Form.Group>
+                          </For>
+                        </Otherwise>
+                      </Choose>
+                      <Button
+                        basic
+                        icon="plus"
+                        color="orange"
+                        content="Adicionar preço"
+                        onClick={this.addPrice}
+                      />
                     </div>
 
                     <div className="NewEventPage-details-confirmation">
@@ -361,11 +416,25 @@ class NewEventPage extends React.Component {
 }
 
 NewEventPage.propTypes = {
-  createEvent: PropTypes.func,
+  alertError: PropTypes.func,
 };
 
-export default graphql(createEventMutation, {
+const NewEventPageWithMutation = graphql(createEventMutation, {
   props: ({ mutate }) => ({
     createEvent: variables => mutate({ variables }),
   }),
 })(withViewer(NewEventPage));
+
+export default connect(
+  () => ({}),
+  dispatch => ({
+    alertError: () => dispatch(showSnackbar({
+      message: 'Encontramos erros no formulário, verifique os campos em vermelho...',
+      color: 'red',
+    })),
+    alertSuccess: () => dispatch(showSnackbar({
+      message: 'Evento criado com sucesso!',
+      color: 'green',
+    })),
+  }),
+)(NewEventPageWithMutation);

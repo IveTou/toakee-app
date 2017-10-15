@@ -45,6 +45,7 @@
   max-width: $spacer*96;
   margin: 0 auto;
   padding: $spacer*3 auto;
+  overflow: hidden;
 
   .slick-list {
     box-shadow: 0 0 8px $black;

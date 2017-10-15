@@ -59,7 +59,7 @@ export default class RecoverPassword extends React.Component {
             accent
             block
           />
-          <Link to={{ pathname: '/login' }}>
+          <Link to="/login">
             <Button
               className="RecoverPassword-form-back"
               label="Voltar"

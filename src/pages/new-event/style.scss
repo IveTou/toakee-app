@@ -56,6 +56,18 @@
         i.icon.grey {
           color: $black12 !important;
         }
+
+        &--error {
+          border-color: $red100;
+
+          i.icon.grey {
+            color: $red100 !important;
+          }
+        }
+      }
+
+      .ErrorWrapper-popup &-dropzone {
+        border: 8px dashed $red50;
       }
 
       &-flyer + .content {
@@ -82,6 +94,10 @@
       &-date {
         .fields {
           align-items: flex-end;
+
+          .fields:first-child {
+            margin-right: $spacer;
+          }
         }
       }
     }

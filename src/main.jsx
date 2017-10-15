@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import { createBrowserHistory } from 'history';
 
 import { Router } from 'react-router-dom';
@@ -22,6 +22,7 @@ if (process.env.BROWSER) {
 }
 
 moment.locale('pt-br');
+moment.tz.setDefault('America/Bahia');
 
 const networkInterface = createNetworkInterface({ uri: config.GRAPHQL_URI });
 
@@ -38,7 +39,10 @@ networkInterface.use([{
 const apolloClient = new ApolloClient({
   initialState: window.__APOLLO_STATE__,
   networkInterface,
+  shouldBatch: true,
 });
+
+window.ac = apolloClient;
 
 const createStoreWithMiddleware = applyMiddleware(
   thunkMiddleware,

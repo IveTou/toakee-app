@@ -6,11 +6,9 @@ import classNames from 'classnames';
 import autoBind from 'react-autobind';
 
 import DefaultLayout from '~/src/layouts/default';
-import { deviceInfo } from '~/src/utils/device-info';
-import { isLogged } from '~/src/utils/session';
 import { fullDateFormat, timeFormat } from '~/src/utils/moment';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
-import { withViewer } from '~/src/hocs';
+import { withInfo } from '~/src/hocs';
 
 import query, { setEventStatusMutation } from './graphql';
 
@@ -31,7 +29,7 @@ export class EventPage extends React.Component {
   }
 
   componentWillReceiveProps({ viewer }) {
-    if (!isLogged()) {
+    if (!viewer.id) {
       TrackingAPI.track('Unlogged Event Page View', 'Guest');
     } else if (viewer) {
       TrackingAPI.track('Logged Event Page View', viewer.id);
@@ -39,7 +37,7 @@ export class EventPage extends React.Component {
   }
 
   toggleGallery() {
-    if (deviceInfo().isMobile) {
+    if (!this.props.deviceInfo.is('desktop')) {
       this.props.history.push(`/evento/${this.props.viewer.events[0].slug}/fotos`);
     } else {
       const { galleryIsVisible } = this.state;
@@ -87,7 +85,12 @@ export class EventPage extends React.Component {
     ];
 
     return buttonProps.map(({ label, color, status }) => (
-      <Button color={color} basic={status !== eventStatus} onClick={() => setStatus(status)}>
+      <Button
+        key={label}
+        color={color}
+        basic={status !== eventStatus}
+        onClick={() => setStatus(status)}
+      >
         {label}
       </Button>
     ));
@@ -230,6 +233,7 @@ EventPage.propTypes = {
   viewer: PropTypes.object,
   history: PropTypes.object,
   setStatus: PropTypes.func,
+  deviceInfo: PropTypes.object,
 };
 
 const injectSetEventStatusMutation = graphql(setEventStatusMutation, {
@@ -266,5 +270,6 @@ const injectData = graphql(query, {
 export default compose(
   injectData,
   injectSetEventStatusMutation,
-)(withViewer(EventPage));
+  withInfo(['viewer', 'deviceInfo']),
+)(EventPage);
 

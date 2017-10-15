@@ -20,7 +20,7 @@ const options = {
 const DashboardMenuItem = ({ slug, flyer, title, open, onClick }) => (
   // eslint-disable-next-line jsx-a11y/no-static-element-interactions
   <div className={buildClasses({ open })} onClick={onClick}>
-    <NavLink to={{ pathname: `/dashboard/${slug}/lista` }}>
+    <NavLink to={`/dashboard/${slug}/lista`}>
       <div className="DashboardMenuItem-header">
         <div className="DashboardMenuItem-header-flyer">
           <img alt="flyer do evento" src={flyer} />
@@ -32,7 +32,7 @@ const DashboardMenuItem = ({ slug, flyer, title, open, onClick }) => (
       <For each="option" of={keys(options)}>
         <NavLink
           key={option}
-          to={{ pathname: `/dashboard/${slug}/${option}` }}
+          to={`/dashboard/${slug}/${option}`}
           className="DashboardMenuItem-content-option"
           activeClassName="active"
         >

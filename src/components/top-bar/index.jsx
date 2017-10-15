@@ -8,11 +8,10 @@ import { Menu, Dropdown, Image, Label, Icon, Button, Search, Visibility } from '
 import classNames from 'classnames';
 import qs from 'query-string';
 
-import { deviceInfo } from '~/src/utils/device-info';
-import { isLogged, logout } from '~/src/utils/session';
+import { logout } from '~/src/utils/session';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import Logo from '~/src/components/logo';
-import { withViewer } from '~/src/hocs';
+import { withInfo } from '~/src/hocs';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -31,7 +30,7 @@ export class TopBar extends React.Component {
     this._searchInput.setValue(qs.parse(location.search).q || '');
     this.setState({ transparent });
 
-    if (!isLogged()) {
+    if (!viewer.id) {
       trackPageView('Unlogged Page View', 'Guest');
     } else if (viewer) {
       trackPageView('Logged Page View', viewer.id);
@@ -40,7 +39,7 @@ export class TopBar extends React.Component {
 
   onSearch(e) {
     if (e.key === 'Enter') {
-      this.props.history.push({ pathname: '/search', search: `?q=${e.target.value}` });
+      this.props.history.push(`/search?q=${e.target.value}`);
     }
   }
 
@@ -103,7 +102,7 @@ export class TopBar extends React.Component {
                 <Dropdown item trigger={this.renderAvatar()} icon={null}>
                   <Dropdown.Menu>
                     <If condition={viewer.isPromoter}>
-                      <Dropdown.Item as={Link} to={{ pathname: '/dashboard' }}>
+                      <Dropdown.Item as={Link} to="/dashboard">
                         Meus eventos
                       </Dropdown.Item>
                     </If>
@@ -113,7 +112,7 @@ export class TopBar extends React.Component {
               </When>
               <Otherwise>
                 <Choose>
-                  <When condition={deviceInfo().isDesktop}>
+                  <When condition={this.props.deviceInfo.is('desktop')}>
                     <Menu.Item>
                       <Button.Group>
                         <Button
@@ -157,6 +156,7 @@ TopBar.propTypes = {
   history: PropTypes.object,
   location: PropTypes.object,
   client: PropTypes.object,
+  deviceInfo: PropTypes.object,
 };
 
-export default withApollo(withRouter(withViewer(TopBar)));
+export default withApollo(withRouter(withInfo(TopBar, ['viewer', 'deviceInfo'])));

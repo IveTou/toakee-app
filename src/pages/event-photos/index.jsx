@@ -5,7 +5,6 @@ import Lightbox from 'react-images';
 import autoBind from 'react-autobind';
 import DefaultLayout from '~/src/layouts/default';
 
-import { isLogged } from '~/src/utils/session';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 
 import query from './graphql';
@@ -13,9 +12,6 @@ import query from './graphql';
 if (process.env.BROWSER) {
   require('./style.scss');
 }
-
-declare var image;
-declare var index;
 
 export class EventPhotos extends React.Component {
   constructor(props) {
@@ -25,7 +21,7 @@ export class EventPhotos extends React.Component {
   }
 
   componentWillReceiveProps({ viewer }) {
-    if (!isLogged()) {
+    if (!viewer.id) {
       TrackingAPI.track('Unlogged Event Photos Page View', 'Guest');
     } else if (viewer) {
       TrackingAPI.track('Logged Event Photos Page View', viewer.id);
@@ -52,6 +48,9 @@ export class EventPhotos extends React.Component {
     const { viewer = {} } = this.props;
     const { event = {} } = viewer;
     const { title, photos = [] } = event;
+
+    declare var image;
+    declare var index;
 
     return (
       <DefaultLayout>
