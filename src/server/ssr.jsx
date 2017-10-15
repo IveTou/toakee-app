@@ -12,7 +12,7 @@ import { StaticRouter } from 'react-router';
 import ReactDOMServer from 'react-dom/server';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import { pick } from 'lodash';
+import { pick, pickBy } from 'lodash';
 import moment from 'moment-timezone';
 
 import '~/src/server/globals';
@@ -51,29 +51,16 @@ export const exposeSSRRoutes = (app, assets) => {
       </ApolloProvider>
     );
 
-    function getPropertyByRegex(obj, patt) {
-      let result;
-      Object.keys(obj).forEach((key) => {
-        if (patt.test(key)) {
-          result = key;
-        }
-      });
-      return result;
-    }
+    const getPropertyByRegex = (obj, pattern) =>
+      Object.keys(pickBy(obj, (_, key) => pattern.test(key)))[0];
 
-    getDataFromTree(apolloApp).then(() => {
-      client.initStore();
-      const content = ReactDOMServer.renderToStaticMarkup(apolloApp);
-      const apolloContent = <div id="app" dangerouslySetInnerHTML={{ __html: content }} />;
-      const initialState = pick(client.store.getState(), 'apollo.data');
-
-      const eventObject = initialState.apollo.data;
-      const eventProps = getPropertyByRegex(eventObject, /^Event:[a-z0-9]+[^.]+[a-z0-9]+$/);
-      const ogMetaTags = req.url.match(/\/evento\/.+/g) ?
+    const getMetaTags = (obj) => {
+      const eventProp = getPropertyByRegex(obj, /^Event:[a-z0-9]+[^.]+[a-z0-9]+$/);
+      return req.url.match(/\/evento\/.+/g) ?
       {
-        title: eventObject[eventProps].title,
-        description: eventObject[eventProps].description,
-        image: eventObject[eventProps].flyer,
+        title: obj[eventProp].title,
+        description: obj[eventProp].description,
+        image: obj[eventProp].flyer,
         url: `${req.headers.host}${req.url}`,
         app_id: config.FACEBOOK_APP_ID,
       }
@@ -86,6 +73,14 @@ export const exposeSSRRoutes = (app, assets) => {
         app_id: config.FACEBOOK_APP_ID,
       }
       ;
+    };
+
+    getDataFromTree(apolloApp).then(() => {
+      client.initStore();
+      const content = ReactDOMServer.renderToStaticMarkup(apolloApp);
+      const apolloContent = <div id="app" dangerouslySetInnerHTML={{ __html: content }} />;
+      const initialState = pick(client.store.getState(), 'apollo.data');
+      const ogMetaTags = getMetaTags(initialState.apollo.data);
 
       res.render('index.html', {
         assets,
