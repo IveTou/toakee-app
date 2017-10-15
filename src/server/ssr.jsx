@@ -53,16 +53,47 @@ export const exposeSSRRoutes = (app, assets) => {
       </ApolloProvider>
     );
 
+    function getPropertyByRegex(obj, patt) {
+      let result;
+      Object.keys(obj).forEach((key) => {
+        if (patt.test(key)) {
+          result = key;
+        }
+      });
+      return result;
+    }
+
     getDataFromTree(apolloApp).then(() => {
       client.initStore();
       const content = ReactDOMServer.renderToStaticMarkup(apolloApp);
       const apolloContent = <div id="app" dangerouslySetInnerHTML={{ __html: content }} />;
       const initialState = pick(client.store.getState(), 'apollo.data');
 
+      const eventObject = initialState.apollo.data;
+      const eventProps = getPropertyByRegex(eventObject, /^Event:[a-z0-9]+[^.]+[a-z0-9]+$/);
+      const ogMetaTags = req.url.match(/\/evento\/.+/g) ?
+      {
+        title: eventObject[eventProps].title,
+        description: eventObject[eventProps].description,
+        image: eventObject[eventProps].flyer,
+        url: `${req.headers.host}${req.url}`,
+        app_id: config.FACEBOOK_APP_ID,
+      }
+      :
+      {
+        title: 'Toakee',
+        description: 'O melhor guia de eventos.',
+        image: `${config.ASSETS_BASE_URI}/core/site/login-bg.jpg`,
+        url: 'www.toakee.com.br',
+        app_id: config.FACEBOOK_APP_ID,
+      }
+      ;
+
       res.render('index.html', {
         assets,
         apolloContent: ReactDOMServer.renderToStaticMarkup(apolloContent),
         apolloState: JSON.stringify(initialState),
+        ogMetaTags,
       });
     });
   });
