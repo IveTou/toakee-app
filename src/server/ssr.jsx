@@ -12,7 +12,7 @@ import { StaticRouter } from 'react-router';
 import ReactDOMServer from 'react-dom/server';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import { pick, pickBy } from 'lodash';
+import { pick } from 'lodash';
 import moment from 'moment-timezone';
 
 import '~/src/server/globals';
@@ -51,13 +51,10 @@ export const exposeSSRRoutes = (app, assets) => {
       </ApolloProvider>
     );
 
-    const getPropertyByRegex = (obj, pattern) =>
-      Object.keys(pickBy(obj, (_, key) => pattern.test(key)))[0];
-
     const getMetaTags = (obj, url) => {
-      const eventPattern = /^Event:[a-z0-9]+[^.]+[a-z0-9]+$/;
       const urlPattern = /^.+\/evento\/.+$/;
-      const eventProp = getPropertyByRegex(obj, eventPattern);
+      const eventId = url.match(/\w+$/g);
+      const eventProp = `Event:${eventId}`;
 
       return urlPattern.test(url) ?
       {
