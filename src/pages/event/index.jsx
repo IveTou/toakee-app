@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { graphql, compose } from 'react-apollo';
 import { Icon, Card, Image, Grid, Button } from 'semantic-ui-react';
 import Lightbox from 'react-images';
-import MetaTags from 'react-meta-tags';
+import MetaTags from 'react-meta-tags'
 import classNames from 'classnames';
 import autoBind from 'react-autobind';
 

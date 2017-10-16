@@ -54,14 +54,18 @@ export const exposeSSRRoutes = (app, assets) => {
     const getPropertyByRegex = (obj, pattern) =>
       Object.keys(pickBy(obj, (_, key) => pattern.test(key)))[0];
 
-    const getMetaTags = (obj) => {
-      const eventProp = getPropertyByRegex(obj, /^Event:[a-z0-9]+[^.]+[a-z0-9]+$/);
-      return req.url.match(/\/evento\/.+/g) ?
+    const getMetaTags = (obj, url) => {
+      const eventPattern = /^Event:[a-z0-9]+[^.]+[a-z0-9]+$/;
+      const urlPattern = /^.+\/evento\/.+$/;
+
+      const eventProp = getPropertyByRegex(obj, eventPattern);
+
+      return urlPattern.test(url) ?
       {
         title: obj[eventProp].title,
         description: obj[eventProp].description,
         image: obj[eventProp].flyer,
-        url: `${req.headers.host}${req.url}`,
+        url,
         app_id: config.FACEBOOK_APP_ID,
       }
       :
@@ -80,7 +84,7 @@ export const exposeSSRRoutes = (app, assets) => {
       const content = ReactDOMServer.renderToStaticMarkup(apolloApp);
       const apolloContent = <div id="app" dangerouslySetInnerHTML={{ __html: content }} />;
       const initialState = pick(client.store.getState(), 'apollo.data');
-      const ogMetaTags = getMetaTags(initialState.apollo.data);
+      const ogMetaTags = getMetaTags(initialState.apollo.data, `${req.headers.host}${req.url}`);
 
       res.render('index.html', {
         assets,
