@@ -57,7 +57,6 @@ export const exposeSSRRoutes = (app, assets) => {
     const getMetaTags = (obj, url) => {
       const eventPattern = /^Event:[a-z0-9]+[^.]+[a-z0-9]+$/;
       const urlPattern = /^.+\/evento\/.+$/;
-
       const eventProp = getPropertyByRegex(obj, eventPattern);
 
       return urlPattern.test(url) ?
@@ -65,16 +64,16 @@ export const exposeSSRRoutes = (app, assets) => {
         title: obj[eventProp].title,
         description: obj[eventProp].description,
         image: obj[eventProp].flyer,
-        url,
         app_id: config.FACEBOOK_APP_ID,
+        url,
       }
       :
       {
         title: 'Toakee',
         description: 'O melhor guia de eventos.',
         image: `${config.ASSETS_BASE_URI}/core/site/login-bg.jpg`,
-        url: 'www.toakee.com.br',
         app_id: config.FACEBOOK_APP_ID,
+        url: 'www.toakee.com.br',
       }
       ;
     };

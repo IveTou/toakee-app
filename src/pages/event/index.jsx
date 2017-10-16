@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { graphql, compose } from 'react-apollo';
 import { Icon, Card, Image, Grid, Button } from 'semantic-ui-react';
 import Lightbox from 'react-images';
+import MetaTags from 'react-meta-tags';
 import classNames from 'classnames';
 import autoBind from 'react-autobind';
 
@@ -118,6 +119,7 @@ export class EventPage extends React.Component {
 
     return (
       <DefaultLayout>
+        <MetaTags><title>{title}</title></MetaTags>
         <Grid columns={2} className={classes}>
           <Grid.Column className="EventPage-gallery" mobile={16} tablet={8} computer={8}>
             <Lightbox
