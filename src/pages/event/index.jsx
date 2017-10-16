@@ -97,7 +97,7 @@ export class EventPage extends React.Component {
   }
 
   render() {
-    const { event: preEvent } = this.props.location.state;
+    const { event: preEvent } = this.props.location.state || {};
     const { galleryIsVisible, loadGallery } = this.state;
     const { viewer = {}, event = preEvent } = this.props;
     const {
