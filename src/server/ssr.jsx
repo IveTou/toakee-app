@@ -35,7 +35,7 @@ const getMetaTags = (obj, url) => {
   const eventKey = `Event:${url.match(/\w+$/g)}`;
   const { title, description, flyer: image } = obj[eventKey] || {};
 
-  return /^.+\/evento\/+$/.test(url)
+  return /^.+\/evento\/.+$/.test(url)
   ? { title, description, image, appId, url }
   : {
     title: 'Toakee',
