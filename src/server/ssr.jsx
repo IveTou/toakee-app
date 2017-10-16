@@ -30,6 +30,22 @@ const createStoreWithMiddleware = applyMiddleware(
 
 const reduxStore = createStoreWithMiddleware(rootReducer);
 
+const getMetaTags = (obj, url) => {
+  const appId = config.FACEBOOK_APP_ID;
+  const eventKey = `Event:${url.match(/\w+$/g)}`;
+  const { title, description, flyer: image } = obj[eventKey] || {};
+
+  return /^.+\/evento\/+$/.test(url)
+  ? { title, description, image, appId, url }
+  : {
+    title: 'Toakee',
+    description: 'O melhor guia de eventos.',
+    image: `${config.ASSETS_BASE_URI}/core/site/brand.png`,
+    url: 'www.toakee.com.br',
+    appId,
+  };
+};
+
 export const exposeSSRRoutes = (app, assets) => {
   app.get('*', (req, res) => {
     const { token } = req.cookies;
@@ -50,30 +66,6 @@ export const exposeSSRRoutes = (app, assets) => {
         </StaticRouter>
       </ApolloProvider>
     );
-
-    const getMetaTags = (obj, url) => {
-      const urlPattern = /^.+\/evento\/.+$/;
-      const eventId = url.match(/\w+$/g);
-      const eventProp = `Event:${eventId}`;
-
-      return urlPattern.test(url) ?
-      {
-        title: obj[eventProp].title,
-        description: obj[eventProp].description,
-        image: obj[eventProp].flyer,
-        app_id: config.FACEBOOK_APP_ID,
-        url,
-      }
-      :
-      {
-        title: 'Toakee',
-        description: 'O melhor guia de eventos.',
-        image: `${config.ASSETS_BASE_URI}/core/site/login-bg.jpg`,
-        app_id: config.FACEBOOK_APP_ID,
-        url: 'www.toakee.com.br',
-      }
-      ;
-    };
 
     getDataFromTree(apolloApp).then(() => {
       client.initStore();
