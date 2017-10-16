@@ -9,7 +9,9 @@ export class ViewerProvider extends React.Component {
   }
 
   render() {
-    return this.props.loading ? <div className="loader" /> : <div>{this.props.children}</div>;
+    return this.props.loading
+      ? <div className="ToakeeLoader" />
+      : <div>{this.props.children}</div>;
   }
 }
 
