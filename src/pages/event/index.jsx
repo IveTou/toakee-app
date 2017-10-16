@@ -99,7 +99,7 @@ export class EventPage extends React.Component {
   render() {
     const { event: preEvent } = this.props.location.state;
     const { galleryIsVisible, loadGallery } = this.state;
-    const { viewer = {}, event = preEvent, match } = this.props;
+    const { viewer = {}, event = preEvent } = this.props;
     const {
       title,
       description,
@@ -235,6 +235,7 @@ EventPage.propTypes = {
   history: PropTypes.object,
   setStatus: PropTypes.func,
   deviceInfo: PropTypes.object,
+  location: PropTypes.object,
 };
 
 const injectSetEventStatusMutation = graphql(setEventStatusMutation, {
@@ -245,7 +246,7 @@ const injectSetEventStatusMutation = graphql(setEventStatusMutation, {
       return mutate({
         variables: { eventId, status },
         update: (store, { data: { updateEvent } }) => {
-          const data = store.readQuery({ query, variables: { id } });
+          const data = store.readQuery({ query, variables: { id: eventId } });
           if (updateEvent) {
             data.event.status = status;
           }

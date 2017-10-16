@@ -157,7 +157,7 @@ const injectRemoveGuestList = graphql(removeGuestListMutation, {
 });
 
 const injectAddNamesToGuestList = graphql(addNamesToGuestListMutation, {
-  props: ({ mutate, ownProps: { viewer } }) => ({
+  props: ({ mutate }) => ({
     addNamesToGuestList: (_guestList, names) => {
       const { id: guestListId, eventId } = _guestList;
 
@@ -189,7 +189,7 @@ const injectAddNamesToGuestList = graphql(addNamesToGuestListMutation, {
 });
 
 const injectUpdateGuestList = graphql(updateGuestListMutation, {
-  props: ({ mutate, ownProps: { viewer } }) => ({
+  props: ({ mutate }) => ({
     updateGuestList: (guestList, patch) => {
       const { id: guestListId, eventId } = guestList;
 
@@ -217,7 +217,7 @@ const injectUpdateGuestList = graphql(updateGuestListMutation, {
 });
 
 const injectRemoveInvitation = graphql(removeInvitationMutation, {
-  props: ({ mutate, ownProps: { viewer } }) => ({
+  props: ({ mutate }) => ({
     removeInvitation: invitation => () => {
       const { id: invitationId, guestListId, eventId } = invitation;
 
