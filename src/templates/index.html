@@ -13,6 +13,13 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="HandheldFriendly" content="True">
     <meta http-equiv="cleartype" content="on">
+    {% if ogMetaTags %}
+      <meta id="og-title" property="og:title" content="{{ogMetaTags.title}}" />
+      <meta id="og-description" property="og:description" content="{{ogMetaTags.description}}" />
+      <meta id="og-image" property="og:image" content="{{ogMetaTags.image}}" />
+      <meta id="og-url" property="og:url" content="{{ogMetaTags.url}}" />
+      <meta id="og-fb" property="fb:app_id" content="{{ogMetaTags.appId}}" />
+    {% endif %}
     <link rel="shortcut icon" href="/imgs/favicon.png" />
     <link href="/css/loader.css" rel="stylesheet" />
     <link href="/{{assets.main.css}}" rel="stylesheet">

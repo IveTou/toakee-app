@@ -30,6 +30,22 @@ const createStoreWithMiddleware = applyMiddleware(
 
 const reduxStore = createStoreWithMiddleware(rootReducer);
 
+const getMetaTags = (obj, url) => {
+  const appId = config.FACEBOOK_APP_ID;
+  const eventKey = `Event:${url.match(/\w+$/g)}`;
+  const { title, description, flyer: image } = obj[eventKey] || {};
+
+  return /^.+\/evento\/.+$/.test(url)
+  ? { title, description, image, appId, url }
+  : {
+    title: 'Toakee',
+    description: 'O melhor guia de eventos.',
+    image: `${config.ASSETS_BASE_URI}/core/site/brand.png`,
+    url: 'www.toakee.com.br',
+    appId,
+  };
+};
+
 export const exposeSSRRoutes = (app, assets) => {
   app.get('*', (req, res) => {
     const { token } = req.cookies;
@@ -56,11 +72,13 @@ export const exposeSSRRoutes = (app, assets) => {
       const content = ReactDOMServer.renderToStaticMarkup(apolloApp);
       const apolloContent = <div id="app" dangerouslySetInnerHTML={{ __html: content }} />;
       const initialState = pick(client.store.getState(), 'apollo.data');
+      const ogMetaTags = getMetaTags(initialState.apollo.data, `${req.headers.host}${req.url}`);
 
       res.render('index.html', {
         assets,
         apolloContent: ReactDOMServer.renderToStaticMarkup(apolloContent),
         apolloState: JSON.stringify(initialState),
+        ogMetaTags,
       });
     });
   });
