@@ -21,7 +21,7 @@ const DashboardMenu = ({ viewer = {}, open, toggle, match }) => (
       <For each="event" of={viewer.events || []}>
         <DashboardMenuItem
           key={event.id}
-          open={match.params.slug === event.slug}
+          open={match.params.id === event.id}
           {...event}
         />
       </For>

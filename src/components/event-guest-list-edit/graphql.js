@@ -1,13 +1,12 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  query GuestLists($eventSlug: String) {
+  query GuestLists($eventId: String) {
     viewer {
       id
 
-      event(slug: $eventSlug) {
+      event(id: $eventId) {
         id
-        slug
         start
 
         guestLists {

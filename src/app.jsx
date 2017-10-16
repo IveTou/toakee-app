@@ -49,8 +49,8 @@ const App = ({ userAgent }) => (
         <Route path="/cadastrar" component={SignUp} />
         <Route path="/search" component={SearchPage} />
         <Route path="/evento/novo" exact component={NewEventPage} />
-        <Route path="/evento/:slug" exact component={EventPage} />
-        <Route path="/evento/:slug/fotos" component={EventPhotos} />
+        <Route path="/evento/:id" exact component={EventPage} />
+        <Route path="/evento/:id/fotos" component={EventPhotos} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/termos-de-uso" component={UseTerms} />
         <Route path="/quem-somos" component={About} />

@@ -9,8 +9,8 @@ import DashboardRoot from './root';
 const DashboardContent = () => (
   <div className="DashboardContent">
     <Route path="/dashboard" exact component={DashboardRoot} />
-    <Route path="/dashboard/:slug/lista" component={EventGuestList} />
-    <Route path="/dashboard/:slug/editar-listas" component={EventGuestListEdit} />
+    <Route path="/dashboard/:id/lista" component={EventGuestList} />
+    <Route path="/dashboard/:id/editar-listas" component={EventGuestListEdit} />
   </div>
 );
 

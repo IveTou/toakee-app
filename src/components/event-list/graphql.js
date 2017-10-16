@@ -33,7 +33,6 @@ export const query = gql`
         forceEmpty: $skipList,
       ) {
         id
-        slug
         title
         flyer
         start

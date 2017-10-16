@@ -13,7 +13,7 @@ if (process.env.BROWSER) {
 const Dashboard = () => (
   <DefaultLayout hideFooter>
     <div className="Dashboard">
-      <Route path="/dashboard/:slug?" component={DashboardMenu} />
+      <Route path="/dashboard/:id?" component={DashboardMenu} />
       <DashboardContent />
     </div>
   </DefaultLayout>

@@ -32,11 +32,12 @@ const renderLabel = (status, start, end) => {
   };
 };
 
-const EventCard = ({ event: { slug, title, place, flyer, start, end, status } }) => {
+const EventCard = ({ event }) => {
+  const { id, title, place, flyer, start, end, status } = event;
   const startMoment = moment(start);
 
   return (
-    <Link className="EventCard" to={`/evento/${slug}`}>
+    <Link className="EventCard" to={{ pathname: `/evento/${id}`, state: { event } }}>
       <Card>
         <If condition={flyer}>
           <Image
@@ -71,7 +72,7 @@ const EventCard = ({ event: { slug, title, place, flyer, start, end, status } })
 
 EventCard.propTypes = {
   event: PropTypes.shape({
-    slug: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     place: PropTypes.object,
     start: PropTypes.string,

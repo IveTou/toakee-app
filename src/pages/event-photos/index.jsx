@@ -86,7 +86,7 @@ EventPhotos.propTypes = {
 
 export default graphql(query, {
   options: ({ match }) => ({
-    variables: { slug: match.params.slug },
+    variables: { id: match.params.id },
   }),
   props: ({ data: { viewer } }) => ({ viewer }),
 })(EventPhotos);

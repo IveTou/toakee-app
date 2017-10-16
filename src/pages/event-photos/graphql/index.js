@@ -1,13 +1,12 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  query EventPage($slug: String) {
+  query EventPage($id: String) {
     viewer {
       id
 
-      event(slug: $slug) {
+      event(id: $id) {
         id
-        slug
         title
         photos
       }
