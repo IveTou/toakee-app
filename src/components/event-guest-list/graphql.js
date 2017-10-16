@@ -1,14 +1,13 @@
 import gql from 'graphql-tag';
 
 const query = gql`
-  query EventGuestList($eventSlug: String) {
+  query EventGuestList($eventId: String) {
     viewer {
       id
 
-      event(slug: $eventSlug) {
+      event(id: $eventId) {
         id
         title
-        slug
 
         guestLists {
           id

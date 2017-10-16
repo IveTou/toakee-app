@@ -117,7 +117,7 @@ class NewEventPage extends React.Component {
       this.setState({ submitting: false });
       this.props.alertSuccess();
       if (!isAdmin) {
-        setTimeout(() => history.push(`/evento/${data.createEvent.slug}`), 2000);
+        setTimeout(() => history.push(`/evento/${data.createEvent.id}`), 2000);
       }
     } else {
       this.props.alertError();

@@ -1,10 +1,9 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  query EventPage($slug: String) {
-    event(slug: $slug) {
+  query EventPage($id: String) {
+    event(id: $id) {
       id
-      slug
       title
       flyer
       start

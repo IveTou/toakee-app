@@ -17,10 +17,10 @@ const options = {
   'editar-listas': 'Gerenciar listas',
 };
 
-const DashboardMenuItem = ({ slug, flyer, title, open, onClick }) => (
+const DashboardMenuItem = ({ id, flyer, title, open, onClick }) => (
   // eslint-disable-next-line jsx-a11y/no-static-element-interactions
   <div className={buildClasses({ open })} onClick={onClick}>
-    <NavLink to={`/dashboard/${slug}/lista`}>
+    <NavLink to={`/dashboard/${id}/lista`}>
       <div className="DashboardMenuItem-header">
         <div className="DashboardMenuItem-header-flyer">
           <img alt="flyer do evento" src={flyer} />
@@ -32,7 +32,7 @@ const DashboardMenuItem = ({ slug, flyer, title, open, onClick }) => (
       <For each="option" of={keys(options)}>
         <NavLink
           key={option}
-          to={`/dashboard/${slug}/${option}`}
+          to={`/dashboard/${id}/${option}`}
           className="DashboardMenuItem-content-option"
           activeClassName="active"
         >
@@ -44,7 +44,7 @@ const DashboardMenuItem = ({ slug, flyer, title, open, onClick }) => (
 );
 
 DashboardMenuItem.propTypes = {
-  slug: PropTypes.string,
+  id: PropTypes.string,
   flyer: PropTypes.string,
   title: PropTypes.string,
   open: PropTypes.bool,

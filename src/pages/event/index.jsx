@@ -38,7 +38,7 @@ export class EventPage extends React.Component {
 
   toggleGallery() {
     if (!this.props.deviceInfo.is('desktop')) {
-      this.props.history.push(`/evento/${this.props.viewer.events[0].slug}/fotos`);
+      this.props.history.push(`/evento/${this.props.viewer.events[0].id}/fotos`);
     } else {
       const { galleryIsVisible } = this.state;
 
@@ -97,8 +97,9 @@ export class EventPage extends React.Component {
   }
 
   render() {
+    const { event: preEvent } = this.props.location.state || {};
     const { galleryIsVisible, loadGallery } = this.state;
-    const { viewer = {}, event = {} } = this.props;
+    const { viewer = {}, event = preEvent } = this.props;
     const {
       title,
       description,
@@ -234,17 +235,18 @@ EventPage.propTypes = {
   history: PropTypes.object,
   setStatus: PropTypes.func,
   deviceInfo: PropTypes.object,
+  location: PropTypes.object,
 };
 
 const injectSetEventStatusMutation = graphql(setEventStatusMutation, {
   props: ({ mutate, ownProps: { event } }) => ({
     setStatus: (status) => {
-      const { slug, id: eventId } = event;
+      const { id: eventId } = event;
 
       return mutate({
         variables: { eventId, status },
         update: (store, { data: { updateEvent } }) => {
-          const data = store.readQuery({ query, variables: { slug } });
+          const data = store.readQuery({ query, variables: { id: eventId } });
           if (updateEvent) {
             data.event.status = status;
           }
@@ -261,10 +263,8 @@ const injectSetEventStatusMutation = graphql(setEventStatusMutation, {
 });
 
 const injectData = graphql(query, {
-  options: ({ match }) => ({
-    variables: { slug: match.params.slug },
-  }),
-  props: ({ data: { event } }) => ({ event }),
+  options: ({ match }) => ({ variables: { id: match.params.id } }),
+  props: ({ data: { event }, ownProps: { location } }) => ({ event, location }),
 });
 
 export default compose(

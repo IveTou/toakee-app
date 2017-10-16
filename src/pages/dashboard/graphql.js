@@ -7,7 +7,6 @@ export const dashboardMenuQuery = gql`
 
       events(start: $start, onlyMine: true) {
         id,
-        slug,
         title,
         flyer,
       }

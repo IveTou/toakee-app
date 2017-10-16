@@ -27,7 +27,7 @@ export const createEventMutation = gql`
       categories: $categories,
       status: $status,
     ) {
-      slug,
+      id,
       status,
     }
   }

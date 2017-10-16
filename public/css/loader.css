@@ -1,13 +1,13 @@
-.Loader,
-.Loader:before,
-.Loader:after {
+.ToakeeLoader,
+.ToakeeLoader:before,
+.ToakeeLoader:after {
   background: #ff8200;
   -webkit-animation: load1 1s infinite ease-in-out;
   animation: load1 1s infinite ease-in-out;
   width: 1em;
   height: 4em;
 }
-.Loader {
+.ToakeeLoader {
   color: #ff8000;
   text-indent: -9999em;
   margin: 88px auto;
@@ -19,18 +19,18 @@
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
 }
-.Loader:before,
-.Loader:after {
+.ToakeeLoader:before,
+.ToakeeLoader:after {
   position: absolute;
   top: 0;
   content: '';
 }
-.Loader:before {
+.ToakeeLoader:before {
   left: -1.5em;
   -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s;
 }
-.Loader:after {
+.ToakeeLoader:after {
   left: 1.5em;
 }
 @-webkit-keyframes load1 {

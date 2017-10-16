@@ -12,7 +12,6 @@ export const query = gql`
 
   fragment EventPart on Event {
     id
-    slug
     title
     flyer
     start

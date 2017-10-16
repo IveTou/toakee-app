@@ -86,7 +86,7 @@ EventGuestList.propTypes = {
 const injectData = graphql(query, {
   options: ({ match }) => ({
     variables: {
-      eventSlug: match.params.slug,
+      eventId: match.params.id,
     },
   }),
   props: ({ data: { viewer } }) => ({ viewer }),
@@ -95,7 +95,7 @@ const injectData = graphql(query, {
 const injectSetAttendanceStatusMutation = graphql(setAttendanceStatusMutation, {
   props: ({ mutate, ownProps: { viewer } }) => ({
     toggleAttendanceStatus: (invitation) => {
-      const { slug: eventSlug, id: eventId } = viewer.event;
+      const { id: eventId } = viewer.event;
 
       const { status } = invitation;
       const newStatus = status === 'ATTENDED' ? 'INVITED' : 'ATTENDED';
@@ -103,7 +103,7 @@ const injectSetAttendanceStatusMutation = graphql(setAttendanceStatusMutation, {
       return mutate({
         variables: { eventId, status: newStatus, invitationId: invitation.id },
         update: (store, { data: { setAttendanceStatus } }) => {
-          const data = store.readQuery({ query, variables: { eventSlug } });
+          const data = store.readQuery({ query, variables: { eventId } });
 
           data.viewer.event.guestLists
             .find(({ id }) => id === invitation.guestList.id)
