@@ -67,9 +67,8 @@ export class EventPage extends React.Component {
 
   fbShare() {
     FB.ui({
-      display: 'popup',
-      method: 'share',
       mobile_iframe: true,
+      method: 'share',
       hashtag: '#eutoakee',
       href: location.href,
     });
