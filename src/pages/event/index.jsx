@@ -65,13 +65,13 @@ export class EventPage extends React.Component {
     this.setState({ lightboxIsOpen: false });
   }
 
-  fbShare() {
+  fbShare(viewer) {
     FB.ui({
       mobile_iframe: true,
       method: 'share',
       hashtag: '#toakee',
       href: location.href,
-    }, () => {});
+    }, () => TrackingAPI.track('Share Event Trigger', viewer ? viewer.id :  'Guest'));
   }
 
   renderModerationButtons() {
@@ -181,7 +181,7 @@ export class EventPage extends React.Component {
               </If>
               <div className="EventPage-details-info-social">
                 <Button
-                  onClick={this.fbShare}
+                  onClick={this.fbShare(viewer)}
                   color="facebook"
                   size="small"
                   content="Compartilhar"
