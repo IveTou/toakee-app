@@ -69,9 +69,9 @@ export class EventPage extends React.Component {
     FB.ui({
       mobile_iframe: true,
       method: 'share',
-      hashtag: '#eutoakee',
+      hashtag: '#toakee',
       href: location.href,
-    });
+    }, () => {});
   }
 
   renderModerationButtons() {
