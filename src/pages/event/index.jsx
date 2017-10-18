@@ -177,7 +177,7 @@ export class EventPage extends React.Component {
               </If>
               <div className="EventPage-details-info-social">
                 <Button
-                  onClick={() => this.fbShare()}
+                  onClick={this.fbShare}
                   color="facebook"
                   size="small"
                   content="Compartilhar"
