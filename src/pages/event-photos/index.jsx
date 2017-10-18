@@ -21,11 +21,7 @@ export class EventPhotos extends React.Component {
   }
 
   componentWillReceiveProps({ viewer }) {
-    if (!viewer.id) {
-      TrackingAPI.track('Unlogged Event Photos Page View', 'Guest');
-    } else if (viewer) {
-      TrackingAPI.track('Logged Event Photos Page View', viewer.id);
-    }
+    TrackingAPI.viewerSafeTrack(viewer, 'Event Photos Page View');
   }
 
   handleClickPrev() {
