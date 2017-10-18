@@ -28,12 +28,14 @@ export class EventPage extends React.Component {
     autoBind(this);
   }
 
+  tracker(viewer, eventName) {
+    return !!viewer
+    ? { name: `Logged ${eventName}`, pid: viewer.id }
+    : { name: `Unlogged ${eventName}`, pid: 'Guest' };
+  }
+
   componentWillReceiveProps({ viewer }) {
-    if (!viewer.id) {
-      TrackingAPI.track('Unlogged Event Page View', 'Guest');
-    } else if (viewer) {
-      TrackingAPI.track('Logged Event Page View', viewer.id);
-    }
+    TrackingAPI.track(this.tracker(viewer, 'Event Page View'));
   }
 
   toggleGallery() {
@@ -71,7 +73,7 @@ export class EventPage extends React.Component {
       method: 'share',
       hashtag: '#toakee',
       href: location.href,
-    }, () => TrackingAPI.track('Share Event Trigger', viewer ? viewer.id :  'Guest'));
+    }, () => TrackingAPI.track(this.tracker(viewer, 'Share Event Trigger')));
   }
 
   renderModerationButtons() {
@@ -181,7 +183,7 @@ export class EventPage extends React.Component {
               </If>
               <div className="EventPage-details-info-social">
                 <Button
-                  onClick={this.fbShare(viewer)}
+                  onClick={() => this.fbShare(viewer)}
                   color="facebook"
                   size="small"
                   content="Compartilhar"
