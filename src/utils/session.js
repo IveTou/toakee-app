@@ -16,7 +16,7 @@ export const setSocialToken = (network, token) => {
 export const isLogged = () => !!getToken();
 
 export const tracker = (viewer, eventName) => (
-  viewer
+  viewer.id
   ? { name: `Logged ${eventName}`, pid: viewer.id }
   : { name: `Unlogged ${eventName}`, pid: 'Guest' }
 );
