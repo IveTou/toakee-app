@@ -17,7 +17,7 @@ if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-const trackPageView = once((metric, id) => TrackingAPI.track(metric, id));
+const trackPageView = once((name, pid) => TrackingAPI.track({ name, pid }));
 
 export class TopBar extends React.Component {
   constructor(props) {
@@ -54,12 +54,12 @@ export class TopBar extends React.Component {
   }
 
   login() {
-    TrackingAPI.track('Landing Login Trigger', 'Guest');
+    TrackingAPI.track({ name: 'Landing Login Trigger', pid: 'Guest' });
     this.props.history.push('/login');
   }
 
   signUp() {
-    TrackingAPI.track('Landing SignUp Trigger', 'Guest');
+    TrackingAPI.track({ name: 'Landing SignUp Trigger', pid: 'Guest' });
     this.props.history.push('/cadastrar');
   }
 

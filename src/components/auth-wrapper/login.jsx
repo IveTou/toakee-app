@@ -48,7 +48,7 @@ export class Login extends React.Component {
     if (!errors) {
       this.props.login(form)
         .then(partial(this.onSuccess, 'login'))
-        .then(() => TrackingAPI.track('Login Trigger', 'Guest'))
+        .then(() => TrackingAPI.track({ name: 'Login Trigger', pid: 'Guest' }))
         .catch(this.props.alert);
     }
   }
@@ -58,7 +58,7 @@ export class Login extends React.Component {
 
     this.props.socialLogin({ network: upperCase(network), token })
       .then(partial(this.onSuccess, 'socialLogin'))
-      .then(() => TrackingAPI.track('Social Login Trigger', 'Guest'))
+      .then(() => TrackingAPI.track({ name: 'Social Login Trigger', pid: 'Guest' }))
       .catch(this.props.alert);
   }
 
