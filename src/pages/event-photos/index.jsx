@@ -6,7 +6,6 @@ import autoBind from 'react-autobind';
 import DefaultLayout from '~/src/layouts/default';
 
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
-import { tracker } from '~/src/utils/session';
 
 import query from './graphql';
 
@@ -22,7 +21,7 @@ export class EventPhotos extends React.Component {
   }
 
   componentWillReceiveProps({ viewer }) {
-    TrackingAPI.track(tracker(viewer, 'Event Photos Page View'));
+    TrackingAPI.viewerSafeTrack(viewer, 'Event Photos Page View');
   }
 
   handleClickPrev() {

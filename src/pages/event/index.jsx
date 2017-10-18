@@ -8,7 +8,6 @@ import autoBind from 'react-autobind';
 import DefaultLayout from '~/src/layouts/default';
 import { fullDateFormat, timeFormat } from '~/src/utils/moment';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
-import { tracker } from '~/src/utils/session';
 import { withInfo } from '~/src/hocs';
 
 import query, { setEventStatusMutation } from './graphql';
@@ -30,7 +29,7 @@ export class EventPage extends React.Component {
   }
 
   componentWillReceiveProps({ viewer }) {
-    TrackingAPI.track(tracker(viewer, 'Event Page View'));
+    TrackingAPI.viewerSafeTrack(viewer, 'Event Page View');
   }
 
   toggleGallery() {
@@ -62,13 +61,13 @@ export class EventPage extends React.Component {
     this.setState({ lightboxIsOpen: false });
   }
 
-  fbShare(viewer) {
+  fbShare() {
     FB.ui({
       mobile_iframe: true,
       method: 'share',
       hashtag: '#toakee',
       href: location.href,
-    }, () => TrackingAPI.track(tracker(viewer, 'Share Event Trigger')));
+    }, () => TrackingAPI.viewerSafeTrack(this.props.viewer, 'Share Event Trigger'));
   }
 
   renderModerationButtons() {
@@ -178,7 +177,7 @@ export class EventPage extends React.Component {
               </If>
               <div className="EventPage-details-info-social">
                 <Button
-                  onClick={() => this.fbShare(viewer)}
+                  onClick={() => this.fbShare()}
                   color="facebook"
                   size="small"
                   content="Compartilhar"

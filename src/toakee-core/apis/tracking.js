@@ -14,6 +14,12 @@ class TrackingAPI extends BaseAPI {
       $referring_domain: document.referrer,
     });
   }
+
+  viewerSafeTrack(viewer = {}, eventName) {
+    const pid = viewer.id || 'Guest';
+    const name = `${viewer.id ? 'Logged' : 'Unlogged'} ${eventName}`;
+    this.track({ name, pid });
+  }
 }
 
 const { protocol, host } = window.location;

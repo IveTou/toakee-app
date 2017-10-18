@@ -17,7 +17,7 @@ if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-const trackPageView = once((name, pid) => TrackingAPI.track({ name, pid }));
+const trackPageView = once((viewer, pid) => TrackingAPI.viewerSafeTrack(viewer, pid));
 
 export class TopBar extends React.Component {
   constructor(props) {
@@ -29,12 +29,7 @@ export class TopBar extends React.Component {
   componentWillReceiveProps({ viewer, transparent, location }) {
     this._searchInput.setValue(qs.parse(location.search).q || '');
     this.setState({ transparent });
-
-    if (!viewer.id) {
-      trackPageView('Unlogged Page View', 'Guest');
-    } else if (viewer) {
-      trackPageView('Logged Page View', viewer.id);
-    }
+    trackPageView(viewer, 'Page View');
   }
 
   onSearch(e) {

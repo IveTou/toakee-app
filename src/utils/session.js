@@ -14,9 +14,3 @@ export const setSocialToken = (network, token) => {
   localStorage.setItem(`${network}Token`, token);
 };
 export const isLogged = () => !!getToken();
-
-export const tracker = (viewer, eventName) => (
-  viewer.id
-  ? { name: `Logged ${eventName}`, pid: viewer.id }
-  : { name: `Unlogged ${eventName}`, pid: 'Guest' }
-);
