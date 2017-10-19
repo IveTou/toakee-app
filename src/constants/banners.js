@@ -13,7 +13,7 @@ const banners = [
     title: '',
     subtitle: '',// eslint-disable-line
     img: `${ASSETS_BASE_URI}/${ASSETS_BANNERS_PATH}/parada.jpg`,
-    url: '/evento/16-parada-lgbt-de-salvador-2017',
+    url: '/evento/59af8d75c274e800046c7530',
   },
   {
     title: 'Somos a peça que faltava no seu negócio.',
