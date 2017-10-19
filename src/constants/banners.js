@@ -6,6 +6,12 @@ const banners = [
   {
     title: '',
     subtitle: '',// eslint-disable-line
+    img: `${ASSETS_BASE_URI}/${ASSETS_BANNERS_PATH}/capa-insanno.png`,
+    url: '/evento/5956f979624af5000473fa5d',
+  },
+  {
+    title: '',
+    subtitle: '',// eslint-disable-line
     img: `${ASSETS_BASE_URI}/${ASSETS_BANNERS_PATH}/parada.jpg`,
     url: '/evento/16-parada-lgbt-de-salvador-2017',
   },
