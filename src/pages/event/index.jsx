@@ -67,7 +67,11 @@ export class EventPage extends React.Component {
       method: 'share',
       hashtag: '#toakee',
       href: location.href,
-    }, () => TrackingAPI.viewerSafeTrack(this.props.viewer, 'Share Event Trigger'));
+    }, (res) => {
+      if (res && !res.error_message) {
+        TrackingAPI.viewerSafeTrack(this.props.viewer, 'Share Event Trigger');
+      }
+    });
   }
 
   renderModerationButtons() {
