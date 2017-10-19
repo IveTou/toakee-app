@@ -34,7 +34,7 @@ export class EventPage extends React.Component {
 
   toggleGallery() {
     if (!this.props.deviceInfo.is('desktop')) {
-      this.props.history.push(`/evento/${this.props.viewer.events[0].id}/fotos`);
+      this.props.history.push(`/evento/${this.props.event.id}/fotos`);
     } else {
       const { galleryIsVisible } = this.state;
 
@@ -117,7 +117,7 @@ export class EventPage extends React.Component {
         <Grid columns={2} className={classes}>
           <Grid.Column className="EventPage-gallery" mobile={16} tablet={8} computer={8}>
             <Lightbox
-              images={photos.map(src => ({ src }))}
+              images={photos.map(({ src }) => ({ src }))}
               isOpen={this.state.lightboxIsOpen}
               onClickPrev={this.handleClickPrev}
               onClickNext={this.handleClickNext}
@@ -129,7 +129,7 @@ export class EventPage extends React.Component {
                 <For each="image" of={photos} index="index">
                   <img
                     className="ui image"
-                    style={{ backgroundImage: `url(${image})` }}
+                    style={{ backgroundImage: `url(${image.thumb})` }}
                     onClick={() => this.openPhoto(index)}
                   />
                 </For>
