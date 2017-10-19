@@ -34,7 +34,7 @@ export class EventPage extends React.Component {
 
   toggleGallery() {
     if (!this.props.deviceInfo.is('desktop')) {
-      this.props.history.push(`/evento/${this.props.viewer.events[0].id}/fotos`);
+      this.props.history.push(`/evento/${this.props.event.id}/fotos`);
     } else {
       const { galleryIsVisible } = this.state;
 
