@@ -104,7 +104,7 @@ export class EventPage extends React.Component {
       price,
       prices = [],
       photos = [],
-    } = event;
+    } = event || {};
     const flyerAlt = `Flyer do ${title || 'evento'}`;
 
     const classes = classNames('EventPage', { 'EventPage--viewGallery': galleryIsVisible });
@@ -203,7 +203,9 @@ export class EventPage extends React.Component {
               style={{ backgroundImage: `url(${flyer})` }}
             />
             <Card>
-              <Image alt={flyerAlt} className="EventPage-flyer-img" src={flyer} />
+              <If condition={flyer}>
+                <Image alt={flyerAlt} className="EventPage-flyer-img" src={flyer} />
+              </If>
               <If condition={viewer.isAdmin}>
                 <Button.Group>{this.renderModerationButtons()}</Button.Group>
               </If>
