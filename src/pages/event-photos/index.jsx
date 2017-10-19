@@ -3,9 +3,10 @@ import { graphql } from 'react-apollo';
 import { Image, Header } from 'semantic-ui-react';
 import Lightbox from 'react-images';
 import autoBind from 'react-autobind';
-import DefaultLayout from '~/src/layouts/default';
 
+import DefaultLayout from '~/src/layouts/default';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
+import { withInfo } from '~/src/hocs';
 
 import query from './graphql';
 
@@ -41,8 +42,7 @@ export class EventPhotos extends React.Component {
   }
 
   render() {
-    const { viewer = {} } = this.props;
-    const { event = {} } = viewer;
+    const { event = {} } = this.props;
     const { title, photos = [] } = event;
 
     declare var image;
@@ -54,7 +54,7 @@ export class EventPhotos extends React.Component {
           <Header color="orange" as="h1">{title}</Header>
 
           <Lightbox
-            images={photos.map(src => ({ src }))}
+            images={photos.map(({ src }) => ({ src }))}
             isOpen={this.state.lightboxIsOpen}
             onClickPrev={this.handleClickPrev}
             onClickNext={this.handleClickNext}
@@ -65,7 +65,7 @@ export class EventPhotos extends React.Component {
             <For each="image" of={photos} index="index">
               <img
                 className="ui image"
-                style={{ backgroundImage: `url(${image})` }}
+                style={{ backgroundImage: `url(${image.thumb})` }}
                 onClick={() => this.openPhoto(index)}
               />
             </For>
@@ -78,11 +78,12 @@ export class EventPhotos extends React.Component {
 
 EventPhotos.propTypes = {
   viewer: PropTypes.object,
+  event: PropTypes.object,
 };
 
 export default graphql(query, {
   options: ({ match }) => ({
     variables: { id: match.params.id },
   }),
-  props: ({ data: { viewer } }) => ({ viewer }),
-})(EventPhotos);
+  props: ({ data: { event } }) => ({ event }),
+})(withInfo(EventPhotos, ['viewer']));
