@@ -29,11 +29,7 @@ export class EventPage extends React.Component {
   }
 
   componentWillReceiveProps({ viewer }) {
-    if (!viewer.id) {
-      TrackingAPI.track('Unlogged Event Page View', 'Guest');
-    } else if (viewer) {
-      TrackingAPI.track('Logged Event Page View', viewer.id);
-    }
+    TrackingAPI.viewerSafeTrack(viewer, 'Event Page View');
   }
 
   toggleGallery() {
@@ -69,9 +65,9 @@ export class EventPage extends React.Component {
     FB.ui({
       mobile_iframe: true,
       method: 'share',
-      hashtag: '#eutoakee',
+      hashtag: '#toakee',
       href: location.href,
-    });
+    }, () => TrackingAPI.viewerSafeTrack(this.props.viewer, 'Share Event Trigger'));
   }
 
   renderModerationButtons() {
