@@ -109,6 +109,7 @@ export class SignUp extends React.Component {
             <Form.Group widths="equal">
               <Form.Input
                 aria-label="nome"
+                aria-required="true"
                 placeholder="Nome"
                 name="firstName"
                 onChange={this.onChange}
@@ -118,6 +119,7 @@ export class SignUp extends React.Component {
               />
               <Form.Input
                 aria-label="sobrenome"
+                aria-required="true"
                 placeholder="Sobrenome"
                 name="lastName"
                 onChange={this.onChange}
@@ -128,6 +130,7 @@ export class SignUp extends React.Component {
             </Form.Group>
             <Form.Input
               aria-label="usuário"
+              aria-required="true"
               placeholder="Usuário"
               name="username"
               onChange={this.onChange}
@@ -137,6 +140,7 @@ export class SignUp extends React.Component {
             />
             <Form.Input
               aria-label="e-mail"
+              aria-required="true"
               type="email"
               name="email"
               placeholder="E-mail"
@@ -147,6 +151,7 @@ export class SignUp extends React.Component {
             />
             <Form.Input
               aria-label="senha"
+              aria-required="true"
               type={passwordVisible ? 'text' : 'password'}
               name="password"
               placeholder="Senha"

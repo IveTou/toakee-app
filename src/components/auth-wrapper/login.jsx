@@ -93,6 +93,7 @@ export class Login extends React.Component {
           <Form aria-label="login">
             <Form.Input
               aria-label="usuário"
+              aria-required="true"
               type="email"
               name="username"
               placeholder="Usuário"
@@ -103,6 +104,7 @@ export class Login extends React.Component {
             />
             <Form.Input
               aria-label="senha"
+              aria-required="true"
               type="password"
               name="password"
               placeholder="Senha"
