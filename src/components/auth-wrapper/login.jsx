@@ -83,11 +83,17 @@ export class Login extends React.Component {
         <div className="Login">
           <Divider horizontal>Entre com</Divider>
           <div className="Login-social">
-            <SocialLoginButton network="facebook" onReceiveToken={this.socialSubmit} />
+            <SocialLoginButton
+              network="facebook"
+              onReceiveToken={this.socialSubmit}
+              aria-label="entrar facebook"
+            />
           </div>
           <Divider horizontal>ou</Divider>
-          <Form>
+          <Form aria-label="login">
             <Form.Input
+              aria-label="usuário"
+              aria-required="true"
               type="email"
               name="username"
               placeholder="Usuário"
@@ -97,6 +103,8 @@ export class Login extends React.Component {
               error={!!this.state.errors.username}
             />
             <Form.Input
+              aria-label="senha"
+              aria-required="true"
               type="password"
               name="password"
               placeholder="Senha"

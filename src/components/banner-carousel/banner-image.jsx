@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router-dom';
 
-const BannerImage = ({ title, subtitle, img, url, ...slickProps }) => (
-  <Link {...slickProps} to={url}>
+const BannerImage = ({ title, subtitle, img, url, description, ...slickProps }) => (
+  <Link {...slickProps} to={url} aria-label={description}>
     <div className="BannerImage" style={{ backgroundImage: `url(${img})` }}>
       <div className="BannerImage-content">
         <div className="BannerImage-content-title">{title}</div>
@@ -17,6 +17,7 @@ BannerImage.propTypes = {
   subtitle: PropTypes.string,
   img: PropTypes.string,
   url: PropTypes.string,
+  description: PropTypes.string,
 };
 
 export default BannerImage;

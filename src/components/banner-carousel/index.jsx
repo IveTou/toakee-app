@@ -23,8 +23,8 @@ const settings = {
   slidesToScroll: 1,
   cellSpacin: 0,
   mobileFirst: true,
-  nextArrow: <Arrow direction="right" />,
-  prevArrow: <Arrow direction="left" />,
+  nextArrow: <Arrow direction="right" aria-label="próximo banner" />,
+  prevArrow: <Arrow direction="left" aria-label="banner anterior" />,
 };
 
 const BannerCarousel = () => (
