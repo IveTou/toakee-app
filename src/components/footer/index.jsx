@@ -186,6 +186,7 @@ class Footer extends React.Component {
                   </label>
                   <Form.Checkbox
                     inline
+                    aria-label="quero receber e-mails do site"
                     className="Footer-form-checkbox"
                     label="Quero receber e-mails com sugestões, promoções e novidades."
                     name="subscribe"
