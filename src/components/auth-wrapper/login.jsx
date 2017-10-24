@@ -86,8 +86,9 @@ export class Login extends React.Component {
             <SocialLoginButton network="facebook" onReceiveToken={this.socialSubmit} />
           </div>
           <Divider horizontal>ou</Divider>
-          <Form>
+          <Form aria-label="login">
             <Form.Input
+              aria-label="usuário"
               type="email"
               name="username"
               placeholder="Usuário"
@@ -97,6 +98,7 @@ export class Login extends React.Component {
               error={!!this.state.errors.username}
             />
             <Form.Input
+              aria-label="senha"
               type="password"
               name="password"
               placeholder="Senha"
@@ -105,10 +107,10 @@ export class Login extends React.Component {
               icon={this.renderErrorIcon('password')}
               error={!!this.state.errors.password}
             />
-            <Form.Button color="orange" onClick={this.submit} fluid>
+            <Form.Button color="orange" onClick={this.submit} aria-label="entrar" fluid>
               Entrar
             </Form.Button>
-            <Link className="AuthWrapper-link" to="/cadastrar">
+            <Link className="AuthWrapper-link" to="/cadastrar" aria-label="cadastrar">
               Não tenho cadastro
             </Link>
           </Form>
