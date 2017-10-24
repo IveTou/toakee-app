@@ -83,7 +83,11 @@ export class Login extends React.Component {
         <div className="Login">
           <Divider horizontal>Entre com</Divider>
           <div className="Login-social">
-            <SocialLoginButton network="facebook" onReceiveToken={this.socialSubmit} />
+            <SocialLoginButton
+              network="facebook"
+              onReceiveToken={this.socialSubmit}
+              aria-label="entrar facebook"
+            />
           </div>
           <Divider horizontal>ou</Divider>
           <Form aria-label="login">
