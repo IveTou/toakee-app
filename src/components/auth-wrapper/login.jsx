@@ -113,10 +113,10 @@ export class Login extends React.Component {
               icon={this.renderErrorIcon('password')}
               error={!!this.state.errors.password}
             />
-            <Form.Button color="orange" onClick={this.submit} aria-label="entrar" fluid>
+            <Form.Button color="orange" onClick={this.submit} fluid>
               Entrar
             </Form.Button>
-            <Link className="AuthWrapper-link" to="/cadastrar" aria-label="cadastrar">
+            <Link className="AuthWrapper-link" to="/cadastrar">
               Não tenho cadastro
             </Link>
           </Form>

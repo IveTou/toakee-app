@@ -201,9 +201,10 @@ class Footer extends React.Component {
                     name="submit"
                     loading={formState === FormState.LOADING}
                     size="large"
-                    content={buttonContent}
                     disabled={triggerDisabled}
-                  />
+                  >
+                    {buttonContent}
+                  </Button>
                 </Form>
               </Form.Group>
             </Segment>

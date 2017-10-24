@@ -161,17 +161,18 @@ export class SignUp extends React.Component {
               icon={this.renderPasswordIcon()}
             />
             <Form.Button
-              aria-label="criar conta"
               content="Criar minha conta"
               color="orange"
               fluid
-            />
+            >
+              Criar minha conta
+            </Form.Button>
             <p>
               Ao criar uma conta, você está concordando com os nossos&nbsp;
-              <Link to="/termos-de-uso" aria-label="termos de uso">Termos de Uso</Link>
+              <Link to="/termos-de-uso">Termos de Uso</Link>
               .
             </p>
-            <Link className="AuthWrapper-link" to="/login" aria-label="login">
+            <Link className="AuthWrapper-link" to="/login">
               Já possuo uma conta
             </Link>
           </Form>
