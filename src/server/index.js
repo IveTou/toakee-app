@@ -5,15 +5,12 @@ import sendgrid from 'sendgrid';
 import fs from 'fs';
 import GooglePlaces from 'node-googleplaces';
 import cookieParser from 'cookie-parser';
-import Sitemap from 'react-router-sitemap';
-
-import App from '~/src/app';
+import sitemap from 'sitemap';
 
 import MixpanelClient from './clients/mixpanel';
 
 import config from './config';
 import { exposeSSRRoutes } from './ssr';
-
 
 const { PORT, SUPPORT_EMAIL, SENDGRID_API_KEY, GOOGLE_PLACES_KEY } = config;
 const devMode = process.env.NODE_ENV !== 'production';
@@ -86,12 +83,18 @@ app.get('/social-login', (_, res) => {
   res.render('social-login.html');
 });
 
-app.get('/sitemap', (req, res) => {
-  console.log(req.headers.host);
-  new Sitemap(App)
-    .build(res.headers.host, { limitCountPaths: 5000 })
-    .save('./sitemap.xml', '/static/')
-    .res.render('sitemap.xml');
+
+app.get('/sitemap.xml', (req, res) => {
+  sitemap.createSitemap({
+    hostname: req.headers.host,
+    cacheTime: 600000,
+  })
+  .toXML((err, xml) => {
+    if (!err) {
+      res.header('Content-Type', 'application/xml');
+      res.send(xml);
+    }
+  });
 });
 
 const assets = devMode
