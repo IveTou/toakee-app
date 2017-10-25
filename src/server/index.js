@@ -90,12 +90,12 @@ app.get('/sitemap.xml', (req, res) => {
     cacheTime: 600000,
     urls: [
       {
-        url: '/landing/',
+        url: '/landing',
         changefreq: 'weekly',
         priority: 0.7,
         img: `${config.ASSETS_BASE_URI}/core/site/brand.png`,
       },
-      { url: '/evento/', changefreq: 'daily', priority: 0.9 },
+      { url: '/evento/*', changefreq: 'daily', priority: 0.9 },
     ],
   })
   .toXML((err, xml) => {
