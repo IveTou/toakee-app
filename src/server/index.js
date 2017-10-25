@@ -5,6 +5,9 @@ import sendgrid from 'sendgrid';
 import fs from 'fs';
 import GooglePlaces from 'node-googleplaces';
 import cookieParser from 'cookie-parser';
+import Sitemap from 'react-router-sitemap';
+
+import App from '~/src/app';
 
 import MixpanelClient from './clients/mixpanel';
 
@@ -81,6 +84,14 @@ app.post('/events/track', (req, res) => {
 
 app.get('/social-login', (_, res) => {
   res.render('social-login.html');
+});
+
+app.get('/sitemap', (req, res) => {
+  console.log(req.headers.host);
+  new Sitemap(App)
+    .build(res.headers.host, { limitCountPaths: 5000 })
+    .save('./sitemap.xml', '/static/')
+    .res.render('sitemap.xml');
 });
 
 const assets = devMode

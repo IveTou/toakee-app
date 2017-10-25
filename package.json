@@ -98,6 +98,7 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-router-relay": "^0.13.5",
+    "react-router-sitemap": "^1.1.2",
     "react-rte": "^0.14.1",
     "react-scroll": "^1.5.4",
     "react-slick": "^0.14.7",
