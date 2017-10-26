@@ -13,14 +13,14 @@ const buildClasses = topbarTransparent => classNames('DefaultLayout', {
   'DefaultLayout--topbarTransparent': topbarTransparent,
 });
 
-const renderTitle = (eventObject) => {
-  const title = eventObject ? `Toakee - ${eventObject.title}` : 'Toakee - Descubra o que fazer em Salvador';
-  return <ReactTitle title={title} />;
-};
-
-const DefaultLayout = ({ children, topbarTransparent, hideFooter, eventObject }) => (
+const DefaultLayout = ({
+  children,
+  topbarTransparent,
+  hideFooter,
+  title = 'Descubra o que fazer em Salvador',
+}) => (
   <div className={buildClasses(topbarTransparent)}>
-    {renderTitle(eventObject)}
+    <ReactTitle title={`Toakee - ${title}`} />
     <TopBar transparent={topbarTransparent} />
     <main>{children}</main>
     <If condition={!hideFooter}>
@@ -36,7 +36,7 @@ DefaultLayout.propTypes = {
   ]),
   topbarTransparent: PropTypes.bool,
   hideFooter: PropTypes.bool,
-  eventObject: PropTypes.object,
+  title: PropTypes.string,
 };
 
 export default DefaultLayout;

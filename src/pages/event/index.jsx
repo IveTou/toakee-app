@@ -117,7 +117,7 @@ export class EventPage extends React.Component {
     declare var index;
 
     return (
-      <DefaultLayout eventObject={event}>
+      <DefaultLayout title={title}>
         <Grid columns={2} className={classes}>
           <Grid.Column className="EventPage-gallery" mobile={16} tablet={8} computer={8}>
             <Lightbox
