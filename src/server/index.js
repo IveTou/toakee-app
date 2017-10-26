@@ -5,12 +5,12 @@ import sendgrid from 'sendgrid';
 import fs from 'fs';
 import GooglePlaces from 'node-googleplaces';
 import cookieParser from 'cookie-parser';
+import sitemap from 'sitemap';
 
 import MixpanelClient from './clients/mixpanel';
 
 import config from './config';
 import { exposeSSRRoutes } from './ssr';
-
 
 const { PORT, SUPPORT_EMAIL, SENDGRID_API_KEY, GOOGLE_PLACES_KEY } = config;
 const devMode = process.env.NODE_ENV !== 'production';
@@ -81,6 +81,29 @@ app.post('/events/track', (req, res) => {
 
 app.get('/social-login', (_, res) => {
   res.render('social-login.html');
+});
+
+
+app.get('/sitemap.xml', (req, res) => {
+  sitemap.createSitemap({
+    hostname: req.headers.host,
+    cacheTime: 600000,
+    urls: [
+      {
+        url: '/landing',
+        changefreq: 'weekly',
+        priority: 0.7,
+        img: `${config.ASSETS_BASE_URI}/core/site/brand.png`,
+      },
+      { url: '/evento/*', changefreq: 'daily', priority: 0.9 },
+    ],
+  })
+  .toXML((err, xml) => {
+    if (!err) {
+      res.header('Content-Type', 'application/xml');
+      res.send(xml);
+    }
+  });
 });
 
 const assets = devMode
