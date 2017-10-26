@@ -1,5 +1,4 @@
 import React from 'react';
-import MetaTags from 'react-meta-tags';
 
 import DefaultLayout from '~/src/layouts/default';
 import EventBox from '~/src/components/event-box';
@@ -11,9 +10,6 @@ if (process.env.BROWSER) {
 
 const EventFeed = () => (
   <DefaultLayout>
-    <MetaTags>
-      <title>Toakee - Descubra o que fazer em Salvador</title>
-    </MetaTags>
     <div className="EventFeed">
       <Header title="Eventos" />
       <div className="EventFeed-content">

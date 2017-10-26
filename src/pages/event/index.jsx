@@ -4,7 +4,6 @@ import { Icon, Card, Image, Grid, Button } from 'semantic-ui-react';
 import Lightbox from 'react-images';
 import classNames from 'classnames';
 import autoBind from 'react-autobind';
-import MetaTags from 'react-meta-tags';
 
 import DefaultLayout from '~/src/layouts/default';
 import { fullDateFormat, timeFormat } from '~/src/utils/moment';
@@ -118,10 +117,7 @@ export class EventPage extends React.Component {
     declare var index;
 
     return (
-      <DefaultLayout>
-        <MetaTags>
-          <title>Toakee - {title}</title>
-        </MetaTags>
+      <DefaultLayout event>
         <Grid columns={2} className={classes}>
           <Grid.Column className="EventPage-gallery" mobile={16} tablet={8} computer={8}>
             <Lightbox
