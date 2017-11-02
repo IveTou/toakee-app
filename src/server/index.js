@@ -85,25 +85,8 @@ app.get('/social-login', (_, res) => {
 
 
 app.get('/sitemap.xml', (req, res) => {
-  sitemap.createSitemap({
-    hostname: req.headers.host,
-    cacheTime: 600000,
-    urls: [
-      {
-        url: '/landing',
-        changefreq: 'weekly',
-        priority: 0.7,
-        img: `${config.ASSETS_BASE_URI}/core/site/brand.png`,
-      },
-      { url: '/evento/*', changefreq: 'daily', priority: 0.9 },
-    ],
-  })
-  .toXML((err, xml) => {
-    if (!err) {
-      res.header('Content-Type', 'application/xml');
-      res.send(xml);
-    }
-  });
+  res.header('Content-Type', 'application/xml');
+  res.render('sitemap.xml');
 });
 
 const assets = devMode
