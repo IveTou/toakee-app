@@ -5,6 +5,7 @@ import sendgrid from 'sendgrid';
 import fs from 'fs';
 import GooglePlaces from 'node-googleplaces';
 import cookieParser from 'cookie-parser';
+import sitemap from 'sitemap';
 
 import MixpanelClient from './clients/mixpanel';
 
