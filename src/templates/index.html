@@ -2,7 +2,6 @@
 <html lang="pt">
   <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Toakee - O seu guia de eventos em Salvador.">
     <meta name="keywords" content="eventos, salvador, fotos, listas de eventos, plataforma online, gerenciamento de eventos, sistema de eventos, congressos, seminários, shows, festas, dança, promoções, música, teatro, raves, cursos, workshops, encontros, networking, esportivo, cultural, lazer, religioso, passeios, turismo, feiras, exposições, happy hour">
     <meta name="author" content="Toakee team">
     <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
@@ -14,6 +13,7 @@
     <meta name="HandheldFriendly" content="True">
     <meta http-equiv="cleartype" content="on">
     {% if ogMetaTags %}
+      <meta id="meta-description" name="description" content="{{ogMetaTags.description}}" />
       <meta id="og-title" property="og:title" content="{{ogMetaTags.title}}" />
       <meta id="og-description" property="og:description" content="{{ogMetaTags.description}}" />
       <meta id="og-image" property="og:image" content="{{ogMetaTags.image}}" />
