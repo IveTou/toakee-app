@@ -41,7 +41,7 @@ const getMetaTags = (obj, url) => {
   ? { title, description: htmlToText.fromString(description, htmlOptions), image, appId, url }
   : {
     title: 'Toakee',
-    description: 'O melhor guia de eventos.',
+    description: 'O seu guia de eventos em Salvador. Encontre o melhores eventos em Salvaor. Música, Teatro, Dança, Shows, Festas, Baladas, Esportes, Seminários, Workshops, Cursos, Promoções, tudo que acontece na cidade em um só lugar.',
     image: `${config.ASSETS_BASE_URI}/core/site/brand.png`,
     url: 'www.toakee.com.br',
     appId,
