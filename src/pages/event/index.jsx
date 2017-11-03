@@ -196,7 +196,8 @@ export class EventPage extends React.Component {
                 <div
                   id="_offers9"
                   itemProp="offers"
-                  itemScope itemType="http://schema.org/Offer"
+                  itemScope
+                  itemType="http://schema.org/Offer"
                   className="EventPage-details-info-item"
                 >
                   <Icon name="dollar" />
