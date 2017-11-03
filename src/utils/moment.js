@@ -1,6 +1,8 @@
 import { upperFirst } from 'lodash';
 import moment from 'moment';
 
+export const dateFormat = time => moment(time).format('YYYY-MM-DD');
+
 export const dateTimeFormat = (time) => {
   if (moment().endOf('week').isBefore(time)) {
     return moment(time).format('DD/MM (ddd)');
