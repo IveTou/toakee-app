@@ -40,8 +40,8 @@ const getMetaTags = (obj, url) => {
   return /^.+\/evento\/.+$/.test(url)
   ? { title, description: htmlToText.fromString(description, htmlOptions), image, appId, url }
   : {
-    title: 'Toakee',
-    description: 'O seu guia de eventos em Salvador. Encontre o melhores eventos em Salvador. Música, Teatro, Dança, Exposições, Shows, Festas, Baladas, Esportes, Seminários, Workshops, Cursos, Promoções, tudo que acontece na cidade em um só lugar.',
+    title: 'Descubra o que fazer em Salvador',
+    description: 'Descubra o que fazer em Salvador. No seu guia de eventos você encontra baladas, teatro, festas, shows, restaurantes, exposições, esportes, seminários, workshops, cursos, promoções, corridas, tudo que acontece na cidade em um só lugar.',
     image: `${config.ASSETS_BASE_URI}/core/site/brand.png`,
     url: 'www.toakee.com.br',
     appId,
