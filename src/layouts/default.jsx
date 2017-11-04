@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import { ReactTitle } from 'react-meta-tags';
+import { Grid } from 'semantic-ui-react';
 
 import TopBar from '~/src/components/top-bar';
 import SideNav from '~/src/components/side-nav';
@@ -24,7 +25,8 @@ const DefaultLayout = ({
     <ReactTitle title={`Toakee - ${title}`} />
     <TopBar transparent={topbarTransparent} />
     <main>
-      <SideNav>{children}</SideNav>
+      <SideNav />
+      <div className="content">{children}</div>
     </main>
     <If condition={!hideFooter}>
       <Footer />

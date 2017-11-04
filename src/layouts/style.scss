@@ -4,6 +4,7 @@
 .DefaultLayout {
   main {
     margin-top: $topbar-height;
+    display: flex;
   }
 
   &--topbarTransparent {

@@ -2,12 +2,15 @@
 @import '../../scss/variables';
 @import '../../scss/colors';
 
-.SideNav.ui.segment.pushable {
-  .push.sidebar.menu {
-    width: $sidenav-width;
-  }
+.SideNav {
+  min-width: $sidenav-width;
+  float: left;
+  height: 100vh;
+  position: sticky;
+  top: $topbar-height;
+}
 
-  .pusher {
-    margin-right: $sidenav-width;
+@include media(">tablet") {
+  .SideNav {
   }
 }

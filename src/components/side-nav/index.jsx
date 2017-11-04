@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Icon, Menu, Sidebar, Segment } from 'semantic-ui-react';
+import { Icon, Menu } from 'semantic-ui-react';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -18,8 +18,7 @@ export class SideNav extends React.Component {
     const {activeItem} = this.state;
 
     return (
-    <Sidebar.Pushable as={Segment} className="SideNav">
-      <Sidebar as={Menu} animation="push" width="thin" visible vertical className="SideNav-menu">
+      <Menu vertical className="SideNav">
         <Menu.Item name="home" active={activeItem === 'home'} onClick={this.handleItemClick}>
           <Icon name="home" />
           Início
@@ -28,15 +27,10 @@ export class SideNav extends React.Component {
           <Icon name="calendar outline" />
           Meus Eventos
         </Menu.Item>
-      </Sidebar>
-      <Sidebar.Pusher children={this.props.children} />
-    </Sidebar.Pushable>
+      </Menu>
     )
   }
 }
 
-SideNav.propTypes = {
-  children: PropTypes.node,
-};
 
 export default SideNav;
