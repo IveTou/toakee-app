@@ -14,7 +14,7 @@ declare var idx;
 declare var background;
 
 const AuthWrapper = ({ children, slideshow }) => (
-  <DefaultLayout topbarTransparent>
+  <DefaultLayout>
     <div className={classNames('AuthWrapper', { static: !slideshow })}>
       <If condition={slideshow}>
         <ul className="AuthWrapper-slideshow">

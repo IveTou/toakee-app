@@ -1,0 +1,13 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/variables';
+@import '../../scss/colors';
+
+.SideNav.ui.segment.pushable {
+  .push.sidebar.menu {
+    width: $sidenav-width;
+  }
+
+  .pusher {
+    margin-right: $sidenav-width;
+  }
+}

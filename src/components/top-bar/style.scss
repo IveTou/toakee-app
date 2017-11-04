@@ -7,8 +7,12 @@
     height: $topbar-height;
     background: $white;
 
-    .item .logo {
+    .item.logo {
       min-width: $spacer*8;
+    }
+
+    .item.nav {
+      display: none;
     }
 
     .menu .item {
@@ -36,6 +40,12 @@
         min-width: $spacer*28;
       }
 
+      .item.nav {
+	display: block;
+	margin-top: $spacer;
+	margin-left: 0 !important;
+      }
+
       .search {
         display: block;
 
@@ -59,6 +69,10 @@
       background: $transparent;
       box-shadow: none;
       border: 0;
+
+      .item.nav {
+	color: $white;
+      }
 
       .button.TopBar-login  {
         &:not(:hover) {

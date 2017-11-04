@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { ReactTitle } from 'react-meta-tags';
 
 import TopBar from '~/src/components/top-bar';
+import SideNav from '~/src/components/side-nav';
 import Footer from '~/src/components/footer';
 
 if (process.env.BROWSER) {
@@ -22,7 +23,9 @@ const DefaultLayout = ({
   <div className={buildClasses(topbarTransparent)}>
     <ReactTitle title={`Toakee - ${title}`} />
     <TopBar transparent={topbarTransparent} />
-    <main>{children}</main>
+    <main>
+      <SideNav>{children}</SideNav>
+    </main>
     <If condition={!hideFooter}>
       <Footer />
     </If>

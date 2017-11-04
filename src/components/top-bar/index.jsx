@@ -78,6 +78,9 @@ export class TopBar extends React.Component {
     return (
       <Visibility className={classes} onUpdate={this.handleUpdate}>
         <Menu fixed="top" borderless>
+          <Menu.Item className="nav">
+            <Icon name="sidebar" size="large" />
+          </Menu.Item>
           <Menu.Item className="logo">
             <Logo />
           </Menu.Item>
