@@ -41,7 +41,7 @@
   .Landing {
     &-banner {
       padding: 0;
-      margin-top: $topbar-height;
+      margin-bottom: $spacer*2;
       white-space: normal;
 
       &-list {

@@ -6,8 +6,10 @@
   min-width: $sidenav-width;
   float: left;
   height: 100vh;
+  margin: 0 !important;
   position: sticky;
   top: $topbar-height;
+  z-index: 10;
 }
 
 @include media(">tablet") {
