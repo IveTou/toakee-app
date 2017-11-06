@@ -3,8 +3,8 @@
 @import '../../scss/colors';
 
 .EventPage {
-  margin-top: $spacer*2 !important;
   position: relative;
+  min-height: 100vh;
 
   &--viewGallery .EventPage {
     &-flyer {
