@@ -42,6 +42,10 @@ export class TopBar extends React.Component {
     this.setState({ transparent: this.props.transparent && !calculations.topPassed });
   }
 
+  handleNavToggle() {
+    this.props.toggle();
+  }
+
   logout() {
     logout();
     this.props.client.resetStore();
@@ -78,7 +82,7 @@ export class TopBar extends React.Component {
     return (
       <Visibility className={classes} onUpdate={this.handleUpdate}>
         <Menu fixed="top" borderless>
-          <Menu.Item className="nav">
+          <Menu.Item className="nav" onClick={this.handleNavToggle}>
             <Icon name="sidebar" size="large" />
           </Menu.Item>
           <Menu.Item className="logo">
@@ -156,6 +160,7 @@ TopBar.propTypes = {
   location: PropTypes.object,
   client: PropTypes.object,
   deviceInfo: PropTypes.object,
+  toggle: PropTypes.func,
 };
 
 export default withApollo(withRouter(withInfo(TopBar, ['viewer', 'deviceInfo'])));

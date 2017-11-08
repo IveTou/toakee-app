@@ -13,6 +13,7 @@
 
     .item.nav {
       display: none;
+	    margin: $spacer !important;
     }
 
     .menu .item {
@@ -34,7 +35,6 @@
 @include media(">tablet") {
   .TopBar {
     .ui.menu {
-      transition: .8s ease;
 
       .item .logo {
         min-width: $spacer*28;
@@ -42,8 +42,6 @@
 
       .item.nav {
 	      display: block;
-	      margin-top: $spacer;
-	      margin-left: 0 !important;
       }
 
       .search {
