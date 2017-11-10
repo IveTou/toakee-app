@@ -22,7 +22,9 @@ class DefaultLayout extends React.Component {
     autoBind(this);
   }
 
-  toggleNav = () => this.setState({ navHidden: !this.state.navHidden });
+  toggleNav(){
+    this.setState({ navHidden: !this.state.navHidden });
+  }
 
   render() {
     const {

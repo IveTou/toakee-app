@@ -13,7 +13,9 @@ export class SideNav extends React.Component {
     this.state = { activeItem: 'home' };
   }
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  handleItemClick(e, { name }) {
+		this.setState({ activeItem: name });
+	}
 
   render() {
     const { activeItem } = this.state;
@@ -23,13 +25,13 @@ export class SideNav extends React.Component {
     return (
       <Menu vertical className={classes}>
         <Menu.Item name="home" active={activeItem === 'home'} onClick={this.handleItemClick}>
-          <Icon name="home" />
-          Início
+          <Icon name="home" size="large" />
+          <div className="title">Início</div>
         </Menu.Item>
         <Menu.Item name="events" active={activeItem === 'events'} onClick={this.handleItemClick}>
-          <Icon name="calendar outline" />
-          Meus Eventos
-        </Menu.Item>
+          <Icon name="calendar outline" size="large" />
+          <div className="title">Meus Eventos</div>
+        </Menu.Item>	
       </Menu>
     );
   }

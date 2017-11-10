@@ -42,10 +42,6 @@ export class TopBar extends React.Component {
     this.setState({ transparent: this.props.transparent && !calculations.topPassed });
   }
 
-  handleNavToggle() {
-    this.props.toggle();
-  }
-
   logout() {
     logout();
     this.props.client.resetStore();
@@ -82,7 +78,7 @@ export class TopBar extends React.Component {
     return (
       <Visibility className={classes} onUpdate={this.handleUpdate}>
         <Menu fixed="top" borderless>
-          <Menu.Item className="nav" onClick={this.handleNavToggle}>
+          <Menu.Item className="nav" onClick={this.props.toggle}>
             <Icon name="sidebar" size="large" />
           </Menu.Item>
           <Menu.Item className="logo">
