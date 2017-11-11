@@ -9,7 +9,7 @@ if (process.env.BROWSER) {
 }
 
 const Landing = () => (
-  <DefaultLayout>
+  <DefaultLayout sidenavPartial>
     <div className="Landing">
       <div className="Landing-banner">
         <BannerCarousel />

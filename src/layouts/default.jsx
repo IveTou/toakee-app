@@ -11,14 +11,15 @@ if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-const buildClasses = topbarTransparent => classNames('DefaultLayout', {
+const buildClasses = (topbarTransparent, sidenavPartial) => classNames('DefaultLayout', {
   'DefaultLayout--topbarTransparent': topbarTransparent,
+  'DefaultLayout--sidenavPartial': sidenavPartial,
 });
 
 class DefaultLayout extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { transparent: props.topbarTransparent, navHidden: false };
+    this.state = { navHidden: false };
     autoBind(this);
   }
 
@@ -30,6 +31,7 @@ class DefaultLayout extends React.Component {
     const {
       children,
       topbarTransparent,
+			sidenavPartial,
       hideFooter,
       title = 'Descubra o que fazer em Salvador',
     } = this.props;
@@ -40,7 +42,7 @@ class DefaultLayout extends React.Component {
         <ReactTitle title={`Toakee - ${title}`} />
         <TopBar transparent={topbarTransparent} toggle={this.toggleNav} />
         <main>
-          <SideNav hidden={navHidden} />
+          <SideNav hidden={navHidden} partial={sidenavPartial} />
           <div className="content">{children}</div>
         </main>
         <If condition={!hideFooter}>
@@ -57,6 +59,7 @@ DefaultLayout.propTypes = {
     PropTypes.node,
   ]),
   topbarTransparent: PropTypes.bool,
+	sidenavPartial: PropTypes.bool,
   hideFooter: PropTypes.bool,
   title: PropTypes.string,
 };

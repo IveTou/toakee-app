@@ -15,7 +15,7 @@ const SearchPage = ({ location: { search } }) => {
   const q = qs.parse(search).q;
 
   return (
-    <DefaultLayout>
+    <DefaultLayout sidenavPartial>
       <div className="SearchPage">
         <SearchPageResults
           title={`Termo buscado: ${q}`}

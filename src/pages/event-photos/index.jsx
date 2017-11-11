@@ -49,7 +49,7 @@ export class EventPhotos extends React.Component {
     declare var index;
 
     return (
-      <DefaultLayout>
+      <DefaultLayout sidenavPartial>
         <div className="EventPhotos">
           <Header color="orange" as="h1">{title}</Header>
 

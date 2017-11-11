@@ -19,8 +19,12 @@ export class SideNav extends React.Component {
 
   render() {
     const { activeItem } = this.state;
-    const { hidden } = this.props;
-    const classes = classNames('SideNav', { 'SideNav--hidden': hidden });
+    const { hidden, partial } = this.props;
+    const classes = classNames(
+			'SideNav',
+			{ 'SideNav--hidden': hidden },
+			{ 'SideNav--hidden--partial': partial},
+		);
 
     return (
       <Menu vertical className={classes}>
@@ -39,6 +43,7 @@ export class SideNav extends React.Component {
 
 SideNav.propTypes = {
   hidden: PropTypes.bool,
+	partial: PropTypes.bool,
 };
 
 export default SideNav;

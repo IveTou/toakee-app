@@ -10,7 +10,7 @@ if (process.env.BROWSER) {
 }
 
 const About = () => (
-  <DefaultLayout>
+  <DefaultLayout sidenavPartial>
     <Grid className="About"columns={2} relaxed>
       <Grid.Column className="About-banner">
         <div className="About-banner-text">

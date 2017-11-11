@@ -9,7 +9,7 @@ if (process.env.BROWSER) {
 }
 
 const EventFeed = () => (
-  <DefaultLayout>
+  <DefaultLayout sidenavPartial>
     <div className="EventFeed">
       <Header title="Eventos" />
       <div className="EventFeed-content">
