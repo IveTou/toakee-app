@@ -4,6 +4,11 @@
 .DefaultLayout {
   main {
     margin-top: $topbar-height;
+    display: flex;
+
+    .content {
+      width: 100%;
+    }
   }
 
   &--topbarTransparent {

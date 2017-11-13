@@ -78,6 +78,9 @@ export class TopBar extends React.Component {
     return (
       <Visibility className={classes} onUpdate={this.handleUpdate}>
         <Menu fixed="top" borderless>
+          <Menu.Item className="nav" onClick={this.props.toggle}>
+            <Icon name="sidebar" size="large" />
+          </Menu.Item>
           <Menu.Item className="logo">
             <Logo />
           </Menu.Item>
@@ -153,6 +156,7 @@ TopBar.propTypes = {
   location: PropTypes.object,
   client: PropTypes.object,
   deviceInfo: PropTypes.object,
+  toggle: PropTypes.func,
 };
 
 export default withApollo(withRouter(withInfo(TopBar, ['viewer', 'deviceInfo'])));

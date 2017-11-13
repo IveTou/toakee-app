@@ -1,0 +1,31 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/variables';
+@import '../../scss/colors';
+
+.SideNav {
+  z-index: $sidenav-zindex;
+  min-width: $sidenav-width;
+  top: $topbar-height;
+  height: 100vh;
+  position: sticky;
+  margin: 0 !important;
+  resize: both;
+  overflow: hidden;
+  transition: .5s;
+
+	.item {
+		.title {
+			overflow: hidden;
+		}
+	}
+	
+  &--hidden {
+    min-width: 0;
+    width: 0 !important;
+
+		&--partial {
+    	width: $spacer*8 !important;
+		}
+  }
+
+}

@@ -4,11 +4,12 @@
 @import '../../scss/mixins';
 
 .AuthWrapper {
-  min-height: calc(100vh - #{$topbar-height});
-  padding: $spacer*10 $spacer*2 $spacer*3;
+  min-height: 100%;
+  padding: $spacer*10 $spacer*2 0;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  background: $black;
 
   &-content.card {
     margin: $spacer*8 auto 0 !important;
@@ -35,16 +36,17 @@
 
   &.static {
     background-image: url(#{$assets-base-uri}/core/site/login-bg.jpg);
+    background-size: cover;
   }
 
   &-slideshow {
     position: absolute;
     width: 100%;
-    min-height: inherit;
+    min-height: 100%;
     top: 0;
     left: 0;
     z-index: 0;
-    margin: 0;
+    margin: $spacer*6 0;
     padding: 0;
     list-style-type: none;
 

@@ -54,7 +54,7 @@ class UseTerms extends React.Component {
     const { activeItem } = this.state;
 
     return (
-      <DefaultLayout>
+      <DefaultLayout sidenavPartial>
         <div className="UseTerms">
           <Grid columns={2} relaxed>
             <If condition={!this.props.deviceInfo.is('desktop')}>
