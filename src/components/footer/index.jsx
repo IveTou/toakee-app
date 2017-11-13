@@ -222,7 +222,7 @@ class Footer extends React.Component {
           <Link className="Footer-link about" to="/quem-somos">
             <span>Quem somos?</span>
           </Link>
-          <Link className="Footer-link terms" to="/termos">
+          <Link className="Footer-link terms" to="/termos-de-uso">
             <span>Termos de Uso</span>
           </Link>
           <If condition={!this.props.viewer.id}>
