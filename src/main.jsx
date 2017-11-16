@@ -4,16 +4,13 @@ import moment from 'moment-timezone';
 import { createBrowserHistory } from 'history';
 
 import { Router } from 'react-router-dom';
-import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
 import rootReducer from '~/src/ducks';
 
-import config from '~/src/config';
-import { getToken } from '~/src/utils/session';
-
+import apolloClient from './apollo';
 import App from './app';
 
 if (process.env.BROWSER) {
@@ -23,26 +20,6 @@ if (process.env.BROWSER) {
 
 moment.locale('pt-br');
 moment.tz.setDefault('America/Bahia');
-
-const networkInterface = createNetworkInterface({ uri: config.GRAPHQL_URI });
-
-networkInterface.use([{
-  applyMiddleware: (req, next) => {
-    if (getToken()) {
-      const authorization = `Bearer ${getToken()}`;
-      req.options.headers = Object.assign(req.options.headers || {}, { authorization });
-    }
-    next();
-  },
-}]);
-
-const apolloClient = new ApolloClient({
-  initialState: window.__APOLLO_STATE__,
-  networkInterface,
-  shouldBatch: true,
-});
-
-window.ac = apolloClient;
 
 const createStoreWithMiddleware = applyMiddleware(
   thunkMiddleware,

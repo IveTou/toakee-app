@@ -1,0 +1,69 @@
+@import '../../scss/variables';
+@import '../../scss/colors';
+@import '../../scss/mixins';
+
+.EventForm {
+  &Main {
+    text-align: center;
+
+    &.ui.segment {
+      padding: $spacer*2;
+    }
+
+    &-preview.ui.image img,
+    &-dropzone {
+      margin: 0 auto $spacer*2;
+      height: $flyer-height-mobile;
+      width: $flyer-width-mobile;
+      object-fit: cover;
+    }
+    &-dropzone {
+      color: $black26;
+      text-align: center;
+      border: 2px dashed;
+      padding: $spacer*3;
+      position: relative;
+
+      &--error {
+        color: $red100;
+      }
+
+      .icon-upload {
+        color: $black12;
+      }
+    }
+
+    &-preview + &-dropzone {
+      position: absolute;
+      top: $spacer*2;
+      left: 50%;
+      opacity: 0;
+      @include transform(translateX(-50%));
+    }
+  }
+
+  &Dates { // HOTFIXES
+    .input > div,
+    .react-datepicker-wrapper,
+    .react-datepicker__input-container {
+      width: 100%;
+    }
+
+    .react-datepicker-time__header {
+      display: none;
+    }
+
+    .react-datepicker__header--time:before {
+      content: 'Hora';
+      margin-top: 0;
+      color: $black;
+      font-weight: bold;
+      font-size: 0.944rem;
+    }
+
+    ul.react-datepicker__time-list {
+      padding: 0 !important;
+    }
+  }
+}
+
