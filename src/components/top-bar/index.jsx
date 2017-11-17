@@ -5,6 +5,9 @@ import { once } from 'lodash';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Menu, Dropdown, Image, Label, Icon, Button, Search, Visibility } from 'semantic-ui-react';
+import { AppBar, IconButton, RaisedButton, IconMenu, MenuItem, DropDownMenu } from 'material-ui';
+import { NavigationClose, MoreVertIcon } from 'material-ui/svg-icons';
+import SearchBar from 'material-ui-search-bar';
 import classNames from 'classnames';
 import qs from 'query-string';
 
@@ -72,83 +75,51 @@ export class TopBar extends React.Component {
 
   render() {
     const { viewer = {} } = this.props;
-    const { transparent } = this.state;
-    const classes = classNames('TopBar', { 'TopBar--transparent': transparent });
 
     return (
-      <Visibility className={classes} onUpdate={this.handleUpdate}>
-        <Menu fixed="top" borderless>
-          <Menu.Item className="logo">
-            <Logo />
-          </Menu.Item>
-          <Menu.Menu position="right">
-            <Menu.Item>
-              <Search
-                aria-label="busca"
-                ref={(node) => { this._searchInput = node; }}
-                open={false}
-                onFocus={this.onSearch}
-                input={{ icon: 'search', onKeyPress: this.onSearch }}
-              />
-            </Menu.Item>
-          </Menu.Menu>
-          <Menu.Menu position="right">
+      <AppBar
+        title={<Logo />}
+        titleStyle={{padding: '8px 0'}}
+        iconElementLeft={<IconButton><NavigationClose /></IconButton>}
+        className="TopBar"
+      >
+        <SearchBar
+          onChange={() => console.log('onChange')}
+          onRequestSearch={() => console.log('onRequestSearch')}
+        />
+        <Choose>
+          <When condition={!!viewer.id}>
+            <DropDownMenu>
+              <If condition={viewer.isPromoter}>
+                <MenuItem as={Link} to="/dashboard">
+                  Meus eventos
+                </MenuItem>
+              </If>
+              <MenuItem onClick={this.logout}>Sair</MenuItem>
+            </DropDownMenu>
+          </When>
+          <Otherwise>
             <Choose>
-              <When condition={!!viewer.id}>
-                <Dropdown item trigger={this.renderAvatar()} icon={null}>
-                  <Dropdown.Menu>
-                    <If condition={viewer.isPromoter}>
-                      <Dropdown.Item as={Link} to="/dashboard">
-                        Meus eventos
-                      </Dropdown.Item>
-                    </If>
-                    <Dropdown.Item onClick={this.logout}>Sair</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+              <When condition={this.props.deviceInfo.is('desktop')}>
+                <RaisedButton label="Cadastrar" onClick={this.signUp} />
+                <RaisedButton label="Entrar" onClick={this.login}/>
               </When>
               <Otherwise>
-                <Choose>
-                  <When condition={this.props.deviceInfo.is('desktop')}>
-                    <Menu.Item>
-                      <Button.Group>
-                        <Button
-                          className="TopBar-login"
-                          onClick={this.login}
-                          basic
-                          color="orange"
-                        >
-                          Entrar
-                        </Button>
-                        <Button
-                          onClick={this.signUp}
-                          color="orange"
-                        >
-                          Cadastrar
-                        </Button>
-                      </Button.Group>
-                    </Menu.Item>
-                  </When>
-                  <Otherwise>
-                    <Dropdown item icon="ellipsis vertical" simple>
-                      <Dropdown.Menu>
-                        <Dropdown.Item onClick={this.login}>Entrar</Dropdown.Item>
-                        <Dropdown.Item onClick={this.signUp}>Cadastrar</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </Otherwise>
-                </Choose>
+                <DropDownMenu iconButton={<NavigationClose />}>
+                  <MenuItem onClick={this.login}>Login</MenuItem>
+                  <MenuItem onClick={this.signUp}>Cadastro</MenuItem>
+                </DropDownMenu>
               </Otherwise>
             </Choose>
-          </Menu.Menu>
-        </Menu>
-      </Visibility>
+          </Otherwise>
+        </Choose>
+      </AppBar>
     );
   }
 }
 
 TopBar.propTypes = {
   viewer: PropTypes.object,
-  transparent: PropTypes.bool,
   history: PropTypes.object,
   location: PropTypes.object,
   client: PropTypes.object,

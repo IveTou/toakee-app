@@ -11,11 +11,9 @@ if (process.env.BROWSER) {
 
 const Logo = ({ deviceInfo }) => {
   const imgSrc = deviceInfo.is('desktop')
-    ? `${config.ASSETS_BASE_URI}/core/site/logo.png`
+    ? `${config.ASSETS_BASE_URI}/core/site/logo-orange.png`
     : `${config.ASSETS_BASE_URI}/core/site/logo-x64.png`;
-  const classes = classNames('Logo', { 'Logo--small': !deviceInfo.is('desktop') });
-
-  return <Link to="/"><img className={classes} alt="toakee logo" src={imgSrc} /></Link>;
+  return <Link to="/"><img className="Logo" alt="toakee logo" src={imgSrc} /></Link>;
 };
 
 Logo.propTypes = {

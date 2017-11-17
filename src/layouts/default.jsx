@@ -9,19 +9,14 @@ if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-const buildClasses = topbarTransparent => classNames('DefaultLayout', {
-  'DefaultLayout--topbarTransparent': topbarTransparent,
-});
-
 const DefaultLayout = ({
   children,
-  topbarTransparent,
   hideFooter,
   title = 'Descubra o que fazer em Salvador',
 }) => (
-  <div className={buildClasses(topbarTransparent)}>
+  <div className="DefaultLayout">
     <ReactTitle title={`Toakee - ${title}`} />
-    <TopBar transparent={topbarTransparent} />
+    <TopBar />
     <main>{children}</main>
     <If condition={!hideFooter}>
       <Footer />
@@ -34,7 +29,6 @@ DefaultLayout.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
-  topbarTransparent: PropTypes.bool,
   hideFooter: PropTypes.bool,
   title: PropTypes.string,
 };

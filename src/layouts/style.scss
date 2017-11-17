@@ -1,22 +1,4 @@
 @import 'node_modules/include-media/dist/_include-media.scss';
 @import '../scss/variables';
 
-.DefaultLayout {
-  main {
-    margin-top: $topbar-height;
-  }
-
-  &--topbarTransparent {
-    main {
-      margin-top: 0;
-    }
-  }
-}
-
-@include media("<tablet") {
-  .DefaultLayout {
-    main {
-      margin-top: $topbar-height;
-    }
-  }
-}
+.DefaultLayout {}

@@ -1,8 +1,9 @@
 @import '../../scss/variables';
 
 .Logo {
-  width: $spacer*20;
-  transition: .8s ease;
+  max-width: $spacer*8;
+  max-height: 100%;
+  border-radius: 50%;
 
   &--small {
     width: $spacer*4;
