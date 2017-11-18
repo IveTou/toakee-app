@@ -9,15 +9,10 @@
   z-index: $topbar-zindex;
 
   &-menu {
+    margin-right: 0 !important;
+
     &-button {
       margin: 0 $spacer !important;
     }
-  }
-
-  &-search {
-    &:first-child {
-      width: 400px;
-      min-width: 200px;
-     }
   }
 }

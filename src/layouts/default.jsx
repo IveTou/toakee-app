@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import classNames from 'classnames';
 import { ReactTitle } from 'react-meta-tags';
 
 import TopBar from '~/src/components/top-bar';

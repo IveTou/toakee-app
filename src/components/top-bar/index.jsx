@@ -9,16 +9,13 @@ import {
   Toolbar,
   ToolbarGroup,
   IconButton,
-  RaisedButton,
   IconMenu,
+  RaisedButton,
   MenuItem,
-  DropDownMenu
 } from 'material-ui';
-import { NavigationMenu, NavigationMoreVert, SocialPerson} from 'material-ui/svg-icons';
-import { deepOrange700, deepOrange500, fullWhite }from 'material-ui/styles/colors';
+import { NavigationMenu, NavigationMoreVert, SocialPerson } from 'material-ui/svg-icons';
+import { deepOrange500, fullWhite } from 'material-ui/styles/colors';
 import SearchBar from 'material-ui-search-bar';
-import classNames from 'classnames';
-import qs from 'query-string';
 
 import { logout } from '~/src/utils/session';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
@@ -35,17 +32,19 @@ export class TopBar extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
+    this.state = { value: '' };
   }
 
-  componentWillReceiveProps({ viewer, location }) {
-    this._searchInput.setValue(qs.parse(location.search).q || '');
+  componentWillReceiveProps({ viewer }) {
     trackPageView(viewer, 'Page View');
   }
 
-  onSearch(e) {
-    if (e.key === 'Enter') {
-      this.props.history.push(`/search?q=${e.target.value}`);
-    }
+  onSearch() {
+    this.props.history.push(`/search?q=${this.state.value}`);
+  }
+
+  onChange(value) {
+    this.setState({ value });
   }
 
   logout() {
@@ -69,8 +68,8 @@ export class TopBar extends React.Component {
 
     if (viewer && viewer.id) {
       return viewer.photo
-        ? <Avatar src={viewer.photo} />
-        : <Avatar>{viewer.firstName[0]}</Avatar>;
+        ? <Avatar className="TopBar-avatar" src={viewer.photo} />
+        : <Avatar className="TopBar-avatar">{viewer.firstName[0]}</Avatar>;
     }
 
     return <SocialPerson />;
@@ -81,29 +80,33 @@ export class TopBar extends React.Component {
 
     return (
       <Toolbar className="TopBar">
-        <ToolbarGroup className="ToBar-nav" firstChild={true}>
+        <ToolbarGroup className="ToBar-nav" firstChild>
           <IconButton className="TopBar-nav-button"><NavigationMenu /></IconButton>
           <Logo />
         </ToolbarGroup>
         <ToolbarGroup>
           <SearchBar
-            onChange={(value) => console.log(value)}
+            onChange={this.onChange}
             onRequestSearch={this.onSearch}
             hintText="Pesquisar no site"
             style={{ width: '400px', minWidth: '200px' }}
           />
         </ToolbarGroup>
-        <ToolbarGroup className="TopBar-menu" lastChild={true}>
+        <ToolbarGroup className="TopBar-menu" lastChild>
           <Choose>
             <When condition={!!viewer.id}>
-              <DropDownMenu iconButton={this.renderAvatar()}>
+              <IconMenu
+                iconButtonElement={<IconButton>{this.renderAvatar()}</IconButton>}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+              >
                 <If condition={viewer.isPromoter}>
                   <MenuItem as={Link} to="/dashboard">
                     Meus eventos
                   </MenuItem>
                 </If>
                 <MenuItem onClick={this.logout}>Sair</MenuItem>
-              </DropDownMenu>
+              </IconMenu>
             </When>
             <Otherwise>
               <Choose>
@@ -122,10 +125,14 @@ export class TopBar extends React.Component {
                   />
                 </When>
                 <Otherwise>
-                  <DropDownMenu iconButton={<NavigationMoreVert />}>
+                  <IconMenu
+                    iconButtonElement={<IconButton><NavigationMoreVert /></IconButton>}
+                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                    targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+                  >
                     <MenuItem onClick={this.login}>Login</MenuItem>
                     <MenuItem onClick={this.signUp}>Cadastro</MenuItem>
-                  </DropDownMenu>
+                  </IconMenu>
                 </Otherwise>
               </Choose>
             </Otherwise>
@@ -139,7 +146,6 @@ export class TopBar extends React.Component {
 TopBar.propTypes = {
   viewer: PropTypes.object,
   history: PropTypes.object,
-  location: PropTypes.object,
   client: PropTypes.object,
   deviceInfo: PropTypes.object,
 };

@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router-dom';
-import classNames from 'classnames';
 
 import config from '~/src/config';
 import { withInfo } from '~/src/hocs';
