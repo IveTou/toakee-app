@@ -1,9 +1,25 @@
 @import '../../scss/variables';
+@import '../../scss/colors';
 
 .Logo {
-  max-width: $spacer*8;
-  max-height: 100%;
-  border-radius: 50%;
+  max-width: $spacer*25;
+  width: $spacer*25;
+  height: 100%;
+  margin-left: $spacer;
+
+  img {
+    max-height: 100%;
+    border-radius: 50%;
+    float: left;
+    padding: $spacer/2;
+  }
+
+  h1 {
+    max-height: 100%;
+    margin: 0;
+    font-size: 38px;
+    color: $gray600;
+  }
 
   &--small {
     width: $spacer*4;

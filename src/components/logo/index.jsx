@@ -13,7 +13,12 @@ const Logo = ({ deviceInfo }) => {
   const imgSrc = deviceInfo.is('desktop')
     ? `${config.ASSETS_BASE_URI}/core/site/logo-orange.png`
     : `${config.ASSETS_BASE_URI}/core/site/logo-x64.png`;
-  return <Link to="/"><img className="Logo" alt="toakee logo" src={imgSrc} /></Link>;
+  return (
+    <Link className="Logo" alt="toakee logo" to="/">
+      <img src={imgSrc} />
+      <h1>Toakee</h1>
+    </Link>
+  );
 };
 
 Logo.propTypes = {

@@ -4,9 +4,18 @@ import autoBind from 'react-autobind';
 import { once } from 'lodash';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import { Menu, Dropdown, Image, Label, Icon, Button, Search, Visibility } from 'semantic-ui-react';
-import { AppBar, IconButton, RaisedButton, IconMenu, MenuItem, DropDownMenu } from 'material-ui';
-import { NavigationClose, MoreVertIcon } from 'material-ui/svg-icons';
+import {
+  Avatar,
+  Toolbar,
+  ToolbarGroup,
+  IconButton,
+  RaisedButton,
+  IconMenu,
+  MenuItem,
+  DropDownMenu
+} from 'material-ui';
+import { NavigationMenu, NavigationMoreVert, SocialPerson} from 'material-ui/svg-icons';
+import { deepOrange700, deepOrange500, fullWhite }from 'material-ui/styles/colors';
 import SearchBar from 'material-ui-search-bar';
 import classNames from 'classnames';
 import qs from 'query-string';
@@ -25,13 +34,11 @@ const trackPageView = once((viewer, pid) => TrackingAPI.viewerSafeTrack(viewer, 
 export class TopBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { transparent: props.transparent };
     autoBind(this);
   }
 
-  componentWillReceiveProps({ viewer, transparent, location }) {
+  componentWillReceiveProps({ viewer, location }) {
     this._searchInput.setValue(qs.parse(location.search).q || '');
-    this.setState({ transparent });
     trackPageView(viewer, 'Page View');
   }
 
@@ -39,10 +46,6 @@ export class TopBar extends React.Component {
     if (e.key === 'Enter') {
       this.props.history.push(`/search?q=${e.target.value}`);
     }
-  }
-
-  handleUpdate(_, { calculations }) {
-    this.setState({ transparent: this.props.transparent && !calculations.topPassed });
   }
 
   logout() {
@@ -66,54 +69,69 @@ export class TopBar extends React.Component {
 
     if (viewer && viewer.id) {
       return viewer.photo
-        ? <Image src={viewer.photo} size="mini" shape="circular" />
-        : <Label circular size="big">{viewer.firstName[0]}</Label>;
+        ? <Avatar src={viewer.photo} />
+        : <Avatar>{viewer.firstName[0]}</Avatar>;
     }
 
-    return <Icon name="user" circular size="large" color="grey" />;
+    return <SocialPerson />;
   }
 
   render() {
     const { viewer = {} } = this.props;
 
     return (
-      <AppBar
-        title={<Logo />}
-        titleStyle={{padding: '8px 0'}}
-        iconElementLeft={<IconButton><NavigationClose /></IconButton>}
-        className="TopBar"
-      >
-        <SearchBar
-          onChange={() => console.log('onChange')}
-          onRequestSearch={() => console.log('onRequestSearch')}
-        />
-        <Choose>
-          <When condition={!!viewer.id}>
-            <DropDownMenu>
-              <If condition={viewer.isPromoter}>
-                <MenuItem as={Link} to="/dashboard">
-                  Meus eventos
-                </MenuItem>
-              </If>
-              <MenuItem onClick={this.logout}>Sair</MenuItem>
-            </DropDownMenu>
-          </When>
-          <Otherwise>
-            <Choose>
-              <When condition={this.props.deviceInfo.is('desktop')}>
-                <RaisedButton label="Cadastrar" onClick={this.signUp} />
-                <RaisedButton label="Entrar" onClick={this.login}/>
-              </When>
-              <Otherwise>
-                <DropDownMenu iconButton={<NavigationClose />}>
-                  <MenuItem onClick={this.login}>Login</MenuItem>
-                  <MenuItem onClick={this.signUp}>Cadastro</MenuItem>
-                </DropDownMenu>
-              </Otherwise>
-            </Choose>
-          </Otherwise>
-        </Choose>
-      </AppBar>
+      <Toolbar className="TopBar">
+        <ToolbarGroup className="ToBar-nav" firstChild={true}>
+          <IconButton className="TopBar-nav-button"><NavigationMenu /></IconButton>
+          <Logo />
+        </ToolbarGroup>
+        <ToolbarGroup>
+          <SearchBar
+            onChange={(value) => console.log(value)}
+            onRequestSearch={this.onSearch}
+            hintText="Pesquisar no site"
+            style={{ width: '400px', minWidth: '200px' }}
+          />
+        </ToolbarGroup>
+        <ToolbarGroup className="TopBar-menu" lastChild={true}>
+          <Choose>
+            <When condition={!!viewer.id}>
+              <DropDownMenu iconButton={this.renderAvatar()}>
+                <If condition={viewer.isPromoter}>
+                  <MenuItem as={Link} to="/dashboard">
+                    Meus eventos
+                  </MenuItem>
+                </If>
+                <MenuItem onClick={this.logout}>Sair</MenuItem>
+              </DropDownMenu>
+            </When>
+            <Otherwise>
+              <Choose>
+                <When condition={this.props.deviceInfo.is('desktop')}>
+                  <RaisedButton
+                    className="TopBar-menu-button signin"
+                    label="Cadastrar"
+                    onClick={this.signUp}
+                    backgroundColor={deepOrange500}
+                    labelColor={fullWhite}
+                  />
+                  <RaisedButton
+                    className="TopBar-menu-button login"
+                    label="Entrar"
+                    onClick={this.login}
+                  />
+                </When>
+                <Otherwise>
+                  <DropDownMenu iconButton={<NavigationMoreVert />}>
+                    <MenuItem onClick={this.login}>Login</MenuItem>
+                    <MenuItem onClick={this.signUp}>Cadastro</MenuItem>
+                  </DropDownMenu>
+                </Otherwise>
+              </Choose>
+            </Otherwise>
+          </Choose>
+        </ToolbarGroup>
+      </Toolbar>
     );
   }
 }
