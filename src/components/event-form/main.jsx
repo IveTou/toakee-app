@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
-import { Form, Segment, Icon, Image } from 'semantic-ui-react';
 import Dropzone from 'react-dropzone';
 import Yup from 'yup';
 import classNames from 'classnames';
+import { TextField, FontIcon } from 'material-ui';
 
-import ErrorLabel from '~/src/components/error-label';
+import MaterialError from '~/src/components/material-error';
 
 const MAX_IMAGE_SIZE = 3145728;
 const MAX_TITLE_LEN = 40;
@@ -18,13 +18,14 @@ const EventFormMain = ({
   });
 
   return (
-    <Segment className="EventFormMain">
+    <div className="EventFormMain">
       <If condition={values.flyer.preview}>
-        <Image
-          src={values.flyer.preview}
-          className="EventFormMain-preview"
-          label={<ErrorLabel error={touched.flyer && errors.flyer} />}
-        />
+        <div className="EventFormMain-preview">
+          <img
+            src={values.flyer.preview}
+            className="EventFormMain-preview-img"
+          />
+        </div>
       </If>
       <Dropzone
         className={dropzoneClasses}
@@ -32,24 +33,21 @@ const EventFormMain = ({
         accept="image/*"
         onDrop={handleDropzoneChange}
       >
-        <ErrorLabel error={touched.flyer && errors.flyer} />
-        <Icon name="upload" size="huge" />
+        <FontIcon className="EventFormMain-dropzone-icon material-icons">file_upload</FontIcon>
         <div className="EventFormMain-dropzone-disclaimer">
           Clique para adicionar flyer
         </div>
       </Dropzone>
-      <Form.Input
+      <MaterialError error={touched.flyer && errors.flyer} center />
+      <TextField
         name="title"
-        placeholder="Título"
+        floatingLabelText="Título"
         value={values.title}
         onChange={handleChange}
-        error={touched.title && !!errors.title}
-        labelPosition="right corner"
-      >
-        <input />
-        <ErrorLabel error={touched.title && errors.title} />
-      </Form.Input>
-    </Segment>
+        errorText={touched.title && errors.title}
+        fullWidth
+      />
+    </div>
   );
 };
 
@@ -66,7 +64,7 @@ EventFormMain.propTypes = {
 export const validation = {
   title: Yup.string()
     .required('O título é obrigatório')
-    .max(MAX_TITLE_LEN, 'O título não pode conter mais de ${max} caracteres'),
+    .max(MAX_TITLE_LEN, 'O título não pode conter mais de ${max} caracteres'), // eslint-disable-line no-template-curly-in-string
   flyer: Yup.mixed()
     .test(
       'existence',
