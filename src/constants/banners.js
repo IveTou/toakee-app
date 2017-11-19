@@ -6,6 +6,13 @@ const banners = [
   {
     title: '',
     subtitle: '',// eslint-disable-line
+    img: `${ASSETS_BASE_URI}/${ASSETS_BANNERS_PATH}/atlantis.png`,
+    url: '/evento/59e9200e55d748000444bd2d',
+    description: 'atlantis',
+  },
+  {
+    title: '',
+    subtitle: '',// eslint-disable-line
     img: `${ASSETS_BASE_URI}/${ASSETS_BANNERS_PATH}/capa-insanno.png`,
     url: '/evento/5956f979624af5000473fa5d',
     description: 'insanno',
