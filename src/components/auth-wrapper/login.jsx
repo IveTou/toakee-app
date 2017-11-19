@@ -33,9 +33,12 @@ export class Login extends React.Component {
   }
 
   onSuccess(mutation, response) {
+    const { location, history, client } = this.props;
+    const redirectTo = (location.state && location.state.from) || '/';
+
     login(response.data[mutation]);
-    this.props.client.resetStore();
-    this.props.history.push('/');
+    client.resetStore();
+    history.push(redirectTo);
   }
 
   submit(e) {
@@ -123,6 +126,7 @@ Login.propTypes = {
   socialLogin: PropTypes.func,
   alert: PropTypes.func,
   history: PropTypes.object,
+  location: PropTypes.object,
   client: PropTypes.object,
 };
 

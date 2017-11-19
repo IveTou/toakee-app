@@ -34,10 +34,10 @@ export default class CategoriesAutocomplete extends React.Component {
     }
   }
 
-  handleInputChange(_value) {
+  handleInputUpdate(_value, _, { source }) {
     const value = trimStart(_value);
     this.setState({ value });
-    if (value !== '') {
+    if (source === 'change' && value !== '') {
       this.debouncedFetch(value);
     }
   }
@@ -63,7 +63,7 @@ export default class CategoriesAutocomplete extends React.Component {
           searchText={value}
           filter={AutoComplete.noFilter}
           dataSource={suggestions}
-          onChange={this.handleInputChange}
+          onUpdateInput={this.handleInputUpdate}
           onNewRequest={this.handleNewRequest}
           dataSourceConfig={{ text: 'title', value: 'id' }}
           errorText={error}

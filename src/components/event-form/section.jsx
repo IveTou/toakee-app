@@ -11,7 +11,7 @@ const EventFormSection = ({ Section, title, form }) => (
 );
 
 EventFormSection.propTypes = {
-  Section: PropTypes.element,
+  Section: PropTypes.func,
   title: PropTypes.string,
   form: PropTypes.object,
 };

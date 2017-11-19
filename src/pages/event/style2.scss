@@ -1,0 +1,57 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/variables';
+@import '../../scss/colors';
+
+.EventPage {
+  background-color: $gray50;
+  padding: $spacer*2 0;
+
+  &-content {
+    width: 90%;
+    margin: 0 auto;
+    height: calc(90vh - #{$spacer*3});
+
+    &-flyer {
+      height: 100%;
+      display: inline-block;
+      vertical-align: top;
+      width: 40%;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &-body {
+      display: inline-block;
+      vertical-align: top;
+      padding: $spacer*2;
+      width: 60%;
+
+      &-header {
+        &-title {
+          color: #ff5723;
+          margin-bottom: $spacer;
+          text-shadow: 1px 1px $black12;
+        }
+
+        &-subtitle {
+          &-icon,
+          h2 {
+            color: $black54 !important;
+            font-size: 18px !important;
+          }
+        }
+      }
+
+      &-description {
+        margin-top: $spacer*2;
+        line-height: 20px;
+        font-size: 16px;
+        text-align: justify;
+        color: $black54;
+      }
+    }
+  }
+}

@@ -61,11 +61,17 @@ const App = ({ userAgent }) => (
             redirectTo="/login"
             exact
           />
+          <ProtectedRoute
+            auth={userIsLogged}
+            component={NewEventPage}
+            path="/evento/novo"
+            redirectTo="/login"
+            exact
+          />
           <Route path="/landing" component={Landing} />
           <Route path="/login" component={Login} />
           <Route path="/cadastrar" component={SignUp} />
           <Route path="/search" component={SearchPage} />
-          <Route path="/evento/novo" exact component={NewEventPage} />
           <Route path="/evento/:id" exact component={EventPage} />
           <Route path="/evento/:id/fotos" component={EventPhotos} />
           <Route path="/dashboard" component={Dashboard} />

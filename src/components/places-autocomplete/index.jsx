@@ -73,7 +73,3 @@ PlacesAutocomplete.propTypes = {
   error: PropTypes.string,
 };
 
-PlacesAutocomplete.defaultProps = {
-  onChange: () => {},
-};
-

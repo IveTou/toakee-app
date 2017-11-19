@@ -58,6 +58,15 @@ export class TopBar extends React.Component {
     this.props.history.push('/cadastrar');
   }
 
+  newEvent() {
+    const { viewer } = this.props;
+    const pid = (viewer && viewer.id) || null;
+    const logged = !!pid;
+
+    TrackingAPI.track({ name: 'New Event Trigger', logged, pid });
+    this.props.history.push('/evento/novo');
+  }
+
   renderAvatar() {
     const { viewer } = this.props;
 
@@ -74,6 +83,7 @@ export class TopBar extends React.Component {
     const { viewer = {} } = this.props;
     const { transparent } = this.state;
     const classes = classNames('TopBar', { 'TopBar--transparent': transparent });
+    const isDesktop = this.props.deviceInfo.is('desktop');
 
     return (
       <Visibility className={classes} onUpdate={this.handleUpdate}>
@@ -94,8 +104,25 @@ export class TopBar extends React.Component {
           <Menu.Menu position="right">
             <Choose>
               <When condition={!!viewer.id}>
+                <If condition={isDesktop}>
+                  <Menu.Item>
+                    <Button
+                      className="TopBar-newEvent"
+                      onClick={this.newEvent}
+                      color="orange"
+                      basic
+                    >
+                      Publicar Evento
+                    </Button>
+                  </Menu.Item>
+                </If>
                 <Dropdown item trigger={this.renderAvatar()} icon={null}>
                   <Dropdown.Menu>
+                    <If condition={!isDesktop}>
+                      <Dropdown.Item onClick={this.newEvent}>
+                        Publicar Evento
+                      </Dropdown.Item>
+                    </If>
                     <If condition={viewer.isPromoter}>
                       <Dropdown.Item as={Link} to="/dashboard">
                         Meus eventos
@@ -107,8 +134,16 @@ export class TopBar extends React.Component {
               </When>
               <Otherwise>
                 <Choose>
-                  <When condition={this.props.deviceInfo.is('desktop')}>
+                  <When condition={isDesktop}>
                     <Menu.Item>
+                      <Button
+                        className="TopBar-newEvent"
+                        onClick={this.newEvent}
+                        basic
+                        color="orange"
+                      >
+                        Publicar Evento
+                      </Button>
                       <Button.Group>
                         <Button
                           className="TopBar-login"
@@ -130,6 +165,9 @@ export class TopBar extends React.Component {
                   <Otherwise>
                     <Dropdown item icon="ellipsis vertical" simple>
                       <Dropdown.Menu>
+                        <Dropdown.Item onClick={this.newEvent}>
+                          Publicar Evento
+                        </Dropdown.Item>
                         <Dropdown.Item onClick={this.login}>Entrar</Dropdown.Item>
                         <Dropdown.Item onClick={this.signUp}>Cadastrar</Dropdown.Item>
                       </Dropdown.Menu>
