@@ -11,6 +11,7 @@ export default gql`
       description
       price
       prices { description, value }
+      categories { id, title },
       directions
       place { id, name, coordinates, address, city { name } }
       status

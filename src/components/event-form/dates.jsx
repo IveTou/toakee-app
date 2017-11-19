@@ -1,10 +1,8 @@
 import React, { PropTypes } from 'react';
-import moment from 'moment';
-import { Form, Segment } from 'semantic-ui-react';
 import Yup from 'yup';
-import DatePicker from 'react-datepicker';
+import { DatePicker, TimePicker } from 'material-ui';
 
-import ErrorLabel from '~/src/components/error-label';
+import MaterialError from '~/src/components/material-error';
 
 if (process.env.BROWSER) {
   require('react-datepicker/dist/react-datepicker-cssmodules.css');
@@ -12,44 +10,70 @@ if (process.env.BROWSER) {
 
 const EventFormDates = ({
   form: { values, errors, setFieldValue, touched },
-}) => (
-  <Segment className="EventFormDates">
-    <Form.Input
-      label="Começa"
-      labelPosition="right corner"
-      error={touched.start && !!errors.start}
-    >
-      <DatePicker
-        placeholderText="Clique para selecionar"
-        selected={values.start}
-        dateFormat="DD/MM/YY HH:mm"
-        timeFormat="HH:mm"
-        showTimeSelect
-        onChange={time => setFieldValue('start', time)}
-        shouldCloseOnSelect={false}
-        customInput={<input style={{ width: '100%' }} />}
-      />
-      <ErrorLabel error={touched.start && errors.start} />
-    </Form.Input>
-    <Form.Input
-      label="Termina"
-      labelPosition="right corner"
-      error={touched.end && !!errors.end}
-    >
-      <DatePicker
-        placeholderText="Clique para selecionar"
-        selected={values.end}
-        dateFormat="DD/MM/YY HH:mm"
-        timeFormat="HH:mm"
-        showTimeSelect
-        onChange={time => setFieldValue('end', time)}
-        shouldCloseOnSelect={false}
-        customInput={<input style={{ width: '100%' }} />}
-      />
-      <ErrorLabel error={touched.end && errors.end} />
-    </Form.Input>
-  </Segment>
-);
+}) => {
+  const handleDateChange = (field, dateTime) => {
+    const [name, period] = field.split(':');
+    const date = values[name] || new Date();
+    if (period === 'date') {
+      date.setFullYear(dateTime.getFullYear());
+      date.setMonth(dateTime.getMonth());
+      date.setDate(dateTime.getDate());
+    } else {
+      date.setHours(dateTime.getHours());
+      date.setMinutes(dateTime.getMinutes());
+    }
+    setFieldValue(name, date);
+  };
+
+  return (
+    <div className="EventFormDates">
+      <div className="EventFormDates-picker">
+        <DatePicker
+          floatingLabelText="Data início"
+          value={values.start}
+          onChange={(_, date) => handleDateChange('start:date', date)}
+          errorText={touched.start && errors.start && ' '}
+          autoOk
+          fullWidth
+        />
+      </div>
+      <div className="EventFormDates-picker">
+        <TimePicker
+          floatingLabelText="Horário"
+          value={values.start}
+          format="24hr"
+          onChange={(_, time) => handleDateChange('start:time', time)}
+          errorText={touched.start && errors.start && ' '}
+          autoOk
+          fullWidth
+        />
+      </div>
+      <MaterialError error={touched.start && errors.start} />
+      <div className="EventFormDates-picker">
+        <DatePicker
+          floatingLabelText="Data término"
+          value={values.end}
+          onChange={(_, date) => handleDateChange('end:date', date)}
+          errorText={touched.end && errors.end && ' '}
+          autoOk
+          fullWidth
+        />
+      </div>
+      <div className="EventFormDates-picker">
+        <TimePicker
+          floatingLabelText="Horário"
+          value={values.end}
+          format="24hr"
+          onChange={(_, time) => handleDateChange('end:time', time)}
+          errorText={touched.end && errors.end && ' '}
+          autoOk
+          fullWidth
+        />
+      </div>
+      <MaterialError error={touched.end && errors.end} />
+    </div>
+  );
+};
 
 EventFormDates.propTypes = {
   form: PropTypes.shape({
@@ -65,18 +89,16 @@ export const validation = {
   start: Yup.mixed()
     .required('Por favor, insira a data de início.')
     .test(
-      'isFuture',
+      'isAfterNow',
       'Por favor, insira uma data futura.',
-      date => moment().isBefore(date),
+      start => start > new Date(),
     ),
   end: Yup.mixed()
     .required('Por favor, insira a data de término.')
-    .when('start', (start, schema) => (
-      schema.test(
-        'isAfterStart',
-        'Por favor, insira uma data após a data de início.',
-        end => end && end.isAfter(start),
-      )
+    .when('start', (start, schema) => schema.test(
+      'isAfterStart',
+      'Por favor, insira uma data após a data de início.',
+      end => end && (end > (start || new Date())),
     )),
 };
 
