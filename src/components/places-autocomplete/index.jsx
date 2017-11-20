@@ -30,7 +30,7 @@ export default class PlacesAutocomplete extends React.Component {
       variables: { query },
     });
     if (data && data.places && fetchingKey === currentFetchingKey) {
-      this.setState({ suggestions: [addNew, ...data.places] });
+      this.setState({ suggestions: [...data.places, addNew] });
     }
   }
 
@@ -41,8 +41,14 @@ export default class PlacesAutocomplete extends React.Component {
     }
   }
 
+  handleNewRequest(request, index) {
+    const option = index === -1 ? this.state.suggestions[0] : request;
+    this.props.onSelect(option);
+    this.setState({ value: option.name });
+  }
+
   render() {
-    const { placeholder, name, error, onSelect } = this.props;
+    const { placeholder, name, error } = this.props;
     const { suggestions, value } = this.state;
 
     return (
@@ -54,7 +60,7 @@ export default class PlacesAutocomplete extends React.Component {
           filter={AutoComplete.noFilter}
           dataSource={suggestions}
           onUpdateInput={this.handleInputUpdate}
-          onNewRequest={onSelect}
+          onNewRequest={this.handleNewRequest}
           dataSourceConfig={{ text: 'name', value: 'id' }}
           errorText={error}
           openOnFocus={!!value}
@@ -73,3 +79,6 @@ PlacesAutocomplete.propTypes = {
   error: PropTypes.string,
 };
 
+PlacesAutocomplete.defaultProps = {
+  onSelect: () => {},
+};

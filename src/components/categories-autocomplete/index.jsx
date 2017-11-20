@@ -30,7 +30,7 @@ export default class CategoriesAutocomplete extends React.Component {
     });
     if (data && data.categories && fetchingKey === currentFetchingKey) {
       const addValue = { title: `Adicionar: ${capitalize(query)}`, id: -1 };
-      this.setState({ suggestions: [addValue, ...data.categories] });
+      this.setState({ suggestions: [...data.categories, addValue] });
     }
   }
 
@@ -42,12 +42,12 @@ export default class CategoriesAutocomplete extends React.Component {
     }
   }
 
-  handleNewRequest(request) {
+  handleNewRequest(request, index) {
     if (this.props.clearOnSelect) {
       this.setState({ value: '' });
     }
     if (this.props.onSelect) {
-      this.props.onSelect(request);
+      this.props.onSelect(index === -1 ? this.state.suggestions[0] : request);
     }
   }
 
@@ -85,6 +85,5 @@ CategoriesAutocomplete.propTypes = {
 };
 
 CategoriesAutocomplete.defaultProps = {
-  onChange: () => {},
+  onSelect: () => {},
 };
-
