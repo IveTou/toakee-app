@@ -19,6 +19,7 @@ import SearchBar from 'material-ui-search-bar';
 import { logout } from '~/src/utils/session';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import Logo from '~/src/components/logo';
+import SideNav from '~/src/components/sidenav';
 import { withInfo } from '~/src/hocs';
 
 if (process.env.BROWSER) {
@@ -31,7 +32,7 @@ export class TopBar extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
-    this.state = { value: '' };
+    this.state = { value: '', navOpen: false };
   }
 
   componentWillReceiveProps({ viewer }) {
@@ -44,6 +45,10 @@ export class TopBar extends React.Component {
 
   onChange(value) {
     this.setState({ value });
+  }
+
+  toggleNav() {
+    this.setState({ navOpen: !this.state.navOpen });
   }
 
   logout() {
@@ -85,11 +90,18 @@ export class TopBar extends React.Component {
 
   render() {
     const { viewer = {} } = this.props;
+    const { navOpen } = this.state;
 
     return (
       <Toolbar className="TopBar">
         <ToolbarGroup className="ToBar-nav" firstChild>
-          <IconButton className="TopBar-nav-button"><NavigationMenu /></IconButton>
+          <IconButton
+            className="TopBar-nav-button"
+            onClick={this.toggleNav}
+          >
+            <NavigationMenu />
+          </IconButton>
+          <SideNav open={navOpen}/>
           <Logo />
         </ToolbarGroup>
         <ToolbarGroup>
