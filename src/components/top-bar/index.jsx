@@ -4,7 +4,7 @@ import autoBind from 'react-autobind';
 import { once } from 'lodash';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import { Menu, Dropdown, Image, Label, Icon, Button, Search, Visibility } from 'semantic-ui-react';
+import { Menu, Dropdown, Label, Icon, Button, Search, Visibility } from 'semantic-ui-react';
 import classNames from 'classnames';
 import qs from 'query-string';
 
@@ -70,13 +70,9 @@ export class TopBar extends React.Component {
   renderAvatar() {
     const { viewer } = this.props;
 
-    if (viewer && viewer.id) {
-      return viewer.photo
-        ? <Image src={viewer.photo} size="mini" shape="circular" />
-        : <Label circular size="big">{viewer.firstName[0]}</Label>;
-    }
-
-    return <Icon name="user" circular size="large" color="grey" />;
+    return viewer && viewer.id
+      ? <Label circular size="big">{viewer.firstName[0]}</Label>
+      : <Icon name="user" circular size="large" color="grey" />;
   }
 
   render() {

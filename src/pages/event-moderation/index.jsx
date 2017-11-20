@@ -14,7 +14,12 @@ const EventModeration = () => (
     <div className="EventModeration">
       <Header title="Moderar eventos" />
       <div className="EventModeration-content">
-        <EventList title="Pendentes" status="PENDING" start={moment().startOf('hour')} />
+        <EventList
+          title="Pendentes"
+          status="PENDING"
+          start={moment().startOf('hour')}
+          forceFetch
+        />
       </div>
     </div>
   </DefaultLayout>

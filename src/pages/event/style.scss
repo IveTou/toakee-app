@@ -9,8 +9,6 @@
   &--viewGallery .EventPage {
     &-flyer {
       margin-left: 50%;
-      top: 0;
-      left: 0;
     }
 
     &-gallery {
@@ -48,6 +46,8 @@
     text-align: center;
     transition: margin-left .5s ease;
     height: calc(100% - #{$spacer*2});
+    top: 0;
+    left: 0;
 
     &--right {
       margin-left: calc(50% + #{$spacer*2 - 2px});
