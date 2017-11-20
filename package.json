@@ -90,8 +90,6 @@
     "react": "15.6.1",
     "react-apollo": "^1.4.15",
     "react-autobind": "^1.0.6",
-    "react-datepicker": "^0.59.0",
-    "react-datetime": "^2.10.1",
     "react-dom": "^15.4.1",
     "react-dropzone": "4.1.0",
     "react-facebook": "^4.0.13",

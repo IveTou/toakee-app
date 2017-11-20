@@ -4,10 +4,6 @@ import { DatePicker, TimePicker } from 'material-ui';
 
 import MaterialError from '~/src/components/material-error';
 
-if (process.env.BROWSER) {
-  require('react-datepicker/dist/react-datepicker-cssmodules.css');
-}
-
 const EventFormDates = ({
   form: { values, errors, setFieldValue, touched },
 }) => {
