@@ -1,17 +1,15 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import config from '~/src/config';
-import { withInfo } from '~/src/hocs';
 
 if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-const Logo = ({ deviceInfo }) => {
-  const imgSrc = deviceInfo.is('desktop')
-    ? `${config.ASSETS_BASE_URI}/core/site/logo-orange.png`
-    : `${config.ASSETS_BASE_URI}/core/site/logo-x64.png`;
+const Logo = () => {
+  const imgSrc = `${config.ASSETS_BASE_URI}/core/site/logo-orange.png`;
+
   return (
     <Link className="Logo" alt="toakee logo" to="/">
       <img src={imgSrc} />
@@ -20,8 +18,4 @@ const Logo = ({ deviceInfo }) => {
   );
 };
 
-Logo.propTypes = {
-  deviceInfo: PropTypes.object.isRequired,
-};
-
-export default withInfo(Logo, ['deviceInfo']);
+export default Logo;

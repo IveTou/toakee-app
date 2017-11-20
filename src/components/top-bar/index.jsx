@@ -101,7 +101,7 @@ export class TopBar extends React.Component {
           >
             <NavigationMenu />
           </IconButton>
-          <SideNav open={navOpen}/>
+          <SideNav open={navOpen} />
           <Logo />
         </ToolbarGroup>
         <ToolbarGroup>
@@ -109,7 +109,7 @@ export class TopBar extends React.Component {
             onChange={this.onChange}
             onRequestSearch={this.onSearch}
             hintText="Pesquisar no site"
-            style={{ width: '400px', minWidth: '200px' }}
+            style={{ width: '400px', minWidth: '128px' }}
           />
         </ToolbarGroup>
         <ToolbarGroup className="TopBar-menu" lastChild>
