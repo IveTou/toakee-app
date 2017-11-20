@@ -23,7 +23,7 @@
   }
 
   &-newEvent {
-    margin-right: $spacer;
+    margin-right: $spacer !important;
   }
 }
 
@@ -57,7 +57,10 @@
       border: 0;
 
       .button.basic  {
-        background: $white !important;
+        &,
+        &:hover {
+          background: $white !important;
+        }
       }
 
       .search {

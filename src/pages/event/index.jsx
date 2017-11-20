@@ -111,6 +111,7 @@ export class EventPage extends React.Component {
       prices = [],
       photos = [],
       creator = {},
+      status,
     } = event || {};
     const flyerAlt = `Flyer do ${title || 'evento'}`;
     const mappedPrice = price || prices.length === 1
@@ -149,6 +150,11 @@ export class EventPage extends React.Component {
 
 
           <Grid.Column className="EventPage-details" mobile={16} tablet={8} computer={8}>
+            <If condition={status === 'PENDING'}>
+              <p className="EventPage-details-disclaimer">
+                Este evento ainda encontra-se pendente, favor aguardar moderação.
+              </p>
+            </If>
             <div
               itemScope
               itemType="http://schema.org/Event"
