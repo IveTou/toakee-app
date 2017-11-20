@@ -4,6 +4,7 @@ import { Icon, Card, Image, Grid, Button } from 'semantic-ui-react';
 import Lightbox from 'react-images';
 import classNames from 'classnames';
 import autoBind from 'react-autobind';
+import { Link } from 'react-router-dom';
 
 import DefaultLayout from '~/src/layouts/default';
 import { fullDateFormat, timeFormat } from '~/src/utils/moment';
@@ -96,6 +97,7 @@ export class EventPage extends React.Component {
     const { galleryIsVisible, loadGallery } = this.state;
     const { viewer = {}, event = preEvent } = this.props;
     const {
+      id,
       title,
       description,
       place,
@@ -104,8 +106,12 @@ export class EventPage extends React.Component {
       price,
       prices = [],
       photos = [],
+      creator = {},
     } = event || {};
     const flyerAlt = `Flyer do ${title || 'evento'}`;
+    const mappedPrice = price || prices.length === 1
+      ? price || prices[0].value
+      : prices.map(p => `${p.description}: ${p.value}`).join(' | ');
 
     const classes = classNames('EventPage', { 'EventPage--viewGallery': galleryIsVisible });
 
@@ -142,6 +148,9 @@ export class EventPage extends React.Component {
             <div className="EventPage-details-header">
               <h1 className="EventPage-details-header-title">
                 {title}
+                <If condition={creator.id === viewer.id}>
+                  <Link to={`/evento/${id}/editar`}><Icon name="pencil" color="orange" /></Link>
+                </If>
               </h1>
               <If condition={place}>
                 <div className="EventPage-details-header-place">
@@ -167,12 +176,10 @@ export class EventPage extends React.Component {
                   <span>{place.address}</span>
                 </div>
               </If>
-              <If condition={price || (prices && !!prices.length)}>
+              <If condition={mappedPrice}>
                 <div className="EventPage-details-info-item">
                   <Icon name="dollar" />
-                  <span>
-                    {price || prices.map(p => `${p.description}: ${p.value}`).join(' | ')}
-                  </span>
+                  <span>{mappedPrice}</span>
                 </div>
               </If>
               <div className="EventPage-details-info-social">

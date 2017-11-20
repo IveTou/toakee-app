@@ -17,12 +17,14 @@ const EventFormMain = ({
     'EventFormMain-dropzone--error': touched.flyer && !!errors.flyer,
   });
 
+  const flyer = values.flyer.url || values.flyer.preview;
+
   return (
     <div className="EventFormMain">
-      <If condition={values.flyer.preview}>
+      <If condition={flyer}>
         <div className="EventFormMain-preview">
           <img
-            src={values.flyer.preview}
+            src={flyer}
             className="EventFormMain-preview-img"
           />
         </div>
@@ -69,17 +71,17 @@ export const validation = {
     .test(
       'existence',
       'Por favor, adicione um flyer para o seu evento.',
-      file => !!file.size,
+      file => file.url || !!file.size,
     )
     .test(
       'format',
       'A imagem deve ser do formato \'.png\' ou \'.jpg\'.',
-      file => /image\/*/.test(file.type),
+      file => file.url || /image\/*/.test(file.type),
     )
     .test(
       'size',
       'A imagem não pode ter mais de 5mb.',
-      file => file.size <= MAX_IMAGE_SIZE,
+      file => file.url || file.size <= MAX_IMAGE_SIZE,
     ),
 };
 

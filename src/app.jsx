@@ -11,6 +11,7 @@ import {
 import ProtectedRoute from '~/src/routes/protected';
 
 import NewEventPage from '~/src/pages/new-event';
+import EditEventPage from '~/src/pages/edit-event';
 import EventPage from '~/src/pages/event';
 import EventPhotos from '~/src/pages/event-photos';
 import EventFeed from '~/src/pages/event-feed';
@@ -65,6 +66,13 @@ const App = ({ userAgent }) => (
             auth={userIsLogged}
             component={NewEventPage}
             path="/evento/novo"
+            redirectTo="/login"
+            exact
+          />
+          <ProtectedRoute
+            auth={userIsLogged}
+            component={EditEventPage}
+            path="/evento/:id/editar"
             redirectTo="/login"
             exact
           />

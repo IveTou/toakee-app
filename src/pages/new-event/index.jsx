@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
+import { pick } from 'lodash';
 
 import { showSnackbar } from '~/src/ducks/snackbar';
 import { withViewer } from '~/src/hocs';
@@ -36,7 +37,7 @@ const NewEventPage = ({
         : prices.filter(p => p.description && p.value),
       place: place.id
         ? { id: place.id }
-        : place.pick(['name', 'address', 'coordinates']),
+        : pick(place, ['name', 'address', 'coordinates', 'googlePlacesId']),
     });
 
     alertSuccess();

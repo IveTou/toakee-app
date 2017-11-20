@@ -48,16 +48,21 @@ EventForm.propTypes = {
 };
 
 export default withFormik({
-  mapPropsToValues: () => ({
-    title: '',
-    flyer: {},
-    start: null,
-    end: null,
-    place: {},
-    prices: [],
-    description: '',
-    categories: [],
-  }),
+  mapPropsToValues: ({ event = {} }) => {
+    const { start, end, flyer, ...eventProps } = event;
+
+    return {
+      title: '',
+      place: {},
+      prices: [],
+      description: '',
+      categories: [],
+      flyer: flyer ? { url: flyer } : {},
+      start: start ? new Date(start) : null,
+      end: end ? new Date(end) : null,
+      ...eventProps,
+    };
+  },
   validateOnChange: false,
   validate: async (values, { onError }) =>
     Yup.object()

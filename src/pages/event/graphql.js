@@ -16,13 +16,14 @@ export default gql`
       place { id, name, coordinates, address, city { name } }
       status
       photos { src, thumb }
+      creator { id }
     }
   }
 `;
 
 export const setEventStatusMutation = gql`
-  mutation SetEventStatus($eventId: String!, $status: EventStatus) {
-    updateEvent(eventId: $eventId, patch: { status: $status })
+  mutation SetEventStatus($eventId: String!, $patch: EventPatchInput!) {
+    updateEvent(eventId: $eventId, patch: $patch)
   }
 `;
 
