@@ -14,7 +14,6 @@ import {
   MenuItem,
 } from 'material-ui';
 import { NavigationMenu, NavigationMoreVert, SocialPerson } from 'material-ui/svg-icons';
-import { deepOrange500, fullWhite } from 'material-ui/styles/colors';
 import SearchBar from 'material-ui-search-bar';
 
 import { logout } from '~/src/utils/session';
@@ -124,8 +123,7 @@ export class TopBar extends React.Component {
                     className="TopBar-menu-button signin"
                     label="Cadastrar"
                     onClick={this.signUp}
-                    backgroundColor={deepOrange500}
-                    labelColor={fullWhite}
+                    primary
                   />
                   <RaisedButton
                     className="TopBar-menu-button login"

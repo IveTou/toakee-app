@@ -6,10 +6,17 @@
   position: fixed;
   top: 0;
   width: 100%;
+  padding: $spacer $spacer*3 !important;
+  min-height: $spacer*9;
   z-index: $topbar-zindex;
 
   &-menu {
     margin-right: 0 !important;
+
+    &-button {
+      margin: 0 $spacer !important;
+    }
+  }
 
   &-newEvent {
     margin-right: $spacer !important;
