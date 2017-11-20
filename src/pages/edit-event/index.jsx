@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
-import { reduce } from 'lodash';
+import { reduce, pick } from 'lodash';
 
 import { showSnackbar } from '~/src/ducks/snackbar';
 import { withViewer } from '~/src/hocs';
@@ -37,7 +37,7 @@ const EditEventPage = ({
           : pick(value, ['name', 'address', 'coordinates', 'googlePlacesId']);
         return event.place === value ? obj : { ...obj, place };
       }
-      return event[key] === value ? obj : { ...obj, [key]: value }
+      return event[key] === value ? obj : { ...obj, [key]: value };
     }, {});
 
     await updateEvent({ eventId: id, patch });
@@ -57,6 +57,7 @@ const EditEventPage = ({
 
 EditEventPage.propTypes = {
   viewer: PropTypes.object,
+  event: PropTypes.object,
   history: PropTypes.object,
   updateEvent: PropTypes.func,
   alertError: PropTypes.func,
@@ -75,8 +76,7 @@ const injectUpdateEventMutation = graphql(updateEventMutation, {
     updateEvent: variables => mutate({
       variables,
       update: (store, { data: { updateEvent } }) => {
-        const data = store.readQuery({ query, variables: { id:  variables.eventId } });
-        console.log({ updateEvent });
+        const data = store.readQuery({ query, variables: { id: variables.eventId } });
         data.event = updateEvent;
         store.writeQuery({ query, data });
       },
