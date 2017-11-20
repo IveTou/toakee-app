@@ -9,6 +9,8 @@
   &--viewGallery .EventPage {
     &-flyer {
       margin-left: 50%;
+      top: 0;
+      left: 0;
     }
 
     &-gallery {
@@ -174,6 +176,7 @@
         padding: $spacer*2 0;
         margin: $spacer*2;
         text-align: justify;
+        white-space: pre-wrap;
       }
     }
   }

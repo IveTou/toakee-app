@@ -13,23 +13,6 @@
     padding: $topbar-height + $spacer*2 0 $spacer*6;
     white-space: nowrap;
     @include box-shadow(inset 0 0 16px $black26);
-
-    &-list {
-      margin-left: $spacer*4;
-      display: inline-block;
-      vertical-align: middle;
-      width: calc(100% - #{$spacer*51});
-      padding-top: $spacer*9;
-
-      .EventList {
-        padding-top: 0;
-
-        &-title {
-          font-size: 14px;
-          font-weight: 300;
-        }
-      }
-    }
   }
 
   &-lists {
@@ -38,19 +21,10 @@
 }
 
 @include media("<tablet") {
-  .Landing {
-    &-banner {
-      padding: 0;
-      margin-top: $topbar-height;
-      white-space: normal;
-
-      &-list {
-        display: block;
-        margin: 0;
-        padding-top: $spacer*3;
-        width: 100%;
-      }
-    }
+  .Landing-banner {
+    padding: 0;
+    margin-top: $topbar-height;
+    white-space: normal;
   }
 }
 

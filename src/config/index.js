@@ -17,4 +17,5 @@ export default {
   MIXPANEL_TOKEN: devMode
     ? '7b57fa79fe746a43e479aa0f416d9e23'
     : '4de036ffde489bc4ecdc1e03498aab2b',
+  GOOGLE_MAPS_API_KEY: 'AIzaSyBzXt5xYCgP8Vna4D_BZm5pcVdLQv4WQQU',
 };

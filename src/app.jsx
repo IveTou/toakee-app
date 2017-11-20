@@ -11,6 +11,7 @@ import {
 import ProtectedRoute from '~/src/routes/protected';
 
 import NewEventPage from '~/src/pages/new-event';
+import EditEventPage from '~/src/pages/edit-event';
 import EventPage from '~/src/pages/event';
 import EventPhotos from '~/src/pages/event-photos';
 import EventFeed from '~/src/pages/event-feed';
@@ -61,11 +62,31 @@ const App = ({ userAgent }) => (
             redirectTo="/login"
             exact
           />
+<<<<<<< HEAD
+=======
+          <ProtectedRoute
+            auth={userIsLogged}
+            component={NewEventPage}
+            path="/evento/novo"
+            redirectTo="/login"
+            exact
+          />
+          <ProtectedRoute
+            auth={userIsLogged}
+            component={EditEventPage}
+            path="/evento/:id/editar"
+            redirectTo="/login"
+            exact
+          />
+>>>>>>> master
           <Route path="/landing" component={Landing} />
           <Route path="/login" component={Login} />
           <Route path="/cadastrar" component={SignUp} />
           <Route path="/search" component={SearchPage} />
+<<<<<<< HEAD
           <Route path="/evento/novo" exact component={NewEventPage} />
+=======
+>>>>>>> master
           <Route path="/evento/:id" exact component={EventPage} />
           <Route path="/evento/:id/fotos" component={EventPhotos} />
           <Route path="/dashboard" component={Dashboard} />

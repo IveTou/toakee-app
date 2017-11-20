@@ -63,6 +63,15 @@ export class TopBar extends React.Component {
     this.props.history.push('/cadastrar');
   }
 
+  newEvent() {
+    const { viewer } = this.props;
+    const pid = (viewer && viewer.id) || null;
+    const logged = !!pid;
+
+    TrackingAPI.track({ name: 'New Event Trigger', logged, pid });
+    this.props.history.push('/evento/novo');
+  }
+
   renderAvatar() {
     const { viewer } = this.props;
 
@@ -77,6 +86,7 @@ export class TopBar extends React.Component {
 
   render() {
     const { viewer = {} } = this.props;
+<<<<<<< HEAD
 
     return (
       <Toolbar className="TopBar">
