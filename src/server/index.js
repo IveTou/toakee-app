@@ -11,7 +11,6 @@ import MixpanelClient from './clients/mixpanel';
 import config from './config';
 import { exposeSSRRoutes } from './ssr';
 
-
 const { PORT, SUPPORT_EMAIL, SENDGRID_API_KEY, GOOGLE_PLACES_KEY } = config;
 const devMode = process.env.NODE_ENV !== 'production';
 
@@ -81,6 +80,12 @@ app.post('/events/track', (req, res) => {
 
 app.get('/social-login', (_, res) => {
   res.render('social-login.html');
+});
+
+
+app.get('/sitemap.xml', (req, res) => {
+  res.header('Content-Type', 'application/xml');
+  res.render('sitemap.xml');
 });
 
 const assets = devMode

@@ -105,9 +105,11 @@ export class SignUp extends React.Component {
       <AuthWrapper slideshow>
         <div className="SignUp">
           <Divider horizontal>Nova conta</Divider>
-          <Form onSubmit={this.onSubmit}>
+          <Form onSubmit={this.onSubmit} aria-label="cadastro">
             <Form.Group widths="equal">
               <Form.Input
+                aria-label="nome"
+                aria-required="true"
                 placeholder="Nome"
                 name="firstName"
                 onChange={this.onChange}
@@ -116,6 +118,8 @@ export class SignUp extends React.Component {
                 error={!!this.state.errors.firstName}
               />
               <Form.Input
+                aria-label="sobrenome"
+                aria-required="true"
                 placeholder="Sobrenome"
                 name="lastName"
                 onChange={this.onChange}
@@ -125,6 +129,8 @@ export class SignUp extends React.Component {
               />
             </Form.Group>
             <Form.Input
+              aria-label="usuário"
+              aria-required="true"
               placeholder="Usuário"
               name="username"
               onChange={this.onChange}
@@ -133,6 +139,8 @@ export class SignUp extends React.Component {
               error={!!this.state.errors.username}
             />
             <Form.Input
+              aria-label="e-mail"
+              aria-required="true"
               type="email"
               name="email"
               placeholder="E-mail"
@@ -142,6 +150,8 @@ export class SignUp extends React.Component {
               error={!!this.state.errors.email}
             />
             <Form.Input
+              aria-label="senha"
+              aria-required="true"
               type={passwordVisible ? 'text' : 'password'}
               name="password"
               placeholder="Senha"
@@ -154,7 +164,9 @@ export class SignUp extends React.Component {
               content="Criar minha conta"
               color="orange"
               fluid
-            />
+            >
+              Criar minha conta
+            </Form.Button>
             <p>
               Ao criar uma conta, você está concordando com os nossos&nbsp;
               <Link to="/termos-de-uso">Termos de Uso</Link>

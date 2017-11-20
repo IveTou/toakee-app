@@ -94,6 +94,7 @@ export class TopBar extends React.Component {
           <Menu.Menu position="right">
             <Menu.Item>
               <Search
+                aria-label="busca"
                 ref={(node) => { this._searchInput = node; }}
                 open={false}
                 onFocus={this.onSearch}

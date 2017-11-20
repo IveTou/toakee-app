@@ -125,13 +125,13 @@ class Footer extends React.Component {
                 <Page href={FACEBOOK_PAGE_URI} tabs="true" smallHeader adaptContainerWidth />
               </FacebookProvider>
             </Segment>
-            <a href="https://www.facebook.com/eu.toakee">
+            <a href="https://www.facebook.com/eu.toakee" aria-label="facebook">
               <Icon circular name="facebook" size="big" />
             </a>
-            <a href="https://www.instagram.com/eu.toakee">
+            <a href="https://www.instagram.com/eu.toakee" aria-label="instagram">
               <Icon circular name="instagram" size="big" />
             </a>
-            <a href="https://linkedin.com/company/toakee">
+            <a href="https://linkedin.com/company/toakee" aria-label="linkedin">
               <Icon circular name="linkedin" size="big" />
             </a>
           </Grid.Column>
@@ -141,12 +141,15 @@ class Footer extends React.Component {
               <Form.Group>
                 <Form
                   inverted
+                  aria-label="contato"
                   className="Footer-form"
                   size="small"
                   onSubmit={this.handleSubmit}
                 >
                   <Form.Input
                     required
+                    aria-required="true"
+                    aria-label="nome"
                     placeholder="Como te chamaremos?"
                     name="name"
                     value={name}
@@ -157,6 +160,8 @@ class Footer extends React.Component {
                   />
                   <Form.Input
                     required
+                    aria-required="true"
+                    aria-label="e-mail"
                     placeholder="Qual o seu e-mail?"
                     name="email"
                     value={email}
@@ -167,6 +172,8 @@ class Footer extends React.Component {
                   />
                   <Form.TextArea
                     required
+                    aria-required="true"
+                    aria-label="mensagem"
                     placeholder="Digite aqui sua mensagem"
                     rows={2}
                     name="message"
@@ -179,6 +186,7 @@ class Footer extends React.Component {
                   </label>
                   <Form.Checkbox
                     inline
+                    aria-label="quero receber e-mails do site"
                     className="Footer-form-checkbox"
                     label="Quero receber e-mails com sugestões, promoções e novidades."
                     name="subscribe"
@@ -193,9 +201,10 @@ class Footer extends React.Component {
                     name="submit"
                     loading={formState === FormState.LOADING}
                     size="large"
-                    content={buttonContent}
                     disabled={triggerDisabled}
-                  />
+                  >
+                    {buttonContent}
+                  </Button>
                 </Form>
               </Form.Group>
             </Segment>
@@ -213,7 +222,7 @@ class Footer extends React.Component {
           <Link className="Footer-link about" to="/quem-somos">
             <span>Quem somos?</span>
           </Link>
-          <Link className="Footer-link terms" to="/termos">
+          <Link className="Footer-link terms" to="/termos-de-uso">
             <span>Termos de Uso</span>
           </Link>
           <If condition={!this.props.viewer.id}>

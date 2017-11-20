@@ -7,7 +7,7 @@ import autoBind from 'react-autobind';
 import { Link } from 'react-router-dom';
 
 import DefaultLayout from '~/src/layouts/default';
-import { fullDateFormat, timeFormat } from '~/src/utils/moment';
+import { fullDateFormat, timeFormat, dateFormat } from '~/src/utils/moment';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import { withInfo } from '~/src/hocs';
 
@@ -68,7 +68,11 @@ export class EventPage extends React.Component {
       method: 'share',
       hashtag: '#toakee',
       href: location.href,
-    }, () => TrackingAPI.viewerSafeTrack(this.props.viewer, 'Share Event Trigger'));
+    }, (res) => {
+      if (res && !res.error_message) {
+        TrackingAPI.viewerSafeTrack(this.props.viewer, 'Share Event Trigger');
+      }
+    });
   }
 
   renderModerationButtons() {
@@ -119,7 +123,7 @@ export class EventPage extends React.Component {
     declare var index;
 
     return (
-      <DefaultLayout>
+      <DefaultLayout title={title}>
         <Grid columns={2} className={classes}>
           <Grid.Column className="EventPage-gallery" mobile={16} tablet={8} computer={8}>
             <Lightbox
@@ -145,25 +149,40 @@ export class EventPage extends React.Component {
 
 
           <Grid.Column className="EventPage-details" mobile={16} tablet={8} computer={8}>
-            <div className="EventPage-details-header">
-              <h1 className="EventPage-details-header-title">
+            <div
+              itemScope
+              itemType="http://schema.org/Event"
+              itemRef="_startDate2 _image7 _description8 _offers9"
+              className="EventPage-details-header"
+            >
+              <h1 itemProp="name" className="EventPage-details-header-title">
                 {title}
                 <If condition={creator.id === viewer.id}>
                   <Link to={`/evento/${id}/editar`}><Icon name="pencil" color="orange" /></Link>
                 </If>
               </h1>
-              <If condition={place}>
-                <div className="EventPage-details-header-place">
-                  {place.name}
-                </div>
-              </If>
+              <span
+                itemProp="location"
+                itemScope
+                itemType="http://schema.org/Place"
+                itemRef="_address5"
+              >
+                <If condition={place}>
+                  <div itemProp="name" className="EventPage-details-header-place">
+                    {place.name}
+                  </div>
+                </If>
+              </span>
             </div>
 
             <div className="EventPage-details-info">
               <If condition={start}>
                 <div className="EventPage-details-info-item">
                   <Icon name="calendar" />
-                  <span>{fullDateFormat(start)}</span>
+                  <span>
+                    <meta id="_startDate2" itemProp="startDate" content={dateFormat(start)} />
+                    {fullDateFormat(start)}
+                  </span>
                 </div>
                 <div className="EventPage-details-info-item">
                   <Icon name="clock" />
@@ -171,15 +190,27 @@ export class EventPage extends React.Component {
                 </div>
               </If>
               <If condition={place && place.address}>
-                <div className="EventPage-details-info-item">
+                <div
+                  id="_address5"
+                  itemProp="address"
+                  itemScope
+                  itemType="http://schema.org/PostalAddress"
+                  className="EventPage-details-info-item"
+                >
                   <Icon name="marker" />
-                  <span>{place.address}</span>
+                  <span itemProp="streetAddress">{place.address}</span>
                 </div>
               </If>
               <If condition={mappedPrice}>
-                <div className="EventPage-details-info-item">
+                <div
+                  id="_offers9"
+                  itemProp="offers"
+                  itemScope
+                  itemType="http://schema.org/Offer"
+                  className="EventPage-details-info-item"
+                >
                   <Icon name="dollar" />
-                  <span>{mappedPrice}</span>
+                  <span itemProp="price">{mappedPrice}</span>
                 </div>
               </If>
               <div className="EventPage-details-info-social">
@@ -197,6 +228,8 @@ export class EventPage extends React.Component {
               <div className="EventPage-details-body-description">
                 <div className="EventPage-details-body-title">Descrição</div>
                 <div
+                  id="_description8"
+                  itemProp="description"
                   className="EventPage-details-body-content"
                   dangerouslySetInnerHTML={{ __html: description }}
                 />
@@ -211,7 +244,13 @@ export class EventPage extends React.Component {
             />
             <Card>
               <If condition={flyer}>
-                <Image alt={flyerAlt} className="EventPage-flyer-img" src={flyer} />
+                <Image
+                  id="_image7"
+                  itemProp="image"
+                  alt={flyerAlt}
+                  className="EventPage-flyer-img"
+                  src={flyer}
+                />
               </If>
               <If condition={viewer.isAdmin}>
                 <Button.Group>{this.renderModerationButtons()}</Button.Group>

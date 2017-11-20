@@ -70,6 +70,7 @@
     "formik": "^0.10.0",
     "graphql-tag": "^2.4.0",
     "history": "^4.7.2",
+    "html-to-text": "^3.3.0",
     "ignore-styles": "^5.0.1",
     "immutable": "3.8.1",
     "include-media": "^1.4.9",

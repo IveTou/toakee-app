@@ -14,6 +14,7 @@ import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { pick } from 'lodash';
 import moment from 'moment-timezone';
+import htmlToText from 'html-to-text';
 
 import '~/src/server/globals';
 import rootReducer from '~/src/ducks';
@@ -33,13 +34,14 @@ const reduxStore = createStoreWithMiddleware(rootReducer);
 const getMetaTags = (obj, url) => {
   const appId = config.FACEBOOK_APP_ID;
   const eventKey = `Event:${url.match(/\w+$/g)}`;
+  const htmlOptions = { wordwrap: false, ignoreHref: true, ignoreImage: true };
   const { title, description, flyer: image } = obj[eventKey] || {};
 
   return /^.+\/evento\/.+$/.test(url)
-  ? { title, description, image, appId, url }
+  ? { title, description: htmlToText.fromString(description, htmlOptions), image, appId, url }
   : {
-    title: 'Toakee',
-    description: 'O melhor guia de eventos.',
+    title: 'Descubra o que fazer em Salvador',
+    description: 'Descubra o que fazer em Salvador. No seu guia de eventos você encontra baladas, teatro, festas, shows, restaurantes, exposições, esportes, seminários, workshops, cursos, promoções, corridas, tudo que acontece na cidade em um só lugar.',
     image: `${config.ASSETS_BASE_URI}/core/site/brand.png`,
     url: 'www.toakee.com.br',
     appId,
