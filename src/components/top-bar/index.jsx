@@ -86,7 +86,6 @@ export class TopBar extends React.Component {
 
   render() {
     const { viewer = {} } = this.props;
-<<<<<<< HEAD
 
     return (
       <Toolbar className="TopBar">
