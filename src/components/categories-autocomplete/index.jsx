@@ -1,48 +1,58 @@
 import React, { PropTypes } from 'react';
-import { debounce } from 'lodash';
+import { debounce, capitalize, trimStart } from 'lodash';
 import autoBind from 'react-autobind';
 import { AutoComplete } from 'material-ui';
 
 import apolloClient from '~/src/apollo';
 
-import { searchPlace } from './graphql';
+import { searchCategory } from './graphql';
 
 let currentFetchingKey = 0;
 const FETCH_DELAY = 250;
-const addNew = { name: 'Adicionar novo...', id: -1 };
 
-export default class PlacesAutocomplete extends React.Component {
+export default class CategoriesAutocomplete extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
     this.state = {
       value: props.value,
-      suggestions: [addNew],
+      suggestions: [],
     };
-    this.debouncedFetch = debounce(this.fetchPlaces, FETCH_DELAY);
+    this.debouncedFetch = debounce(this.fetchCategories, FETCH_DELAY);
   }
 
-  async fetchPlaces(query) {
+  async fetchCategories(query) {
     currentFetchingKey += 1;
     const fetchingKey = currentFetchingKey;
     const { data } = await apolloClient.query({
-      query: searchPlace,
+      query: searchCategory,
       variables: { query },
     });
-    if (data && data.places && fetchingKey === currentFetchingKey) {
-      this.setState({ suggestions: [addNew, ...data.places] });
+    if (data && data.categories && fetchingKey === currentFetchingKey) {
+      const addValue = { title: `Adicionar: ${capitalize(query)}`, id: -1 };
+      this.setState({ suggestions: [addValue, ...data.categories] });
     }
   }
 
-  handleInputUpdate(value, _, { source }) {
+  handleInputUpdate(_value, _, { source }) {
+    const value = trimStart(_value);
     this.setState({ value });
     if (source === 'change' && value !== '') {
       this.debouncedFetch(value);
     }
   }
 
+  handleNewRequest(request) {
+    if (this.props.clearOnSelect) {
+      this.setState({ value: '' });
+    }
+    if (this.props.onSelect) {
+      this.props.onSelect(request);
+    }
+  }
+
   render() {
-    const { placeholder, name, error, onSelect } = this.props;
+    const { placeholder, name, error } = this.props;
     const { suggestions, value } = this.state;
 
     return (
@@ -54,8 +64,8 @@ export default class PlacesAutocomplete extends React.Component {
           filter={AutoComplete.noFilter}
           dataSource={suggestions}
           onUpdateInput={this.handleInputUpdate}
-          onNewRequest={onSelect}
-          dataSourceConfig={{ text: 'name', value: 'id' }}
+          onNewRequest={this.handleNewRequest}
+          dataSourceConfig={{ text: 'title', value: 'id' }}
           errorText={error}
           openOnFocus={!!value}
           fullWidth
@@ -65,11 +75,16 @@ export default class PlacesAutocomplete extends React.Component {
   }
 }
 
-PlacesAutocomplete.propTypes = {
+CategoriesAutocomplete.propTypes = {
   name: PropTypes.string,
   value: PropTypes.string,
   placeholder: PropTypes.string,
   onSelect: PropTypes.func,
+  clearOnSelect: PropTypes.bool,
   error: PropTypes.string,
+};
+
+CategoriesAutocomplete.defaultProps = {
+  onChange: () => {},
 };
 
