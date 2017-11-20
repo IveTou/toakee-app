@@ -22,8 +22,10 @@ export default gql`
 `;
 
 export const setEventStatusMutation = gql`
-  mutation SetEventStatus($eventId: String!, $patch: EventPatchInput!) {
-    updateEvent(eventId: $eventId, patch: $patch)
+  mutation SetEventStatus($eventId: String!, $status: EventStatus) {
+    updateEvent(eventId: $eventId, patch: { status: $status }) {
+      status
+    }
   }
 `;
 
