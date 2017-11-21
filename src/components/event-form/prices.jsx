@@ -9,7 +9,8 @@ const EventFormPrices = ({
   const removePrice = idx =>
     setFieldValue('prices', [...prices.slice(0, idx), ...prices.slice(idx + 1)]);
   const handlePriceChange = (e, value) => {
-    const [index, name] = e.target.name.split(':');
+    const [_index, name] = e.target.name.split(':');
+    const index = parseInt(_index, 10);
     setFieldValue('prices', [
       ...prices.slice(0, index),
       { ...prices[index], [name]: value },
