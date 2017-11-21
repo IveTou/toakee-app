@@ -5,9 +5,6 @@ import { withApollo } from 'react-apollo';
 import { withRouter } from 'react-router';
 import { Drawer, Divider, Menu, MenuItem, Subheader } from 'material-ui';
 import { ActionHome, ActionEvent, SocialPerson } from 'material-ui/svg-icons';
-import { Link } from 'react-router-dom';
-
-import { withInfo } from '~/src/hocs';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -25,12 +22,6 @@ export class SideNav extends React.Component {
 
   home() {
     this.props.history.push('/');
-  }
-
-  renderMenuItem() {
-    if(this.props.mini && !this.props.open) {
-    } else {
-    }
   }
 
   render() {
@@ -65,7 +56,7 @@ export class SideNav extends React.Component {
           <MenuItem primaryText="Shows" leftIcon={<SocialPerson />} />
         </Menu>
       </Drawer>
-      );
+    );
   }
 }
 

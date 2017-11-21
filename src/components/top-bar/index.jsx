@@ -3,7 +3,6 @@ import { withApollo } from 'react-apollo';
 import autoBind from 'react-autobind';
 import { once } from 'lodash';
 import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
 import {
   Avatar,
   Toolbar,
