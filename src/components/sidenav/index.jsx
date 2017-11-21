@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import autoBind from 'react-autobind';
+import classNames from 'classnames';
 import { withApollo } from 'react-apollo';
 import { withRouter } from 'react-router';
 import { Drawer, Divider, Menu, MenuItem, Subheader } from 'material-ui';
@@ -26,34 +27,42 @@ export class SideNav extends React.Component {
     this.props.history.push('/');
   }
 
+  renderMenuItem() {
+    if(this.props.mini && !this.props.open) {
+    } else {
+    }
+  }
+
   render() {
-    console.log(this.props.open);
-    console.log(this.props.mini);
+    const { mini, open } = this.props;
+    const classes = classNames('SideNav', { 'SideNav--mini': mini });
+    const isMini = mini && !open;
+
     return (
       <Drawer
-        className="SideNav"
-        width={this.props.mini && !this.props.open ? 64 : 256}
-        open={!this.props.mini ? this.props.open : undefined}
+        className={classes}
+        width={isMini ? 64 : 256}
+        open={!mini ? open : undefined}
         containerStyle={{ marginTop: '72px' }}
       >
         <Menu>
           <MenuItem
             onClick={this.home}
             primaryText="Início"
-            rightIcon={<ActionHome />}
+            leftIcon={<ActionHome />}
           />
           <MenuItem
             onClick={this.dashboard}
             primaryText="Meus Eventos"
-            rightIcon={<ActionEvent />}
+            leftIcon={<ActionEvent />}
           />
           <Divider />
           <Subheader>Categorias</Subheader>
-          <MenuItem primaryText="Arte" rightIcon={<SocialPerson />} />
-          <MenuItem primaryText="Baladas" rightIcon={<SocialPerson />} />
-          <MenuItem primaryText="Cursos" rightIcon={<SocialPerson />} />
-          <MenuItem primaryText="Esporte" rightIcon={<SocialPerson />} />
-          <MenuItem primaryText="Shows" rightIcon={<SocialPerson />} />
+          <MenuItem primaryText="Arte" leftIcon={<SocialPerson />} />
+          <MenuItem primaryText="Baladas" leftIcon={<SocialPerson />} />
+          <MenuItem primaryText="Cursos" leftIcon={<SocialPerson />} />
+          <MenuItem primaryText="Esporte" leftIcon={<SocialPerson />} />
+          <MenuItem primaryText="Shows" leftIcon={<SocialPerson />} />
         </Menu>
       </Drawer>
       );
