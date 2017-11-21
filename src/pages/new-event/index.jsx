@@ -47,7 +47,7 @@ const NewEventPage = ({
   };
 
   return (
-    <DefaultLayout>
+    <DefaultLayout miniVariant>
       <EventForm onSubmit={handleSubmit} onError={alertError} />
     </DefaultLayout>
   );

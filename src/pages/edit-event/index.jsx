@@ -49,7 +49,7 @@ const EditEventPage = ({
   };
 
   return (
-    <DefaultLayout>
+    <DefaultLayout miniVariant>
       <EventForm onSubmit={handleSubmit} onError={alertError} event={event} />
     </DefaultLayout>
   );

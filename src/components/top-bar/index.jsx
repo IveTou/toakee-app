@@ -67,6 +67,10 @@ export class TopBar extends React.Component {
     this.props.history.push('/cadastrar');
   }
 
+  dashboard() {
+    this.props.history.push('/dashboard');
+  }
+
   newEvent() {
     const { viewer } = this.props;
     const pid = (viewer && viewer.id) || null;
@@ -89,7 +93,7 @@ export class TopBar extends React.Component {
   }
 
   render() {
-    const { viewer = {} } = this.props;
+    const { mini, viewer = {} } = this.props;
     const { navOpen } = this.state;
 
     return (
@@ -101,7 +105,7 @@ export class TopBar extends React.Component {
           >
             <NavigationMenu />
           </IconButton>
-          <SideNav open={navOpen} />
+          <SideNav open={navOpen} mini={mini} />
           <Logo />
         </ToolbarGroup>
         <ToolbarGroup>
@@ -121,7 +125,7 @@ export class TopBar extends React.Component {
                 targetOrigin={{ horizontal: 'right', vertical: 'top' }}
               >
                 <If condition={viewer.isPromoter}>
-                  <MenuItem as={Link} to="/dashboard">
+                  <MenuItem onClick={this.dashboard}>
                     Meus eventos
                   </MenuItem>
                 </If>
@@ -167,6 +171,7 @@ TopBar.propTypes = {
   history: PropTypes.object,
   client: PropTypes.object,
   deviceInfo: PropTypes.object,
+  mini: PropTypes.bool,
 };
 
 export default withApollo(withRouter(withInfo(TopBar, ['viewer', 'deviceInfo'])));

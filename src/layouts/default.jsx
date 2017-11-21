@@ -11,11 +11,12 @@ if (process.env.BROWSER) {
 const DefaultLayout = ({
   children,
   hideFooter,
+  miniVariant,
   title = 'Descubra o que fazer em Salvador',
 }) => (
   <div className="DefaultLayout">
     <ReactTitle title={`Toakee - ${title}`} />
-    <TopBar />
+    <TopBar mini={miniVariant} />
     <main>{children}</main>
     <If condition={!hideFooter}>
       <Footer />
@@ -30,6 +31,7 @@ DefaultLayout.propTypes = {
   ]),
   hideFooter: PropTypes.bool,
   title: PropTypes.string,
+  miniVariant: PropTypes.bool,
 };
 
 export default DefaultLayout;
