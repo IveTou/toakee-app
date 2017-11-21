@@ -46,7 +46,7 @@
 
 @include media("<tablet") {
   .UseTerms {
-    margin: $spacer 0;
+    margin: $topbar-height + $spacer*4 0;
 
     .element.intro {
       padding: $spacer $spacer*4;

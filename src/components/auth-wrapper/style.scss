@@ -5,7 +5,7 @@
 
 .AuthWrapper {
   min-height: calc(100vh - #{$topbar-height});
-  padding: $spacer*10 $spacer*2 $spacer*3;
+  padding: $spacer*16 $spacer*2 $spacer*3;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -93,8 +93,6 @@
 
 @include media("<tablet") {
   .AuthWrapper {
-    padding-top: $spacer*3;
-
     &-content.card {
       margin: 0 auto !important;
     }
