@@ -3,12 +3,89 @@ import autoBind from 'react-autobind';
 import classNames from 'classnames';
 import { withApollo } from 'react-apollo';
 import { withRouter } from 'react-router';
-import { Drawer, Divider, Menu, MenuItem, Subheader } from 'material-ui';
-import { ActionHome, ActionEvent, SocialPerson } from 'material-ui/svg-icons';
+import {
+  Avatar,
+  Drawer,
+  Divider,
+  Menu,
+  MenuItem,
+  Subheader,
+  Table,
+  TableBody,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui';
+import {
+  ActionHome,
+  ActionEvent,
+  ActionLoyalty,
+  ImageColorLens,
+  MapsLocalActivity,
+  MapsLocalBar,
+  MapsLocalLibrary,
+  PlacesPool,
+  SocialWhatshot,
+} from 'material-ui/svg-icons';
+import {
+  black,
+  white,
+  red800,
+  deepPurple500,
+  lightBlue500,
+  green500,
+  yellow500,
+  deepOrange500,
+  blueGrey500,
+} from 'material-ui/styles/colors';
 
 if (process.env.BROWSER) {
   require('./style.scss');
 }
+
+const tableData = [
+  {
+    title: 'Artes',
+    icon: <ImageColorLens />,
+    color: black,
+    backgroundColor: red800,
+  },
+  {
+    title: 'Baladas',
+    icon: <SocialWhatshot />,
+    color: black,
+    backgroundColor: deepPurple500,
+  },
+  {
+    title: 'Cursos',
+    icon: <MapsLocalLibrary />,
+    backgroundColor: lightBlue500,
+  },
+  {
+    title: 'Esportes',
+    icon: <PlacesPool />,
+    color: black,
+    backgroundColor: green500,
+  },
+  {
+    title: 'Shows',
+    icon: <MapsLocalActivity />,
+    color: black,
+    backgroundColor: yellow500,
+  },
+  {
+    title: 'Gastronomia',
+    icon: <MapsLocalBar />,
+    color: black,
+    backgroundColor: deepOrange500,
+  },
+  {
+    title: 'Promoções',
+    icon: <ActionLoyalty />,
+    color: black,
+    backgroundColor: blueGrey500,
+  },
+
+];
 
 export class SideNav extends React.Component {
   constructor(props) {
@@ -24,10 +101,27 @@ export class SideNav extends React.Component {
     this.props.history.push('/');
   }
 
+  renderRows(data) {
+    return data.map((row, idx) => (
+        <TableRow style={{ color: row.color }}>
+          <TableRowColumn
+            style={{ padding: '8px', width: '48px' }}
+          >
+            <Avatar icon={row.icon} backgroundColor={row.backgroundColor} />
+          </TableRowColumn>
+          <TableRowColumn style={{ fontSize: '16px' }}>{row.title}</TableRowColumn>
+        </TableRow>
+      )
+    );
+  }
+
   render() {
     const { mini, open } = this.props;
-    const classes = classNames('SideNav', { 'SideNav--mini': mini });
     const isMini = mini && !open;
+    const classes = classNames(
+        'SideNav',
+        { 'SideNav--mini': mini, 'SideNav--mini--closed': isMini}
+    );
 
     return (
       <Drawer
@@ -48,12 +142,12 @@ export class SideNav extends React.Component {
             leftIcon={<ActionEvent />}
           />
           <Divider />
-          <Subheader>Categorias</Subheader>
-          <MenuItem primaryText="Arte" leftIcon={<SocialPerson />} />
-          <MenuItem primaryText="Baladas" leftIcon={<SocialPerson />} />
-          <MenuItem primaryText="Cursos" leftIcon={<SocialPerson />} />
-          <MenuItem primaryText="Esporte" leftIcon={<SocialPerson />} />
-          <MenuItem primaryText="Shows" leftIcon={<SocialPerson />} />
+          <Subheader className="subheader">Categorias</Subheader>
+          <Table selectable multiSelectable>
+            <TableBody deselectOnClickaway={false} displayRowCheckbox={false} showRowHover>
+              {this.renderRows(tableData)}
+            </TableBody>
+          </Table>
         </Menu>
       </Drawer>
     );

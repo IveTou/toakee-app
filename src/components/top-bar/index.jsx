@@ -12,7 +12,7 @@ import {
   RaisedButton,
   MenuItem,
 } from 'material-ui';
-import { NavigationMenu, NavigationMoreVert, SocialPerson } from 'material-ui/svg-icons';
+import { NavigationMenu, NavigationMoreVert, ActionAccountCircle } from 'material-ui/svg-icons';
 import SearchBar from 'material-ui-search-bar';
 
 import { logout } from '~/src/utils/session';
@@ -88,7 +88,7 @@ export class TopBar extends React.Component {
         : <Avatar className="TopBar-avatar">{viewer.firstName[0]}</Avatar>;
     }
 
-    return <SocialPerson />;
+    return <ActionAccountCircle />;
   }
 
   render() {
