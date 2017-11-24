@@ -42,6 +42,10 @@ export class TopBar extends React.Component {
     this.props.history.push(`/search?q=${this.state.value}`);
   }
 
+  itemSearch(items) {
+    this.props.history.push(`/search?q=${items}`);
+  }
+
   onChange(value) {
     this.setState({ value });
   }
@@ -104,7 +108,7 @@ export class TopBar extends React.Component {
           >
             <NavigationMenu />
           </IconButton>
-          <SideNav open={navOpen} mini={mini} />
+          <SideNav open={navOpen} mini={mini} onItemSelect={this.itemSearch} />
           <Logo />
         </ToolbarGroup>
         <ToolbarGroup>

@@ -73,7 +73,7 @@ const tableData = [
     backgroundColor: yellow500,
   },
   {
-    title: 'Gastronomia',
+    title: 'Bares e Restaurantes',
     icon: <MapsLocalBar />,
     color: black,
     backgroundColor: deepOrange500,
@@ -91,6 +91,7 @@ export class SideNav extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
+    this.state = { selected: ['arte', 'balada', 'curso', 'esporte', 'show', 'bares restaurantes', 'promoçoes'] }
   }
 
   dashboard() {
@@ -103,7 +104,7 @@ export class SideNav extends React.Component {
 
   renderRows(data) {
     return data.map((row, idx) => (
-        <TableRow style={{ color: row.color }}>
+        <TableRow style={{ color: row.color, cursor: 'pointer' }}>
           <TableRowColumn
             style={{ padding: '8px', width: '48px' }}
           >
@@ -143,8 +144,8 @@ export class SideNav extends React.Component {
           />
           <Divider />
           <Subheader className="subheader">Categorias</Subheader>
-          <Table selectable multiSelectable>
-            <TableBody deselectOnClickaway={false} displayRowCheckbox={false} showRowHover>
+          <Table selectable multiSelectable onRowSelection={(e) => console.log(e)}>
+            <TableBody deselectOnClickaway={false} displayRowCheckbox={false}>
               {this.renderRows(tableData)}
             </TableBody>
           </Table>
@@ -158,6 +159,7 @@ SideNav.propTypes = {
   open: PropTypes.bool,
   mini: PropTypes.bool,
   history: PropTypes.object,
+  onItemSelect: PropTypes.func,
 };
 
 export default withApollo(withRouter(SideNav));
