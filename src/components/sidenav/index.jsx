@@ -3,21 +3,21 @@ import autoBind from 'react-autobind';
 import classNames from 'classnames';
 import { withApollo } from 'react-apollo';
 import { withRouter } from 'react-router';
+import { concat, pull } from 'lodash';
 import {
   Avatar,
   Drawer,
   Divider,
   Menu,
   MenuItem,
+  List,
+  ListItem,
   Subheader,
-  Table,
-  TableBody,
-  TableRow,
-  TableRowColumn,
 } from 'material-ui';
 import {
   ActionHome,
   ActionEvent,
+  ActionCheckCircle,
   ActionLoyalty,
   ImageColorLens,
   MapsLocalActivity,
@@ -42,7 +42,7 @@ if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-const tableData = [
+const categories = [
   {
     title: 'Artes',
     icon: <ImageColorLens />,
@@ -91,7 +91,7 @@ export class SideNav extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
-    this.state = { selected: ['arte', 'balada', 'curso', 'esporte', 'show', 'bares restaurantes', 'promoçoes'] }
+    this.state = { activeItems: [] }
   }
 
   dashboard() {
@@ -102,29 +102,43 @@ export class SideNav extends React.Component {
     this.props.history.push('/');
   }
 
-  renderRows(data) {
-    return data.map((row, idx) => (
-        <TableRow style={{ color: row.color, cursor: 'pointer' }}>
-          <TableRowColumn
-            style={{ padding: '8px', width: '48px' }}
-          >
-            <Avatar icon={row.icon} backgroundColor={row.backgroundColor} />
-          </TableRowColumn>
-          <TableRowColumn style={{ fontSize: '16px' }}>{row.title}</TableRowColumn>
-        </TableRow>
-      )
-    );
+  onItemClick(value) {
+    const { activeItems } = this.state;
+    const items = activeItems.indexOf(value[0]) < 0
+      ? concat(activeItems, value[0])
+      : pull(activeItems, value[0]);
+
+    this.setState({ activeItems: items })
+    this.props.history.push(`/search?q=${items}`);
   }
 
-  render() {
-    const { mini, open } = this.props;
-    const isMini = mini && !open;
-    const classes = classNames(
-        'SideNav',
-        { 'SideNav--mini': mini, 'SideNav--mini--closed': isMini}
-    );
+  renderRows(data) {
+    return data.map((row, idx) => (
+        <ListItem
+          key={idx}
+          primaryText={row.title}
+          rightIcon={<ActionCheckCircle color={green500}/>}
+          leftAvatar={<Avatar
+            icon={row.icon}
+            backgroundColor={row.backgroundColor}
+            style={{left: '8px'}}
+            />
+          }
+          onClick={this.onItemClick}
+        />
+      )
+   );
+  }
 
-    return (
+render() {
+  const { mini, open } = this.props;
+  const isMini = mini && !open;
+  const classes = classNames(
+      'SideNav',
+      { 'SideNav--mini': mini, 'SideNav--mini--closed': isMini}
+  );
+
+  return (
       <Drawer
         className={classes}
         width={isMini ? 64 : 256}
@@ -144,11 +158,7 @@ export class SideNav extends React.Component {
           />
           <Divider />
           <Subheader className="subheader">Categorias</Subheader>
-          <Table selectable multiSelectable onRowSelection={(e) => console.log(e)}>
-            <TableBody deselectOnClickaway={false} displayRowCheckbox={false}>
-              {this.renderRows(tableData)}
-            </TableBody>
-          </Table>
+          <List>{this.renderRows(categories)}</List>
         </Menu>
       </Drawer>
     );
@@ -159,7 +169,6 @@ SideNav.propTypes = {
   open: PropTypes.bool,
   mini: PropTypes.bool,
   history: PropTypes.object,
-  onItemSelect: PropTypes.func,
 };
 
 export default withApollo(withRouter(SideNav));

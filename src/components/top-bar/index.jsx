@@ -108,7 +108,7 @@ export class TopBar extends React.Component {
           >
             <NavigationMenu />
           </IconButton>
-          <SideNav open={navOpen} mini={mini} onItemSelect={this.itemSearch} />
+          <SideNav open={navOpen} mini={mini} />
           <Logo />
         </ToolbarGroup>
         <ToolbarGroup>
