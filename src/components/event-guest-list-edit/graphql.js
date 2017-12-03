@@ -2,28 +2,24 @@ import gql from 'graphql-tag';
 
 export default gql`
   query GuestLists($eventId: String) {
-    viewer {
+    event(id: $eventId) {
       id
+      start
 
-      event(id: $eventId) {
+      guestLists {
         id
-        start
-
-        guestLists {
+        eventId
+        name
+        privacy
+        limit
+        registrationDeadline
+        entranceDeadline
+        socialIntegrations { mediaUrl }
+        invitations {
           id
-          eventId
           name
-          privacy
-          limit
-          registrationDeadline
-          entranceDeadline
-          socialIntegrations { mediaUrl }
-          invitations {
-            id
-            name
-            eventId
-            guestListId
-          }
+          eventId
+          guestListId
         }
       }
     }
@@ -31,35 +27,35 @@ export default gql`
 `;
 
 export const createGuestListMutation = gql`
-  mutation CreateGuestList(
-    $eventId: String!,
-    $name: String,
-    $registrationDeadline: Date,
-    $entranceDeadline: Date,
-    $socialIntegrations: [SocialIntegrationInputType],
+mutation CreateGuestList(
+  $eventId: String!,
+  $name: String,
+  $registrationDeadline: Date,
+  $entranceDeadline: Date,
+  $socialIntegrations: [SocialIntegrationInputType],
+) {
+  createGuestList(
+    eventId: $eventId,
+    name: $name,
+    registrationDeadline: $registrationDeadline,
+    entranceDeadline: $entranceDeadline,
+    socialIntegrations: $socialIntegrations,
   ) {
-    createGuestList(
-      eventId: $eventId,
-      name: $name,
-      registrationDeadline: $registrationDeadline,
-      entranceDeadline: $entranceDeadline,
-      socialIntegrations: $socialIntegrations,
-    ) {
+    id
+    eventId
+    name
+    privacy
+    limit
+    registrationDeadline
+    entranceDeadline
+    socialIntegrations { mediaUrl }
+    invitations {
       id
-      eventId
       name
-      privacy
-      limit
-      registrationDeadline
-      entranceDeadline
-      socialIntegrations { mediaUrl }
-      invitations {
-        id
-        name
-        eventId
-        guestListId
-      }
+      eventId
+      guestListId
     }
+  }
   }
 `;
 

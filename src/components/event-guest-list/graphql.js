@@ -2,23 +2,19 @@ import gql from 'graphql-tag';
 
 const query = gql`
   query EventGuestList($eventId: String) {
-    viewer {
+    event(id: $eventId) {
       id
+      title
 
-      event(id: $eventId) {
+      guestLists {
         id
-        title
+        name
 
-        guestLists {
+        invitations {
           id
           name
-
-          invitations {
-            id
-            name
-            normalizedName
-            status
-          }
+          normalizedName
+          status
         }
       }
     }
@@ -26,12 +22,12 @@ const query = gql`
 `;
 
 export const setAttendanceStatusMutation = gql`
-  mutation SetAttendanceStatusMutation(
+  mutation SetAttendanceStatus(
     $eventId: String!,
     $invitationId: String!,
     $status: GuestStatus!
   ) {
-    setAttendanceStatusMutation(eventId: $eventId, invitationId: $invitationId, status: $status)
+    setAttendanceStatus(eventId: $eventId, invitationId: $invitationId, status: $status)
   }
 `;
 
