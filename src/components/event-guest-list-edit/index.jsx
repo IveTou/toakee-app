@@ -87,6 +87,7 @@ EventGuestListEdit.propTypes = {
   createGuestList: PropTypes.func,
   removeGuestList: PropTypes.func,
   removeInvitation: PropTypes.func,
+  event: PropTypes.object,
 };
 
 const injectQuery = graphql(query, {
