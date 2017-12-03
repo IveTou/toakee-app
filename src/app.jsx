@@ -21,6 +21,7 @@ import Dashboard from '~/src/pages/dashboard';
 import UseTerms from '~/src/pages/use-terms';
 import About from '~/src/pages/about';
 import EventModeration from '~/src/pages/event-moderation';
+import MyEvents from '~/src/pages/my-events';
 
 import Login from '~/src/components/auth-wrapper/login';
 import SignUp from '~/src/components/auth-wrapper/sign-up';
@@ -85,6 +86,7 @@ const App = ({ userAgent }) => (
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/termos-de-uso" component={UseTerms} />
           <Route path="/quem-somos" component={About} />
+          <Route path="/meus-eventos" component={MyEvents} />
         </Switch>
       </DeviceInfoProvider>
     </ViewerProvider>
