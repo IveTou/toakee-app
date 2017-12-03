@@ -3,12 +3,13 @@
 
 .DefaultLayout {
   main {
-    margin-top: $topbar-height;
+    padding-top: $topbar-height;
+    min-height: 100vh;
   }
 
   &--topbarTransparent {
     main {
-      margin-top: 0;
+      padding-top: 0;
     }
   }
 }
@@ -16,7 +17,7 @@
 @include media("<tablet") {
   .DefaultLayout {
     main {
-      margin-top: $topbar-height;
+      padding-top: $topbar-height;
     }
   }
 }

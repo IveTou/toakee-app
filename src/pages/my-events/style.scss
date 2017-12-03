@@ -1,0 +1,30 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/variables';
+@import '../../scss/colors';
+
+.MyEvents {
+  background: $gray50;
+  height: calc(100vh - #{$topbar-height});
+  padding: $spacer*4 0;
+
+  &-section {
+    width: 100%;
+    max-width: $spacer*50;
+
+    &-title {
+      padding-left: $spacer*2;
+      color: $black87;
+    }
+
+    &-list {
+      max-height: $spacer*50;
+      overflow: auto;
+    }
+  }
+}
+
+@include media(">tablet") {
+  .MyEvents {
+    padding: $spacer*4 $spacer*8;
+  }
+}
