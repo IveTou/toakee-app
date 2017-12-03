@@ -49,7 +49,6 @@ const EventCard = ({ event }) => {
         </If>
         <Card.Content className="EventCard-main">
           <Card.Header><span title={title}>{title}</span></Card.Header>
-          <Card.Meta>{place.name}</Card.Meta>
         </Card.Content>
         <Card.Content className="EventCard-details" extra>
           <div className="EventCard-details-calendar">
@@ -61,8 +60,8 @@ const EventCard = ({ event }) => {
             </div>
           </div>
           <div className="EventCard-details-timeAndPlace">
+            <div><Icon name="marker" />{place.name}</div>
             <div><Icon name="clock" />{startMoment.format('HH')}h</div>
-            <div><Icon name="marker" />{place.address}</div>
           </div>
         </Card.Content>
       </Card>
