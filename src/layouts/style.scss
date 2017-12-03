@@ -1,4 +1,10 @@
-@import 'node_modules/include-media/dist/_include-media.scss';
 @import '../scss/variables';
+@import '../scss/colors';
 
-.DefaultLayout {}
+.Main{
+  background: $gray50;
+
+  &--mini {
+    padding-left: $spacer*32;
+  }
+}

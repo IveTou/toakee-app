@@ -5,6 +5,7 @@ import { Grid, Segment, Divider, Button, Image, Form, Icon, Popup } from 'semant
 import FacebookProvider, { Page } from 'react-facebook';
 import { omit, pick } from 'lodash';
 import autoBind from 'react-autobind';
+import classNames from 'classnames';
 
 import { withInfo } from '~/src/hocs';
 import { assetsUrl } from '~/src/utils/url';
@@ -114,9 +115,10 @@ class Footer extends React.Component {
     }[formState];
 
     const triggerDisabled = !!this.state.formState;
+    const classes = classNames('Footer', { 'Footer--mini': this.props.mini });
 
     return (
-      <footer className="Footer">
+      <footer className={classes}>
         <Grid columns={2} relaxed>
           <Grid.Column className="Footer-column social">
             <Divider horizontal inverted >Estamos Aqui!</Divider>
@@ -241,6 +243,7 @@ class Footer extends React.Component {
 
 Footer.propTypes = {
   viewer: PropTypes.object,
+  mini: PropTypes.bool,
 };
 
 export default withInfo(Footer, ['viewer']);

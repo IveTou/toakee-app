@@ -10,6 +10,10 @@ $footer-color: #1d1d1d;
   padding: $spacer*4 $spacer*3;
   text-align: center;
 
+  &--mini {
+    padding-left: $spacer*32;
+  }
+
   .social {
     .icon {
       background-color: $gray300;

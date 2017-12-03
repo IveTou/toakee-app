@@ -1,36 +1,10 @@
-@import 'node_modules/include-media/dist/_include-media.scss';
 @import '../../scss/variables';
-@import '../../scss/colors';
 
 .Logo {
-  max-width: $spacer*25;
-  width: $spacer*15;
-  height: 100%;
-  margin-left: $spacer;
-  margin-right: $spacer;
+  width: $spacer*20;
+  margin-left: $spacer*3;
 
-  img {
-    max-height: 100%;
-    border-radius: 50%;
-    float: left;
-    padding: $spacer/2;
-  }
-
-  h1 {
-    display:none;
-  }
-}
-
-@include media(">tablet") {
-  .Logo {
-    width: $spacer*25;
-
-    h1 {
-      display: block;
-      max-height: 100%;
-      margin: 0;
-      font-size: 38px;
-      color: $black87;
-    }
+  &--small {
+    width: $spacer*4;
   }
 }

@@ -1,8 +1,17 @@
 @import '../../scss/variables';
+@import '../../scss/colors';
 
 .SideNav {
+  > div {
+    background-color: $gray50 !important;
+  }
+
   div[role=presentation] {
-      width: $spacer*32 !important;
+    width: $spacer*32 !important;
+  }
+
+  .divider {
+    margin: $spacer $spacer*2 !important;
   }
 
   &--mini {

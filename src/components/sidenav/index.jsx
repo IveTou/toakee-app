@@ -3,9 +3,7 @@ import autoBind from 'react-autobind';
 import classNames from 'classnames';
 import { withApollo } from 'react-apollo';
 import { withRouter } from 'react-router';
-import { concat, pull } from 'lodash';
 import {
-  Avatar,
   Drawer,
   Divider,
   Menu,
@@ -17,7 +15,6 @@ import {
 import {
   ActionHome,
   ActionEvent,
-  ActionCheckCircle,
   ActionLoyalty,
   ImageColorLens,
   MapsLocalActivity,
@@ -27,8 +24,6 @@ import {
   SocialWhatshot,
 } from 'material-ui/svg-icons';
 import {
-  black,
-  white,
   red800,
   deepPurple500,
   lightBlue500,
@@ -41,48 +36,35 @@ import {
 if (process.env.BROWSER) {
   require('./style.scss');
 }
-
+const iconStyle = { left: '8px' };
 const categories = [
   {
     title: 'Artes',
-    icon: <ImageColorLens />,
-    color: black,
-    backgroundColor: red800,
+    icon: <ImageColorLens style={iconStyle} color={red800} />,
   },
   {
     title: 'Baladas',
-    icon: <SocialWhatshot />,
-    color: black,
-    backgroundColor: deepPurple500,
+    icon: <SocialWhatshot style={iconStyle} color={deepPurple500} />,
   },
   {
     title: 'Cursos',
-    icon: <MapsLocalLibrary />,
-    backgroundColor: lightBlue500,
+    icon: <MapsLocalLibrary style={iconStyle} color={lightBlue500} />,
   },
   {
     title: 'Esportes',
-    icon: <PlacesPool />,
-    color: black,
-    backgroundColor: green500,
+    icon: <PlacesPool style={iconStyle} color={green500} />,
   },
   {
     title: 'Shows',
-    icon: <MapsLocalActivity />,
-    color: black,
-    backgroundColor: yellow500,
+    icon: <MapsLocalActivity style={iconStyle} color={yellow500} />,
   },
   {
     title: 'Bares e Restaurantes',
-    icon: <MapsLocalBar />,
-    color: black,
-    backgroundColor: deepOrange500,
+    icon: <MapsLocalBar style={iconStyle} color={deepOrange500} />,
   },
   {
     title: 'Promoções',
-    icon: <ActionLoyalty />,
-    color: black,
-    backgroundColor: blueGrey500,
+    icon: <ActionLoyalty style={iconStyle} color={blueGrey500} />,
   },
 
 ];
@@ -91,55 +73,37 @@ export class SideNav extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
-    this.state = { activeItems: [] }
   }
 
-  dashboard() {
-    this.props.history.push('/dashboard');
+  onItemClick(value) {
+    this.props.history.push(`/search?q=${value}`);
   }
 
   home() {
     this.props.history.push('/');
   }
 
-  onItemClick(value) {
-    const { activeItems } = this.state;
-    const items = activeItems.indexOf(value[0]) < 0
-      ? concat(activeItems, value[0])
-      : pull(activeItems, value[0]);
-
-    this.setState({ activeItems: items })
-    this.props.history.push(`/search?q=${items}`);
+  dashboard() {
+    this.props.history.push('/dashboard');
   }
 
   renderRows(data) {
-    return data.map((row, idx) => (
-        <ListItem
-          key={idx}
-          primaryText={row.title}
-          rightIcon={<ActionCheckCircle color={green500}/>}
-          leftAvatar={<Avatar
-            icon={row.icon}
-            backgroundColor={row.backgroundColor}
-            style={{left: '8px'}}
-            />
-          }
-          onClick={this.onItemClick}
-        />
-      )
-   );
+    return data.map(row => (
+      <ListItem primaryText={row.title} leftIcon={row.icon} onClick={this.onItemClick} />
+    ));
   }
 
-render() {
-  const { mini, open } = this.props;
-  const isMini = mini && !open;
-  const classes = classNames(
+  render() {
+    const { mini, open } = this.props;
+    const isMini = mini && !open;
+    const classes = classNames(
       'SideNav',
-      { 'SideNav--mini': mini, 'SideNav--mini--closed': isMini}
-  );
+      { 'SideNav--mini': mini, 'SideNav--mini--closed': isMini },
+    );
 
-  return (
+    return (
       <Drawer
+        zDepth={0}
         className={classes}
         width={isMini ? 64 : 256}
         open={!mini ? open : undefined}
@@ -156,7 +120,7 @@ render() {
             primaryText="Meus Eventos"
             leftIcon={<ActionEvent />}
           />
-          <Divider />
+          <Divider className="divider" />
           <Subheader className="subheader">Categorias</Subheader>
           <List>{this.renderRows(categories)}</List>
         </Menu>

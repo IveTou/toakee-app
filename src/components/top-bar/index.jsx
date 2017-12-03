@@ -18,7 +18,6 @@ import SearchBar from 'material-ui-search-bar';
 import { logout } from '~/src/utils/session';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import Logo from '~/src/components/logo';
-import SideNav from '~/src/components/sidenav';
 import { withInfo } from '~/src/hocs';
 
 if (process.env.BROWSER) {
@@ -31,7 +30,7 @@ export class TopBar extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
-    this.state = { value: '', navOpen: false };
+    this.state = { value: '' };
   }
 
   componentWillReceiveProps({ viewer }) {
@@ -42,16 +41,12 @@ export class TopBar extends React.Component {
     this.props.history.push(`/search?q=${this.state.value}`);
   }
 
-  itemSearch(items) {
-    this.props.history.push(`/search?q=${items}`);
-  }
-
   onChange(value) {
     this.setState({ value });
   }
 
-  toggleNav() {
-    this.setState({ navOpen: !this.state.navOpen });
+  itemSearch(items) {
+    this.props.history.push(`/search?q=${items}`);
   }
 
   logout() {
@@ -96,19 +91,17 @@ export class TopBar extends React.Component {
   }
 
   render() {
-    const { mini, viewer = {} } = this.props;
-    const { navOpen } = this.state;
+    const { viewer = {}, toggle } = this.props;
 
     return (
       <Toolbar className="TopBar">
         <ToolbarGroup className="ToBar-nav" firstChild>
           <IconButton
             className="TopBar-nav-button"
-            onClick={this.toggleNav}
+            onClick={toggle}
           >
             <NavigationMenu />
           </IconButton>
-          <SideNav open={navOpen} mini={mini} />
           <Logo />
         </ToolbarGroup>
         <ToolbarGroup>
@@ -174,7 +167,7 @@ TopBar.propTypes = {
   history: PropTypes.object,
   client: PropTypes.object,
   deviceInfo: PropTypes.object,
-  mini: PropTypes.bool,
+  toggle: PropTypes.func,
 };
 
 export default withApollo(withRouter(withInfo(TopBar, ['viewer', 'deviceInfo'])));
