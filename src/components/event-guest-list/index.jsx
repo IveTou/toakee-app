@@ -79,6 +79,7 @@ EventGuestList.propTypes = {
   toggleDashboard: PropTypes.func,
   closeDashboard: PropTypes.func,
   changeFilter: PropTypes.func,
+  event: PropTypes.object,
 };
 
 const injectData = graphql(query, {
