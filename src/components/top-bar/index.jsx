@@ -147,8 +147,8 @@ export class TopBar extends React.Component {
                     targetOrigin={{ horizontal: 'right', vertical: 'top' }}
                   >
                     <MenuItem onClick={this.newEvent}>Publicar Evento</MenuItem>
-                    <MenuItem onClick={this.login}>Login</MenuItem>
-                    <MenuItem onClick={this.signUp}>Cadastro</MenuItem>
+                    <MenuItem onClick={this.signUp}>Cadastrar</MenuItem>
+                    <MenuItem onClick={this.login}>Entrar</MenuItem>
                   </IconMenu>
                 </Otherwise>
               </Choose>
