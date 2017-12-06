@@ -37,7 +37,7 @@ if (process.env.BROWSER) {
 const iconStyle = { left: '8px' };
 const categories = [
   {
-    title: 'Artes',
+    title: 'Arte e Cultura',
     icon: <ImageColorLens style={iconStyle} color={red800} />,
   },
   {
