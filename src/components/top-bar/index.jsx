@@ -10,6 +10,7 @@ import {
   IconButton,
   IconMenu,
   RaisedButton,
+  FlatButton,
   MenuItem,
 } from 'material-ui';
 import { NavigationMenu, NavigationMoreVert, ActionAccountCircle } from 'material-ui/svg-icons';
@@ -103,7 +104,7 @@ export class TopBar extends React.Component {
           </IconButton>
           <Logo />
         </ToolbarGroup>
-        <ToolbarGroup>
+        <ToolbarGroup className="TopBar-search">
           <SearchBar
             onChange={this.onChange}
             onRequestSearch={this.onSearch}
@@ -119,11 +120,8 @@ export class TopBar extends React.Component {
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                 targetOrigin={{ horizontal: 'right', vertical: 'top' }}
               >
-                <If condition={viewer.isPromoter}>
-                  <MenuItem onClick={this.dashboard}>
-                    Meus eventos
-                  </MenuItem>
-                </If>
+                <MenuItem onClick={this.dashboard}>Meus eventos</MenuItem>
+                <MenuItem onClick={this.newEvent}>Publicar Evento</MenuItem>
                 <MenuItem onClick={this.logout}>Sair</MenuItem>
               </IconMenu>
             </When>
@@ -132,11 +130,16 @@ export class TopBar extends React.Component {
                 <When condition={this.props.deviceInfo.is('desktop')}>
                   <RaisedButton
                     className="TopBar-menu-button signin"
-                    label="Cadastrar"
-                    onClick={this.signUp}
+                    label="Publicar Evento"
+                    onClick={this.newEvent}
                     primary
                   />
-                  <RaisedButton
+                  <FlatButton
+                    className="TopBar-menu-button signin"
+                    label="Cadastrar"
+                    onClick={this.signUp}
+                  />
+                  <FlatButton
                     className="TopBar-menu-button login"
                     label="Entrar"
                     onClick={this.login}
@@ -148,6 +151,7 @@ export class TopBar extends React.Component {
                     anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                     targetOrigin={{ horizontal: 'right', vertical: 'top' }}
                   >
+                    <MenuItem onClick={this.newEvent}>Publicar Evento</MenuItem>
                     <MenuItem onClick={this.login}>Login</MenuItem>
                     <MenuItem onClick={this.signUp}>Cadastro</MenuItem>
                   </IconMenu>

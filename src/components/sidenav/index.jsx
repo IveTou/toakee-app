@@ -88,6 +88,7 @@ export class SideNav extends React.Component {
   renderRows(data) {
     return data.map(row => (
       <MenuItem
+        key={row.title}
         primaryText={row.title}
         leftIcon={row.icon}
       />

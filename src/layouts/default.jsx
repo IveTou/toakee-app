@@ -3,6 +3,7 @@ import { ReactTitle } from 'react-meta-tags';
 import autoBind from 'react-autobind';
 import classNames from 'classnames';
 
+import { withInfo } from '~/src/hocs';
 import TopBar from '~/src/components/top-bar';
 import Footer from '~/src/components/footer';
 import SideNav from '~/src/components/sidenav';
@@ -15,7 +16,7 @@ export class DefaultLayout extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
-    this.state = { navOpen: true };
+    this.state = { navOpen: props.deviceInfo.is('desktop') };
   }
 
   toggleNav() {
@@ -51,9 +52,10 @@ DefaultLayout.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
+  deviceInfo: PropTypes.object,
   hideFooter: PropTypes.bool,
   title: PropTypes.string,
   miniVariant: PropTypes.bool,
 };
 
-export default DefaultLayout;
+export default withInfo(DefaultLayout, ['deviceInfo']);

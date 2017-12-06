@@ -10,6 +10,10 @@
   min-height: $spacer*9;
   z-index: $topbar-zindex;
 
+  &-search {
+    margin-left: $spacer*5;
+  }
+
   &-menu {
     margin-right: 0 !important;
 
@@ -17,8 +21,12 @@
       margin: 0 $spacer !important;
     }
   }
+}
 
-  &-newEvent {
-    margin-right: $spacer !important;
+@include media(">tablet") {
+  .TopBar {
+    &-search {
+      margin-left: 0;
+    }
   }
 }
