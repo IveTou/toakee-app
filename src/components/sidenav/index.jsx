@@ -8,8 +8,6 @@ import {
   Divider,
   Menu,
   MenuItem,
-  List,
-  ListItem,
   Subheader,
 } from 'material-ui';
 import {
@@ -75,8 +73,8 @@ export class SideNav extends React.Component {
     autoBind(this);
   }
 
-  onItemClick(value) {
-    this.props.history.push(`/search?q=${value}`);
+  onItemClick(e, item) {
+    this.props.history.push(`/search?q=${item.props.primaryText}`);
   }
 
   home() {
@@ -89,7 +87,10 @@ export class SideNav extends React.Component {
 
   renderRows(data) {
     return data.map(row => (
-      <ListItem primaryText={row.title} leftIcon={row.icon} onClick={this.onItemClick} />
+      <MenuItem
+        primaryText={row.title}
+        leftIcon={row.icon}
+      />
     ));
   }
 
@@ -109,7 +110,7 @@ export class SideNav extends React.Component {
         open={!mini ? open : undefined}
         containerStyle={{ marginTop: '72px' }}
       >
-        <Menu>
+        <Menu onItemTouchTap={this.onItemClick}>
           <MenuItem
             onClick={this.home}
             primaryText="Início"
@@ -122,7 +123,7 @@ export class SideNav extends React.Component {
           />
           <Divider className="divider" />
           <Subheader className="subheader">Categorias</Subheader>
-          <List>{this.renderRows(categories)}</List>
+          {this.renderRows(categories)}
         </Menu>
       </Drawer>
     );

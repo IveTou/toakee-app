@@ -15,7 +15,7 @@ export class DefaultLayout extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
-    this.state = { navOpen: false };
+    this.state = { navOpen: true };
   }
 
   toggleNav() {
