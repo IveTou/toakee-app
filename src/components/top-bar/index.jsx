@@ -18,7 +18,6 @@ import SearchBar from 'material-ui-search-bar';
 import { logout } from '~/src/utils/session';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import Logo from '~/src/components/logo';
-import { withInfo } from '~/src/hocs';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -43,10 +42,6 @@ export class TopBar extends React.Component {
 
   onChange(value) {
     this.setState({ value });
-  }
-
-  itemSearch(items) {
-    this.props.history.push(`/search?q=${items}`);
   }
 
   logout() {
@@ -102,7 +97,7 @@ export class TopBar extends React.Component {
           >
             <NavigationMenu />
           </IconButton>
-          <Logo />
+          <Logo deviceInfo={this.props.deviceInfo} />
         </ToolbarGroup>
         <ToolbarGroup className="TopBar-search">
           <SearchBar
@@ -173,4 +168,4 @@ TopBar.propTypes = {
   toggle: PropTypes.func,
 };
 
-export default withApollo(withRouter(withInfo(TopBar, ['viewer', 'deviceInfo'])));
+export default withApollo(withRouter(TopBar));

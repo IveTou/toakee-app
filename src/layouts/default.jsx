@@ -36,7 +36,7 @@ export class DefaultLayout extends React.Component {
     return (
       <div className="DefaultLayout">
         <ReactTitle title={`Toakee - ${title}`} />
-        <TopBar toggle={this.toggleNav} />
+        <TopBar toggle={this.toggleNav} deviceInfo={this.props.deviceInfo} />
         <SideNav open={navOpen} mini={miniVariant} />
         <main className={classes}>{children}</main>
         <If condition={!hideFooter}>

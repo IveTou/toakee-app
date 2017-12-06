@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
 import config from '~/src/config';
-import { withInfo } from '~/src/hocs';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -22,4 +21,4 @@ Logo.propTypes = {
   deviceInfo: PropTypes.object.isRequired,
 };
 
-export default withInfo(Logo, ['deviceInfo']);
+export default Logo;
