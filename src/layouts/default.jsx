@@ -31,7 +31,7 @@ export class DefaultLayout extends React.Component {
       title = 'Descubra o que fazer em Salvador',
     } = this.props;
     const navOpen = this.state.navOpen;
-    const classes = classNames('Main', { 'Main--mini': navOpen });
+    const classes = classNames('main', { 'main--mini': navOpen });
 
     return (
       <div className="DefaultLayout">
