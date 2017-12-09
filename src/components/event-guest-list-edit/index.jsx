@@ -38,7 +38,7 @@ class EventGuestListEdit extends React.Component {
 
   render() {
     const {
-      viewer = {},
+      event = {},
       toggleDashboard,
       createGuestList,
       updateGuestList,
@@ -48,7 +48,6 @@ class EventGuestListEdit extends React.Component {
       removeInvitation,
     } = this.props;
 
-    const { event = {} } = viewer;
     const { guestLists = [] } = event;
     declare var guestList;
 
@@ -80,7 +79,6 @@ class EventGuestListEdit extends React.Component {
 }
 
 EventGuestListEdit.propTypes = {
-  viewer: PropTypes.object,
   confirmRemove: PropTypes.func,
   addNamesToGuestList: PropTypes.func,
   toggleDashboard: PropTypes.func,
@@ -89,28 +87,29 @@ EventGuestListEdit.propTypes = {
   createGuestList: PropTypes.func,
   removeGuestList: PropTypes.func,
   removeInvitation: PropTypes.func,
+  event: PropTypes.object,
 };
 
 const injectQuery = graphql(query, {
   options: ({ match }) => ({
     variables: { eventId: match.params.id },
   }),
-  props: ({ data: { viewer } }) => ({ viewer }),
+  props: ({ data: { event } }) => ({ event }),
 });
 
 const injectCreateGuestList = graphql(createGuestListMutation, {
-  props: ({ mutate, ownProps: { viewer } }) => ({
+  props: ({ mutate, ownProps: { event } }) => ({
     createGuestList: (guestList) => {
-      const { id: eventId } = viewer.event;
+      const { id: eventId } = event;
 
       return mutate({
         variables: guestList,
         update: (store, { data: { createGuestList: newGuestList } }) => {
           const data = store.readQuery({ query, variables: { eventId } });
-          const guestLists = data.viewer.event.guestLists
+          const guestLists = data.event.guestLists
             .filter(gl => gl.name !== guestList.name);
 
-          data.viewer.event.guestLists = newGuestList.id
+          data.event.guestLists = newGuestList.id
             ? [...guestLists, newGuestList]
             : guestLists;
 
@@ -135,15 +134,15 @@ const injectCreateGuestList = graphql(createGuestListMutation, {
 });
 
 const injectRemoveGuestList = graphql(removeGuestListMutation, {
-  props: ({ mutate, ownProps: { viewer } }) => ({
+  props: ({ mutate, ownProps: { event } }) => ({
     removeGuestList: guestListId => () => {
-      const { id: eventId } = viewer.event;
+      const { id: eventId } = event;
 
       return mutate({
         variables: { eventId, guestListId },
         update: (store) => {
           const data = store.readQuery({ query, variables: { eventId } });
-          data.viewer.event.guestLists = data.viewer.event.guestLists
+          data.event.guestLists = data.event.guestLists
             .filter(gl => gl.id !== guestListId);
           store.writeQuery({ query, data });
         },
@@ -165,7 +164,7 @@ const injectAddNamesToGuestList = graphql(addNamesToGuestListMutation, {
         variables: { eventId, guestListId, names },
         update: (store, { data: { addNamesToGuestList: newInvitations } }) => {
           const data = store.readQuery({ query, variables: { eventId } });
-          const guestList = data.viewer.event.guestLists.find(gl => gl.id === guestListId);
+          const guestList = data.event.guestLists.find(gl => gl.id === guestListId);
 
           guestList.invitations = guestList.invitations
             .filter(i => names.indexOf(i.name) === -1)
@@ -201,7 +200,7 @@ const injectUpdateGuestList = graphql(updateGuestListMutation, {
             ? Object.assign({}, guestList, patch)
             : guestList;
 
-          const { event } = data.viewer;
+          const { event } = data;
           event.guestLists = event.guestLists
             .map(gl => (gl.id === guestListId ? updatedGuestList : gl));
 
@@ -225,7 +224,7 @@ const injectRemoveInvitation = graphql(removeInvitationMutation, {
         variables: { eventId, invitationId },
         update: (store, { data: { removeInvitation } }) => {
           const data = store.readQuery({ query, variables: { eventId } });
-          const guestList = data.viewer.event.guestLists.find(gl => gl.id === guestListId);
+          const guestList = data.event.guestLists.find(gl => gl.id === guestListId);
           guestList.invitations = guestList.invitations.filter(i => i.id !== invitationId);
 
           if (!removeInvitation) {

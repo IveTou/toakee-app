@@ -103,7 +103,7 @@
     text-align: right;
     width: 50%;
 
-    &-badge.label {
+    &-badge.ui.label {
       white-space: nowrap;
       overflow: auto;
       max-width: calc(100% - #{$spacer*6});

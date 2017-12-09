@@ -28,7 +28,7 @@ $event-list-height: $spacer*29;
     .EventListArrow {
       position: absolute;
       z-index: 2;
-      margin-top: $spacer*12;
+      margin-top: $spacer*6;
       @include box-shadow(0 0 $spacer $black26);
       border-radius: 4px;
 

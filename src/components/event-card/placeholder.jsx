@@ -6,9 +6,8 @@ const EventCardPlaceholder = () => (
     <Dimmer inverted active><Loader content="Carregando" /></Dimmer>
     <Card>
       <Image className="EventCardPlaceholder-background" />
-      <Card.Content>
+      <Card.Content className="EventCard-main">
         <Card.Header>Lorem ipsum</Card.Header>
-        <Card.Meta>Dolor sit amet</Card.Meta>
       </Card.Content>
       <Card.Content className="EventCardPlaceholder-details" extra>
         <div className="EventCardPlaceholder-details-calendar">

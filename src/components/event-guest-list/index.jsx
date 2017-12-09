@@ -26,8 +26,7 @@ class EventGuestList extends React.Component {
   }
 
   render() {
-    const { filter, viewer, toggleAttendanceStatus, toggleDashboard, changeFilter } = this.props;
-    const { event } = viewer || {};
+    const { filter, event, toggleAttendanceStatus, toggleDashboard, changeFilter } = this.props;
     const { guestLists = [] } = event || {};
     const invitations = flatMap(guestLists, mapGuestListToInvitations);
 
@@ -75,27 +74,25 @@ class EventGuestList extends React.Component {
 }
 
 EventGuestList.propTypes = {
-  viewer: PropTypes.object,
   filter: PropTypes.string,
   toggleAttendanceStatus: PropTypes.func,
   toggleDashboard: PropTypes.func,
   closeDashboard: PropTypes.func,
   changeFilter: PropTypes.func,
+  event: PropTypes.object,
 };
 
 const injectData = graphql(query, {
   options: ({ match }) => ({
-    variables: {
-      eventId: match.params.id,
-    },
+    variables: { eventId: match.params.id },
   }),
-  props: ({ data: { viewer } }) => ({ viewer }),
+  props: ({ data: { event } }) => ({ event }),
 });
 
 const injectSetAttendanceStatusMutation = graphql(setAttendanceStatusMutation, {
-  props: ({ mutate, ownProps: { viewer } }) => ({
+  props: ({ mutate, ownProps: { event } }) => ({
     toggleAttendanceStatus: (invitation) => {
-      const { id: eventId } = viewer.event;
+      const { id: eventId } = event;
 
       const { status } = invitation;
       const newStatus = status === 'ATTENDED' ? 'INVITED' : 'ATTENDED';
@@ -105,7 +102,7 @@ const injectSetAttendanceStatusMutation = graphql(setAttendanceStatusMutation, {
         update: (store, { data: { setAttendanceStatus } }) => {
           const data = store.readQuery({ query, variables: { eventId } });
 
-          data.viewer.event.guestLists
+          data.event.guestLists
             .find(({ id }) => id === invitation.guestList.id)
             .invitations
             .find(({ id }) => id === invitation.id)
