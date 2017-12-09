@@ -9,9 +9,9 @@ if (process.env.BROWSER) {
 }
 
 const Logo = ({ small }) => {
-  const imgSrc = !small
-    ? `${config.ASSETS_BASE_URI}/core/site/logo.png`
-    : `${config.ASSETS_BASE_URI}/core/site/logo-x64.png`;
+  const imgSrc = small
+    ? `${config.ASSETS_BASE_URI}/core/site/logo-x64.png`;
+    : `${config.ASSETS_BASE_URI}/core/site/logo.png`
   const classes = classNames('Logo', { 'Logo--small': small });
 
   return <Link className={classes} to="/"><img alt="toakee logo" src={imgSrc} /></Link>;
