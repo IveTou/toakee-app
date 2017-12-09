@@ -8,17 +8,17 @@ if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-const Logo = ({ deviceInfo }) => {
-  const imgSrc = deviceInfo.is('desktop')
+const Logo = ({ small }) => {
+  const imgSrc = !small
     ? `${config.ASSETS_BASE_URI}/core/site/logo.png`
     : `${config.ASSETS_BASE_URI}/core/site/logo-x64.png`;
-  const classes = classNames('Logo', { 'Logo--small': !deviceInfo.is('desktop') });
+  const classes = classNames('Logo', { 'Logo--small': small });
 
-  return <Link to="/"><img className={classes} alt="toakee logo" src={imgSrc} /></Link>;
+  return <Link className={classes} to="/"><img alt="toakee logo" src={imgSrc} /></Link>;
 };
 
 Logo.propTypes = {
-  deviceInfo: PropTypes.object.isRequired,
+  small: PropTypes.bool.isRequired,
 };
 
 export default Logo;

@@ -115,7 +115,7 @@ class Footer extends React.Component {
     }[formState];
 
     const triggerDisabled = !!this.state.formState;
-    const classes = classNames('Footer', { 'Footer--mini': this.props.mini });
+    const classes = classNames('Footer', { 'Footer--compressed': this.props.compressed });
 
     return (
       <footer className={classes}>
@@ -243,7 +243,7 @@ class Footer extends React.Component {
 
 Footer.propTypes = {
   viewer: PropTypes.object,
-  mini: PropTypes.bool,
+  compressed: PropTypes.bool,
 };
 
 export default withInfo(Footer, ['viewer']);

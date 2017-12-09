@@ -29,7 +29,7 @@ export class TopBar extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
-    this.state = { value: '' };
+    this.state = { searchText: '' };
   }
 
   componentWillReceiveProps({ viewer }) {
@@ -37,11 +37,11 @@ export class TopBar extends React.Component {
   }
 
   onSearch() {
-    this.props.history.push(`/search?q=${this.state.value}`);
+    this.props.history.push(`/search?q=${this.state.searchText}`);
   }
 
-  onChange(value) {
-    this.setState({ value });
+  onChange(searchText) {
+    this.setState({ searchText });
   }
 
   logout() {
@@ -86,25 +86,24 @@ export class TopBar extends React.Component {
   }
 
   render() {
-    const { viewer = {}, toggle } = this.props;
+    const { viewer = {}, onToggle, small } = this.props;
 
     return (
       <Toolbar className="TopBar">
         <ToolbarGroup className="ToBar-nav" firstChild>
           <IconButton
             className="TopBar-nav-button"
-            onClick={toggle}
+            onClick={onToggle}
           >
             <NavigationMenu />
           </IconButton>
-          <Logo deviceInfo={this.props.deviceInfo} />
+          <Logo small={small} />
         </ToolbarGroup>
         <ToolbarGroup className="TopBar-search">
           <SearchBar
             onChange={this.onChange}
             onRequestSearch={this.onSearch}
             hintText="Pesquisar no site"
-            style={{ width: '400px', minWidth: '128px' }}
           />
         </ToolbarGroup>
         <ToolbarGroup className="TopBar-menu" lastChild>
@@ -122,20 +121,20 @@ export class TopBar extends React.Component {
             </When>
             <Otherwise>
               <Choose>
-                <When condition={this.props.deviceInfo.is('desktop')}>
+                <When condition={!small}>
                   <RaisedButton
-                    className="TopBar-menu-button signin"
+                    className="TopBar-menu-button"
                     label="Publicar Evento"
                     onClick={this.newEvent}
                     primary
                   />
                   <FlatButton
-                    className="TopBar-menu-button signin"
+                    className="TopBar-menu-button"
                     label="Cadastrar"
                     onClick={this.signUp}
                   />
                   <FlatButton
-                    className="TopBar-menu-button login"
+                    className="TopBar-menu-button"
                     label="Entrar"
                     onClick={this.login}
                   />
@@ -164,8 +163,8 @@ TopBar.propTypes = {
   viewer: PropTypes.object,
   history: PropTypes.object,
   client: PropTypes.object,
-  deviceInfo: PropTypes.object,
-  toggle: PropTypes.func,
+  small: PropTypes.bool,
+  onToggle: PropTypes.func,
 };
 
 export default withApollo(withRouter(TopBar));

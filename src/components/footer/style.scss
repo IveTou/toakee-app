@@ -10,7 +10,7 @@ $footer-color: #1d1d1d;
   padding: $spacer*4 $spacer*3;
   text-align: center;
 
-  &--mini {
+  &--compressed {
     padding-left: $spacer*32;
   }
 
@@ -142,6 +142,8 @@ $footer-color: #1d1d1d;
 
 @include media("<tablet") {
   .Footer {
+    padding: $spacer*2;
+
     &-column {
       width: 100% !important;
     }

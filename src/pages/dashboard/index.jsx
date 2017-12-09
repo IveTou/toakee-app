@@ -11,7 +11,7 @@ if (process.env.BROWSER) {
 }
 
 const Dashboard = () => (
-  <DefaultLayout hideFooter miniVariant>
+  <DefaultLayout hideFooter>
     <div className="Dashboard">
       <Route path="/dashboard/:id?" component={DashboardMenu} />
       <DashboardContent />

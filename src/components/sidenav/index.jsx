@@ -34,37 +34,38 @@ import {
 if (process.env.BROWSER) {
   require('./style.scss');
 }
-const iconStyle = { left: '8px' };
+
+declare var category;
+
 const categories = [
   {
     title: 'Arte e Cultura',
-    icon: <ImageColorLens style={iconStyle} color={red800} />,
+    icon: <ImageColorLens color={red800} />,
   },
   {
     title: 'Baladas',
-    icon: <SocialWhatshot style={iconStyle} color={deepPurple500} />,
+    icon: <SocialWhatshot color={deepPurple500} />,
   },
   {
     title: 'Cursos',
-    icon: <MapsLocalLibrary style={iconStyle} color={lightBlue500} />,
+    icon: <MapsLocalLibrary color={lightBlue500} />,
   },
   {
     title: 'Esportes',
-    icon: <PlacesPool style={iconStyle} color={green500} />,
+    icon: <PlacesPool color={green500} />,
   },
   {
     title: 'Shows',
-    icon: <MapsLocalActivity style={iconStyle} color={yellow500} />,
+    icon: <MapsLocalActivity color={yellow500} />,
   },
   {
     title: 'Bares e Restaurantes',
-    icon: <MapsLocalBar style={iconStyle} color={deepOrange500} />,
+    icon: <MapsLocalBar color={deepOrange500} />,
   },
   {
     title: 'Promoções',
-    icon: <ActionLoyalty style={iconStyle} color={blueGrey500} />,
+    icon: <ActionLoyalty color={blueGrey500} />,
   },
-
 ];
 
 export class SideNav extends React.Component {
@@ -74,57 +75,39 @@ export class SideNav extends React.Component {
   }
 
   onItemClick(e, item) {
-    this.props.history.push(`/search?q=${item.props.primaryText}`);
-  }
-
-  home() {
-    this.props.history.push('/');
-  }
-
-  dashboard() {
-    this.props.history.push('/dashboard');
-  }
-
-  renderRows(data) {
-    return data.map(row => (
-      <MenuItem
-        key={row.title}
-        primaryText={row.title}
-        leftIcon={row.icon}
-      />
-    ));
+    if (item.props.name) {
+      this.props.history.push(`/search?q=${item.props.name}`);
+    }
   }
 
   render() {
-    const { mini, open } = this.props;
-    const isMini = mini && !open;
-    const classes = classNames(
-      'SideNav',
-      { 'SideNav--mini': mini, 'SideNav--mini--closed': isMini },
-    );
+    const { open } = this.props;
+    const classes = classNames('SideNav', { 'SideNav--open': open });
 
     return (
-      <Drawer
-        zDepth={0}
-        className={classes}
-        width={isMini ? 64 : 256}
-        open={!mini ? open : undefined}
-        containerStyle={{ marginTop: '72px' }}
-      >
+      <Drawer zDepth={0} className={classes} open={open}>
         <Menu onItemTouchTap={this.onItemClick}>
           <MenuItem
-            onClick={this.home}
+            href={'/landing'}
             primaryText="Início"
             leftIcon={<ActionHome />}
           />
           <MenuItem
+            href={'/dashboard'}
             onClick={this.dashboard}
             primaryText="Meus Eventos"
             leftIcon={<ActionEvent />}
           />
-          <Divider className="divider" />
-          <Subheader className="subheader">Categorias</Subheader>
-          {this.renderRows(categories)}
+          <Divider className="SideNav-divider" />
+          <Subheader className="SideNav-subheader">Categorias</Subheader>
+          <For each="category" of={categories}>
+            <MenuItem
+              key={category.title}
+              primaryText={category.title}
+              leftIcon={category.icon}
+              name={category.title}
+            />
+          </For>
         </Menu>
       </Drawer>
     );
@@ -133,7 +116,6 @@ export class SideNav extends React.Component {
 
 SideNav.propTypes = {
   open: PropTypes.bool,
-  mini: PropTypes.bool,
   history: PropTypes.object,
 };
 

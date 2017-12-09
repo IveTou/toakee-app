@@ -27,20 +27,20 @@ export class DefaultLayout extends React.Component {
     const {
       children,
       hideFooter,
-      miniVariant,
       title = 'Descubra o que fazer em Salvador',
     } = this.props;
-    const navOpen = this.state.navOpen;
-    const classes = classNames('main', { 'main--mini': navOpen });
+    const { navOpen } = this.state;
+    const classes = classNames('main', { 'main--compressed': navOpen });
+    const small = !this.props.deviceInfo.is('desktop');
 
     return (
       <div className="DefaultLayout">
         <ReactTitle title={`Toakee - ${title}`} />
-        <TopBar toggle={this.toggleNav} deviceInfo={this.props.deviceInfo} />
-        <SideNav open={navOpen} mini={miniVariant} />
+        <TopBar onToggle={this.toggleNav} small={small} />
+        <SideNav open={navOpen} />
         <main className={classes}>{children}</main>
         <If condition={!hideFooter}>
-          <Footer mini={navOpen} />
+          <Footer compressed={navOpen} />
         </If>
       </div>
     );
@@ -55,7 +55,6 @@ DefaultLayout.propTypes = {
   deviceInfo: PropTypes.object,
   hideFooter: PropTypes.bool,
   title: PropTypes.string,
-  miniVariant: PropTypes.bool,
 };
 
 export default withInfo(DefaultLayout, ['deviceInfo']);

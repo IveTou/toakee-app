@@ -10,7 +10,7 @@ if (process.env.BROWSER) {
 }
 
 const EventModeration = () => (
-  <DefaultLayout miniVariant>
+  <DefaultLayout>
     <div className="EventModeration">
       <Header title="Moderar eventos" />
       <div className="EventModeration-content">
