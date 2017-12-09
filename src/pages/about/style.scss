@@ -58,7 +58,6 @@
 @include media("<tablet") {
   .About {
     &.column {
-      margin: 0 !important;
       width: auto;
     }
 
