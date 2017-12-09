@@ -90,7 +90,7 @@ export class TopBar extends React.Component {
 
     return (
       <Toolbar className="TopBar">
-        <ToolbarGroup className="ToBar-nav" firstChild>
+        <ToolbarGroup className="TopBar-nav" firstChild>
           <IconButton
             className="TopBar-nav-button"
             onClick={onToggle}

@@ -1,8 +1,6 @@
 import React, { PropTypes } from 'react';
 import autoBind from 'react-autobind';
 import classNames from 'classnames';
-import { withApollo } from 'react-apollo';
-import { withRouter } from 'react-router';
 import {
   Drawer,
   Divider,
@@ -26,7 +24,7 @@ import {
   deepPurple500,
   lightBlue500,
   green500,
-  yellow500,
+  amber500,
   deepOrange500,
   blueGrey500,
 } from 'material-ui/styles/colors';
@@ -34,8 +32,6 @@ import {
 if (process.env.BROWSER) {
   require('./style.scss');
 }
-
-declare var category;
 
 const categories = [
   {
@@ -56,7 +52,7 @@ const categories = [
   },
   {
     title: 'Shows',
-    icon: <MapsLocalActivity color={yellow500} />,
+    icon: <MapsLocalActivity color={amber500} />,
   },
   {
     title: 'Bares e Restaurantes',
@@ -74,27 +70,21 @@ export class SideNav extends React.Component {
     autoBind(this);
   }
 
-  onItemClick(e, item) {
-    if (item.props.name) {
-      this.props.history.push(`/search?q=${item.props.name}`);
-    }
-  }
-
   render() {
+    declare var category;
     const { open } = this.props;
     const classes = classNames('SideNav', { 'SideNav--open': open });
 
     return (
       <Drawer zDepth={0} className={classes} open={open}>
-        <Menu onItemTouchTap={this.onItemClick}>
+        <Menu>
           <MenuItem
-            href={'/landing'}
+            href={"/landing"}
             primaryText="Início"
             leftIcon={<ActionHome />}
           />
           <MenuItem
-            href={'/dashboard'}
-            onClick={this.dashboard}
+            href={"/dashboard"}
             primaryText="Meus Eventos"
             leftIcon={<ActionEvent />}
           />
@@ -103,6 +93,7 @@ export class SideNav extends React.Component {
           <For each="category" of={categories}>
             <MenuItem
               key={category.title}
+              href={'/search?q=${item.props.name}'}
               primaryText={category.title}
               leftIcon={category.icon}
               name={category.title}
@@ -116,7 +107,6 @@ export class SideNav extends React.Component {
 
 SideNav.propTypes = {
   open: PropTypes.bool,
-  history: PropTypes.object,
 };
 
-export default withApollo(withRouter(SideNav));
+export default SideNav;

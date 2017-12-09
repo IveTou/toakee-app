@@ -27,7 +27,8 @@
 
     .SideNav {
       &-divider {
-        width: $spacer*32;
+        width: $spacer*25;
+        margin: $spacer $spacer*3 !important;
       }
 
       &-subheader {
