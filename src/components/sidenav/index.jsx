@@ -79,12 +79,12 @@ export class SideNav extends React.Component {
       <Drawer zDepth={0} className={classes} open={open}>
         <Menu>
           <MenuItem
-            href={"/landing"}
+            href="/landing"
             primaryText="Início"
             leftIcon={<ActionHome />}
           />
           <MenuItem
-            href={"/dashboard"}
+            href="/dashboard"
             primaryText="Meus Eventos"
             leftIcon={<ActionEvent />}
           />
@@ -93,7 +93,7 @@ export class SideNav extends React.Component {
           <For each="category" of={categories}>
             <MenuItem
               key={category.title}
-              href={'/search?q=${item.props.name}'}
+              href={`/search?q=${category.title}`}
               primaryText={category.title}
               leftIcon={category.icon}
               name={category.title}
