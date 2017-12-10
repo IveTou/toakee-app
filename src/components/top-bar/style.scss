@@ -11,7 +11,7 @@
   z-index: $topbar-zindex;
 
   &-search {
-    width: $spacer*25;
+    margin: 0 $spacer*2;
 
     > div {
       width: 100%;
@@ -19,6 +19,12 @@
 
       > div {
         margin: 0 $spacer !important;
+
+        > div > div > div {
+          height: 100%;
+          line-height: $spacer*6;
+          bottom: 0 !important;
+        }
       }
     }
   }
