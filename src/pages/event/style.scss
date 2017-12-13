@@ -68,8 +68,20 @@
       margin: $spacer $spacer $spacer 0;
       width: 100%;
 
+      > div {
+        padding-bottom: 0 !important;
+      }
+
       &-title {
-        background-color: $gray100;
+        background-color: $deepOrange500;
+
+        span {
+          color: $white !important;
+        }
+
+        svg {
+          color: $white !important;
+        }
       }
 
       &-info {

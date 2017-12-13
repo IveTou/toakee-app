@@ -169,12 +169,14 @@ export class EventPage extends React.Component {
                   <If condition={start}>
                     <List className="EventPage-main-details-info">
                       <ListItem
+                        disabled
                         primaryText={fullDateFormat(start)}
                         leftIcon={<ActionDateRange />}
                       />
                     </List>
                     <List className="EventPage-main-details-info">
                       <ListItem
+                        disabled
                         primaryText={timeFormat(start)}
                         leftIcon={<ActionSchedule />}
                       />
