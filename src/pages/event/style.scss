@@ -5,12 +5,12 @@
 .EventPage {
   display: table;
   width: 100%;
-  padding: 0 $spacer*4 $spacer*4;
+  padding: 0 0 $spacer*4;
 
   &-main {
-    display: table-cell;
+    display: block;
     width: 100%;
-    margin: $spacer;
+    margin: 0;
 
     &-flyer {
       height: $spacer*50;
@@ -62,12 +62,54 @@
         }
       }
     }
+
+    &-details {
+      display: inline-block;
+      margin: $spacer $spacer $spacer 0;
+      width: 100%;
+
+      &-title {
+        background-color: $gray100;
+      }
+
+      &-info {
+        padding: 0 !important;
+      }
+    }
+
+    &-prices {
+      display: table-cell;
+      min-width: $spacer*50;
+    }
+
+    &-description {
+      width: 100%;
+    }
   }
 
   &-related {
-    display: table-cell;
+    display: block;
     white-space: nowrap;
     min-width: $spacer*40;
     margin: $spacer;
+  }
+}
+
+@include media(">tablet") {
+  .EventPage {
+    padding: 0 $spacer*4 $spacer*4;
+
+    &-main {
+      display: table-cell;
+      margin: $spacer;
+
+      &-details {
+        min-width: $spacer*50;
+      }
+    }
+
+    &-related {
+      display: table-cell;
+    }
   }
 }

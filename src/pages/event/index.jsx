@@ -1,7 +1,16 @@
 import React, { PropTypes } from 'react';
 import { graphql, compose } from 'react-apollo';
-import { Card, CardMedia, CardText, CardTitle, FlatButton, Paper } from 'material-ui';
-import { SocialShare } from 'material-ui/svg-icons';
+import {
+  Card,
+  CardMedia,
+  CardText,
+  CardTitle,
+  FlatButton,
+  CardHeaderi,
+  List,
+  ListItem,
+} from 'material-ui';
+import { ActionDateRange, ActionSchedule, SocialShare } from 'material-ui/svg-icons';
 import { white } from 'material-ui/styles/colors';
 import classNames from 'classnames';
 import autoBind from 'react-autobind';
@@ -129,10 +138,7 @@ export class EventPage extends React.Component {
         <div className="EventPage">
           <div className="EventPage-main">
             <Card>
-              <CardMedia
-                className="EventPage-main-flyer"
-
-              >
+              <CardMedia className="EventPage-main-flyer">
                 <div
                   className="EventPage-main-flyer-bg"
                   style={{backgroundImage: `url(${flyer})`}}
@@ -152,6 +158,30 @@ export class EventPage extends React.Component {
                 </div>
               </CardMedia>
             </Card>
+              <Card className="EventPage-main-details" initiallyExpanded>
+                <CardTitle
+                  className="EventPage-main-details-title"
+                  title="Quando?"
+                  actAsExpander
+                  showExpandableButton
+                />
+                <CardText expandable={true}>
+                  <If condition={start}>
+                    <List className="EventPage-main-details-info">
+                      <ListItem
+                        primaryText={fullDateFormat(start)}
+                        leftIcon={<ActionDateRange />}
+                      />
+                    </List>
+                    <List className="EventPage-main-details-info">
+                      <ListItem
+                        primaryText={timeFormat(start)}
+                        leftIcon={<ActionSchedule />}
+                      />
+                    </List>
+                  </If>
+                </CardText>
+              </Card>
           </div>
           <div className="EventPage-related">
           </div>
