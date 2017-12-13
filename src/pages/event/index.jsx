@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import { graphql, compose } from 'react-apollo';
-import { Icon, Card, Image, Grid, Button } from 'semantic-ui-react';
-import Lightbox from 'react-images';
+import { Card, CardMedia, CardText, CardTitle, FlatButton, Paper } from 'material-ui';
+import { SocialShare } from 'material-ui/svg-icons';
+import { white } from 'material-ui/styles/colors';
 import classNames from 'classnames';
 import autoBind from 'react-autobind';
 import { Link } from 'react-router-dom';
@@ -125,154 +126,36 @@ export class EventPage extends React.Component {
 
     return (
       <DefaultLayout title={title}>
-        <Grid columns={2} className={classes}>
-          <Grid.Column className="EventPage-gallery" mobile={16} tablet={8} computer={8}>
-            <Lightbox
-              images={photos.map(({ src }) => ({ src }))}
-              isOpen={this.state.lightboxIsOpen}
-              onClickPrev={this.handleClickPrev}
-              onClickNext={this.handleClickNext}
-              onClose={this.closeLightBox}
-              currentImage={this.state.currentImage}
-            />
-            <If condition={loadGallery}>
-              <Image.Group size="small">
-                <For each="image" of={photos} index="index">
-                  <img
-                    className="ui image"
-                    style={{ backgroundImage: `url(${image.thumb})` }}
-                    onClick={() => this.openPhoto(index)}
-                  />
-                </For>
-              </Image.Group>
-            </If>
-          </Grid.Column>
-
-
-          <Grid.Column className="EventPage-details" mobile={16} tablet={8} computer={8}>
-            <If condition={status === 'PENDING'}>
-              <p className="EventPage-details-disclaimer">
-                Este evento ainda encontra-se pendente, favor aguardar moderação.
-              </p>
-            </If>
-            <div
-              itemScope
-              itemType="http://schema.org/Event"
-              itemRef="_startDate2 _image7 _description8 _offers9"
-              className="EventPage-details-header"
-            >
-              <h1 itemProp="name" className="EventPage-details-header-title">
-                {title}
-                <If condition={creator.id === viewer.id}>
-                  <Link to={`/evento/${id}/editar`}><Icon name="pencil" color="orange" /></Link>
-                </If>
-              </h1>
-              <span
-                itemProp="location"
-                itemScope
-                itemType="http://schema.org/Place"
-                itemRef="_address5"
-              >
-                <If condition={place}>
-                  <div itemProp="name" className="EventPage-details-header-place">
-                    {place.name}
-                  </div>
-                </If>
-              </span>
-            </div>
-
-            <div className="EventPage-details-info">
-              <If condition={start}>
-                <div className="EventPage-details-info-item">
-                  <Icon name="calendar" />
-                  <span>
-                    <meta id="_startDate2" itemProp="startDate" content={dateFormat(start)} />
-                    {fullDateFormat(start)}
-                  </span>
-                </div>
-                <div className="EventPage-details-info-item">
-                  <Icon name="clock" />
-                  <span>{timeFormat(start)}</span>
-                </div>
-              </If>
-              <If condition={place && place.address}>
-                <div
-                  id="_address5"
-                  itemProp="address"
-                  itemScope
-                  itemType="http://schema.org/PostalAddress"
-                  className="EventPage-details-info-item"
-                >
-                  <Icon name="marker" />
-                  <span itemProp="streetAddress">{place.address}</span>
-                </div>
-              </If>
-              <If condition={mappedPrice}>
-                <div
-                  id="_offers9"
-                  itemProp="offers"
-                  itemScope
-                  itemType="http://schema.org/Offer"
-                  className="EventPage-details-info-item"
-                >
-                  <Icon name="dollar" />
-                  <span itemProp="price">{mappedPrice}</span>
-                </div>
-              </If>
-              <div className="EventPage-details-info-social">
-                <Button
-                  onClick={this.fbShare}
-                  color="facebook"
-                  size="small"
-                  content="Compartilhar"
-                  icon="share"
-                />
-              </div>
-            </div>
-
-            <div className="EventPage-details-body">
-              <div className="EventPage-details-body-description">
-                <div className="EventPage-details-body-title">Descrição</div>
-                <div
-                  id="_description8"
-                  itemProp="description"
-                  className="EventPage-details-body-content"
-                  dangerouslySetInnerHTML={{ __html: description }}
-                />
-              </div>
-            </div>
-          </Grid.Column>
-
-          <Grid.Column className="EventPage-flyer" mobile={16} tablet={8} computer={8}>
-            <div
-              className="EventPage-flyer-bg"
-              style={{ backgroundImage: `url(${flyer})` }}
-            />
+        <div className="EventPage">
+          <div className="EventPage-main">
             <Card>
-              <If condition={flyer}>
-                <Image
-                  id="_image7"
-                  itemProp="image"
-                  alt={flyerAlt}
-                  className="EventPage-flyer-img"
-                  src={flyer}
+              <CardMedia
+                className="EventPage-main-flyer"
+
+              >
+                <div
+                  className="EventPage-main-flyer-bg"
+                  style={{backgroundImage: `url(${flyer})`}}
                 />
-              </If>
-              <If condition={viewer.isAdmin}>
-                <Button.Group>{this.renderModerationButtons()}</Button.Group>
-              </If>
-              <If condition={photos.length}>
-                <Button
-                  onClick={this.toggleGallery}
-                  size="large"
-                  color="orange"
-                >
-                  Ver {galleryIsVisible ? 'detalhes' : 'fotos'}
-                </Button>
-              </If>
+                <div className="EventPage-main-flyer-overlay">
+                  <div className="EventPage-main-flyer-overlay-title">
+                    <h1>{title}</h1>
+                  </div>
+                  <div className="EventPage-main-flyer-overlay-actions">
+                    <FlatButton
+                      label="compartilhar"
+                      labelPosition="before"
+                      primary={true}
+                      icon={<SocialShare color={white} />}
+                    />
+                  </div>
+                </div>
+              </CardMedia>
             </Card>
-          </Grid.Column>
-        </Grid>
+          </div>
+          <div className="EventPage-related">
+          </div>
+        </div>
       </DefaultLayout>
     );
   }
