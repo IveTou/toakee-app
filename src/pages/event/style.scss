@@ -64,16 +64,19 @@
     }
 
     &-details {
-      display: inline-block;
-      margin: $spacer $spacer $spacer 0;
+      margin: $spacer 0 $spacer 0;
       width: 100%;
+
+      * {
+        line-height: $spacer*3;
+      }
 
       > div {
         padding-bottom: 0 !important;
       }
 
       &-title {
-        background-color: $deepOrange500;
+        background-color: $blueGrey500;
 
         span {
           color: $white !important;
@@ -86,23 +89,80 @@
 
       &-info {
         padding: 0 !important;
+
+        > div > div {
+          padding: $spacer $spacer*2 $spacer*2 $spacer*9 !important;
+        }
+
+        span {
+          float: right;
+        }
       }
     }
 
     &-prices {
-      display: table-cell;
-      min-width: $spacer*50;
+      margin: 0 0 $spacer 0;
+      display: inline-block;
+      width: 100%;
+
+      * {
+        line-height: $spacer;
+      }
+
+      > div {
+        padding-bottom: 0 !important;
+      }
+
+      &-title {
+        background-color: $lightBlue500;
+
+        span {
+          color: $white !important;
+        }
+
+        svg {
+          color: $white !important;
+        }
+      }
     }
 
     &-description {
+      margin: 0 0 $spacer 0;
       width: 100%;
+      display: inline-block;
+
+      p {
+        font-size: 16px !important;
+      }
+
+      > div {
+        padding-bottom: 0 !important;
+      }
+
+
+      &-title {
+        background-color: $amber500;
+
+        span {
+          color: $white !important;
+        }
+
+        svg {
+          color: $white !important;
+        }
+      }
+
+      &-info {
+        padding: 0 $spacer;
+        font-size: 16px;
+      }
     }
   }
 
   &-related {
     display: block;
     white-space: nowrap;
-    min-width: $spacer*40;
+    min-width: $spacer*30;
     margin: $spacer;
   }
 }
@@ -112,11 +172,19 @@
     padding: 0 $spacer*4 $spacer*4;
 
     &-main {
-      display: table-cell;
       margin: $spacer;
 
       &-details {
-        min-width: $spacer*50;
+        margin: $spacer $spacer $spacer 0;
+        min-width: $spacer*40;
+        float: left;
+        width: 58%;
+      }
+
+      &-prices {
+        margin: $spacer 0 $spacer $spacer;
+        width: 38%;
+        float: right;
       }
     }
 

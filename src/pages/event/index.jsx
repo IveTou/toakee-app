@@ -6,7 +6,6 @@ import {
   CardText,
   CardTitle,
   FlatButton,
-  CardHeaderi,
   List,
   ListItem,
 } from 'material-ui';
@@ -158,33 +157,74 @@ export class EventPage extends React.Component {
                 </div>
               </CardMedia>
             </Card>
-              <Card className="EventPage-main-details" initiallyExpanded>
-                <CardTitle
-                  className="EventPage-main-details-title"
-                  title="Quando?"
-                  actAsExpander
-                  showExpandableButton
-                />
-                <CardText expandable={true}>
-                  <If condition={start}>
-                    <List className="EventPage-main-details-info">
+            <Card className="EventPage-main-details" initiallyExpanded>
+              <CardTitle
+                className="EventPage-main-details-title"
+                title="Detalhes"
+                actAsExpander
+                showExpandableButton
+              />
+              <CardText expandable={true}>
+                <If condition={start}>
+                  <List className="EventPage-main-details-info">
+                    <ListItem
+                      disabled
+                      primaryText={fullDateFormat(start)}
+                      leftIcon={<ActionDateRange />}
+                    />
+                  </List>
+                  <List className="EventPage-main-details-info">
+                    <ListItem
+                      disabled
+                      primaryText={timeFormat(start)}
+                      leftIcon={<ActionSchedule />}
+                    />
+                    <If condition={place && place.address}>
                       <ListItem
                         disabled
-                        primaryText={fullDateFormat(start)}
+                        primaryText={place.address}
                         leftIcon={<ActionDateRange />}
                       />
-                    </List>
-                    <List className="EventPage-main-details-info">
-                      <ListItem
-                        disabled
-                        primaryText={timeFormat(start)}
-                        leftIcon={<ActionSchedule />}
-                      />
-                    </List>
-                  </If>
-                </CardText>
-              </Card>
+                      <span><FlatButton label="Ver Mapa" secondary /></span>
+                    </If>
+                  </List>
+                </If>
+              </CardText>
+            </Card>
+            <Card className="EventPage-main-prices" initiallyExpanded>
+              <CardTitle
+                className="EventPage-main-prices-title"
+                title="Preços"
+                actAsExpander
+                showExpandableButton
+              />
+              <CardText expandable={true}>
+                <If condition={mappedPrice}>
+                  <List className="EventPage-main-prices-info">
+                    <ListItem
+                      disabled
+                      primaryText={mappedPrice}
+                    />
+                  </List>
+                </If>
+              </CardText>
+            </Card>
+            <Card className="EventPage-main-description" initiallyExpanded>
+              <CardTitle
+                className="EventPage-main-description-title"
+                title="Descrição"
+                actAsExpander
+                showExpandableButton
+              />
+              <CardText expandable={true}>
+                <div
+                  className="EventPage-main-description-info"
+                  dangerouslySetInnerHTML={{ __html: description }}
+                />
+              </CardText>
+            </Card>
           </div>
+
           <div className="EventPage-related">
           </div>
         </div>
