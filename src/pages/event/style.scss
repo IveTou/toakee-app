@@ -66,6 +66,7 @@
     &-details {
       margin: $spacer 0 $spacer 0;
       width: 100%;
+      border-left: 4px solid $deepOrange500;
 
       * {
         line-height: $spacer*3;
@@ -76,14 +77,13 @@
       }
 
       &-title {
-        background-color: $blueGrey500;
-
+        border-left: 4px solid $deepOrange500;
         span {
-          color: $white !important;
+          font-size: 18px !important;
         }
 
-        svg {
-          color: $white !important;
+        + div {
+          padding: 0 $spacer $spacer !important;
         }
       }
 
@@ -94,19 +94,20 @@
           padding: $spacer $spacer*2 $spacer*2 $spacer*9 !important;
         }
 
-        span {
-          float: right;
+        &-button {
+          width: 100%;
+          text-align: right;
         }
       }
     }
 
     &-prices {
       margin: 0 0 $spacer 0;
-      display: inline-block;
       width: 100%;
+      border-left: 4px solid $lightBlue500;
 
       * {
-        line-height: $spacer;
+        line-height: $spacer*3;
       }
 
       > div {
@@ -114,14 +115,19 @@
       }
 
       &-title {
-        background-color: $lightBlue500;
-
+        border-left: 4px solid $lightBlue500;
         span {
-          color: $white !important;
+          font-size: 18px !important;
         }
 
-        svg {
-          color: $white !important;
+        + div {
+          padding: 0 $spacer $spacer !important;
+        }
+      }
+
+      &-info {
+        > div > div {
+          padding: 0 $spacer*2 $spacer !important;
         }
       }
     }
@@ -130,6 +136,7 @@
       margin: 0 0 $spacer 0;
       width: 100%;
       display: inline-block;
+      border-left: 4px solid $amber500;
 
       p {
         font-size: 16px !important;
@@ -141,14 +148,13 @@
 
 
       &-title {
-        background-color: $amber500;
-
+        border-left: 4px solid $amber500;
         span {
-          color: $white !important;
+          font-size: 18px !important;
         }
 
-        svg {
-          color: $white !important;
+        + div {
+          padding: 0 $spacer $spacer*3 !important;
         }
       }
 
@@ -162,7 +168,7 @@
   &-related {
     display: block;
     white-space: nowrap;
-    min-width: $spacer*30;
+    min-width: $spacer*50;
     margin: $spacer;
   }
 }
@@ -173,18 +179,29 @@
 
     &-main {
       margin: $spacer;
+      position: relative;
 
       &-details {
         margin: $spacer $spacer $spacer 0;
         min-width: $spacer*40;
         float: left;
-        width: 58%;
+        width: 68%;
       }
 
       &-prices {
         margin: $spacer 0 $spacer $spacer;
-        width: 38%;
+        width: 28%;
         float: right;
+        position: absolute;
+        right: 0;
+
+        &-info {
+          min-height: $spacer*22;
+        }
+      }
+
+      &-description {
+        display: table;
       }
     }
 

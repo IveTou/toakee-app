@@ -123,21 +123,22 @@ export class EventPage extends React.Component {
       status,
     } = event || {};
     const flyerAlt = `Flyer do ${title || 'evento'}`;
-    const mappedPrice = price || prices.length === 1
-      ? price || prices[0].value
-      : prices.map(p => `${p.description}: ${p.value}`).join(' | ');
+    const mappedPrice = price || prices.length === 1 ? price || prices[0].value : prices;
 
     const classes = classNames('EventPage', { 'EventPage--viewGallery': galleryIsVisible });
 
     declare var image;
     declare var index;
+    declare var priceItem;
+
+    console.log(price);
 
     return (
       <DefaultLayout title={title}>
         <div className="EventPage">
           <div className="EventPage-main">
             <Card>
-              <CardMedia className="EventPage-main-flyer">
+              <CardMedia className="EventPage-main-flyer" alt={flyerAlt}>
                 <div
                   className="EventPage-main-flyer-bg"
                   style={{backgroundImage: `url(${flyer})`}}
@@ -164,31 +165,31 @@ export class EventPage extends React.Component {
                 actAsExpander
                 showExpandableButton
               />
-              <CardText expandable={true}>
-                <If condition={start}>
-                  <List className="EventPage-main-details-info">
+              <CardText expandable>
+                <List className="EventPage-main-details-info">
+                  <If condition={start}>
                     <ListItem
                       disabled
                       primaryText={fullDateFormat(start)}
                       leftIcon={<ActionDateRange />}
                     />
-                  </List>
-                  <List className="EventPage-main-details-info">
                     <ListItem
                       disabled
                       primaryText={timeFormat(start)}
                       leftIcon={<ActionSchedule />}
                     />
-                    <If condition={place && place.address}>
-                      <ListItem
-                        disabled
-                        primaryText={place.address}
-                        leftIcon={<ActionDateRange />}
-                      />
-                      <span><FlatButton label="Ver Mapa" secondary /></span>
-                    </If>
-                  </List>
-                </If>
+                  </If>
+                  <If condition={place && place.address}>
+                    <ListItem
+                      disabled
+                      primaryText={place.address}
+                      leftIcon={<ActionDateRange />}
+                    />
+                    <div className="EventPage-main-details-info-button">
+                      <FlatButton label="Ver Mapa" secondary />
+                    </div>
+                  </If>
+                </List>
               </CardText>
             </Card>
             <Card className="EventPage-main-prices" initiallyExpanded>
@@ -201,10 +202,14 @@ export class EventPage extends React.Component {
               <CardText expandable={true}>
                 <If condition={mappedPrice}>
                   <List className="EventPage-main-prices-info">
-                    <ListItem
-                      disabled
-                      primaryText={mappedPrice}
-                    />
+                    <For each="priceItem" of={mappedPrice}>
+                      <ListItem
+                        disabled
+                        key={`${priceItem.description}${priceItem.value}`}
+                        primaryText={`${priceItem.description}`}
+                        secondaryText={`R$ ${priceItem.value}`}
+                      />
+                    </For>
                   </List>
                 </If>
               </CardText>
