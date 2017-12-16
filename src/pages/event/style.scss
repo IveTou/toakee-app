@@ -104,6 +104,7 @@
     &-prices {
       margin: 0 0 $spacer 0;
       width: 100%;
+      min-width: $spacer*25;
       border-left: 4px solid $lightBlue500;
 
       * {
@@ -161,6 +162,14 @@
       &-info {
         padding: 0 $spacer;
         font-size: 16px;
+        text-align: left;
+      }
+    }
+
+    &-map {
+      border-left: 4px solid $deepPurple500;
+      &-title {
+        border-left: 4px solid $deepPurple500;
       }
     }
   }
@@ -202,6 +211,7 @@
 
       &-description {
         display: table;
+        padding-right: 28%;
       }
     }
 

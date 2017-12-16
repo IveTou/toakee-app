@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import  Wrapper from '~/src/components/map';
 import { graphql, compose } from 'react-apollo';
 import {
   Card,
@@ -113,6 +114,7 @@ export class EventPage extends React.Component {
       id,
       title,
       description,
+      directions,
       place,
       start,
       flyer,
@@ -130,8 +132,6 @@ export class EventPage extends React.Component {
     declare var image;
     declare var index;
     declare var priceItem;
-
-    console.log(price);
 
     return (
       <DefaultLayout title={title}>
@@ -200,8 +200,9 @@ export class EventPage extends React.Component {
                 showExpandableButton
               />
               <CardText expandable={true}>
-                <If condition={mappedPrice}>
-                  <List className="EventPage-main-prices-info">
+                <List className="EventPage-main-prices-info">
+                <Choose>
+                  <When condition={Array.isArray(mappedPrice)}>
                     <For each="priceItem" of={mappedPrice}>
                       <ListItem
                         disabled
@@ -210,8 +211,12 @@ export class EventPage extends React.Component {
                         secondaryText={`R$ ${priceItem.value}`}
                       />
                     </For>
-                  </List>
-                </If>
+                  </When>
+                  <Otherwise>
+                    <ListItem disabled primaryText={mappedPrice} />
+                  </Otherwise>
+                  </Choose>
+                </List>
               </CardText>
             </Card>
             <Card className="EventPage-main-description" initiallyExpanded>
@@ -227,6 +232,19 @@ export class EventPage extends React.Component {
                   dangerouslySetInnerHTML={{ __html: description }}
                 />
               </CardText>
+            </Card>
+            <Card className="EventPage-main-map" initiallyExpanded>
+              <CardTitle
+                className="EventPage-main-map-title"
+                title="Mapa"
+                actAsExpander
+                showExpandableButton
+              />
+              <If condition={!directions}>
+                <CardText expandable={true}>
+                  <Wrapper center={directions}/>
+                </CardText>
+              </If>
             </Card>
           </div>
 
