@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import  Wrapper from '~/src/components/map';
+import { Link, Element } from 'react-scroll';
 import { graphql, compose } from 'react-apollo';
 import {
   Avatar,
@@ -9,6 +9,7 @@ import {
   CardText,
   CardTitle,
   FlatButton,
+  FloatingActionButton,
   List,
   ListItem,
 } from 'material-ui';
@@ -26,9 +27,9 @@ import {
 import { amber500, deepOrange500, green500, lightBlue500, white } from 'material-ui/styles/colors';
 import classNames from 'classnames';
 import autoBind from 'react-autobind';
-import { Link } from 'react-router-dom';
 
 import DefaultLayout from '~/src/layouts/default';
+import  Wrapper from '~/src/components/map';
 import { fullDateFormat, timeFormat, dateFormat } from '~/src/utils/moment';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import { withInfo } from '~/src/hocs';
@@ -160,12 +161,9 @@ export class EventPage extends React.Component {
                     <h1>{title}</h1>
                   </div>
                   <div className="EventPage-main-flyer-overlay-actions">
-                    <FlatButton
-                      label="compartilhar"
-                      labelPosition="before"
-                      primary={true}
-                      icon={<SocialShare color={white} />}
-                    />
+                    <FloatingActionButton title="Compartilhar" onClick={this.fbShare} secondary>
+                      <SocialShare color={white} />
+                    </FloatingActionButton>
                   </div>
                 </div>
               </CardMedia>
@@ -201,7 +199,11 @@ export class EventPage extends React.Component {
                       leftIcon={<MapsPlace />}
                     />
                     <div className="EventPage-main-details-info-button">
-                      <FlatButton label="Ver Mapa" secondary />
+                      <FlatButton
+                        label="Ver Mapa"
+                        secondary
+                        containerElement={<Link to="map" smooth offset={-200} duration={500} />}
+                      />
                     </div>
                   </If>
                 </List>
@@ -254,7 +256,7 @@ export class EventPage extends React.Component {
                 />
               </CardText>
             </Card>
-            <Card className="EventPage-main-map" initiallyExpanded>
+            <Card className="EventPage-main-map" name="map" initiallyExpanded>
               <CardHeader
                 className="EventPage-main-map-title"
                 title="Mapa"
@@ -266,7 +268,9 @@ export class EventPage extends React.Component {
               />
               <If condition={!directions}>
                 <CardText expandable={true}>
-                  <Wrapper center={directions}/>
+                  <Element name="map">
+                    <Wrapper center={directions}/>
+                  </Element>
                 </CardText>
               </If>
             </Card>

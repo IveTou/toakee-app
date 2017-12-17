@@ -50,15 +50,7 @@
 
         &-actions {
           float: right;
-
-          button {
-            color: $white !important;
-
-            svg {
-              width: $spacer*4 !important;
-              height: $spacer*4 !important;
-            }
-          }
+          margin-right: $spacer*3;
         }
       }
     }
