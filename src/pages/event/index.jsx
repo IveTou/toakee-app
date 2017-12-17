@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardMedia,
   CardText,
-  CardTitle,
   FlatButton,
   FloatingActionButton,
   List,
@@ -19,7 +18,6 @@ import {
   ActionDescription,
   ActionSchedule,
   EditorAttachMoney,
-  NotificationEventNote,
   MapsPlace,
   MapsMap,
   SocialShare,
@@ -29,7 +27,7 @@ import classNames from 'classnames';
 import autoBind from 'react-autobind';
 
 import DefaultLayout from '~/src/layouts/default';
-import  Wrapper from '~/src/components/map';
+import Wrapper from '~/src/components/map';
 import { fullDateFormat, timeFormat, dateFormat } from '~/src/utils/moment';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import { withInfo } from '~/src/hocs';
@@ -108,14 +106,14 @@ export class EventPage extends React.Component {
     ];
 
     return buttonProps.map(({ label, color, status }) => (
-      <Button
+      <FlatButton
         key={label}
         color={color}
         basic={status !== eventStatus}
         onClick={() => setStatus(status)}
       >
         {label}
-      </Button>
+      </FlatButton>
     ));
   }
 
@@ -154,7 +152,7 @@ export class EventPage extends React.Component {
               <CardMedia className="EventPage-main-flyer" alt={flyerAlt}>
                 <div
                   className="EventPage-main-flyer-bg"
-                  style={{backgroundImage: `url(${flyer})`}}
+                  style={{ backgroundImage: `url(${flyer})` }}
                 />
                 <div className="EventPage-main-flyer-overlay">
                   <div className="EventPage-main-flyer-overlay-title">
@@ -219,22 +217,22 @@ export class EventPage extends React.Component {
                   <Avatar icon={<EditorAttachMoney />} backgroundColor={lightBlue500} size={30} />
                 }
               />
-              <CardText expandable={true}>
+              <CardText expandable>
                 <List className="EventPage-main-prices-info">
-                <Choose>
-                  <When condition={Array.isArray(mappedPrice)}>
-                    <For each="priceItem" of={mappedPrice}>
-                      <ListItem
-                        disabled
-                        key={`${priceItem.description}${priceItem.value}`}
-                        primaryText={`${priceItem.description}`}
-                        secondaryText={`R$ ${priceItem.value}`}
-                      />
-                    </For>
-                  </When>
-                  <Otherwise>
-                    <ListItem disabled primaryText={mappedPrice} />
-                  </Otherwise>
+                  <Choose>
+                    <When condition={Array.isArray(mappedPrice)}>
+                      <For each="priceItem" of={mappedPrice}>
+                        <ListItem
+                          disabled
+                          key={`${priceItem.description}${priceItem.value}`}
+                          primaryText={`${priceItem.description}`}
+                          secondaryText={`R$ ${priceItem.value}`}
+                        />
+                      </For>
+                    </When>
+                    <Otherwise>
+                      <ListItem disabled primaryText={mappedPrice} />
+                    </Otherwise>
                   </Choose>
                 </List>
               </CardText>
@@ -249,7 +247,7 @@ export class EventPage extends React.Component {
                   <Avatar icon={<ActionDescription />} backgroundColor={amber500} size={30} />
                 }
               />
-              <CardText expandable={true}>
+              <CardText expandable>
                 <div
                   className="EventPage-main-description-info"
                   dangerouslySetInnerHTML={{ __html: description }}
@@ -267,17 +265,16 @@ export class EventPage extends React.Component {
                 }
               />
               <If condition={!directions}>
-                <CardText expandable={true}>
+                <CardText expandable>
                   <Element name="map">
-                    <Wrapper center={directions}/>
+                    <Wrapper center={directions} />
                   </Element>
                 </CardText>
               </If>
             </Card>
           </div>
 
-          <div className="EventPage-related">
-          </div>
+          <div className="EventPage-related" />
         </div>
       </DefaultLayout>
     );
