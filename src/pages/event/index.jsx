@@ -1,12 +1,33 @@
 import React, { PropTypes } from 'react';
+import { Link, Element } from 'react-scroll';
 import { graphql, compose } from 'react-apollo';
-import { Icon, Card, Image, Grid, Button } from 'semantic-ui-react';
-import Lightbox from 'react-images';
+import {
+  Avatar,
+  Card,
+  CardHeader,
+  CardMedia,
+  CardText,
+  FlatButton,
+  FloatingActionButton,
+  List,
+  ListItem,
+} from 'material-ui';
+import {
+  ActionEvent,
+  ActionDateRange,
+  ActionDescription,
+  ActionSchedule,
+  EditorAttachMoney,
+  MapsPlace,
+  MapsMap,
+  SocialShare,
+} from 'material-ui/svg-icons';
+import { amber500, deepOrange500, green500, lightBlue500, white } from 'material-ui/styles/colors';
 import classNames from 'classnames';
 import autoBind from 'react-autobind';
-import { Link } from 'react-router-dom';
 
 import DefaultLayout from '~/src/layouts/default';
+import Wrapper from '~/src/components/map';
 import { fullDateFormat, timeFormat, dateFormat } from '~/src/utils/moment';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import { withInfo } from '~/src/hocs';
@@ -85,14 +106,14 @@ export class EventPage extends React.Component {
     ];
 
     return buttonProps.map(({ label, color, status }) => (
-      <Button
+      <FlatButton
         key={label}
         color={color}
         basic={status !== eventStatus}
         onClick={() => setStatus(status)}
       >
         {label}
-      </Button>
+      </FlatButton>
     ));
   }
 
@@ -104,6 +125,7 @@ export class EventPage extends React.Component {
       id,
       title,
       description,
+      directions,
       place,
       start,
       flyer,
@@ -114,165 +136,146 @@ export class EventPage extends React.Component {
       status,
     } = event || {};
     const flyerAlt = `Flyer do ${title || 'evento'}`;
-    const mappedPrice = price || prices.length === 1
-      ? price || prices[0].value
-      : prices.map(p => `${p.description}: ${p.value}`).join(' | ');
-
+    const mappedPrice = price || prices.length === 1 ? price || prices[0].value : prices;
+    const isMobile = !this.props.deviceInfo.is('desktop');
     const classes = classNames('EventPage', { 'EventPage--viewGallery': galleryIsVisible });
 
     declare var image;
     declare var index;
+    declare var priceItem;
 
     return (
       <DefaultLayout title={title}>
-        <Grid columns={2} className={classes}>
-          <Grid.Column className="EventPage-gallery" mobile={16} tablet={8} computer={8}>
-            <Lightbox
-              images={photos.map(({ src }) => ({ src }))}
-              isOpen={this.state.lightboxIsOpen}
-              onClickPrev={this.handleClickPrev}
-              onClickNext={this.handleClickNext}
-              onClose={this.closeLightBox}
-              currentImage={this.state.currentImage}
-            />
-            <If condition={loadGallery}>
-              <Image.Group size="small">
-                <For each="image" of={photos} index="index">
-                  <img
-                    className="ui image"
-                    style={{ backgroundImage: `url(${image.thumb})` }}
-                    onClick={() => this.openPhoto(index)}
-                  />
-                </For>
-              </Image.Group>
-            </If>
-          </Grid.Column>
-
-
-          <Grid.Column className="EventPage-details" mobile={16} tablet={8} computer={8}>
-            <If condition={status === 'PENDING'}>
-              <p className="EventPage-details-disclaimer">
-                Este evento ainda encontra-se pendente, favor aguardar moderação.
-              </p>
-            </If>
-            <div
-              itemScope
-              itemType="http://schema.org/Event"
-              itemRef="_startDate2 _image7 _description8 _offers9"
-              className="EventPage-details-header"
-            >
-              <h1 itemProp="name" className="EventPage-details-header-title">
-                {title}
-                <If condition={creator.id === viewer.id}>
-                  <Link to={`/evento/${id}/editar`}><Icon name="pencil" color="orange" /></Link>
-                </If>
-              </h1>
-              <span
-                itemProp="location"
-                itemScope
-                itemType="http://schema.org/Place"
-                itemRef="_address5"
-              >
-                <If condition={place}>
-                  <div itemProp="name" className="EventPage-details-header-place">
-                    {place.name}
-                  </div>
-                </If>
-              </span>
-            </div>
-
-            <div className="EventPage-details-info">
-              <If condition={start}>
-                <div className="EventPage-details-info-item">
-                  <Icon name="calendar" />
-                  <span>
-                    <meta id="_startDate2" itemProp="startDate" content={dateFormat(start)} />
-                    {fullDateFormat(start)}
-                  </span>
-                </div>
-                <div className="EventPage-details-info-item">
-                  <Icon name="clock" />
-                  <span>{timeFormat(start)}</span>
-                </div>
-              </If>
-              <If condition={place && place.address}>
+        <div className="EventPage">
+          <div className="EventPage-main">
+            <Card>
+              <CardMedia className="EventPage-main-flyer" alt={flyerAlt}>
                 <div
-                  id="_address5"
-                  itemProp="address"
-                  itemScope
-                  itemType="http://schema.org/PostalAddress"
-                  className="EventPage-details-info-item"
-                >
-                  <Icon name="marker" />
-                  <span itemProp="streetAddress">{place.address}</span>
-                </div>
-              </If>
-              <If condition={mappedPrice}>
-                <div
-                  id="_offers9"
-                  itemProp="offers"
-                  itemScope
-                  itemType="http://schema.org/Offer"
-                  className="EventPage-details-info-item"
-                >
-                  <Icon name="dollar" />
-                  <span itemProp="price">{mappedPrice}</span>
-                </div>
-              </If>
-              <div className="EventPage-details-info-social">
-                <Button
-                  onClick={this.fbShare}
-                  color="facebook"
-                  size="small"
-                  content="Compartilhar"
-                  icon="share"
+                  className="EventPage-main-flyer-bg"
+                  style={{ backgroundImage: `url(${flyer})` }}
                 />
-              </div>
-            </div>
-
-            <div className="EventPage-details-body">
-              <div className="EventPage-details-body-description">
-                <div className="EventPage-details-body-title">Descrição</div>
+                <div className="EventPage-main-flyer-overlay">
+                  <div className="EventPage-main-flyer-overlay-title">
+                    <h1>{title}</h1>
+                  </div>
+                  <div className="EventPage-main-flyer-overlay-actions">
+                    <FloatingActionButton title="Compartilhar" onClick={this.fbShare} secondary>
+                      <SocialShare color={white} />
+                    </FloatingActionButton>
+                  </div>
+                </div>
+              </CardMedia>
+            </Card>
+            <Card className="EventPage-main-details" initiallyExpanded>
+              <CardHeader
+                className="EventPage-main-details-title"
+                title="Detalhes"
+                actAsExpander={isMobile}
+                showExpandableButton={isMobile}
+                avatar={
+                  <Avatar icon={<ActionEvent />} backgroundColor={deepOrange500} size={30} />
+                }
+              />
+              <CardText expandable>
+                <List className="EventPage-main-details-info">
+                  <If condition={start}>
+                    <ListItem
+                      disabled
+                      primaryText={fullDateFormat(start)}
+                      leftIcon={<ActionDateRange />}
+                    />
+                    <ListItem
+                      disabled
+                      primaryText={timeFormat(start)}
+                      leftIcon={<ActionSchedule />}
+                    />
+                  </If>
+                  <If condition={place && place.address}>
+                    <ListItem
+                      disabled
+                      primaryText={place.address}
+                      leftIcon={<MapsPlace />}
+                    />
+                    <div className="EventPage-main-details-info-button">
+                      <FlatButton
+                        label="Ver Mapa"
+                        secondary
+                        containerElement={<Link to="map" smooth offset={-200} duration={500} />}
+                      />
+                    </div>
+                  </If>
+                </List>
+              </CardText>
+            </Card>
+            <Card className="EventPage-main-prices" initiallyExpanded>
+              <CardHeader
+                className="EventPage-main-prices-title"
+                title="Preços"
+                actAsExpander={isMobile}
+                showExpandableButton={isMobile}
+                avatar={
+                  <Avatar icon={<EditorAttachMoney />} backgroundColor={lightBlue500} size={30} />
+                }
+              />
+              <CardText expandable>
+                <List className="EventPage-main-prices-info">
+                  <Choose>
+                    <When condition={Array.isArray(mappedPrice)}>
+                      <For each="priceItem" of={mappedPrice}>
+                        <ListItem
+                          disabled
+                          key={`${priceItem.description}${priceItem.value}`}
+                          primaryText={`${priceItem.description}`}
+                          secondaryText={`R$ ${priceItem.value}`}
+                        />
+                      </For>
+                    </When>
+                    <Otherwise>
+                      <ListItem disabled primaryText={mappedPrice} />
+                    </Otherwise>
+                  </Choose>
+                </List>
+              </CardText>
+            </Card>
+            <Card className="EventPage-main-description" initiallyExpanded>
+              <CardHeader
+                className="EventPage-main-description-title"
+                title="Descrição"
+                actAsExpander={isMobile}
+                showExpandableButton={isMobile}
+                avatar={
+                  <Avatar icon={<ActionDescription />} backgroundColor={amber500} size={30} />
+                }
+              />
+              <CardText expandable>
                 <div
-                  id="_description8"
-                  itemProp="description"
-                  className="EventPage-details-body-content"
+                  className="EventPage-main-description-info"
                   dangerouslySetInnerHTML={{ __html: description }}
                 />
-              </div>
-            </div>
-          </Grid.Column>
-
-          <Grid.Column className="EventPage-flyer" mobile={16} tablet={8} computer={8}>
-            <div
-              className="EventPage-flyer-bg"
-              style={{ backgroundImage: `url(${flyer})` }}
-            />
-            <Card>
-              <If condition={flyer}>
-                <Image
-                  id="_image7"
-                  itemProp="image"
-                  alt={flyerAlt}
-                  className="EventPage-flyer-img"
-                  src={flyer}
-                />
-              </If>
-              <If condition={viewer.isAdmin}>
-                <Button.Group>{this.renderModerationButtons()}</Button.Group>
-              </If>
-              <If condition={photos.length}>
-                <Button
-                  onClick={this.toggleGallery}
-                  size="large"
-                  color="orange"
-                >
-                  Ver {galleryIsVisible ? 'detalhes' : 'fotos'}
-                </Button>
+              </CardText>
+            </Card>
+            <Card className="EventPage-main-map" name="map" initiallyExpanded>
+              <CardHeader
+                className="EventPage-main-map-title"
+                title="Mapa"
+                actAsExpander={isMobile}
+                showExpandableButton={isMobile}
+                avatar={
+                  <Avatar icon={<MapsMap />} backgroundColor={green500} size={30} />
+                }
+              />
+              <If condition={!directions}>
+                <CardText expandable>
+                  <Element name="map">
+                    <Wrapper center={directions} />
+                  </Element>
+                </CardText>
               </If>
             </Card>
-          </Grid.Column>
-        </Grid>
+          </div>
+
+          <div className="EventPage-related" />
+        </div>
       </DefaultLayout>
     );
   }

@@ -1,10 +1,18 @@
 @import '../../scss/variables';
 
 .Logo {
-  width: $spacer*20;
-  transition: .8s ease;
+  margin: 0 $spacer*3;
+
+  img {
+    width: $spacer*20;
+  }
 
   &--small {
-    width: $spacer*4;
+    margin: 0 $spacer;
+
+    img {
+      width: $spacer*4;
+    }
   }
 }
+

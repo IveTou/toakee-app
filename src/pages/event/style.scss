@@ -3,213 +3,226 @@
 @import '../../scss/colors';
 
 .EventPage {
-  margin-top: $spacer*2 !important;
-  position: relative;
+  display: table;
+  width: 100%;
+  padding: 0 0 $spacer*4;
 
-  &--viewGallery .EventPage {
+  &-main {
+    display: block;
+    width: 100%;
+    margin: 0;
+
     &-flyer {
-      margin-left: 50%;
-    }
+      height: $spacer*50;
+      overflow: hidden;
 
-    &-gallery {
-      height: auto;
-      overflow-y: auto;
+      @keyframes bgAnimation{
+        0% {transform: scale(1)}
+        30% {transform: scale(1.15)}
+        100% {transform: scale(1)}
+      }
+
+      &-bg {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        animation: bgAnimation 20s linear infinite;
+      }
+
+      &-overlay {
+        position: absolute;
+        bottom: 0;
+        background-color: $black54;
+        min-height: $spacer*11;
+        padding: $spacer*3 $spacer*2;
+        display: table;
+
+        &-title {
+          display: table-cell;
+
+          h1 {
+            color: $white;
+            font-size: $spacer*4;
+          }
+        }
+
+        &-actions {
+          float: right;
+          margin-right: $spacer*3;
+        }
+      }
     }
 
     &-details {
-      height: calc(100vh - #{$topbar-height});
-      overflow: hidden;
-    }
-  }
-
-  &-gallery {
-    height: calc(100vh - #{$topbar-height + $spacer*2});
-    overflow-y: hidden;
-
-    .small.images {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-evenly;
-      padding: $spacer;
-
-      img.image {
-        margin: $spacer 0;
-        height: $spacer*19;
-        cursor: pointer;
-        background-size: cover;
-      }
-    }
-  }
-
-  &-flyer {
-    position: absolute !important;
-    text-align: center;
-    transition: margin-left .5s ease;
-    height: calc(100% - #{$spacer*2});
-    top: 0;
-    left: 0;
-
-    &--right {
-      margin-left: calc(50% + #{$spacer*2 - 2px});
-    }
-
-    &:after {
-      content: '';
-      background-color: #ff6600;
+      margin: $spacer 0 $spacer 0;
       width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      position: absolute;
-      opacity: .35;
-    }
+      border-left: 4px solid $deepOrange500;
 
-    &-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-size: cover;
-      background-attachment: fixed;
-    }
-
-    .ui.card {
-      padding: $spacer/2;
-      max-width: 60%;
-      margin: $spacer*3 auto;
-      z-index: 1;
-      position: sticky;
-      top: $spacer*20;
-      margin-bottom: $spacer*10 !important;
-      background: $transparent;
-      box-shadow: none;
-
-      img {
-        box-shadow: 0 0 12px $black87;
+      * {
+        line-height: $spacer*3;
       }
 
-      button {
-        border: 2px solid $white30;
-        margin: $spacer*2 auto;
-        width: fit-content;
+      > div {
+        padding-bottom: 0 !important;
       }
-
-      &:before {
-        content: '';
-        background-color: $orange;
-        width: 100%;
-        height: 100;
-        top: 0;
-        left: 0;
-      }
-
-      .ui.image {
-        width: 100%;
-      }
-    }
-  }
-
-  &-details {
-    min-height: calc(100vh - #{$topbar-height});
-
-    &-header {
-      padding: $spacer*2;
-      border-left: 4px solid $orange;
 
       &-title {
-        color: $orange;
+        span {
+          font-size: 18px !important;
+        }
+
+        + div {
+          padding: 0 $spacer $spacer !important;
+        }
+
+        > div + div {
+          vertical-align: initial !important;
+        }
       }
 
-      &-place {
-        font-size: 15px;
-        text-transform: uppercase;
-      }
-    }
+      &-info {
+        padding: 0 !important;
 
-    &-info {
-      padding: $spacer*2;
-      color: $white;
-      font-weight: 300;
-      background-color: $orange;
-      position: relative;
+        > div > div {
+          padding: $spacer $spacer*2 $spacer*2 $spacer*9 !important;
+        }
 
-      &-item {
-        margin: $spacer 0;
-      }
-
-      &-social {
-        margin-top: $spacer*2;
-      }
-
-      &:before {
-        content: '';
-        position: absolute;
-        width: 300%;
-        top: 0;
-        left: -100%;
-        height: 100%;
-        z-index: -1;
-        background-color: $orange;
-      }
-
-      .Icon:before {
-        width: $spacer*2;
-        text-align: center;
-        margin-right: $spacer;
-        display: block;
+        &-button {
+          width: 100%;
+          text-align: right;
+        }
       }
     }
 
-    &-body {
+    &-prices {
+      margin: 0 0 $spacer 0;
+      width: 100%;
+      min-width: $spacer*25;
+      border-left: 4px solid $lightBlue500;
+
+      * {
+        line-height: $spacer*3;
+      }
+
+      > div {
+        padding-bottom: 0 !important;
+      }
+
       &-title {
-        color: $orange;
-        font-size: 18px;
-        text-transform: uppercase;
+        span {
+          font-size: 18px !important;
+        }
+
+        + div {
+          padding: 0 $spacer $spacer !important;
+        }
+
+        > div + div {
+          vertical-align: initial !important;
+        }
       }
 
-      &-content {
-        margin-top: $spacer*2;
-      }
-
-      &-description {
-        padding: $spacer*2 0;
-        margin: $spacer*2;
-        text-align: justify;
-        white-space: pre-wrap;
+      &-info {
+        > div > div {
+          padding: 0 $spacer*2 $spacer !important;
+        }
       }
     }
+
+    &-description {
+      margin: 0 0 $spacer 0;
+      width: 100%;
+      display: inline-block;
+      border-left: 4px solid $amber500;
+
+      p {
+        font-size: 16px !important;
+      }
+
+      > div {
+        padding-bottom: 0 !important;
+      }
+
+
+      &-title {
+        span {
+          font-size: 18px !important;
+        }
+
+        + div {
+          padding: 0 $spacer $spacer*3 !important;
+        }
+
+        > div + div {
+          vertical-align: initial !important;
+        }
+      }
+
+      &-info {
+        padding: 0 $spacer;
+        font-size: 16px;
+        text-align: left;
+      }
+    }
+
+    &-map {
+      border-left: 4px solid $green500;
+
+      &-title > div + div {
+        span {
+          font-size: 18px !important;
+        }
+
+        vertical-align: initial !important;
+      }
+    }
+  }
+
+  &-related {
+    display: block;
+    white-space: nowrap;
+    min-width: $spacer*50;
+    margin: $spacer;
   }
 }
 
-@include media("<tablet") {
+@include media(">tablet") {
   .EventPage {
-    &-flyer,
-    &-gallery {
-      height: calc(100vh - #{$spacer*20});
-    }
+    padding: 0 $spacer*4 $spacer*4;
 
-    &-flyer {
-      position: absolute !important;
+    &-main {
+      margin: $spacer;
+      position: relative;
 
-      &-bg.ui,
-      &:after {
-        left: $spacer*2;
+      &-details {
+        margin: $spacer $spacer $spacer 0;
+        min-width: $spacer*40;
+        float: left;
+        width: 68%;
       }
 
-      .ui.card {
-        width: 90%;
-        max-width: $spacer*60;
-        margin-left: 5%;
+      &-prices {
+        margin: $spacer 0 $spacer $spacer;
+        width: 28%;
+        float: right;
+        position: absolute;
+        right: 0;
+
+        &-info {
+          min-height: $spacer*22;
+        }
+      }
+
+      &-description {
+        display: table;
+        padding-right: 28%;
       }
     }
 
-    &-details-body-description {
-      padding: $spacer;
-    }
-
-    &--viewGallery .EventPage-flyer {
-      margin-left: 100%;
+    &-related {
+      display: table-cell;
     }
   }
 }

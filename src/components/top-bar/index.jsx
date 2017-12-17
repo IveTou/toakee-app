@@ -3,15 +3,21 @@ import { withApollo } from 'react-apollo';
 import autoBind from 'react-autobind';
 import { once } from 'lodash';
 import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
-import { Menu, Dropdown, Label, Icon, Button, Search, Visibility } from 'semantic-ui-react';
-import classNames from 'classnames';
-import qs from 'query-string';
-
+import {
+  Avatar,
+  Toolbar,
+  ToolbarGroup,
+  IconButton,
+  IconMenu,
+  RaisedButton,
+  FlatButton,
+  MenuItem,
+} from 'material-ui';
+import { NavigationMenu, NavigationMoreVert, ActionAccountCircle } from 'material-ui/svg-icons';
+import SearchBar from 'material-ui-search-bar';
 import { logout } from '~/src/utils/session';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import Logo from '~/src/components/logo';
-import { withInfo } from '~/src/hocs';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -22,24 +28,20 @@ const trackPageView = once((viewer, pid) => TrackingAPI.viewerSafeTrack(viewer, 
 export class TopBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { transparent: props.transparent };
     autoBind(this);
+    this.state = { searchText: '' };
   }
 
-  componentWillReceiveProps({ viewer, transparent, location }) {
-    this._searchInput.setValue(qs.parse(location.search).q || '');
-    this.setState({ transparent });
+  componentWillReceiveProps({ viewer }) {
     trackPageView(viewer, 'Page View');
   }
 
-  onSearch(e) {
-    if (e.key === 'Enter') {
-      this.props.history.push(`/search?q=${e.target.value}`);
-    }
+  onSearch() {
+    this.props.history.push(`/search?q=${this.state.searchText}`);
   }
 
-  handleUpdate(_, { calculations }) {
-    this.setState({ transparent: this.props.transparent && !calculations.topPassed });
+  onChange(searchText) {
+    this.setState({ searchText });
   }
 
   logout() {
@@ -58,6 +60,10 @@ export class TopBar extends React.Component {
     this.props.history.push('/cadastrar');
   }
 
+  dashboard() {
+    this.props.history.push('/dashboard');
+  }
+
   newEvent() {
     const { viewer } = this.props;
     const pid = (viewer && viewer.id) || null;
@@ -70,123 +76,95 @@ export class TopBar extends React.Component {
   renderAvatar() {
     const { viewer } = this.props;
 
-    return viewer && viewer.id
-      ? <Label circular size="big">{viewer.firstName[0]}</Label>
-      : <Icon name="user" circular size="large" color="grey" />;
+    if (viewer && viewer.id) {
+      return viewer.photo
+        ? <Avatar className="TopBar-avatar" src={viewer.photo} />
+        : <Avatar className="TopBar-avatar">{viewer.firstName[0]}</Avatar>;
+    }
+
+    return <ActionAccountCircle />;
   }
 
   render() {
-    const { viewer = {} } = this.props;
-    const { transparent } = this.state;
-    const classes = classNames('TopBar', { 'TopBar--transparent': transparent });
-    const isDesktop = this.props.deviceInfo.is('desktop');
+    const { viewer = {}, onToggle, small } = this.props;
 
     return (
-      <Visibility className={classes} onUpdate={this.handleUpdate}>
-        <Menu fixed="top" borderless>
-          <Menu.Item className="logo">
-            <Logo />
-          </Menu.Item>
-          <Menu.Menu position="right">
-            <Menu.Item>
-              <Search
-                aria-label="busca"
-                ref={(node) => { this._searchInput = node; }}
-                open={false}
-                onFocus={this.onSearch}
-                input={{ icon: 'search', onKeyPress: this.onSearch }}
-              />
-            </Menu.Item>
-          </Menu.Menu>
-          <Menu.Menu position="right">
-            <Choose>
-              <When condition={!!viewer.id}>
-                <If condition={isDesktop}>
-                  <Menu.Item>
-                    <Button
-                      className="TopBar-newEvent"
-                      onClick={this.newEvent}
-                      color="orange"
-                      basic
-                    >
-                      Publicar Evento
-                    </Button>
-                  </Menu.Item>
-                </If>
-                <Dropdown item trigger={this.renderAvatar()} icon={null}>
-                  <Dropdown.Menu>
-                    <If condition={!isDesktop}>
-                      <Dropdown.Item onClick={this.newEvent}>
-                        Publicar Evento
-                      </Dropdown.Item>
-                    </If>
-                    <If condition={viewer.isPromoter}>
-                      <Dropdown.Item as={Link} to="/dashboard">
-                        Meus eventos
-                      </Dropdown.Item>
-                    </If>
-                    <Dropdown.Item onClick={this.logout}>Sair</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </When>
-              <Otherwise>
-                <Choose>
-                  <When condition={isDesktop}>
-                    <Menu.Item>
-                      <Button
-                        className="TopBar-newEvent"
-                        onClick={this.newEvent}
-                        basic
-                        color="orange"
-                      >
-                        Publicar Evento
-                      </Button>
-                      <Button.Group>
-                        <Button
-                          className="TopBar-login"
-                          onClick={this.login}
-                          basic
-                          color="orange"
-                        >
-                          Entrar
-                        </Button>
-                        <Button
-                          onClick={this.signUp}
-                          color="orange"
-                        >
-                          Cadastrar
-                        </Button>
-                      </Button.Group>
-                    </Menu.Item>
-                  </When>
-                  <Otherwise>
-                    <Dropdown item icon="ellipsis vertical" simple>
-                      <Dropdown.Menu>
-                        <Dropdown.Item onClick={this.newEvent}>
-                          Publicar Evento
-                        </Dropdown.Item>
-                        <Dropdown.Item onClick={this.login}>Entrar</Dropdown.Item>
-                        <Dropdown.Item onClick={this.signUp}>Cadastrar</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </Otherwise>
-                </Choose>
-              </Otherwise>
-            </Choose>
-          </Menu.Menu>
-        </Menu>
-      </Visibility>
+      <Toolbar className="TopBar">
+        <ToolbarGroup className="TopBar-nav" firstChild>
+          <IconButton
+            className="TopBar-nav-button"
+            onClick={onToggle}
+          >
+            <NavigationMenu />
+          </IconButton>
+          <Logo small={small} />
+        </ToolbarGroup>
+        <ToolbarGroup className="TopBar-search">
+          <SearchBar
+            onChange={this.onChange}
+            onRequestSearch={this.onSearch}
+            hintText="Pesquisar no site"
+          />
+        </ToolbarGroup>
+        <ToolbarGroup className="TopBar-menu" lastChild>
+          <Choose>
+            <When condition={!!viewer.id}>
+              <IconMenu
+                iconButtonElement={<IconButton>{this.renderAvatar()}</IconButton>}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+              >
+                <MenuItem onClick={this.dashboard}>Meus eventos</MenuItem>
+                <MenuItem onClick={this.newEvent}>Publicar Evento</MenuItem>
+                <MenuItem onClick={this.logout}>Sair</MenuItem>
+              </IconMenu>
+            </When>
+            <Otherwise>
+              <Choose>
+                <When condition={!small}>
+                  <RaisedButton
+                    className="TopBar-menu-button"
+                    label="Publicar Evento"
+                    onClick={this.newEvent}
+                    primary
+                  />
+                  <FlatButton
+                    className="TopBar-menu-button"
+                    label="Cadastrar"
+                    onClick={this.signUp}
+                  />
+                  <FlatButton
+                    className="TopBar-menu-button"
+                    label="Entrar"
+                    onClick={this.login}
+                  />
+                </When>
+                <Otherwise>
+                  <IconMenu
+                    iconButtonElement={<IconButton><NavigationMoreVert /></IconButton>}
+                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                    targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+                  >
+                    <MenuItem onClick={this.newEvent}>Publicar Evento</MenuItem>
+                    <MenuItem onClick={this.signUp}>Cadastrar</MenuItem>
+                    <MenuItem onClick={this.login}>Entrar</MenuItem>
+                  </IconMenu>
+                </Otherwise>
+              </Choose>
+            </Otherwise>
+          </Choose>
+        </ToolbarGroup>
+      </Toolbar>
     );
   }
 }
 
 TopBar.propTypes = {
   viewer: PropTypes.object,
-  transparent: PropTypes.bool,
   history: PropTypes.object,
-  location: PropTypes.object,
   client: PropTypes.object,
-  deviceInfo: PropTypes.object,
+  small: PropTypes.bool,
+  onToggle: PropTypes.func,
 };
 
-export default withApollo(withRouter(withInfo(TopBar, ['viewer', 'deviceInfo'])));
+export default withApollo(withRouter(TopBar));
