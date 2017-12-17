@@ -139,7 +139,7 @@ export class EventPage extends React.Component {
     } = event || {};
     const flyerAlt = `Flyer do ${title || 'evento'}`;
     const mappedPrice = price || prices.length === 1 ? price || prices[0].value : prices;
-
+    const isMobile = !this.props.deviceInfo.is('desktop');
     const classes = classNames('EventPage', { 'EventPage--viewGallery': galleryIsVisible });
 
     declare var image;
@@ -172,11 +172,11 @@ export class EventPage extends React.Component {
               <CardHeader
                 className="EventPage-main-details-title"
                 title="Detalhes"
+                actAsExpander={isMobile}
+                showExpandableButton={isMobile}
                 avatar={
                   <Avatar icon={<ActionEvent />} backgroundColor={deepOrange500} size={30} />
                 }
-                actAsExpander
-                showExpandableButton
               />
               <CardText expandable>
                 <List className="EventPage-main-details-info">
@@ -213,11 +213,11 @@ export class EventPage extends React.Component {
               <CardHeader
                 className="EventPage-main-prices-title"
                 title="Preços"
+                actAsExpander={isMobile}
+                showExpandableButton={isMobile}
                 avatar={
                   <Avatar icon={<EditorAttachMoney />} backgroundColor={lightBlue500} size={30} />
                 }
-                actAsExpander
-                showExpandableButton
               />
               <CardText expandable={true}>
                 <List className="EventPage-main-prices-info">
@@ -243,11 +243,11 @@ export class EventPage extends React.Component {
               <CardHeader
                 className="EventPage-main-description-title"
                 title="Descrição"
-                actAsExpander
+                actAsExpander={isMobile}
+                showExpandableButton={isMobile}
                 avatar={
                   <Avatar icon={<ActionDescription />} backgroundColor={amber500} size={30} />
                 }
-                showExpandableButton
               />
               <CardText expandable={true}>
                 <div
@@ -260,11 +260,11 @@ export class EventPage extends React.Component {
               <CardHeader
                 className="EventPage-main-map-title"
                 title="Mapa"
+                actAsExpander={isMobile}
+                showExpandableButton={isMobile}
                 avatar={
                   <Avatar icon={<MapsMap />} backgroundColor={green500} size={30} />
                 }
-                actAsExpander
-                showExpandableButton
               />
               <If condition={!directions}>
                 <CardText expandable={true}>
