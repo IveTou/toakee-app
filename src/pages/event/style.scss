@@ -77,13 +77,16 @@
       }
 
       &-title {
-        border-left: 4px solid $deepOrange500;
         span {
           font-size: 18px !important;
         }
 
         + div {
           padding: 0 $spacer $spacer !important;
+        }
+
+        > div + div {
+          vertical-align: initial !important;
         }
       }
 
@@ -116,13 +119,16 @@
       }
 
       &-title {
-        border-left: 4px solid $lightBlue500;
         span {
           font-size: 18px !important;
         }
 
         + div {
           padding: 0 $spacer $spacer !important;
+        }
+
+        > div + div {
+          vertical-align: initial !important;
         }
       }
 
@@ -149,13 +155,16 @@
 
 
       &-title {
-        border-left: 4px solid $amber500;
         span {
           font-size: 18px !important;
         }
 
         + div {
           padding: 0 $spacer $spacer*3 !important;
+        }
+
+        > div + div {
+          vertical-align: initial !important;
         }
       }
 
@@ -167,9 +176,14 @@
     }
 
     &-map {
-      border-left: 4px solid $deepPurple500;
-      &-title {
-        border-left: 4px solid $deepPurple500;
+      border-left: 4px solid $green500;
+
+      &-title > div + div {
+        span {
+          font-size: 18px !important;
+        }
+
+        vertical-align: initial !important;
       }
     }
   }

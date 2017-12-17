@@ -2,7 +2,9 @@ import React, { PropTypes } from 'react';
 import  Wrapper from '~/src/components/map';
 import { graphql, compose } from 'react-apollo';
 import {
+  Avatar,
   Card,
+  CardHeader,
   CardMedia,
   CardText,
   CardTitle,
@@ -10,8 +12,18 @@ import {
   List,
   ListItem,
 } from 'material-ui';
-import { ActionDateRange, ActionSchedule, SocialShare } from 'material-ui/svg-icons';
-import { white } from 'material-ui/styles/colors';
+import {
+  ActionEvent,
+  ActionDateRange,
+  ActionDescription,
+  ActionSchedule,
+  EditorAttachMoney,
+  NotificationEventNote,
+  MapsPlace,
+  MapsMap,
+  SocialShare,
+} from 'material-ui/svg-icons';
+import { amber500, deepOrange500, green500, lightBlue500, white } from 'material-ui/styles/colors';
 import classNames from 'classnames';
 import autoBind from 'react-autobind';
 import { Link } from 'react-router-dom';
@@ -159,9 +171,12 @@ export class EventPage extends React.Component {
               </CardMedia>
             </Card>
             <Card className="EventPage-main-details" initiallyExpanded>
-              <CardTitle
+              <CardHeader
                 className="EventPage-main-details-title"
                 title="Detalhes"
+                avatar={
+                  <Avatar icon={<ActionEvent />} backgroundColor={deepOrange500} size={30} />
+                }
                 actAsExpander
                 showExpandableButton
               />
@@ -183,7 +198,7 @@ export class EventPage extends React.Component {
                     <ListItem
                       disabled
                       primaryText={place.address}
-                      leftIcon={<ActionDateRange />}
+                      leftIcon={<MapsPlace />}
                     />
                     <div className="EventPage-main-details-info-button">
                       <FlatButton label="Ver Mapa" secondary />
@@ -193,9 +208,12 @@ export class EventPage extends React.Component {
               </CardText>
             </Card>
             <Card className="EventPage-main-prices" initiallyExpanded>
-              <CardTitle
+              <CardHeader
                 className="EventPage-main-prices-title"
                 title="Preços"
+                avatar={
+                  <Avatar icon={<EditorAttachMoney />} backgroundColor={lightBlue500} size={30} />
+                }
                 actAsExpander
                 showExpandableButton
               />
@@ -220,10 +238,13 @@ export class EventPage extends React.Component {
               </CardText>
             </Card>
             <Card className="EventPage-main-description" initiallyExpanded>
-              <CardTitle
+              <CardHeader
                 className="EventPage-main-description-title"
                 title="Descrição"
                 actAsExpander
+                avatar={
+                  <Avatar icon={<ActionDescription />} backgroundColor={amber500} size={30} />
+                }
                 showExpandableButton
               />
               <CardText expandable={true}>
@@ -234,9 +255,12 @@ export class EventPage extends React.Component {
               </CardText>
             </Card>
             <Card className="EventPage-main-map" initiallyExpanded>
-              <CardTitle
+              <CardHeader
                 className="EventPage-main-map-title"
                 title="Mapa"
+                avatar={
+                  <Avatar icon={<MapsMap />} backgroundColor={green500} size={30} />
+                }
                 actAsExpander
                 showExpandableButton
               />
