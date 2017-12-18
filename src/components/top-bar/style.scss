@@ -3,85 +3,43 @@
 @import '../../scss/colors';
 
 .TopBar {
-  .ui.menu {
-    height: $topbar-height;
-    background: $white;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: $spacer $spacer*3 !important;
+  height: $topbar-height !important;
+  z-index: $topbar-zindex;
 
-    .item .logo {
-      min-width: $spacer*8;
-    }
+  &-search {
+    margin: 0 $spacer*2;
 
-    .search {
-      input:focus {
-        border-color: $orange;
-      }
+    > div {
+      width: 100%;
+      padding: 0 $spacer;
 
-      .input {
-        width: 100%;
+      > div {
+        margin: 0 $spacer !important;
+
+        > div > div > div {
+          height: 100%;
+          line-height: $spacer*6;
+          bottom: 0 !important;
+        }
       }
     }
   }
 
-  &-newEvent {
-    margin-right: $spacer !important;
+  &-menu {
+    margin-right: $spacer*-3 !important;
+
+    &-button {
+      margin: 0 $spacer !important;
+    }
   }
 }
 
 @include media(">tablet") {
-  .TopBar {
-    .ui.menu {
-      transition: .8s ease;
-
-      .item .logo {
-        min-width: $spacer*28;
-      }
-
-      .search {
-        display: block;
-
-        input {
-          color: $black54;
-          font-size: 18px;
-          padding: $spacer $spacer*2;
-        }
-      }
-    }
-  }
-
-  .TopBar {
-    &--transparent .ui.menu {
-      box-shadow: none;
-      border: 0;
-      background: $transparent;
-      box-shadow: none;
-      border: 0;
-
-      .button.basic  {
-        &,
-        &:hover {
-          background: $white !important;
-        }
-      }
-
-      .search {
-        input {
-          border-color: $white;
-          color: $white;
-          background: $black26;
-
-          &:focus {
-            border-color: $white;
-          }
-        }
-
-        i {
-          color: $white;
-        }
-      }
-
-      .Logo {
-        content: url(#{$assets-base-uri}/core/site/logo-white.png);
-      }
-    }
+  .TopBar-search {
+    width: $spacer*50;
   }
 }

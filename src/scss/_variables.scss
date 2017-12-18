@@ -1,10 +1,11 @@
 $spacer: 8px;
 $ellipsis: '\2026';
 $assets-base-uri: 'http://res.cloudinary.com/toakeeassets/image/upload/s--Ug65JuU_--/v1494199755';
-$topbar-height: $spacer*8;
+$topbar-height: $spacer*9;
 $snackbar-top: $topbar-height+$spacer;
 
 $snackbar-zindex: 11;
+$topbar-zindex: 101;
 
 $flyer-width-mobile: $spacer*32;
 $flyer-height-mobile: $spacer*18;

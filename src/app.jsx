@@ -6,6 +6,7 @@ import {
   deepOrange700,
   deepOrange500,
   blue500,
+  white,
 } from 'material-ui/styles/colors';
 
 import ProtectedRoute from '~/src/routes/protected';
@@ -38,6 +39,9 @@ const theme = getMuiTheme({
     primary2Color: deepOrange700,
     accent1Color: blue500,
     pickerHeaderColor: blue500,
+  },
+  toolbar: {
+    backgroundColor: white,
   },
 });
 
