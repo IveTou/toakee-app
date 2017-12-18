@@ -138,6 +138,7 @@ export class EventPage extends React.Component {
     const flyerAlt = `Flyer do ${title || 'evento'}`;
     const mappedPrice = price || prices.length === 1 ? price || prices[0].value : prices;
     const isMobile = !this.props.deviceInfo.is('desktop');
+
     const classes = classNames('EventPage', { 'EventPage--viewGallery': galleryIsVisible });
 
     declare var image;
