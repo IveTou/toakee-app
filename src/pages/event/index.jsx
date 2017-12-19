@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link, Element } from 'react-scroll';
 import { graphql, compose } from 'react-apollo';
+import { take } from 'lodash';
 import {
   Avatar,
   Card,
@@ -13,6 +14,7 @@ import {
   GridTile,
   List,
   ListItem,
+  Paper,
 } from 'material-ui';
 import {
   ActionEvent,
@@ -37,7 +39,6 @@ import classNames from 'classnames';
 import autoBind from 'react-autobind';
 
 import DefaultLayout from '~/src/layouts/default';
-import BannerCarousel from '~/src/components/banner-carousel';
 import Wrapper from '~/src/components/map';
 import { fullDateFormat, timeFormat, dateFormat } from '~/src/utils/moment';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
@@ -149,10 +150,12 @@ export class EventPage extends React.Component {
     const flyerAlt = `Flyer do ${title || 'evento'}`;
     const mappedPrice = price || prices.length === 1 ? price || prices[0].value : prices;
     const isMobile = !this.props.deviceInfo.is('desktop');
+    const previewThumbs = take(photos, 10);
 
     const classes = classNames('EventPage', { 'EventPage--viewGallery': photos.length });
 
     declare var priceItem;
+    declare var previewPhotos;
 
     return (
       <DefaultLayout title={title}>
@@ -165,7 +168,13 @@ export class EventPage extends React.Component {
                   style={{ backgroundImage: `url(${flyer})` }}
                 />
                 <div className="EventPage-main-flyer-actions">
-                  <FlatButton className="gallery-button" label="VEJA COMO FOI!" />
+                  <FlatButton
+                    className="gallery-button"
+                    label="VEJA COMO FOI!"
+                    containerElement={
+                      <Link to="gallery-header" smooth offset={500} duration={500} />
+                    }
+                  />
                 </div>
                 <div className="EventPage-main-flyer-overlay">
                   <div className="EventPage-main-flyer-overlay-title">
@@ -180,24 +189,30 @@ export class EventPage extends React.Component {
               </CardMedia>
             </Card>
             <If condition={photos.length} >
-              <Card className="EventPage-main-gallery" initiallyExpanded>
-                <CardHeader
-                  className="EventPage-main-gallery-title"
-                  title="Galeria de Fotos"
-                  actAsExpander={isMobile}
-                  showExpandableButton={isMobile}
-                  avatar={
-                    <Avatar icon={<ImagePhotoCamera />} backgroundColor={deepPurple500} size={30} />
-                  }
-                />
-                <CardText expandable>
-                  <BannerCarousel banners={[
-                    {title:'', subtitle:'',img:'https://goo.gl/AAhn6S', url:{}, description:''},
-                    {title:'', subtitle:'',img:'https://goo.gl/a9XaQj', url:{}, description:''},
-                    ]}
+              <Card className="EventPage-main-gallery">
+                <Element name="gallery-header">
+                  <CardHeader
+                    className="EventPage-main-gallery-title"
+                    title="Galeria de Fotos"
+                    avatar={
+                      <Avatar
+                        icon={<ImagePhotoCamera />}
+                        backgroundColor={deepPurple500}
+                        size={30}
+                      />
+                    }
                   />
-                  <GridList cellHeight='auto' />
+                </Element>
+                <CardText className="EventPage-main-gallery-preview">
+                  <GridList cols={2.2}>
+                    <For each='previewItem' of={previewThumbs} >
+                      <GridTile key={previewItem.thumb}><img src={previewItem.thumb} /></GridTile>
+                    </For>
+                  </GridList>
                 </CardText>
+                <div className="EventPage-main-gallery-actions">
+                  <FlatButton label="Abrir Galeria" secondary />
+                </div>
               </Card>
             </If>
             <Card className="EventPage-main-details" initiallyExpanded>
