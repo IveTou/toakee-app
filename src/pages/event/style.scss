@@ -31,6 +31,26 @@
         animation: bgAnimation 20s linear infinite;
       }
 
+      &-actions {
+        height: $spacer*50;
+        text-align: center;
+        position: absolute;
+        z-index: 101;
+
+        button {
+          color: $white !important;
+          background-color: $deepOrange570 !important;
+          top: $spacer*16 !important;
+          padding: $spacer !important;
+          height: $spacer*9 !important;
+          display: none !important;
+
+          span {
+            font-size: $spacer*3 !important;
+          }
+        }
+      }
+
       &-overlay {
         position: absolute;
         bottom: 0;
@@ -52,6 +72,19 @@
           float: right;
           margin-right: $spacer*3;
         }
+      }
+    }
+
+    &-gallery {
+      margin: $spacer 0 $spacer 0;
+      border-left: 4px solid $deepPurple500;
+
+      &-title > div + div {
+        span {
+          font-size: 18px !important;
+        }
+
+        vertical-align: initial !important;
       }
     }
 
@@ -161,7 +194,7 @@
       }
 
       &-info {
-        padding: 0 $spacer;
+        padding: 0 $spacer*2;
         font-size: 16px;
         text-align: left;
       }
@@ -185,6 +218,14 @@
     white-space: nowrap;
     min-width: $spacer*50;
     margin: $spacer;
+  }
+
+  &--viewGallery {
+    .gallery {
+      &-button {
+        display: inline-block !important;
+      }
+    }
   }
 }
 

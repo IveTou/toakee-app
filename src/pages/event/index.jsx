@@ -9,6 +9,8 @@ import {
   CardText,
   FlatButton,
   FloatingActionButton,
+  GridList,
+  GridTile,
   List,
   ListItem,
 } from 'material-ui';
@@ -18,15 +20,24 @@ import {
   ActionDescription,
   ActionSchedule,
   EditorAttachMoney,
+  ImagePhotoCamera,
   MapsPlace,
   MapsMap,
   SocialShare,
 } from 'material-ui/svg-icons';
-import { amber500, deepOrange500, green500, lightBlue500, white } from 'material-ui/styles/colors';
+import {
+  amber500,
+  deepOrange500,
+  deepPurple500,
+  green500,
+  lightBlue500,
+  white
+} from 'material-ui/styles/colors';
 import classNames from 'classnames';
 import autoBind from 'react-autobind';
 
 import DefaultLayout from '~/src/layouts/default';
+import BannerCarousel from '~/src/components/banner-carousel';
 import Wrapper from '~/src/components/map';
 import { fullDateFormat, timeFormat, dateFormat } from '~/src/utils/moment';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
@@ -139,15 +150,13 @@ export class EventPage extends React.Component {
     const mappedPrice = price || prices.length === 1 ? price || prices[0].value : prices;
     const isMobile = !this.props.deviceInfo.is('desktop');
 
-    const classes = classNames('EventPage', { 'EventPage--viewGallery': galleryIsVisible });
+    const classes = classNames('EventPage', { 'EventPage--viewGallery': photos.length });
 
-    declare var image;
-    declare var index;
     declare var priceItem;
 
     return (
       <DefaultLayout title={title}>
-        <div className="EventPage">
+        <div className={classes}>
           <div className="EventPage-main">
             <Card>
               <CardMedia className="EventPage-main-flyer" alt={flyerAlt}>
@@ -155,6 +164,9 @@ export class EventPage extends React.Component {
                   className="EventPage-main-flyer-bg"
                   style={{ backgroundImage: `url(${flyer})` }}
                 />
+                <div className="EventPage-main-flyer-actions">
+                  <FlatButton className="gallery-button" label="VEJA COMO FOI!" />
+                </div>
                 <div className="EventPage-main-flyer-overlay">
                   <div className="EventPage-main-flyer-overlay-title">
                     <h1>{title}</h1>
@@ -167,6 +179,27 @@ export class EventPage extends React.Component {
                 </div>
               </CardMedia>
             </Card>
+            <If condition={photos.length} >
+              <Card className="EventPage-main-gallery" initiallyExpanded>
+                <CardHeader
+                  className="EventPage-main-gallery-title"
+                  title="Galeria de Fotos"
+                  actAsExpander={isMobile}
+                  showExpandableButton={isMobile}
+                  avatar={
+                    <Avatar icon={<ImagePhotoCamera />} backgroundColor={deepPurple500} size={30} />
+                  }
+                />
+                <CardText expandable>
+                  <BannerCarousel banners={[
+                    {title:'', subtitle:'',img:'https://goo.gl/AAhn6S', url:{}, description:''},
+                    {title:'', subtitle:'',img:'https://goo.gl/a9XaQj', url:{}, description:''},
+                    ]}
+                  />
+                  <GridList cellHeight='auto' />
+                </CardText>
+              </Card>
+            </If>
             <Card className="EventPage-main-details" initiallyExpanded>
               <CardHeader
                 className="EventPage-main-details-title"
