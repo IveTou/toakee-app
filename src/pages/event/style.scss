@@ -39,7 +39,7 @@
 
         a {
           color: $white !important;
-          background-color: $deepOrange570 !important;
+          background-color: $deepOrange580 !important;
           top: $spacer*16 !important;
           padding: $spacer !important;
           height: $spacer*7 !important;
@@ -77,13 +77,14 @@
 
     &-gallery {
       margin: $spacer 0 $spacer 0;
-      display: grid;
+      display: none;
       position: relative;
       border-left: 4px solid $deepPurple500;
 
       > div {
         overflow: hidden;
         margin: 0 $spacer*2 0 0;
+        padding-bottom: $spacer*2 !important;
       }
 
       &-title {
@@ -123,6 +124,27 @@
       &-actions {
         text-align: right;
         margin-bottom: $spacer;
+      }
+
+      &-photos {
+        display: none;
+        height: $spacer*50;
+        overflow: overlay;
+
+        > div {
+          margin: auto !important;
+          max-width: $spacer*50;
+
+          > div {
+            max-width: $spacer*25;
+            max-height: $spacer*17;
+
+            img {
+              height: 100% !important;
+              cursor: pointer;
+            }
+          }
+        }
       }
     }
 
@@ -251,19 +273,31 @@
     }
   }
 
+  &--viewGallery {
+    .EventPage-main {
+      &-flyer-actions{
+        &-button {
+          display: inline-block !important;
+        }
+      }
+
+      &-gallery {
+        display: grid;
+      }
+    }
+  }
+
+  &--galleryIsVisible {
+    .EventPage-main-gallery-photos {
+      display: block;
+    }
+  }
+
   &-related {
     display: block;
     white-space: nowrap;
     min-width: $spacer*50;
     margin: $spacer;
-  }
-
-  &--viewGallery {
-    .gallery {
-      &-button {
-        display: inline-block !important;
-      }
-    }
   }
 }
 
@@ -297,6 +331,14 @@
       &-description {
         display: table;
         padding-right: 28%;
+      }
+
+      &-gallery {
+        &-photos {
+          > div {
+            max-width: $spacer*100;
+          }
+        }
       }
     }
 
