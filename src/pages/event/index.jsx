@@ -10,6 +10,7 @@ import {
   CardMedia,
   CardText,
   FlatButton,
+  RaisedButton,
   FloatingActionButton,
   GridList,
   GridTile,
@@ -222,7 +223,7 @@ export class EventPage extends React.Component {
                   </CardText>
                 </If>
                 <div className="EventPage-main-gallery-actions">
-                  <FlatButton
+                  <RaisedButton
                     label={galleryIsVisible ? 'Fechar Galeria' : 'Abrir Galeria'}
                     onClick={this.toggleGallery}
                     secondary

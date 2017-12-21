@@ -61,6 +61,7 @@
 
         &-title {
           display: table-cell;
+          padding-right: $spacer;
 
           h1 {
             color: $white;
@@ -113,10 +114,15 @@
           overflow-y: hidden;
           height: 100%;
           width: 100%;
+          box-shadow: 0 0 4px;
 
           > div {
             height: 100% !important;
             padding: 0 !important;
+
+            img {
+              height: 100% !important;
+            }
           }
         }
       }
