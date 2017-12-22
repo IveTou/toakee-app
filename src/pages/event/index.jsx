@@ -34,6 +34,7 @@ import {
   deepPurple500,
   green500,
   lightBlue500,
+  red500,
   white,
 } from 'material-ui/styles/colors';
 import classNames from 'classnames';
@@ -107,20 +108,21 @@ export class EventPage extends React.Component {
     const { setStatus, event } = this.props;
     const { status: eventStatus } = event || {};
     const buttonProps = [
-      { label: 'Esconder', color: 'blue', status: 'PENDING' },
-      { label: 'Reprovar', color: 'red', status: 'REPROVED' },
-      { label: 'Aprovar', color: 'green', status: 'ACTIVE' },
+      { label: 'Aprovar', color: green500, status: 'ACTIVE' },
+      { label: 'Reprovar', color: red500, status: 'REPROVED' },
+      { label: 'Esconder', color: amber500, status: 'PENDING' },
     ];
 
     return buttonProps.map(({ label, color, status }) => (
-      <FlatButton
+      <RaisedButton
+        className="EventPage-main-flyer-actions-button"
         key={label}
-        color={color}
-        basic={status !== eventStatus}
+        backgroundColor={color}
+        labelColor={white}
+        label={label}
+        disabled={status == eventStatus}
         onClick={() => setStatus(status)}
-      >
-        {label}
-      </FlatButton>
+      />
     ));
   }
 
@@ -151,6 +153,7 @@ export class EventPage extends React.Component {
         'EventPage',
         { 'EventPage--viewGallery': photos.length },
         { 'EventPage--galleryIsVisible': galleryIsVisible },
+        { 'EventPage--isAdmin': viewer.isAdmin },
         );
 
     declare var index;
@@ -177,6 +180,7 @@ export class EventPage extends React.Component {
                       <Link to="gallery-header" smooth offset={300} duration={500} />
                     }
                   />
+                  <If condition={viewer.isAdmin}>{this.renderModerationButtons()}</If>
                 </div>
                 <div className="EventPage-main-flyer-overlay">
                   <div className="EventPage-main-flyer-overlay-title">

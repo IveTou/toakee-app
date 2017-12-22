@@ -299,6 +299,17 @@
     }
   }
 
+  &--isAdmin {
+    .EventPage-main-flyer-actions {
+      background-color: $black54;
+      padding-top: $spacer*2;
+
+      &-button {
+        margin: $spacer;
+      }
+    }
+  }
+
   &-related {
     display: block;
     white-space: nowrap;
