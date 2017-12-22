@@ -23,6 +23,7 @@ import {
   ActionDescription,
   ActionSchedule,
   EditorAttachMoney,
+  EditorModeEdit,
   ImagePhotoCamera,
   MapsPlace,
   MapsMap,
@@ -36,6 +37,7 @@ import {
   lightBlue500,
   red500,
   white,
+  grey500,
 } from 'material-ui/styles/colors';
 import classNames from 'classnames';
 import autoBind from 'react-autobind';
@@ -187,8 +189,17 @@ export class EventPage extends React.Component {
                     <h1>{title}</h1>
                   </div>
                   <div className="EventPage-main-flyer-overlay-actions">
+                    <If condition={creator.id === viewer.id}>
+                      <FloatingActionButton
+                        title="Editar"
+                        backgroundColor={grey500}
+                        href={`/evento/${id}/editar`}
+                      >
+                        <EditorModeEdit />
+                      </FloatingActionButton>
+                    </If>
                     <FloatingActionButton title="Compartilhar" onClick={this.fbShare} secondary>
-                      <SocialShare color={white} />
+                      <SocialShare />
                     </FloatingActionButton>
                   </div>
                 </div>

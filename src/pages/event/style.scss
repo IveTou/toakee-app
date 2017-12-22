@@ -35,7 +35,6 @@
         height: $spacer*50;
         text-align: center;
         position: absolute;
-        z-index: 11;
 
         a {
           color: $white !important;
@@ -61,7 +60,8 @@
 
         &-title {
           display: table-cell;
-          padding-right: $spacer;
+          vertical-align: middle;
+          padding: $spacer;
 
           h1 {
             color: $white;
@@ -71,7 +71,12 @@
 
         &-actions {
           float: right;
-          margin-right: $spacer*3;
+          min-width: $spacer*18;
+          text-align: center;
+
+          > div {
+            margin: $spacer;
+          }
         }
       }
     }
