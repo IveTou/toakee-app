@@ -39,7 +39,7 @@
         a {
           color: $white !important;
           background-color: $deepOrange580 !important;
-          top: $spacer*16 !important;
+          top: $spacer*14 !important;
           padding: $spacer !important;
           height: $spacer*7 !important;
           display: none !important;
@@ -151,7 +151,7 @@
             max-height: $spacer*17;
 
             img {
-              height: 100% !important;
+              width: 100%;
               cursor: pointer;
             }
           }
