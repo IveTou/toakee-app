@@ -44,7 +44,8 @@
         background-color: $deepOrange500;
         color: $white;
         border-radius: 0 2px 2px 0;
-        font-size: 16px;
+        font-size: 14px;
+        box-shadow: 1px 1px 2px $black54;
       }
     }
   }
@@ -141,7 +142,4 @@
       display: inline-grid !important;
     }
   }
-}
-
-@include media("<tablet") {
 }

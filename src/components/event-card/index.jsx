@@ -51,7 +51,7 @@ const EventCard = ({ event }) => {
             />
             <If condition={ribbon}>
               <div className="EventCard-flyer-ribbon">
-                <span>{ribbon}</span>
+                <span>{ribbon.content}</span>
               </div>
             </If>
           </CardMedia>
