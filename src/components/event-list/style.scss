@@ -18,7 +18,7 @@ $event-list-height: $spacer*29;
   }
 
   &-list {
-    overflow-x: hidden;
+    overflow: hidden;
     margin-left: $spacer*-1;
     white-space: nowrap;
     min-height: $event-list-height;

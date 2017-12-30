@@ -2,7 +2,9 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router-dom';
 import { upperFirst } from 'lodash';
 import moment from 'moment';
-import { Card, Image, Icon } from 'semantic-ui-react';
+import { Card, CardHeader, CardMedia, CardText, List, ListItem } from 'material-ui';
+import { ActionSchedule , MapsPlace } from 'material-ui/svg-icons';
+import { grey500 } from 'material-ui/styles/colors';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -27,30 +29,35 @@ const renderLabel = (status, start, end) => {
     content: start.isSameOrBefore(now) && end.isSameOrAfter(now)
       ? 'Acontecendo agora'
       : upperFirst(start.fromNow()),
-    color: 'orange',
-    ribbon: true,
   };
 };
 
 const EventCard = ({ event }) => {
   const { id, title, place, flyer, start, end, status } = event;
   const startMoment = moment(start);
+  const ribbon = renderLabel(status, startMoment, moment(end));
 
   return (
     <Link className="EventCard" to={{ pathname: `/evento/${id}`, state: { event } }}>
       <Card>
         <If condition={flyer}>
-          <Image
-            className="EventCard-background"
-            label={renderLabel(status, startMoment, moment(end))}
+          <CardMedia
+            className="EventCard-flyer"
             alt={`flyer do ${title}`}
-            src={flyer}
-          />
+          >
+            <div
+              className="EventCard-flyer-background"
+              style={{ backgroundImage: `url(${flyer})` }}
+            />
+            <If condition={ribbon}>
+              <div className="EventCard-flyer-ribbon">
+                <span>{ribbon}</span>
+              </div>
+            </If>
+          </CardMedia>
         </If>
-        <Card.Content className="EventCard-main">
-          <Card.Header><span title={title}>{title}</span></Card.Header>
-        </Card.Content>
-        <Card.Content className="EventCard-details" extra>
+        <CardHeader className="EventCard-title" title={title} />
+        <CardText className="EventCard-details">
           <div className="EventCard-details-calendar">
             <div className="EventCard-details-calendar-month">
               {startMoment.format('MMM')}
@@ -60,10 +67,10 @@ const EventCard = ({ event }) => {
             </div>
           </div>
           <div className="EventCard-details-timeAndPlace">
-            <div><Icon name="marker" />{place.name}</div>
-            <div><Icon name="clock" />{startMoment.format('HH')}h</div>
+            <div><MapsPlace color={grey500} /><span>{place.name}</span></div>
+            <div><ActionSchedule color={grey500} /><span>{startMoment.format('HH')}h</span></div>
           </div>
-        </Card.Content>
+        </CardText>
       </Card>
     </Link>
   );
