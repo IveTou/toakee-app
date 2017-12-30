@@ -6,48 +6,49 @@
 .EventCardPlaceholder,
 .EventCard {
   margin: $spacer 0 $spacer $spacer*3;
-  max-width: $spacer*30;
+  width: $spacer*30;
+  min-height: $spacer*30;
   display: inline-block;
   white-space: nowrap;
+  vertical-align: top;
 
-  &-main {
-    padding: $spacer !important;
+  > div {
+    height: $spacer*30;
+  }
 
-    .header span {
-      font-size: 14px;
+  &-flyer{
+    height: $spacer*15;
+
+    &-background {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background-repeat: no-repeat;
+      background-size: cover;
     }
   }
 
-  &:hover .card {
-    box-shadow: 0 0 0 1px #D4D4D5, 0 2px 4px 0 rgba(34, 36, 38, .12), 0 2px 10px 0 rgba(34, 36, 38, .15), 0 2px 0 0 #F2711C;
-  }
 
-  .header,
-  .meta {
+  &-title {
+    padding: $spacer !important;
+    margin-right: $spacer;
     overflow: hidden;
-  }
 
-  &-link {
-    text-decoration: none;
-  }
+    > div {
+      padding-right: 0 !important;
 
-  .card &-background.image {
-    height: $spacer*15;
-  }
-
-  .card &-background,
-  .card &-background.image img {
-    @include drag(none);
-    width: 100%;
-    object-fit: cover;
-  }
-
-  .card .image img {
-    height: 100% !important;
+      span {
+        font-size: 14px;
+        font-weight: 600;
+        vertical-align: bottom;
+        max-height: $spacer*4;
+      }
+    }
   }
 
   &-details {
-    padding: 0 !important;
+    border-top: 1px solid rgba(0,0,0,.05);
+    padding: 0 $spacer !important;
     overflow: hidden;
 
     &-calendar {
@@ -72,12 +73,23 @@
     }
 
     &-timeAndPlace {
+      color: $black54;
       font-size: 12px;
       width: calc(100% - #{$spacer*7});
-      padding: 0 $spacer;
+      padding: 0;
       display: inline-block;
       vertical-align: middle;
       overflow: hidden;
+
+      > div {
+        position: relative;
+
+        span {
+          position: absolute;
+          transform: translateY(24%);
+          padding-left: $spacer;
+        }
+      }
     }
   }
 }
