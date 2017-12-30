@@ -29,14 +29,13 @@ const renderLabel = (status, start, end) => {
     content: start.isSameOrBefore(now) && end.isSameOrAfter(now)
       ? 'Acontecendo agora'
       : upperFirst(start.fromNow()),
-    color: 'orange',
-    ribbon: true,
   };
 };
 
 const EventCard = ({ event }) => {
   const { id, title, place, flyer, start, end, status } = event;
   const startMoment = moment(start);
+  const ribbon = renderLabel(status, startMoment, moment(end));
 
   return (
     <Link className="EventCard" to={{ pathname: `/evento/${id}`, state: { event } }}>
@@ -45,12 +44,16 @@ const EventCard = ({ event }) => {
           <CardMedia
             className="EventCard-flyer"
             alt={`flyer do ${title}`}
-            title={`flyer do ${title}`}
           >
             <div
               className="EventCard-flyer-background"
               style={{ backgroundImage: `url(${flyer})` }}
             />
+            <If condition={ribbon}>
+              <div className="EventCard-flyer-ribbon">
+                <span>{ribbon}</span>
+              </div>
+            </If>
           </CardMedia>
         </If>
         <CardHeader className="EventCard-title" title={title} />

@@ -3,21 +3,25 @@
 @import '../../scss/variables';
 @import '../../scss/colors';
 
-.EventCardPlaceholder,
 .EventCard {
   margin: $spacer 0 $spacer $spacer*3;
   width: $spacer*30;
-  min-height: $spacer*30;
+  min-height: $spacer*28;
   display: inline-block;
   white-space: nowrap;
   vertical-align: top;
 
   > div {
-    height: $spacer*30;
+    height: $spacer*28;
+  }
+
+  &:hover &-flyer-background {
+    transform: scale(1.2);
   }
 
   &-flyer{
     height: $spacer*15;
+    overflow: hidden;
 
     &-background {
       position: absolute;
@@ -25,6 +29,23 @@
       width: 100%;
       background-repeat: no-repeat;
       background-size: cover;
+      transition: all .5s;
+    }
+
+    &-ribbon {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+
+      span {
+        top: $spacer;
+        position: relative;
+        padding: $spacer/2;
+        background-color: $deepOrange500;
+        color: $white;
+        border-radius: 0 2px 2px 0;
+        font-size: 16px;
+      }
     }
   }
 
@@ -84,9 +105,13 @@
       > div {
         position: relative;
 
+        svg {
+          height: 18px !important;
+        }
+
         span {
           position: absolute;
-          transform: translateY(24%);
+          transform: translateY(16%);
           padding-left: $spacer;
         }
       }
@@ -95,44 +120,28 @@
 }
 
 .EventCardPlaceholder {
-  position: relative;
-  z-index: 0;
+  margin: $spacer 0 $spacer $spacer*3;
+  width: $spacer*30;
+  min-height: $spacer*28;
+  display: inline-block;
 
-  .ui.card {
-    margin: 0;
+  > div {
+    height: $spacer*28;
 
-    * {
-      color: transparent !important;
+    > div {
+      height: 100%;
+      text-align: center;
+      position: relative;
+      top: $spacer*5;
+    }
+  }
+
+  &-progress {
+    > div {
+      display: inline-grid !important;
     }
   }
 }
 
 @include media("<tablet") {
-  .EventCardPlaceholder,
-  .EventCard {
-    width: 100%;
-
-    &-background,
-    &-background.image img {
-      height: $spacer*16;
-    }
-
-    &-main {
-      padding: $spacer !important;
-    }
-
-    &-content {
-      &-title {
-        height: $spacer*5;
-
-        &-text {
-          font-size: 13px;
-        }
-      }
-
-      &-time {
-        font-size: 12px;
-      }
-    }
-  }
 }
