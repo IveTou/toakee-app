@@ -12,6 +12,8 @@
 @include media(">tablet") {
   .DefaultLayout {
     .main {
+      padding-left: $spacer*8;
+
       &--compressed {
         padding-left: $spacer*32;
       }
