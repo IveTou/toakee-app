@@ -317,9 +317,11 @@
 
   &-related {
     display: block;
+    vertical-align: top;
     white-space: nowrap;
     min-width: $spacer*50;
     margin: $spacer;
+    padding-top: $spacer*2;
   }
 }
 

@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import classNames from 'classnames';
 import { graphql } from 'react-apollo';
 import autoBind from 'react-autobind';
 import VisibilitySensor from 'react-visibility-sensor';
@@ -48,7 +49,7 @@ class EventList extends React.Component {
   }
 
   render() {
-    const { title, viewer = {} } = this.props;
+    const { title, viewer = {}, related } = this.props;
     const { events = [], eventCount } = viewer;
 
     const node = this._listDOM || {};
@@ -56,23 +57,24 @@ class EventList extends React.Component {
     const hideRightArrow =
       node.scrollLeft + node.offsetWidth >= node.scrollWidth
       && !this.state.hasMore;
+    const classes = classNames('EventList', { 'EventList--related': related });
 
     declare var event;
     declare var placeholder;
     declare var idx;
     return !!eventCount && (
-      <div className="EventList">
+      <div className={classes}>
         <div className="EventList-title">{title} ({eventCount})</div>
         <div className="EventList-list" ref={(dom) => { this._listDOM = dom; }}>
           <EventListArrow direction="left" onClick={() => this.scroll(-1)} hide={hideLeftArrow} />
           <EventListArrow direction="right" onClick={() => this.scroll(1)} hide={hideRightArrow} />
           <For each="event" index="idx" of={events}>
-            <EventCard key={idx} event={event} />
+            <EventCard key={idx} event={event} related={related} />
           </For>
           <If condition={this.state.hasMore}>
             <VisibilitySensor onChange={isVisible => (isVisible && this.fetchEvents())} />
             <For each="placeholder" of={range(Math.min(5, eventCount - events.length))}>
-              <EventCardPlaceholder key={placeholder} />
+              <EventCardPlaceholder key={placeholder} related={related} />
             </For>
           </If>
         </div>
@@ -84,6 +86,7 @@ class EventList extends React.Component {
 EventList.propTypes = {
   title: PropTypes.string,
   loadMore: PropTypes.func,
+  related: PropTypes.bool,
   viewer: PropTypes.object,
 };
 

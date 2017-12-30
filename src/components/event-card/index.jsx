@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { upperFirst } from 'lodash';
 import moment from 'moment';
@@ -32,13 +33,14 @@ const renderLabel = (status, start, end) => {
   };
 };
 
-const EventCard = ({ event }) => {
+const EventCard = ({ event, related }) => {
   const { id, title, place, flyer, start, end, status } = event;
   const startMoment = moment(start);
   const ribbon = renderLabel(status, startMoment, moment(end));
+  const classes = classNames('EventCard', { 'EventCard--related': related });
 
   return (
-    <Link className="EventCard" to={{ pathname: `/evento/${id}`, state: { event } }}>
+    <Link className={classes} to={{ pathname: `/evento/${id}`, state: { event } }}>
       <Card>
         <If condition={flyer}>
           <CardMedia
@@ -77,6 +79,7 @@ const EventCard = ({ event }) => {
 };
 
 EventCard.propTypes = {
+  related: PropTypes.bool,
   event: PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,

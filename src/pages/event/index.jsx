@@ -3,6 +3,7 @@ import { Link, Element } from 'react-scroll';
 import Lightbox from 'react-images';
 import { graphql, compose } from 'react-apollo';
 import { take } from 'lodash';
+import moment from 'moment';
 import {
   Avatar,
   Card,
@@ -41,8 +42,8 @@ import {
 } from 'material-ui/styles/colors';
 import classNames from 'classnames';
 import autoBind from 'react-autobind';
-
 import DefaultLayout from '~/src/layouts/default';
+import EventList from '~/src/components/event-list';
 import Wrapper from '~/src/components/map';
 import { fullDateFormat, timeFormat, dateFormat } from '~/src/utils/moment';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
@@ -144,6 +145,7 @@ export class EventPage extends React.Component {
       prices = [],
       photos = [],
       creator = {},
+      categories = [],
       status,
     } = event || {};
     const flyerAlt = `Flyer do ${title || 'evento'}`;
@@ -367,7 +369,16 @@ export class EventPage extends React.Component {
             </If>
           </div>
 
-          <div className="EventPage-related" />
+          <div className="EventPage-related">
+            <If condition={categories.length}>
+              <EventList
+                title="Eventos Relacionados"
+                start={moment().startOf('hour')}
+                categoryIds={categories[0].id}
+                related
+              />
+            </If>
+          </div>
         </div>
       </DefaultLayout>
     );

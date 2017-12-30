@@ -68,6 +68,11 @@ $event-list-height: $spacer*29;
       width: $spacer*3;
     }
   }
+
+  &--related {
+    overflow: auto;
+    max-height: calc(100vh);
+  }
 }
 
 @include media("<tablet") {

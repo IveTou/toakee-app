@@ -11,6 +11,10 @@
   white-space: nowrap;
   vertical-align: top;
 
+  &--related {
+    display: block;
+  }
+
   > div {
     height: $spacer*28;
   }
@@ -45,6 +49,7 @@
         color: $white;
         border-radius: 0 2px 2px 0;
         font-size: 14px;
+        font-weight: bold;
         box-shadow: 1px 1px 2px $black54;
       }
     }
@@ -125,6 +130,10 @@
   width: $spacer*30;
   min-height: $spacer*28;
   display: inline-block;
+
+  &--related {
+    display: block;
+  }
 
   > div {
     height: $spacer*28;
