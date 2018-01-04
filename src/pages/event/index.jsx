@@ -10,6 +10,7 @@ import {
   CardHeader,
   CardMedia,
   CardText,
+  Divider,
   FlatButton,
   RaisedButton,
   FloatingActionButton,
@@ -370,9 +371,11 @@ export class EventPage extends React.Component {
           </div>
 
           <div className="EventPage-related">
+            <h2>Eventos Relacionados</h2>
+            <Divider />
             <If condition={categories.length}>
               <EventList
-                title="Eventos Relacionados"
+                title=""
                 start={moment().startOf('hour')}
                 categoryIds={categories[0].id}
                 related
