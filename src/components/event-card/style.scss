@@ -103,7 +103,7 @@
       color: $black54;
       font-size: 12px;
       width: calc(100% - #{$spacer*7});
-      padding: 0;
+      padding-top: $spacer;
       display: inline-block;
       vertical-align: middle;
       overflow: hidden;
@@ -112,13 +112,11 @@
         position: relative;
 
         svg {
-          height: 18px !important;
+          height: $spacer*2 !important;
         }
 
         span {
           position: absolute;
-          transform: translateY(16%);
-          padding-left: $spacer;
         }
       }
     }
