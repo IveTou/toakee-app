@@ -6,7 +6,7 @@ import { deepOrange500 } from 'material-ui/styles/colors';
 const EventCardPlaceholder = ({ related }) => {
   const classes = classNames('EventCardPlaceholder', { 'EventCardPlaceholder--related': related });
 
-  return(
+  return (
     <div className={classes}>
       <Card>
         <CircularProgress
@@ -18,6 +18,10 @@ const EventCardPlaceholder = ({ related }) => {
       </Card>
     </div>
   );
-}
+};
+
+EventCardPlaceholder.propTypes = {
+  related: PropTypes.bool,
+};
 
 export default EventCardPlaceholder;

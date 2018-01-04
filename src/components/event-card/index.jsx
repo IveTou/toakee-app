@@ -3,8 +3,8 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { upperFirst } from 'lodash';
 import moment from 'moment';
-import { Card, CardHeader, CardMedia, CardText, List, ListItem } from 'material-ui';
-import { ActionSchedule , MapsPlace } from 'material-ui/svg-icons';
+import { Card, CardHeader, CardMedia, CardText } from 'material-ui';
+import { ActionSchedule, MapsPlace } from 'material-ui/svg-icons';
 import { grey500 } from 'material-ui/styles/colors';
 
 if (process.env.BROWSER) {

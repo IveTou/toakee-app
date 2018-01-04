@@ -46,7 +46,7 @@ import autoBind from 'react-autobind';
 import DefaultLayout from '~/src/layouts/default';
 import EventList from '~/src/components/event-list';
 import Wrapper from '~/src/components/map';
-import { fullDateFormat, timeFormat, dateFormat } from '~/src/utils/moment';
+import { fullDateFormat, timeFormat } from '~/src/utils/moment';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import { withInfo } from '~/src/hocs';
 
@@ -124,7 +124,7 @@ export class EventPage extends React.Component {
         backgroundColor={color}
         labelColor={white}
         label={label}
-        disabled={status == eventStatus}
+        disabled={status === eventStatus}
         onClick={() => setStatus(status)}
       />
     ));
