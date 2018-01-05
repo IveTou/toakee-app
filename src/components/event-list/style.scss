@@ -6,20 +6,20 @@
 $event-list-height: $spacer*29;
 
 .EventList {
-  margin-bottom: $spacer*3;
+  margin-bottom: $spacer*2;
 
   &-title {
-    margin: 0 $spacer*2 $spacer*2;
-    padding-bottom: $spacer;
+    margin-bottom: 0;
+    font-size: 14px;
+    border: 0;
+    padding: 0;
     color: $black87;
-    font-size: 20px;
     font-weight: bold;
     text-transform: uppercase;
-    border-bottom: 1px solid $gray300;
   }
 
   &-list {
-    overflow: hidden;
+    overflow-x: auto;
     margin-left: $spacer*-1;
     white-space: nowrap;
     min-height: $event-list-height;
@@ -27,6 +27,7 @@ $event-list-height: $spacer*29;
 
     .EventListArrow {
       position: absolute;
+      display: none;
       z-index: 2;
       margin-top: $spacer*6;
       @include box-shadow(0 0 $spacer $black26);
@@ -72,7 +73,6 @@ $event-list-height: $spacer*29;
 
   &--related {
     overflow: auto;
-    position: absolute;
     top: $spacer*9;
     bottom: 0;
     margin-bottom: $spacer;
@@ -85,26 +85,43 @@ $event-list-height: $spacer*29;
       &-title {
         display: none;
       }
+
+      &-list {
+        display: inline-flex;
+      }
     }
   }
 }
 
-@include media("<tablet") {
+@include media(">tablet") {
   .EventList {
-    margin-bottom: $spacer*2;
+    margin-bottom: $spacer*3;
 
     &-title {
-      margin-bottom: 0;
-      font-size: 14px;
-      border: 0;
-      padding: 0;
+      margin: 0 $spacer*2 $spacer*2;
+      padding-bottom: $spacer;
+      font-size: 20px;
+      border-bottom: 1px solid $gray300;
     }
 
     &-list {
-      overflow-x: auto;
+      overflow: hidden;
 
       .EventListArrow {
-        display: none;
+        display: block;
+      }
+    }
+
+    &--related {
+      position: absolute;
+      margin-bottom: $spacer;
+
+      .EventList-list {
+        display: block;
+
+        .EventListArrow {
+          display: none;
+        }
       }
     }
   }
