@@ -27,14 +27,12 @@ $event-list-height: $spacer*29;
 
     .EventListArrow {
       position: absolute;
-      display: none;
-      z-index: 2;
-      margin-top: $spacer*6;
-      @include box-shadow(0 0 $spacer $black26);
-      border-radius: 4px;
+      display: none !important;
+      margin-top: $spacer*10;
+      z-index: 11;
 
-      &.icon.bordered {
-        width: $spacer*8;
+      svg {
+        fill: $black54 !important;
       }
 
       &--right {
@@ -53,7 +51,7 @@ $event-list-height: $spacer*29;
         }
       }
 
-      &--hidden.icon.link {
+      &--hidden {
         opacity: 0;
         pointer-events: none;
 
@@ -108,7 +106,7 @@ $event-list-height: $spacer*29;
       overflow: hidden;
 
       .EventListArrow {
-        display: block;
+        display: block !important;
       }
     }
 

@@ -59,9 +59,12 @@ class EventList extends React.Component {
       && !this.state.hasMore;
     const classes = classNames('EventList', { 'EventList--related': related });
 
+    console.log(node);
+
     declare var event;
     declare var placeholder;
     declare var idx;
+
     return !!eventCount && (
       <div className={classes}>
         <div className="EventList-title">{title} ({eventCount})</div>
