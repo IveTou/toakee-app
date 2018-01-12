@@ -133,12 +133,13 @@ export class EventPage extends React.Component {
   }
 
   scroll(direction) {
-    const node = this._listDOM;
-    const startingPoint = node.scrollLeft;
-    const amount = node.offsetHeight* 0.8 * direction;
+    const relatedNode = this._relatedDOM || {};
+    const childNode = relatedNode.lastChild || {};
+    const startingPoint = childNode.scrollTop;
+    const amount = childNode.offsetHeight* 0.8 * direction;
 
     ease(500, (tweaker) => {
-      node.scrollTop= startingPoint + (tweaker * amount);
+      childNode.scrollTop= startingPoint + (tweaker * amount);
     }, () => this.forceUpdate());
   }
 
@@ -166,9 +167,10 @@ export class EventPage extends React.Component {
     const isMobile = !this.props.deviceInfo.is('desktop');
     const previewThumbs = take(photos, isMobile ? 8 : 16);
 
-    const node = this._listDOM || {};
-    const hideTopArrow = !node.scrollTop;
-    const hideBottomArrow = node.scrollTop + node.offsetHeight >= node.scrollHeight;
+    const relatedNode = this._relatedDOM || {};
+    const childNode = relatedNode.lastChild || {};
+    const hideTopArrow = !childNode.scrollTop;
+    const hideBottomArrow = childNode.scrollTop + childNode.offsetHeight >= childNode.scrollHeight;
 
     const classes = classNames(
         'EventPage',
@@ -386,7 +388,7 @@ export class EventPage extends React.Component {
             </If>
           </div>
 
-          <div className="EventPage-related">
+          <div className="EventPage-related" ref={(dom) => { this._relatedDOM = dom; }}>
             <h2>Eventos Relacionados</h2>
             <Divider />
             <If condition={categories.length}>
@@ -404,7 +406,6 @@ export class EventPage extends React.Component {
                 title=""
                 start={moment().startOf('hour')}
                 categoryIds={map(categories, 'id')}
-                ref={(dom) => { this._listDOM = dom; }}
                 excludedEventId={id}
                 vertical
               />

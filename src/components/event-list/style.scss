@@ -89,7 +89,7 @@ $event-list-height: $spacer*29;
 
   &--bottom {
     position: absolute;
-    bottom: 0;
+    bottom: $spacer*2;
     margin-left: $spacer*14;
 
     &.EventListArrow--hidden {
