@@ -51,6 +51,20 @@ $event-list-height: $spacer*29;
         }
       }
 
+      &--top {
+
+        &.EventListArrow--hidden {
+          top: 0;
+        }
+      }
+
+      &--bottom {
+
+        &.EventListArrow--hidden {
+          bottom: 0;
+        }
+      }
+
       &--hidden {
         opacity: 0;
         pointer-events: none;
@@ -69,14 +83,13 @@ $event-list-height: $spacer*29;
     }
   }
 
-  &--related {
-    overflow: auto;
+  &--vertical {
+    overflow-y: auto;
     top: $spacer*9;
     bottom: 0;
     margin-bottom: $spacer;
 
     .EventListArrow {
-      display: none;
     }
 
     .EventList {
@@ -110,7 +123,7 @@ $event-list-height: $spacer*29;
       }
     }
 
-    &--related {
+    &--vertical {
       position: absolute;
       margin-bottom: $spacer;
 

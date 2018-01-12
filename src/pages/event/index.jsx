@@ -378,7 +378,7 @@ export class EventPage extends React.Component {
                 title=""
                 start={moment().startOf('hour')}
                 categoryIds={categories[0].id}
-                related
+                vertical
               />
             </If>
           </div>

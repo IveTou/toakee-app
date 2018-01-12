@@ -1,7 +1,12 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import { FloatingActionButton } from 'material-ui';
-import { NavigationChevronLeft, NavigationChevronRight } from 'material-ui/svg-icons';
+import {
+  NavigationChevronLeft,
+  NavigationChevronRight,
+  NavigationExpandLess,
+  NavigationExpandMore,
+} from 'material-ui/svg-icons';
 import { grey200 } from 'material-ui/styles/colors';
 
 const buildClasses = ({ direction, hide }) => classNames(
@@ -17,10 +22,12 @@ const EventListArrow = ({ onClick, direction, hide }) => (
     onClick={onClick}
     zDepth={4}
   >
-    <Choose>
-      <When condition={direction === 'left'}><NavigationChevronLeft /></When>
-      <Otherwise><NavigationChevronRight /></Otherwise>
-    </Choose>
+    {{
+      'left': (<NavigationChevronLeft />),
+      'right': (<NavigationChevronRight />),
+      'top': (<NavigationExpandLess />),
+      'bottom': (<NavigationExpandMore />),
+    }[direction]}
   </FloatingActionButton>
 );
 

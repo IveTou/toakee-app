@@ -49,17 +49,20 @@ class EventList extends React.Component {
   }
 
   render() {
-    const { title, viewer = {}, related } = this.props;
+    const { title, viewer = {}, vertical } = this.props;
     const { events = [], eventCount } = viewer;
 
     const node = this._listDOM || {};
-    const hideLeftArrow = !node.scrollLeft;
+    const hideLeftArrow = !node.scrollLeft || vertical;
     const hideRightArrow =
       node.scrollLeft + node.offsetWidth >= node.scrollWidth
-      && !this.state.hasMore;
-    const classes = classNames('EventList', { 'EventList--related': related });
+      && !this.state.hasMore || vertical;
+    const hideTopArrow = !node.scrollTop || !vertical;
+    const hideBottomArrow =
+      node.scrollTop + node.offsetHeight >= node.scrollHeight
+      && !this.state.hasMore || !vertical;
 
-    console.log(node);
+    const classes = classNames('EventList', { 'EventList--vertical': vertical });
 
     declare var event;
     declare var placeholder;
@@ -71,13 +74,15 @@ class EventList extends React.Component {
         <div className="EventList-list" ref={(dom) => { this._listDOM = dom; }}>
           <EventListArrow direction="left" onClick={() => this.scroll(-1)} hide={hideLeftArrow} />
           <EventListArrow direction="right" onClick={() => this.scroll(1)} hide={hideRightArrow} />
+          <EventListArrow direction="top" onClick={() => this.scroll(1)} hide={hideTopArrow} />
+          <EventListArrow direction="bottom" onClick={() => this.scroll(1)} hide={hideBottomArrow} />
           <For each="event" index="idx" of={events}>
-            <EventCard key={idx} event={event} related={related} />
+            <EventCard key={idx} event={event} vertical={vertical} />
           </For>
           <If condition={this.state.hasMore}>
             <VisibilitySensor onChange={isVisible => (isVisible && this.fetchEvents())} />
             <For each="placeholder" of={range(Math.min(5, eventCount - events.length))}>
-              <EventCardPlaceholder key={placeholder} related={related} />
+              <EventCardPlaceholder key={placeholder} vertical={vertical} />
             </For>
           </If>
         </div>
@@ -89,7 +94,7 @@ class EventList extends React.Component {
 EventList.propTypes = {
   title: PropTypes.string,
   loadMore: PropTypes.func,
-  related: PropTypes.bool,
+  vertical: PropTypes.bool,
   viewer: PropTypes.object,
 };
 
