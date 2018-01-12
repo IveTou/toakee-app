@@ -57,10 +57,6 @@ class EventList extends React.Component {
     const hideRightArrow =
       node.scrollLeft + node.offsetWidth >= node.scrollWidth
       && !this.state.hasMore || vertical;
-    const hideTopArrow = !node.scrollTop || !vertical;
-    const hideBottomArrow =
-      node.scrollTop + node.offsetHeight >= node.scrollHeight
-      && !this.state.hasMore || !vertical;
 
     const classes = classNames('EventList', { 'EventList--vertical': vertical });
 
@@ -74,8 +70,6 @@ class EventList extends React.Component {
         <div className="EventList-list" ref={(dom) => { this._listDOM = dom; }}>
           <EventListArrow direction="left" onClick={() => this.scroll(-1)} hide={hideLeftArrow} />
           <EventListArrow direction="right" onClick={() => this.scroll(1)} hide={hideRightArrow} />
-          <EventListArrow direction="top" onClick={() => this.scroll(1)} hide={hideTopArrow} />
-          <EventListArrow direction="bottom" onClick={() => this.scroll(1)} hide={hideBottomArrow} />
           <For each="event" index="idx" of={events}>
             <EventCard key={idx} event={event} vertical={vertical} />
           </For>

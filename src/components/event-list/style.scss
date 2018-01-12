@@ -25,56 +25,6 @@ $event-list-height: $spacer*29;
     min-height: $event-list-height;
     padding-right: $spacer*2;
 
-    .EventListArrow {
-      position: absolute;
-      display: none !important;
-      margin-top: $spacer*10;
-      z-index: 11;
-
-      svg {
-        fill: $black54 !important;
-      }
-
-      &--right {
-        right: $spacer;
-
-        &.EventListArrow--hidden {
-          right: 0;
-        }
-      }
-
-      &--left {
-        margin-left: $spacer;
-
-        &.EventListArrow--hidden {
-          margin-left: 0;
-        }
-      }
-
-      &--top {
-
-        &.EventListArrow--hidden {
-          top: 0;
-        }
-      }
-
-      &--bottom {
-
-        &.EventListArrow--hidden {
-          bottom: 0;
-        }
-      }
-
-      &--hidden {
-        opacity: 0;
-        pointer-events: none;
-
-        &:hover {
-          opacity: 0 !important;
-        }
-      }
-    }
-
     &-sensor {
       margin: 0 $spacer*3;
       display: inline-block;
@@ -84,13 +34,10 @@ $event-list-height: $spacer*29;
   }
 
   &--vertical {
-    overflow-y: auto;
+    overflow-y: hidden;
     top: $spacer*9;
     bottom: 0;
     margin-bottom: $spacer;
-
-    .EventListArrow {
-    }
 
     .EventList {
       &-title {
@@ -100,6 +47,62 @@ $event-list-height: $spacer*29;
       &-list {
         display: inline-flex;
       }
+    }
+  }
+}
+
+.EventListArrow {
+  position: absolute;
+  display: none !important;
+  margin-top: $spacer*10;
+  z-index: 11;
+
+  svg {
+    fill: $black54 !important;
+  }
+
+  &--right {
+    right: $spacer;
+
+    &.EventListArrow--hidden {
+      right: 0;
+    }
+  }
+
+  &--left {
+    margin-left: $spacer;
+
+    &.EventListArrow--hidden {
+      margin-left: 0;
+    }
+  }
+
+  &--top {
+    position: absolute;
+    top: 0;
+    margin-left: $spacer*14;
+
+    &.EventListArrow--hidden {
+      top: $spacer*-5;
+    }
+  }
+
+  &--bottom {
+    position: absolute;
+    bottom: 0;
+    margin-left: $spacer*14;
+
+    &.EventListArrow--hidden {
+      bottom: $spacer*-5;
+    }
+  }
+
+  &--hidden {
+    opacity: 0;
+    pointer-events: none;
+
+    &:hover {
+      opacity: 0 !important;
     }
   }
 }
@@ -117,10 +120,6 @@ $event-list-height: $spacer*29;
 
     &-list {
       overflow: hidden;
-
-      .EventListArrow {
-        display: block !important;
-      }
     }
 
     &--vertical {
@@ -129,11 +128,17 @@ $event-list-height: $spacer*29;
 
       .EventList-list {
         display: block;
-
-        .EventListArrow {
-          display: none;
-        }
       }
+    }
+  }
+
+  .EventListArrow {
+    &--right, &--left {
+      display: block !important;
+    }
+
+    &--top, &--bottom {
+      display: inline-block !important;
     }
   }
 }

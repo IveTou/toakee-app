@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Link, Element } from 'react-scroll';
 import Lightbox from 'react-images';
 import { graphql, compose } from 'react-apollo';
-import { take } from 'lodash';
+import { take, map } from 'lodash';
 import moment from 'moment';
 import {
   Avatar,
@@ -44,7 +44,9 @@ import {
 import classNames from 'classnames';
 import autoBind from 'react-autobind';
 import DefaultLayout from '~/src/layouts/default';
+import { ease } from '~/src/utils/animation';
 import EventList from '~/src/components/event-list';
+import EventListArrow from '~/src/components/event-list/arrow';
 import Wrapper from '~/src/components/map';
 import { fullDateFormat, timeFormat } from '~/src/utils/moment';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
@@ -130,6 +132,16 @@ export class EventPage extends React.Component {
     ));
   }
 
+  scroll(direction) {
+    const node = this._listDOM;
+    const startingPoint = node.scrollLeft;
+    const amount = node.offsetHeight* 0.8 * direction;
+
+    ease(500, (tweaker) => {
+      node.scrollTop= startingPoint + (tweaker * amount);
+    }, () => this.forceUpdate());
+  }
+
   render() {
     const { event: preEvent } = this.props.location.state || {};
     const { galleryIsVisible } = this.state;
@@ -153,6 +165,11 @@ export class EventPage extends React.Component {
     const mappedPrice = price || prices.length === 1 ? price || prices[0].value : prices;
     const isMobile = !this.props.deviceInfo.is('desktop');
     const previewThumbs = take(photos, isMobile ? 8 : 16);
+
+    const node = this._listDOM || {};
+    const hideTopArrow = !node.scrollTop;
+    const hideBottomArrow = node.scrollTop + node.offsetHeight >= node.scrollHeight;
+    console.log(node);
 
     const classes = classNames(
         'EventPage',
@@ -374,10 +391,21 @@ export class EventPage extends React.Component {
             <h2>Eventos Relacionados</h2>
             <Divider />
             <If condition={categories.length}>
+              <EventListArrow
+                direction="top"
+                onClick={() => this.scroll(-1)}
+                hide={hideTopArrow}
+              />
+              <EventListArrow
+                direction="bottom"
+                onClick={() => this.scroll(1)}
+                hide={hideBottomArrow}
+              />
               <EventList
                 title=""
                 start={moment().startOf('hour')}
-                categoryIds={categories[0].id}
+                categoryIds={map(categories, 'id')}
+                ref={(dom) => { this._listDOM = dom; }}
                 vertical
               />
             </If>
