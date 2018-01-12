@@ -33,11 +33,11 @@ const renderLabel = (status, start, end) => {
   };
 };
 
-const EventCard = ({ event, related }) => {
+const EventCard = ({ event, vertical }) => {
   const { id, title, place, flyer, start, end, status } = event;
   const startMoment = moment(start);
   const ribbon = renderLabel(status, startMoment, moment(end));
-  const classes = classNames('EventCard', { 'EventCard--related': related });
+  const classes = classNames('EventCard', { 'EventCard--vertical': vertical });
 
   return (
     <Link className={classes} to={{ pathname: `/evento/${id}`, state: { event } }}>
@@ -79,7 +79,7 @@ const EventCard = ({ event, related }) => {
 };
 
 EventCard.propTypes = {
-  related: PropTypes.bool,
+  vertical: PropTypes.bool,
   event: PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,

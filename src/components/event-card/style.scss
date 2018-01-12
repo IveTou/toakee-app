@@ -11,7 +11,7 @@
   white-space: nowrap;
   vertical-align: top;
 
-  &--related {
+  &--vertical {
     display: block;
   }
 
@@ -129,7 +129,7 @@
   min-height: $spacer*28;
   display: inline-block;
 
-  &--related {
+  &--vertical {
     display: block;
   }
 

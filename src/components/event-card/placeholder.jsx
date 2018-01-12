@@ -3,8 +3,8 @@ import classNames from 'classnames';
 import { Card, CircularProgress } from 'material-ui';
 import { deepOrange500 } from 'material-ui/styles/colors';
 
-const EventCardPlaceholder = ({ related }) => {
-  const classes = classNames('EventCardPlaceholder', { 'EventCardPlaceholder--related': related });
+const EventCardPlaceholder = ({ vertical }) => {
+  const classes = classNames('EventCardPlaceholder', { 'EventCardPlaceholder--vertical': vertical });
 
   return (
     <div className={classes}>
@@ -21,7 +21,7 @@ const EventCardPlaceholder = ({ related }) => {
 };
 
 EventCardPlaceholder.propTypes = {
-  related: PropTypes.bool,
+  vertical: PropTypes.bool,
 };
 
 export default EventCardPlaceholder;
