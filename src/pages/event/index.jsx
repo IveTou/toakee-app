@@ -169,7 +169,6 @@ export class EventPage extends React.Component {
     const node = this._listDOM || {};
     const hideTopArrow = !node.scrollTop;
     const hideBottomArrow = node.scrollTop + node.offsetHeight >= node.scrollHeight;
-    console.log(node);
 
     const classes = classNames(
         'EventPage',
@@ -406,6 +405,7 @@ export class EventPage extends React.Component {
                 start={moment().startOf('hour')}
                 categoryIds={map(categories, 'id')}
                 ref={(dom) => { this._listDOM = dom; }}
+                excludedEventId={id}
                 vertical
               />
             </If>
