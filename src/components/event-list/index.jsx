@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { graphql } from 'react-apollo';
 import autoBind from 'react-autobind';
 import VisibilitySensor from 'react-visibility-sensor';
-import { range, remove } from 'lodash';
+import { range } from 'lodash';
 
 import { ease } from '~/src/utils/animation';
 import EventCard from '~/src/components/event-card';
@@ -56,8 +56,9 @@ class EventList extends React.Component {
     const node = this._listDOM || {};
     const hideLeftArrow = !node.scrollLeft || vertical;
     const hideRightArrow =
-      node.scrollLeft + node.offsetWidth >= node.scrollWidth
-      && !this.state.hasMore || vertical;
+      vertical
+      || (node.scrollLeft + node.offsetWidth >= node.scrollWidth && !this.state.hasMore);
+
 
     const classes = classNames('EventList', { 'EventList--vertical': vertical });
 
@@ -108,7 +109,7 @@ export default graphql(query, {
       skipCount: false,
     },
   }),
-  props: ({data: { viewer, fetchMore },ownProps: { categoryIds, start: _start }}) => ({
+  props: ({ data: { viewer, fetchMore }, ownProps: { categoryIds, start: _start } }) => ({
     viewer,
     loadMore: () => {
       const { events = [] } = viewer;
@@ -118,7 +119,7 @@ export default graphql(query, {
         : _start;
 
       const skip = events.length && events
-        .filter(e =>eventStart.getTime() === new Date(e.start).getTime())
+        .filter(e => eventStart.getTime() === new Date(e.start).getTime())
         .length;
       const strict = !!events.length;
       const skipCount = true;

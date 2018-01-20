@@ -23,10 +23,10 @@ const EventListArrow = ({ onClick, direction, hide }) => (
     zDepth={4}
   >
     {{
-      'left': (<NavigationChevronLeft />),
-      'right': (<NavigationChevronRight />),
-      'top': (<NavigationExpandLess />),
-      'bottom': (<NavigationExpandMore />),
+      left: (<NavigationChevronLeft />),
+      right: (<NavigationChevronRight />),
+      top: (<NavigationExpandLess />),
+      bottom: (<NavigationExpandMore />),
     }[direction]}
   </FloatingActionButton>
 );

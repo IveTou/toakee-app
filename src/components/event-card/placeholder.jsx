@@ -8,9 +8,9 @@ const EventCardPlaceholder = ({ vertical }) => {
 
   return (
     <div className={classes}>
-      <Card>
+      <Card className="EventCardPlaceholder-card">
         <CircularProgress
-          className="EventCardPlaceholder-progress"
+          className="EventCardPlaceholder-card-progress"
           size={60}
           color={deepOrange500}
         />

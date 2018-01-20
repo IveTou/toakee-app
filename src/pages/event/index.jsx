@@ -78,7 +78,7 @@ export class EventPage extends React.Component {
   }
 
   openGallery() {
-    this.setState({ galleryIsVisible: 'true' });
+    this.setState({ galleryIsVisible: true });
   }
 
   handleClickPrev() {
@@ -110,6 +110,17 @@ export class EventPage extends React.Component {
     });
   }
 
+  scroll(direction) {
+    const relatedNode = this._relatedDOM || {};
+    const childNode = relatedNode.lastChild || {};
+    const startingPoint = childNode.scrollTop;
+    const amount = childNode.offsetHeight * 0.8 * direction;
+
+    ease(500, (tweaker) => {
+      childNode.scrollTop = startingPoint + (tweaker * amount);
+    }, () => this.forceUpdate());
+  }
+
   renderModerationButtons() {
     const { setStatus, event } = this.props;
     const { status: eventStatus } = event || {};
@@ -132,17 +143,6 @@ export class EventPage extends React.Component {
     ));
   }
 
-  scroll(direction) {
-    const relatedNode = this._relatedDOM || {};
-    const childNode = relatedNode.lastChild || {};
-    const startingPoint = childNode.scrollTop;
-    const amount = childNode.offsetHeight* 0.8 * direction;
-
-    ease(500, (tweaker) => {
-      childNode.scrollTop= startingPoint + (tweaker * amount);
-    }, () => this.forceUpdate());
-  }
-
   render() {
     const { event: preEvent } = this.props.location.state || {};
     const { galleryIsVisible } = this.state;
@@ -160,10 +160,9 @@ export class EventPage extends React.Component {
       photos = [],
       creator = {},
       categories = [],
-      status,
     } = event || {};
     const flyerAlt = `Flyer do ${title || 'evento'}`;
-    const mappedPrice = price || prices.length === 1 ? price || prices[0].value : prices;
+    const mappedPrice = price ? [{ value: price }] : prices;
     const isMobile = !this.props.deviceInfo.is('desktop');
     const previewThumbs = take(photos, isMobile ? 8 : 16);
 
@@ -226,7 +225,7 @@ export class EventPage extends React.Component {
                 </div>
               </CardMedia>
             </Card>
-            <If condition={photos.length} >
+            <If condition={photos.length}>
               <Card className="EventPage-main-gallery">
                 <Lightbox
                   images={photos.map(({ src }) => ({ src }))}
@@ -252,7 +251,7 @@ export class EventPage extends React.Component {
                 <If condition={!galleryIsVisible}>
                   <CardText className="EventPage-main-gallery-preview">
                     <GridList cols={2.2}>
-                      <For each="previewItem" of={previewThumbs} >
+                      <For each="previewItem" of={previewThumbs}>
                         <GridTile key={previewItem.thumb}><img src={previewItem.thumb} /></GridTile>
                       </For>
                     </GridList>
@@ -333,21 +332,14 @@ export class EventPage extends React.Component {
               />
               <CardText expandable>
                 <List className="EventPage-main-prices-info">
-                  <Choose>
-                    <When condition={Array.isArray(mappedPrice)}>
-                      <For each="priceItem" of={mappedPrice}>
-                        <ListItem
-                          disabled
-                          key={`${priceItem.description}${priceItem.value}`}
-                          primaryText={`${priceItem.description}`}
-                          secondaryText={`R$ ${priceItem.value}`}
-                        />
-                      </For>
-                    </When>
-                    <Otherwise>
-                      <ListItem disabled primaryText={mappedPrice} />
-                    </Otherwise>
-                  </Choose>
+                  <For each="priceItem" of={mappedPrice}>
+                    <ListItem
+                      disabled
+                      key={`${priceItem.description}${priceItem.value}`}
+                      primaryText={priceItem.description || 'Entrada'}
+                      secondaryText={priceItem.value ? `R$ ${priceItem.value}` : ''}
+                    />
+                  </For>
                 </List>
               </CardText>
             </Card>
@@ -420,7 +412,6 @@ export class EventPage extends React.Component {
 EventPage.propTypes = {
   event: PropTypes.object,
   viewer: PropTypes.object,
-  history: PropTypes.object,
   setStatus: PropTypes.func,
   deviceInfo: PropTypes.object,
   location: PropTypes.object,

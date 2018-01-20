@@ -38,23 +38,20 @@
 
     &-ribbon {
       position: absolute;
-      height: 100%;
-      width: 100%;
-
-      span {
-        top: $spacer;
-        position: relative;
-        padding: $spacer/2;
-        background-color: $deepOrange500;
-        color: $white;
-        border-radius: 0 2px 2px 0;
-        font-size: 14px;
-        font-weight: bold;
-        box-shadow: 1px 1px 2px $black54;
-      }
+      border-radius: 0 2px 2px 0;
+      height: $spacer*3;
+      line-height: $spacer*3;
+      top: $spacer*2;
+      background-color: $deepOrange500;
+      color: $white;
+      padding: 0 $spacer;
+      font-size: 14px;
+      font-weight: bold;
+      box-shadow: 1px 1px 2px $black54;
+      min-width: 0 !important;
+      width: initial !important;
     }
   }
-
 
   &-title {
     padding: $spacer !important;
@@ -74,7 +71,7 @@
   }
 
   &-details {
-    border-top: 1px solid rgba(0,0,0,.05);
+    border-top: 1px solid $black06;
     padding: 0 $spacer !important;
     overflow: hidden;
 
@@ -108,7 +105,7 @@
       vertical-align: middle;
       overflow: hidden;
 
-      > div {
+      &-time, &-place {
         position: relative;
 
         svg {
@@ -133,7 +130,7 @@
     display: block;
   }
 
-  > div {
+  &-card {
     height: $spacer*28;
 
     > div {
@@ -142,11 +139,11 @@
       position: relative;
       top: $spacer*5;
     }
-  }
 
-  &-progress {
-    > div {
-      display: inline-grid !important;
+    &-progress {
+      > div {
+        display: inline-grid !important;
+      }
     }
   }
 }

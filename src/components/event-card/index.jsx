@@ -53,7 +53,7 @@ const EventCard = ({ event, vertical }) => {
             />
             <If condition={ribbon}>
               <div className="EventCard-flyer-ribbon">
-                <span>{ribbon.content}</span>
+                {ribbon.content}
               </div>
             </If>
           </CardMedia>
@@ -69,8 +69,12 @@ const EventCard = ({ event, vertical }) => {
             </div>
           </div>
           <div className="EventCard-details-timeAndPlace">
-            <div><MapsPlace color={grey500} /><span>{place.name}</span></div>
-            <div><ActionSchedule color={grey500} /><span>{startMoment.format('HH')}h</span></div>
+            <div className="EventCard-details-timeAndPlace-place">
+              <MapsPlace color={grey500} /><span>{place.name}</span>
+            </div>
+            <div className="EventCard-details-timeAndPlace-time">
+              <ActionSchedule color={grey500} /><span>{startMoment.format('HH')}h</span>
+            </div>
           </div>
         </CardText>
       </Card>
