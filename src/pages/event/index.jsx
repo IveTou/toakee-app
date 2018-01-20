@@ -399,7 +399,7 @@ export class EventPage extends React.Component {
                 start={moment().startOf('hour')}
                 categoryIds={map(categories, 'id')}
                 excludedEventId={id}
-                vertical
+                vertical={!isMobile}
               />
             </If>
           </div>

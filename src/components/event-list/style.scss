@@ -39,14 +39,8 @@ $event-list-height: $spacer*29;
     bottom: 0;
     margin-bottom: $spacer;
 
-    .EventList {
-      &-title {
-        display: none;
-      }
-
-      &-list {
-        display: inline-flex;
-      }
+    .EventList-list {
+      display: inline-flex;
     }
   }
 }

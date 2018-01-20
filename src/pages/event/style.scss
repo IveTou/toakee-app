@@ -323,15 +323,20 @@
     white-space: nowrap;
     margin: $spacer;
     padding-top: $spacer*2;
-    width: $spacer*37;
     position: relative;
+    overflow: hidden;
 
     h2 {
       margin-left: $spacer*2;
     }
 
     hr {
+      display: none;
       margin: 0 0 $spacer !important;
+    }
+
+    .EventList-list {
+      overflow-y: hidden;
     }
   }
 }
@@ -380,6 +385,11 @@
 
     &-related {
       display: table-cell;
+      width: $spacer*37;
+
+      hr {
+        display: block;
+      }
     }
   }
 }

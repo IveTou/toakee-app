@@ -68,7 +68,9 @@ class EventList extends React.Component {
 
     return !!eventCount && (
       <div className={classes}>
-        <div className="EventList-title">{title} ({eventCount})</div>
+        <If condition={title}>
+          <div className="EventList-title">{title} ({eventCount})</div>
+        </If>
         <div className="EventList-list" ref={(dom) => { this._listDOM = dom; }}>
           <EventListArrow direction="left" onClick={() => this.scroll(-1)} hide={hideLeftArrow} />
           <EventListArrow direction="right" onClick={() => this.scroll(1)} hide={hideRightArrow} />
