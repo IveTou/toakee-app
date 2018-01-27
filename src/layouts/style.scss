@@ -6,7 +6,7 @@
   .main {
     margin-top: $topbar-height;
     background: $gray50;
-    transition: padding-left 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms !important;
+    transition: padding-left 450ms $bezier-curve 0ms !important;
   }
 }
 
