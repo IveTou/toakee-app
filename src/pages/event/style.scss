@@ -324,7 +324,7 @@
     margin: $spacer;
     padding-top: $spacer*2;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
 
     h2 {
       margin-left: $spacer*2;
@@ -385,7 +385,8 @@
 
     &-related {
       display: table-cell;
-      width: $spacer*37;
+      overflow-x: visible;
+      width: $spacer*39;
 
       hr {
         display: block;

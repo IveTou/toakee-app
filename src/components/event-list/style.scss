@@ -43,6 +43,34 @@ $event-list-height: $spacer*29;
       display: inline-flex;
     }
   }
+
+  .EventCardPlaceholder {
+    margin: $spacer 0 $spacer $spacer*3;
+    width: $spacer*30;
+    min-height: $spacer*28;
+    display: inline-block;
+
+    &--vertical {
+      display: block;
+    }
+
+    &-card {
+      height: $spacer*28;
+
+      > div {
+        height: 100%;
+        text-align: center;
+        position: relative;
+        top: $spacer*5;
+      }
+
+      &-progress {
+        > div {
+          display: inline-grid !important;
+        }
+      }
+    }
+  }
 }
 
 .EventListArrow {
