@@ -51,7 +51,7 @@ class EventList extends React.Component {
   render() {
     const { title, viewer = {}, vertical, excludedEventId } = this.props;
     const { eventCount } = viewer;
-    const events = viewer.events.filter(e => e.id !== excludedEventId) || [];
+    const events = viewer.events ? viewer.events.filter(e => e.id !== excludedEventId) : [];
 
     const node = this._listDOM || {};
     const hideLeftArrow = !node.scrollLeft || vertical;
