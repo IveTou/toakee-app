@@ -13,7 +13,7 @@ declare var banner;
 const Banner = () => (
   <Link className="Banner" to="/">
     <div className="Banner-description" >
-      <h1 className="Banner-description-title">Title Title Title</h1>
+      <h1 className="Banner-description-title">Title Title Title text have to fill just 2 lines so limit that</h1>
       <div className="Banner-description-calendar">
         <div className="Banner-description-calendar-month">
         Jan
@@ -24,7 +24,7 @@ const Banner = () => (
       </div>
       <div className="Banner-description-timeAndPlace">
         <div className="Banner-description-timeAndPlace-place">
-          <MapsPlace color={white} /><span>place</span>
+          <MapsPlace color={white} /><span>place the placeis name has to be in 2 line no more and fill the lmited space</span>
         </div>
         <div className="Banner-description-timeAndPlace-time">
           <ActionSchedule color={white} /><span>17h</span>

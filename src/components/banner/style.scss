@@ -23,9 +23,13 @@
     padding: $spacer*2;
     position: absolute;
     bottom: 0;
-    display: table;
+    display: inline-block;
 
     &-title {
+      max-height: $spacer*8;
+      overflow: hidden;
+      white-space: normal;
+      text-overflow: ellipsis;
       margin-bottom: 0;
     }
 
@@ -94,12 +98,12 @@
 
       &-calendar {
         &-month {
-          font-size: 22px;
+          font-size: 20px;
           padding: $spacer 0;
         }
 
         &-day {
-          font-size: 48px;
+          font-size: 38px;
           padding: $spacer 0;
         }
       }
