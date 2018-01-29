@@ -9,6 +9,7 @@
     margin-top: $topbar-height;
     transform: none !important;
     transition: width 450ms $bezier-curve 0ms !important;
+    z-index: $sidenav-zindex !important;
   }
 
   &-subheader {
