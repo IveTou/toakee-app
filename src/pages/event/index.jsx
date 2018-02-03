@@ -381,7 +381,6 @@ export class EventPage extends React.Component {
 
           <div className="EventPage-related" ref={(dom) => { this._relatedDOM = dom; }}>
             <h2>Eventos Relacionados</h2>
-            <Divider />
             <If condition={categories.length}>
               <EventListArrow
                 direction="top"
