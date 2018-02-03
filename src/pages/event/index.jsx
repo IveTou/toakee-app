@@ -171,12 +171,11 @@ export class EventPage extends React.Component {
     const hideTopArrow = !childNode.scrollTop;
     const hideBottomArrow = childNode.scrollTop + childNode.offsetHeight >= childNode.scrollHeight;
 
-    const classes = classNames(
-        'EventPage',
-        { 'EventPage--viewGallery': photos.length },
-        { 'EventPage--galleryIsVisible': galleryIsVisible },
-        { 'EventPage--isAdmin': viewer.isAdmin },
-        );
+    const classes = classNames('EventPage', {
+      'EventPage--viewGallery': photos.length,
+      'EventPage--galleryIsVisible': galleryIsVisible,
+      'EventPage--isAdmin': viewer.isAdmin,
+    });
 
     declare var index;
     declare var priceItem;
