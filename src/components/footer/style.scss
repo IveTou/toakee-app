@@ -3,6 +3,8 @@
 @import '../../scss/colors';
 
 .Footer {
+  background-color: $gray500;
+
   &--compressed {
     padding-left: $spacer*32;
   }
@@ -10,6 +12,5 @@
 
 @include media(">tablet") {
   .Footer {
-    padding: $spacer*2;
   }
 }

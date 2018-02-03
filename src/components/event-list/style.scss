@@ -6,7 +6,7 @@
 $event-list-height: $spacer*29;
 
 .EventList {
-  margin-bottom: $spacer*2;
+  padding-bottom: $spacer*3;
 
   &-title {
     margin-bottom: 0;
@@ -15,7 +15,6 @@ $event-list-height: $spacer*29;
     padding: 0;
     color: $black87;
     font-weight: bold;
-    text-transform: uppercase;
   }
 
   &-list {
@@ -131,8 +130,6 @@ $event-list-height: $spacer*29;
 
 @include media(">tablet") {
   .EventList {
-    margin-bottom: $spacer*3;
-
     &-title {
       margin: 0 $spacer*2 $spacer*2;
       padding-bottom: $spacer;

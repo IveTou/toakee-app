@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router-dom';
+import { IconButton, FontIcon } from 'material-ui';
+import { NavigationMenu } from 'material-ui/svg-icons';
 import classNames from 'classnames';
 
 if (process.env.BROWSER) {
@@ -11,12 +13,16 @@ const Footer = ({ compressed }) => {
 
     return (
       <footer className={classes}>
-            <a href="https://www.facebook.com/eu.toakee" aria-label="facebook">
-            </a>
-            <a href="https://www.instagram.com/eu.toakee" aria-label="instagram">
-            </a>
-            <a href="https://linkedin.com/company/toakee" aria-label="linkedin">
-            </a>
+        <div className="Footer-contact">
+          <IconButton
+            href="https://www.facebook.com/eu.toakee"
+            aria-label="facebook"
+          />
+          <IconButton href="https://www.instagram.com/eu.toakee" aria-label="instagram">
+          </IconButton>
+          <IconButton href="https://linkedin.com/company/toakee" aria-label="linkedin">
+          </IconButton>
+        </div>
           <Link className="Footer-link about" to="/quem-somos">
             <span>Quem somos?</span>
           </Link>
