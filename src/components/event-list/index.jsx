@@ -49,7 +49,7 @@ class EventList extends React.Component {
   }
 
   render() {
-    const { title, viewer = {}, vertical, excludedEventId } = this.props;
+    const { title, viewer = {}, vertical, excludedEventId, inputRef } = this.props;
     const { eventCount } = viewer;
     const events = viewer.events ? viewer.events.filter(e => e.id !== excludedEventId) : [];
 
@@ -67,7 +67,7 @@ class EventList extends React.Component {
     declare var idx;
 
     return !!eventCount && (
-      <div className={classes}>
+      <div className={classes} ref={inputRef}>
         <If condition={title}>
           <div className="EventList-title">{title} ({eventCount})</div>
         </If>
@@ -95,6 +95,7 @@ EventList.propTypes = {
   vertical: PropTypes.bool,
   excludedEventId: PropTypes.string,
   viewer: PropTypes.object,
+  inputRef: PropTypes.func,
 };
 
 export default graphql(query, {

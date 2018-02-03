@@ -111,13 +111,12 @@ export class EventPage extends React.Component {
   }
 
   scroll(direction) {
-    const relatedNode = this._relatedDOM || {};
-    const childNode = relatedNode.lastChild || {};
-    const startingPoint = childNode.scrollTop;
-    const amount = childNode.offsetHeight * 0.8 * direction;
+    const node = this._listDOM || {};
+    const startingPoint = node.scrollTop;
+    const amount = node.offsetHeight * 0.8 * direction;
 
     ease(500, (tweaker) => {
-      childNode.scrollTop = startingPoint + (tweaker * amount);
+      node.scrollTop = startingPoint + (tweaker * amount);
     }, () => this.forceUpdate());
   }
 
@@ -166,10 +165,11 @@ export class EventPage extends React.Component {
     const isMobile = !this.props.deviceInfo.is('desktop');
     const previewThumbs = take(photos, isMobile ? 8 : 16);
 
-    const relatedNode = this._relatedDOM || {};
-    const childNode = relatedNode.lastChild || {};
-    const hideTopArrow = !childNode.scrollTop;
-    const hideBottomArrow = childNode.scrollTop + childNode.offsetHeight >= childNode.scrollHeight;
+    const node = this._listDOM || {};
+    const hideTopArrow = !node.scrollTop;
+    const hideBottomArrow = node.scrollTop + node.offsetHeight >= node.scrollHeight;
+
+    console.log(node);
 
     const classes = classNames('EventPage', {
       'EventPage--viewGallery': photos.length,
@@ -379,7 +379,7 @@ export class EventPage extends React.Component {
             </If>
           </div>
 
-          <div className="EventPage-related" ref={(dom) => { this._relatedDOM = dom; }}>
+          <div className="EventPage-related">
             <h2>Eventos Relacionados</h2>
             <If condition={categories.length}>
               <EventListArrow
@@ -398,6 +398,7 @@ export class EventPage extends React.Component {
                 categoryIds={map(categories, 'id')}
                 excludedEventId={id}
                 vertical={!isMobile}
+                inputRef={ dom => this._listDOM = dom }
               />
             </If>
           </div>
