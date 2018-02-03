@@ -38,12 +38,10 @@
     &-ribbon {
       position: absolute;
       border-radius: 0 2px 2px 0;
-      height: $spacer*3;
-      line-height: $spacer*3;
       top: $spacer*2;
       background-color: $deepOrange500;
       color: $white;
-      padding: 0 $spacer;
+      padding: $spacer/2 $spacer;
       font-size: 14px;
       font-weight: bold;
       box-shadow: 1px 1px 2px $black54;
@@ -53,8 +51,7 @@
   }
 
   &-title {
-    padding: $spacer !important;
-    margin-right: $spacer;
+    padding: $spacer 0 !important;
     overflow: hidden;
 
     > div {
@@ -70,15 +67,14 @@
   }
 
   &-details {
-    border-top: 1px solid $black06;
-    padding: 0 $spacer !important;
+    padding: 0 !important;
     overflow: hidden;
 
     &-calendar {
       color: $black54;
       text-align: center;
       font-weight: bold;
-      padding: 0 $spacer;
+      padding: 0 $spacer 0 0;
       border-right: 1px solid rgba(0,0,0,.05);
       display: inline-block;
       vertical-align: middle;
@@ -99,7 +95,6 @@
       color: $black54;
       font-size: 12px;
       width: calc(100% - #{$spacer*7});
-      padding-top: $spacer;
       display: inline-block;
       vertical-align: middle;
       overflow: hidden;

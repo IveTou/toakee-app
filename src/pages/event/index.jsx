@@ -169,8 +169,6 @@ export class EventPage extends React.Component {
     const hideTopArrow = !node.scrollTop;
     const hideBottomArrow = node.scrollTop + node.offsetHeight >= node.scrollHeight;
 
-    console.log(node);
-
     const classes = classNames('EventPage', {
       'EventPage--viewGallery': photos.length,
       'EventPage--galleryIsVisible': galleryIsVisible,

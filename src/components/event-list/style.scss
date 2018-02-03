@@ -74,7 +74,7 @@ $event-list-height: $spacer*29;
 .EventListArrow {
   position: absolute;
   display: none !important;
-  margin-top: $spacer*10;
+  margin-top: $spacer*5;
   z-index: 11;
 
   svg {
