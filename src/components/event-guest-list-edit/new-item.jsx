@@ -39,8 +39,8 @@ export default class EventGuestListEditNewItem extends React.Component {
           ? entranceDeadline.add(1, 'days').toDate()
           : entranceDeadline.toDate(),
         socialIntegrations: socialIntegration
-         ? [{ network: 'INSTAGRAM', mediaUrl: socialIntegration }]
-         : [],
+          ? [{ network: 'INSTAGRAM', mediaUrl: socialIntegration }]
+          : [],
       });
 
       this.setState(initialState(start));
