@@ -53,8 +53,8 @@ Dialog.propTypes = {
   close: PropTypes.func,
   mode: PropTypes.string,
   allProps: PropTypes.shape({
-    confirmTrigger: PropTypes.obj,
-    cancelTrigger: PropTypes.obj,
+    confirmTrigger: PropTypes.object,
+    cancelTrigger: PropTypes.object,
     onConfirm: PropTypes.func,
   }),
 };
