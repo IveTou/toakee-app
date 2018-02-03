@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Route } from 'react-router-dom';
 
 import DefaultLayout from '~/src/layouts/default';
@@ -18,9 +18,5 @@ const Dashboard = () => (
     </div>
   </DefaultLayout>
 );
-
-Dashboard.propTypes = {
-  match: PropTypes.object,
-};
 
 export default Dashboard;

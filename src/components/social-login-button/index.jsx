@@ -31,7 +31,7 @@ const icon = {
 
 const propTypes = {
   onReceiveToken: PropTypes.func,
-  service: PropTypes.string,
+  network: PropTypes.string,
 };
 
 const defaultProps = {
@@ -39,9 +39,10 @@ const defaultProps = {
 };
 
 export default class SocialLoginButton extends React.Component {
-  defaultProps: defaultProps;
+  static propTypes = propTypes;
+  static defaultProps = defaultProps;
 
-  constructor(props: propTypes) {
+  constructor(props) {
     super(props);
     autoBind(this);
   }
@@ -70,3 +71,4 @@ export default class SocialLoginButton extends React.Component {
     );
   }
 }
+

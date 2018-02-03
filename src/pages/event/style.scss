@@ -192,7 +192,7 @@
         padding: 0 !important;
 
         > div > div {
-          padding: $spacer $spacer*2 $spacer*2 $spacer*9 !important;
+          padding: $spacer $spacer*2 $spacer $spacer*7 !important;
         }
 
         &-button {
@@ -327,11 +327,6 @@
 
     h2 {
       margin-left: $spacer*2;
-    }
-
-    hr {
-      display: none;
-      margin: 0 0 $spacer !important;
     }
 
     .EventList-list {

@@ -10,6 +10,11 @@
     transform: none !important;
     transition: width 450ms $bezier-curve 0ms !important;
     z-index: $sidenav-zindex !important;
+    box-shadow: 0 1px 3px $black12, 0 1px 2px $black26;
+
+    > div {
+      width: 100% !important;
+    }
   }
 
   &-subheader {
