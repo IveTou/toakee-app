@@ -8,6 +8,10 @@
     margin-bottom: $spacer*2;
     padding: 0;
   }
+
+  &-lists {
+    padding-bottom: $spacer*3;
+  }
 }
 
 @include media(">tablet") {

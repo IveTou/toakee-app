@@ -3,7 +3,14 @@
 @import '../../scss/colors';
 
 .Footer {
-  background-color: $gray500;
+  background-color: $grey50;
+  color: $grey500;
+
+  &-content {
+    margin: 0 auto;
+    display: table;
+    padding: $spacer*3 $spacer;
+  }
 
   &--compressed {
     padding-left: $spacer*32;
