@@ -7,7 +7,7 @@ $event-list-height: $spacer*29;
 
 .EventList {
   &-title {
-    margin: 0 $spacer;
+    margin: 0 $spacer*2;
     font-size: 18px;
     border: 0;
     padding: 0;
@@ -17,7 +17,6 @@ $event-list-height: $spacer*29;
 
   &-list {
     overflow-x: auto;
-    margin-left: $spacer*-1;
     white-space: nowrap;
     min-height: $event-list-height;
     padding: $spacer*2 $spacer 0 $spacer;
