@@ -10,7 +10,6 @@ import {
   CardHeader,
   CardMedia,
   CardText,
-  Divider,
   FlatButton,
   RaisedButton,
   FloatingActionButton,
@@ -396,7 +395,7 @@ export class EventPage extends React.Component {
                 categoryIds={map(categories, 'id')}
                 excludedEventId={id}
                 vertical={!isMobile}
-                inputRef={ dom => this._listDOM = dom }
+                inputRef={dom => this._listDOM = dom}
               />
             </If>
           </div>

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router-dom';
-import { FontIcon } from 'material-ui';
+import { IconButton } from 'material-ui';
 import { NavigationMenu } from 'material-ui/svg-icons';
 import classNames from 'classnames';
 

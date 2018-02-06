@@ -10,7 +10,7 @@ import MixpanelClient from './clients/mixpanel';
 import config from './config';
 import { exposeSSRRoutes } from './ssr';
 
-const { PORT, SUPPORT_EMAIL, SENDGRID_API_KEY, GOOGLE_PLACES_KEY } = config;
+const { PORT, GOOGLE_PLACES_KEY } = config;
 const devMode = process.env.NODE_ENV !== 'production';
 
 const app = express();
