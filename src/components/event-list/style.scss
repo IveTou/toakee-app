@@ -52,6 +52,7 @@ $event-list-height: $spacer*29;
     &-content {
       margin: $spacer*5 auto;
       display: table;
+      text-align: center;
 
       &-progress {
         margin-bottom: $spacer*2;
