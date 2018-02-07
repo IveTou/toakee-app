@@ -6,10 +6,40 @@
   background-color: $grey50;
   color: $grey500;
 
+  .column {
+    margin: 0 $spacer*2;
+  }
+
   &-content {
     margin: 0 auto;
     display: table;
-    padding: $spacer*3 $spacer;
+    padding: $spacer*5 $spacer;
+
+    &-row {
+      display: table;
+      margin: 0 auto;
+
+      p {
+        padding: 0 $spacer;
+        margin-bottom: 0;
+        font-size: 18px;
+        line-height: $spacer*4;
+        color: $grey800;
+      }
+
+      ul {
+        padding: 0 $spacer;
+        margin-top: $spacer;
+        font-size: 18px;
+        line-height: $spacer*4;
+        list-style-type: none;
+      }
+    }
+
+    &-copyright {
+      margin-top: $spacer*2;
+      padding: $spacer $spacer*3;
+    }
   }
 
   &--compressed {
@@ -18,6 +48,7 @@
 }
 
 @include media(">tablet") {
-  .Footer {
+  .Footer-content-row {
+    display: flex;
   }
 }
