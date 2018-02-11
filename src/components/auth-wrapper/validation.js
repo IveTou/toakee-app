@@ -21,8 +21,8 @@ export const validateSignUp = obj => validate(obj, {
       tooLong: 'O usuário não pode conter mais de 14 caracteres.',
     },
     format: {
-      pattern: '[a-z][a-z0-9]+',
-      message: 'Usuário só pode conter letras e números, não pode começar com números.',
+      pattern: '^[a-z][a-z0-9]+',
+      message: 'Usuário só pode conter letras minúsculas e números, não pode começar com números.',
       flags: 'i',
     },
   },

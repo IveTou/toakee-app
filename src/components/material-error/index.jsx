@@ -10,9 +10,11 @@ const MaterialError = ({ error, center }) => {
     'MaterialError--center': center,
   });
 
-  return error
-    ? <div className={classes}>{error}</div>
-    : null;
+  return (
+    <If condition={!!error}>
+      <div className={classes}>{error}</div>
+    </If>
+  );
 };
 
 MaterialError.propTypes = {

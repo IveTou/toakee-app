@@ -1,13 +1,17 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Snackbar as MaterialSnackbar } from 'material-ui';
+import { Snackbar as MaterialSnackbar } from 'material-ui-next';
 
 if (process.env.BROWSER) {
   require('./style.scss');
 }
 
 const Snackbar = ({ visible, props: { message } }) => (
-  <MaterialSnackbar open={!!visible} message={message || ''} />
+  <MaterialSnackbar
+    open={!!visible}
+    message={message || ''}
+    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+  />
 );
 
 Snackbar.propTypes = {
