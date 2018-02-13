@@ -9,7 +9,7 @@
   padding: $spacer $spacer*3 !important;
   height: $topbar-height !important;
   z-index: $topbar-zindex;
-  box-shadow: 0 1px 2px 0 $gray500;
+  box-shadow: 0 1px 2px 0 $black12;
 
   &-search {
     margin: 0 $spacer*2;
@@ -31,10 +31,15 @@
   }
 
   &-menu {
-    margin-right: $spacer*-3 !important;
+    margin-right: $spacer !important;
+    padding-top: $spacer;
 
     &-button {
       margin: 0 $spacer !important;
+    }
+
+    button {
+      padding: 0 !important;
     }
   }
 }

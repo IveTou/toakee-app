@@ -7,8 +7,8 @@ $event-list-height: $spacer*29;
 
 .EventList {
   &-title {
-    margin-bottom: 0;
-    font-size: 14px;
+    margin: 0 $spacer*2;
+    font-size: 18px;
     border: 0;
     padding: 0;
     color: $black87;
@@ -17,10 +17,9 @@ $event-list-height: $spacer*29;
 
   &-list {
     overflow-x: auto;
-    margin-left: $spacer*-1;
     white-space: nowrap;
     min-height: $event-list-height;
-    padding-right: $spacer*2;
+    padding: $spacer*2 $spacer 0 $spacer;
 
     &-sensor {
       margin: 0 $spacer*3;
@@ -41,29 +40,22 @@ $event-list-height: $spacer*29;
   }
 
   .EventCardPlaceholder {
-    margin: $spacer 0 $spacer $spacer*3;
+    margin: $spacer 0 $spacer $spacer;
     width: $spacer*30;
-    min-height: $spacer*28;
     display: inline-block;
+    height: $spacer*28;
 
     &--vertical {
       display: block;
     }
 
-    &-card {
-      height: $spacer*28;
-
-      > div {
-        height: 100%;
-        text-align: center;
-        position: relative;
-        top: $spacer*5;
-      }
+    &-content {
+      margin: $spacer*5 auto;
+      display: table;
+      text-align: center;
 
       &-progress {
-        > div {
-          display: inline-grid !important;
-        }
+        margin-bottom: $spacer*2;
       }
     }
   }
@@ -72,7 +64,7 @@ $event-list-height: $spacer*29;
 .EventListArrow {
   position: absolute;
   display: none !important;
-  margin-top: $spacer*10;
+  margin-top: $spacer*5;
   z-index: 11;
 
   svg {
@@ -127,16 +119,17 @@ $event-list-height: $spacer*29;
 
 @include media(">tablet") {
   .EventList {
-    margin-bottom: $spacer*3;
+    margin-left: $spacer*3;
 
     &-title {
-      margin: 0 $spacer*2 $spacer*2;
+      margin: 0;
       padding-bottom: $spacer;
       font-size: 20px;
     }
 
     &-list {
       overflow: hidden;
+      padding: $spacer 0;
     }
 
     &--vertical {

@@ -2,13 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ActionSchedule, MapsPlace } from 'material-ui/svg-icons';
 import { white } from 'material-ui/styles/colors';
-import { banners } from '~/src/constants';
 
 if (process.env.BROWSER) {
   require('./style.scss');
 }
-
-declare var banner;
 
 const Banner = () => (
   <Link className="Banner" to="/">

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { upperFirst } from 'lodash';
 import moment from 'moment';
-import { Card, CardHeader, CardMedia, CardText } from 'material-ui';
+import { CardHeader, CardMedia, CardText } from 'material-ui';
 import { ActionSchedule, MapsPlace } from 'material-ui/svg-icons';
 import { grey500 } from 'material-ui/styles/colors';
 
@@ -41,7 +41,7 @@ const EventCard = ({ event, vertical }) => {
 
   return (
     <Link className={classes} to={{ pathname: `/evento/${id}`, state: { event } }}>
-      <Card>
+      <div>
         <If condition={flyer}>
           <CardMedia
             className="EventCard-flyer"
@@ -77,7 +77,7 @@ const EventCard = ({ event, vertical }) => {
             </div>
           </div>
         </CardText>
-      </Card>
+      </div>
     </Link>
   );
 };

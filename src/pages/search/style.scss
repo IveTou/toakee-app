@@ -7,16 +7,14 @@
 }
 
 .SearchPageResults {
-  padding: $spacer*3 0;
+  padding: $spacer*3;
 
   &-title {
-    margin: $spacer*3 $spacer*2 $spacer*2;
+    margin-bottom: $spacer*2;
     padding-bottom: $spacer;
     color: $black87;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
-    text-transform: uppercase;
-    border-bottom: 1px solid $gray300;
   }
 
   &-notFound {

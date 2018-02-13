@@ -3,7 +3,7 @@
 @import '../../scss/colors';
 
 .Banner {
-  height: $spacer*38;
+  height: $spacer*30;
   max-width: $spacer*100;
   background-color: $orange;
   background-position: center;
@@ -15,7 +15,6 @@
   position: relative;
 
   &-description {
-    max-height: $spacer*50;
     width: 100%;
     float: right;
     background-color: $black54;
@@ -26,7 +25,8 @@
     display: inline-block;
 
     &-title {
-      max-height: $spacer*8;
+      max-height: $spacer*6;
+      font-size: 20px;
       overflow: hidden;
       white-space: normal;
       text-overflow: ellipsis;
@@ -86,14 +86,15 @@
   .Banner {
     height: $spacer*50;
 
-
     &-description {
       height: 100%;
       width: $spacer*30;
       position: relative;
 
       &-title {
+        max-height: $spacer*9;
         margin-bottom: $spacer*2;
+        font-size: 28px;
       }
 
       &-calendar {
