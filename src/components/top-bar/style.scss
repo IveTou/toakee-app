@@ -31,10 +31,15 @@
   }
 
   &-menu {
-    margin-right: $spacer*-3 !important;
+    margin-right: $spacer !important;
+    padding-top: $spacer;
 
     &-button {
       margin: 0 $spacer !important;
+    }
+
+    button {
+      padding: 0 !important;
     }
   }
 }

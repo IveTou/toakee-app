@@ -15,6 +15,7 @@ import {
 } from 'material-ui';
 import { NavigationMenu, NavigationMoreVert, ActionAccountCircle } from 'material-ui/svg-icons';
 import SearchBar from 'material-ui-search-bar';
+import { withInfo } from '~/src/hocs';
 import { logout } from '~/src/utils/session';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import Logo from '~/src/components/logo';
@@ -77,9 +78,7 @@ export class TopBar extends React.Component {
     const { viewer } = this.props;
 
     if (viewer && viewer.id) {
-      return viewer.photo
-        ? <Avatar className="TopBar-avatar" src={viewer.photo} />
-        : <Avatar className="TopBar-avatar">{viewer.firstName[0]}</Avatar>;
+      return <Avatar className="TopBar-menu-avatar">{viewer.firstName[0]}</Avatar>;
     }
 
     return <ActionAccountCircle />;
@@ -167,4 +166,4 @@ TopBar.propTypes = {
   onToggle: PropTypes.func,
 };
 
-export default withApollo(withRouter(TopBar));
+export default withApollo(withRouter(withInfo(TopBar, ['viewer'])));
