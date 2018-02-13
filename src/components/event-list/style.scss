@@ -135,6 +135,7 @@ $event-list-height: $spacer*29;
     &--vertical {
       position: absolute;
       margin-bottom: $spacer;
+      margin-left: $spacer;
 
       .EventList-list {
         display: block;

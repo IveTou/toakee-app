@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Link, Element } from 'react-scroll';
 import Lightbox from 'react-images';
 import { graphql, compose } from 'react-apollo';
-import { take, map } from 'lodash';
+import { take, map, isEmpty } from 'lodash';
 import moment from 'moment';
 import {
   Avatar,
@@ -166,7 +166,7 @@ export class EventPage extends React.Component {
 
     const node = this._listDOM || {};
     const hideTopArrow = !node.scrollTop;
-    const hideBottomArrow = node.scrollTop + node.offsetHeight >= node.scrollHeight;
+    const hideBottomArrow = isEmpty(node) || node.scrollTop + node.offsetHeight >= node.scrollHeight;
 
     const classes = classNames('EventPage', {
       'EventPage--viewGallery': photos.length,
