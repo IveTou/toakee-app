@@ -164,11 +164,7 @@
     &-details {
       margin: $spacer 0 $spacer 0;
       width: 100%;
-      border-left: 4px solid $deepOrange500;
 
-      * {
-        line-height: $spacer*4;
-      }
 
       > div {
         padding-bottom: 0 !important;
@@ -181,6 +177,8 @@
 
         + div {
           padding: 0 $spacer $spacer !important;
+          display: inline-flex;
+          width: 100%;
         }
 
         > div + div {
@@ -190,6 +188,11 @@
 
       &-info {
         padding: 0 !important;
+        width: 66%;
+
+        * {
+          line-height: $spacer*4;
+        }
 
         > div > div {
           padding: $spacer $spacer*2 $spacer $spacer*7 !important;
@@ -200,13 +203,27 @@
           text-align: right;
         }
       }
+
+      &-map {
+        width:33%;
+        padding: $spacer;
+
+        .Map {
+          &-container {
+            height: $spacer*26;
+          }
+
+          &-element {
+            height: 100%;
+          }
+        }
+      }
     }
 
     &-prices {
       margin: 0 0 $spacer 0;
       width: 100%;
       min-width: $spacer*25;
-      border-left: 4px solid $lightBlue500;
 
       * {
         line-height: $spacer*3;
@@ -241,7 +258,6 @@
       margin: 0 0 $spacer 0;
       width: 100%;
       display: inline-block;
-      border-left: 4px solid $amber500;
 
       p {
         font-size: 16px !important;
@@ -270,18 +286,6 @@
         padding: 0 $spacer*2;
         font-size: 16px;
         text-align: left;
-      }
-    }
-
-    &-map {
-      border-left: 4px solid $green500;
-
-      &-title > div + div {
-        vertical-align: initial !important;
-
-        span {
-          font-size: 18px !important;
-        }
       }
     }
   }
@@ -346,21 +350,6 @@
 
       &-details {
         margin: $spacer $spacer $spacer 0;
-        min-width: $spacer*40;
-        float: left;
-        width: 68%;
-      }
-
-      &-prices {
-        margin: $spacer 0 $spacer $spacer;
-        width: 28%;
-        float: right;
-        position: absolute;
-        right: 0;
-
-        &-info {
-          min-height: $spacer*22;
-        }
       }
 
       &-description {

@@ -149,7 +149,6 @@ export class EventPage extends React.Component {
       id,
       title,
       description,
-      directions,
       place,
       start,
       flyer,
@@ -163,6 +162,7 @@ export class EventPage extends React.Component {
     const mappedPrice = price ? [{ value: price }] : prices;
     const isMobile = !this.props.deviceInfo.is('desktop');
     const previewThumbs = take(photos, isMobile ? 8 : 16);
+    const coordinates = { lat: place.coordinates[1], lng: place.coordinates[0] } || {};
 
     const node = this._listDOM || {};
     const hideTopArrow = !node.scrollTop;
@@ -303,17 +303,13 @@ export class EventPage extends React.Component {
                       primaryText={place.address}
                       leftIcon={<MapsPlace />}
                     />
-                    <If condition={directions}>
-                      <div className="EventPage-main-details-info-button">
-                        <FlatButton
-                          label="Ver Mapa"
-                          secondary
-                          containerElement={<Link to="map" smooth offset={-200} duration={500} />}
-                        />
-                      </div>
-                    </If>
                   </If>
                 </List>
+                <If condition={!isEmpty(coordinates)}>
+                  <div className="EventPage-main-details-map">
+                    <Wrapper center={coordinates} />
+                  </div>
+                </If>
               </CardText>
             </Card>
             <Card className="EventPage-main-prices" initiallyExpanded>
@@ -356,24 +352,6 @@ export class EventPage extends React.Component {
                 />
               </CardText>
             </Card>
-            <If condition={directions}>
-              <Card className="EventPage-main-map" name="map" initiallyExpanded>
-                <CardHeader
-                  className="EventPage-main-map-title"
-                  title="Mapa"
-                  actAsExpander={isMobile}
-                  showExpandableButton={isMobile}
-                  avatar={
-                    <Avatar icon={<MapsMap />} backgroundColor={green500} size={30} />
-                  }
-                />
-                <CardText expandable>
-                  <Element name="map">
-                    <Wrapper center={directions} />
-                  </Element>
-                </CardText>
-              </Card>
-            </If>
           </div>
 
           <div className="EventPage-related">
