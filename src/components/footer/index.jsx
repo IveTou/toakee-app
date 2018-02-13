@@ -19,24 +19,24 @@ const Footer = ({ compressed }) => {
             <ul>
               <li>contato@toakee.com</li>
               <li>+55 71 996 763 313</li>
-              <li>Rua parara parara, Savador-Ba</li>
+              <li>Salvador-Ba</li>
             </ul>
           </div>
           <div className="Footer-content-row-services column">
             <p>Serviços</p>
             <ul>
               <li>
-                <Link className="Footer-content-row-services-event" to="/quem-somos">
+                <Link className="Footer-content-row-services-event" to="/evento/novo">
                   <span>Crie seu evento</span>
                 </Link>
               </li>
               <li>
-                <Link className="Footer-content-row-services-signup" to="/quem-somos">
+                <Link className="Footer-content-row-services-signup" to="/cadastrar">
                   <span>Cadastre-se</span>
                 </Link>
               </li>
               <li>
-                <Link className="Footer-content-row-services-dashboard" to="/quem-somos">
+                <Link className="Footer-content-row-services-dashboard" to="/dashboard">
                   <span>Meus eventos</span>
                 </Link>
               </li>
@@ -53,6 +53,11 @@ const Footer = ({ compressed }) => {
               <li>
                 <Link className="Footer-link terms" to="/termos-de-uso">
                   <span>Termos de Uso</span>
+                </Link>
+              </li>
+              <li>
+                <Link className="Footer-link privacy" to="/privacidade">
+                  <span>Políticas de Privacidade</span>
                 </Link>
               </li>
             </ul>
