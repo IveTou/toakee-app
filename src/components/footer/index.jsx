@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Grid, Segment, Divider, Button, Image, Form, Icon, Popup } from 'semantic-ui-react';
 import FacebookProvider, { Page } from 'react-facebook';

@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
-import { MuiThemeProvider as OldThemeProvider } from 'material-ui/styles';
-import { MuiThemeProvider } from 'material-ui-next/styles';
+import { MuiThemeProvider } from 'material-ui';
 
 import ProtectedRoute from '~/src/routes/protected';
 
@@ -28,59 +28,57 @@ import DeviceInfoProvider from '~/src/components/device-info-provider';
 
 import { userIsLogged, userIsAdmin } from '~/src/auth';
 
-import { oldTheme, theme } from '~/src/mui/theme';
+import { theme } from '~/src/mui/theme';
 
 const App = ({ userAgent }) => (
-  <OldThemeProvider muiTheme={oldTheme}>
-    <MuiThemeProvider theme={theme}>
-      <ViewerProvider>
-        <DeviceInfoProvider userAgent={userAgent || window.navigator.userAgent}>
-          <Scroller />
-          <Snackbar />
-          <AuthModal />
-          <Switch>
-            <ProtectedRoute
-              auth={userIsLogged}
-              component={EventFeed}
-              path="/"
-              redirectTo="/landing"
-              exact
-            />
-            <ProtectedRoute
-              auth={userIsAdmin}
-              component={EventModeration}
-              path="/moderacao"
-              redirectTo="/login"
-              exact
-            />
-            <ProtectedRoute
-              auth={userIsLogged}
-              component={NewEventPage}
-              path="/evento/novo"
-              redirectTo="/login"
-              exact
-            />
-            <ProtectedRoute
-              auth={userIsLogged}
-              component={EditEventPage}
-              path="/evento/:id/editar"
-              redirectTo="/login"
-              exact
-            />
-            <Route path="/landing" component={Landing} />
-            <Route path="/login" component={Login} />
-            <Route path="/cadastrar" component={SignUp} />
-            <Route path="/search" component={SearchPage} />
-            <Route path="/evento/:id" exact component={EventPage} />
-            <Route path="/evento/:id/fotos" component={EventPhotos} />
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/termos-de-uso" component={UseTerms} />
-            <Route path="/quem-somos" component={About} />
-          </Switch>
-        </DeviceInfoProvider>
-      </ViewerProvider>
-    </MuiThemeProvider>
-  </OldThemeProvider>
+  <MuiThemeProvider theme={theme}>
+    <ViewerProvider>
+      <DeviceInfoProvider userAgent={userAgent || window.navigator.userAgent}>
+        <Scroller />
+        <Snackbar />
+        <AuthModal />
+        <Switch>
+          <ProtectedRoute
+            auth={userIsLogged}
+            component={EventFeed}
+            path="/"
+            redirectTo="/landing"
+            exact
+          />
+          <ProtectedRoute
+            auth={userIsAdmin}
+            component={EventModeration}
+            path="/moderacao"
+            redirectTo="/login"
+            exact
+          />
+          <ProtectedRoute
+            auth={userIsLogged}
+            component={NewEventPage}
+            path="/evento/novo"
+            redirectTo="/login"
+            exact
+          />
+          <ProtectedRoute
+            auth={userIsLogged}
+            component={EditEventPage}
+            path="/evento/:id/editar"
+            redirectTo="/login"
+            exact
+          />
+          <Route path="/landing" component={Landing} />
+          <Route path="/login" component={Login} />
+          <Route path="/cadastrar" component={SignUp} />
+          <Route path="/search" component={SearchPage} />
+          <Route path="/evento/:id" exact component={EventPage} />
+          <Route path="/evento/:id/fotos" component={EventPhotos} />
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/termos-de-uso" component={UseTerms} />
+          <Route path="/quem-somos" component={About} />
+        </Switch>
+      </DeviceInfoProvider>
+    </ViewerProvider>
+  </MuiThemeProvider>
 );
 
 App.propTypes = {

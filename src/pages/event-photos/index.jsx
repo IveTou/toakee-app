@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import { Image, Header } from 'semantic-ui-react';
 import Lightbox from 'react-images';

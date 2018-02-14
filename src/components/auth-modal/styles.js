@@ -1,4 +1,4 @@
-import { withStyles } from 'material-ui-next';
+import { withStyles } from 'material-ui';
 
 const headerTweaker = 14;
 

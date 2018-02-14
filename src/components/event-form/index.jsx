@@ -1,85 +1,116 @@
-import React, { PropTypes } from 'react';
-import { withFormik } from 'formik';
-import Yup from 'yup';
-import { RaisedButton } from 'material-ui';
+import React from 'react';
+import PropTypes from 'prop-types';
+import moment from 'moment';
+import { Formik } from 'formik';
+import { Button } from 'material-ui';
+import { compose, withStateHandlers } from 'recompose';
+
+import { throwInner } from '~/src/utils/validation';
+import { omitTypenames } from '~/src/utils/graphql';
+import { withGraphqlError } from '~/src/hocs/graphql';
 
 import EventFormSection from './section';
-import EventFormMain, { validation as mainValidation } from './main';
-import EventFormDates, { validation as datesValidation } from './dates';
-import EventFormPlace, { validation as placeValidation } from './place';
+import EventFormMain from './main';
+import EventFormPlace from './place';
 import EventFormPrices from './prices';
 import EventFormDescription from './description';
 
-if (process.env.BROWSER) {
-  require('./style.scss');
-}
+import { withIndexStyle } from './styles';
+import { schema } from './validation';
 
-export const EventForm = ({ handleSubmit, isSubmitting, ...form }) => (
-  <div className="EventForm">
-    <form onSubmit={handleSubmit}>
-      <div className="EventForm-body">
-        <EventFormSection title="1. Principal" form={form} Section={EventFormMain} />
-        <EventFormSection title="2. Data" form={form} Section={EventFormDates} />
-        <EventFormSection title="3. Local" form={form} Section={EventFormPlace} />
-        <EventFormSection title="4. Preços" form={form} Section={EventFormPrices} />
-        <EventFormSection
-          title="5. Descrição e Categorias"
-          form={form}
-          Section={EventFormDescription}
-        />
-      </div>
+const sections = [
+  { title: '1. Principal', component: EventFormMain },
+  { title: '2. Local', component: EventFormPlace },
+  { title: '3. Preços', component: EventFormPrices },
+  { title: '4. Descrição e Categorias', component: EventFormDescription },
+];
 
-      <div className="EventForm-submit">
-        <RaisedButton
-          type="submit"
-          label="Salvar"
-          disabled={isSubmitting}
-          primary
-        />
-      </div>
-    </form>
-  </div>
+const initialValues = (event) => {
+  const {
+    start, end, flyer,
+    prices = [{}], categories = [],
+    ...eventProps
+  } = event || {};
+
+  return {
+    title: '',
+    place: {},
+    description: '',
+    categories: omitTypenames(categories),
+    prices: omitTypenames(prices),
+    flyer: flyer ? { url: flyer } : {},
+    start: start ? moment(start) : null,
+    end: end ? moment(end) : null,
+    ...eventProps,
+  };
+};
+
+export const EventForm = ({
+  event, onSubmit, onError, onGraphqlError, onToggle, expanded, classes
+}) => (
+  <Formik
+    initialValues={initialValues(event)}
+    validateOnChange={false}
+    validate={(values) =>
+      schema.validate(values, { abortEarly: false })
+        .catch(error => {
+          onError();
+          throwInner(error);
+        })
+    }
+    onSubmit={(values, { setSubmitting }) => {
+      onSubmit(values)
+        .then(() => setSubmitting(false))
+        .catch(onGraphqlError);
+    }}
+    render={({ handleSubmit, isSubmitting, ...form }) => (
+      <form className={classes.root} onSubmit={handleSubmit}>
+        <For each="section" of={sections} index="idx">
+          <EventFormSection
+            key={idx}
+            Section={section.component}
+            title={section.title}
+            onToggle={() => onToggle(idx)}
+            expanded={expanded[idx]}
+            form={form}
+          />
+        </For>
+        <div className={classes.submit}>
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            color="primary"
+            variant="raised"
+          >
+            Salvar
+          </Button>
+        </div>
+      </form>
+    )}
+  />
 );
 
 EventForm.propTypes = {
-  deviceInfo: PropTypes.object,
-  handleSubmit: PropTypes.func,
-  isSubmitting: PropTypes.bool,
+  event: PropTypes.object,
+  classes: PropTypes.object,
+  onToggle: PropTypes.func,
+  onError: PropTypes.func,
+  onGraphqlError: PropTypes.func,
+  onSubmit: PropTypes.func,
+  expanded: PropTypes.arrayOf(PropTypes.bool),
 };
 
-export default withFormik({
-  mapPropsToValues: ({ event = {} }) => {
-    const { start, end, flyer, ...eventProps } = event;
+const withState = withStateHandlers(
+  { expanded: sections.map(_ => true) },
+  {
+    onToggle: ({ expanded }) => i => ({
+      expanded: expanded.map((v, idx) => idx === i ? !v : v),
+    })
+  },
+);
 
-    return {
-      title: '',
-      place: {},
-      prices: [],
-      description: '',
-      categories: [],
-      flyer: flyer ? { url: flyer } : {},
-      start: start ? new Date(start) : null,
-      end: end ? new Date(end) : null,
-      ...eventProps,
-    };
-  },
-  validateOnChange: false,
-  validate: async (values, { onError }) =>
-    Yup.object()
-      .shape({
-        ...mainValidation,
-        ...datesValidation,
-        ...placeValidation,
-      })
-      .validate(values, { abortEarly: false })
-      .catch(({ inner }) => {
-        onError();
-        throw inner.reduce((acc, curr) => ({ ...acc, [curr.path]: curr.message }), {});
-      }),
-  handleSubmit: (values, { setSubmitting, props }) => {
-    props.onSubmit(values)
-      .then(() => setSubmitting(false))
-      .catch(props.onError);
-  },
-  displayName: 'EventForm',
-})(EventForm);
+export default compose(
+  withState,
+  withIndexStyle,
+  withGraphqlError,
+)(EventForm);

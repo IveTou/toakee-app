@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Snackbar as MaterialSnackbar } from 'material-ui-next';
+import { Snackbar as MaterialSnackbar } from 'material-ui';
 
 if (process.env.BROWSER) {
   require('./style.scss');

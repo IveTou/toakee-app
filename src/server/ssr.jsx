@@ -2,6 +2,7 @@ import 'fetch-everywhere';
 import 'ignore-styles';
 
 import React from 'react';
+import { MuiThemeProvider } from 'material-ui';
 import {
   ApolloClient,
   createNetworkInterface,
@@ -9,6 +10,7 @@ import {
   getDataFromTree,
 } from 'react-apollo';
 import { StaticRouter } from 'react-router';
+import { JssProvider, SheetsRegistry } from 'react-jss'
 import ReactDOMServer from 'react-dom/server';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
@@ -19,6 +21,7 @@ import htmlToText from 'html-to-text';
 import '~/src/server/globals';
 import rootReducer from '~/src/ducks';
 import App from '~/src/app';
+import { theme } from '~/src/mui/theme';
 
 import config from './config';
 
@@ -61,10 +64,16 @@ export const exposeSSRRoutes = (app, assets) => {
       }),
     });
 
+    const sheets = new SheetsRegistry();
+
     const apolloApp = (
       <ApolloProvider client={client} store={reduxStore}>
         <StaticRouter location={req.url} context={{}}>
-          <App userAgent={req.headers['user-agent']} />
+          <JssProvider registry={sheets}>
+            <MuiThemeProvider theme={theme}>
+              <App userAgent={req.headers['user-agent']} />
+            </MuiThemeProvider>
+          </JssProvider>
         </StaticRouter>
       </ApolloProvider>
     );
@@ -80,6 +89,7 @@ export const exposeSSRRoutes = (app, assets) => {
         assets,
         apolloContent: ReactDOMServer.renderToStaticMarkup(apolloContent),
         apolloState: JSON.stringify(initialState),
+        jssSheets: sheets.toString(),
         ogMetaTags,
       });
     });

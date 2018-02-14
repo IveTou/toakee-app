@@ -1,23 +1,5 @@
-import { createMuiTheme } from 'material-ui-next/styles';
-import {
-  deepOrange,
-  pink,
-  red,
-  grey,
-  blue,
-} from 'material-ui-next/colors';
-
-import { deepOrange700, deepOrange500, blue500 } from 'material-ui/styles/colors';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
-export const oldTheme = getMuiTheme({
-  palette: {
-    primary1Color: deepOrange500,
-    primary2Color: deepOrange700,
-    accent1Color: blue500,
-    pickerHeaderColor: blue500,
-  },
-});
+import { createMuiTheme } from 'material-ui';
+import { deepOrange, grey, blue } from 'material-ui/colors';
 
 export const theme = createMuiTheme({
   palette: {
@@ -27,8 +9,6 @@ export const theme = createMuiTheme({
       dark: deepOrange[700],
       contrastText: grey[50],
     },
-    secondary: pink,
-    error: red,
   },
   overrides: {
     MuiInput: {
