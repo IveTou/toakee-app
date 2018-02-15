@@ -223,6 +223,7 @@
 
     &-prices {
       margin: 0 0 $spacer 0;
+      padding: $spacer;
       width: 100%;
       min-width: $spacer*25;
 
@@ -257,6 +258,7 @@
 
     &-description {
       margin: 0 0 $spacer 0;
+      padding: $spacer;
       width: 100%;
       display: inline-block;
 
@@ -367,11 +369,6 @@
         }
       }
 
-      &-description {
-        display: table;
-        padding-right: 28%;
-      }
-
       &-gallery {
         &-photos {
           > div {
@@ -385,10 +382,6 @@
       display: table-cell;
       overflow-x: visible;
       width: $spacer*39;
-
-      hr {
-        display: block;
-      }
     }
   }
 }
