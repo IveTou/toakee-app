@@ -162,7 +162,9 @@ export class EventPage extends React.Component {
     const mappedPrice = price ? [{ value: price }] : prices;
     const isMobile = !this.props.deviceInfo.is('desktop');
     const previewThumbs = take(photos, isMobile ? 8 : 16);
-    const coordinates = { lat: place.coordinates[1], lng: place.coordinates[0] } || {};
+    const coordinates = place.coordinates
+      ? { lat: place.coordinates[1], lng: place.coordinates[0] }
+      : {};
 
     const node = this._listDOM || {};
     const hideTopArrow = !node.scrollTop;
@@ -307,7 +309,7 @@ export class EventPage extends React.Component {
                 </List>
                 <If condition={!isEmpty(coordinates)}>
                   <div className="EventPage-main-details-map">
-                    <Wrapper center={coordinates} />
+                    <Wrapper center={coordinates} centerMarker />
                   </div>
                 </If>
               </CardText>

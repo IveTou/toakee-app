@@ -59,7 +59,6 @@ class EventList extends React.Component {
       vertical
       || (node.scrollLeft + node.offsetWidth >= node.scrollWidth && !this.state.hasMore);
 
-
     const classes = classNames('EventList', { 'EventList--vertical': vertical });
 
     declare var event;
