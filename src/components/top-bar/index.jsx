@@ -5,16 +5,14 @@ import autoBind from 'react-autobind';
 import { once } from 'lodash';
 import { withRouter } from 'react-router';
 import {
+  Icon,
   Avatar,
   Toolbar,
-  ToolbarGroup,
   IconButton,
   IconMenu,
-  RaisedButton,
-  FlatButton,
+  Button,
   MenuItem,
 } from 'material-ui';
-import { NavigationMenu, NavigationMoreVert, ActionAccountCircle } from 'material-ui/svg-icons';
 import SearchBar from 'material-ui-search-bar';
 import { withInfo } from '~/src/hocs';
 import { logout } from '~/src/utils/session';
@@ -76,13 +74,10 @@ export class TopBar extends React.Component {
   }
 
   renderAvatar() {
-    const { viewer } = this.props;
-
-    if (viewer && viewer.id) {
-      return <Avatar className="TopBar-menu-avatar">{viewer.firstName[0]}</Avatar>;
-    }
-
-    return <ActionAccountCircle />;
+    const { viewer = {} } = this.props;
+    return viewer.id
+      ? <Avatar className="TopBar-menu-avatar">{viewer.firstName[0]}</Avatar>
+      : <Icon>account_circle</Icon>;
   }
 
   render() {
@@ -90,23 +85,17 @@ export class TopBar extends React.Component {
 
     return (
       <Toolbar className="TopBar">
-        <ToolbarGroup className="TopBar-nav" firstChild>
-          <IconButton
-            className="TopBar-nav-button"
-            onClick={onToggle}
-          >
-            <NavigationMenu />
+          <IconButton className="TopBar-nav-button" onClick={onToggle}>
+            <Icon>menu</Icon>
           </IconButton>
           <Logo small={small} />
-        </ToolbarGroup>
-        <ToolbarGroup className="TopBar-search">
+
           <SearchBar
             onChange={this.onChange}
             onRequestSearch={this.onSearch}
             hintText="Pesquisar no site"
           />
-        </ToolbarGroup>
-        <ToolbarGroup className="TopBar-menu" lastChild>
+
           <Choose>
             <When condition={!!viewer.id}>
               <IconMenu
@@ -122,18 +111,19 @@ export class TopBar extends React.Component {
             <Otherwise>
               <Choose>
                 <When condition={!small}>
-                  <RaisedButton
+                  <Button
+                    variant="raised"
                     className="TopBar-menu-button"
                     label="Publicar Evento"
                     onClick={this.newEvent}
                     primary
                   />
-                  <FlatButton
+                  <Button
                     className="TopBar-menu-button"
                     label="Cadastrar"
                     onClick={this.signUp}
                   />
-                  <FlatButton
+                  <Button
                     className="TopBar-menu-button"
                     label="Entrar"
                     onClick={this.login}
@@ -141,7 +131,7 @@ export class TopBar extends React.Component {
                 </When>
                 <Otherwise>
                   <IconMenu
-                    iconButtonElement={<IconButton><NavigationMoreVert /></IconButton>}
+                    iconButtonElement={<IconButton><Icon>more_vert</Icon></IconButton>}
                     anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                     targetOrigin={{ horizontal: 'right', vertical: 'top' }}
                   >
@@ -153,7 +143,6 @@ export class TopBar extends React.Component {
               </Choose>
             </Otherwise>
           </Choose>
-        </ToolbarGroup>
       </Toolbar>
     );
   }

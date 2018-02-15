@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ActionSchedule, MapsPlace } from 'material-ui/svg-icons';
-import { white } from 'material-ui/styles/colors';
+import { Icon } from 'material-ui';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -21,10 +20,10 @@ const Banner = () => (
       </div>
       <div className="Banner-description-timeAndPlace">
         <div className="Banner-description-timeAndPlace-place">
-          <MapsPlace color={white} /><span>place the placeis name has to be in 2 line no more and fill the lmited space</span>
+          <Icon>place</Icon><span>place the placeis name has to be in 2 line no more and fill the lmited space</span>
         </div>
         <div className="Banner-description-timeAndPlace-time">
-          <ActionSchedule color={white} /><span>17h</span>
+          <Icon>schedule</Icon><span>17h</span>
         </div>
       </div>
       <If condition={true}>

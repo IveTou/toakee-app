@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { CircularProgress } from 'material-ui';
-import { deepOrange500 } from 'material-ui/styles/colors';
 
 const EventCardPlaceholder = ({ vertical }) => {
   const classes = classNames('EventCardPlaceholder', { 'EventCardPlaceholder--vertical': vertical });
@@ -12,7 +12,6 @@ const EventCardPlaceholder = ({ vertical }) => {
         <CircularProgress
           className="EventCardPlaceholder-content-progress"
           size={60}
-          color={deepOrange500}
         />
         <div>Carregando</div>
       </div>

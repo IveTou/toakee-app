@@ -81,6 +81,7 @@
     "lodash": "4.17.4",
     "material-ui": "v1.0.0-beta.33",
     "material-ui-pickers": "1.0.0-beta.15.1",
+    "material-ui-search-bar": "v1.0.0-beta.4",
     "mixpanel": "0.7.0",
     "moment": "2.19.1",
     "moment-timezone": "0.5.13",

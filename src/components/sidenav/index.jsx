@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import autoBind from 'react-autobind';
 import classNames from 'classnames';
 import {
@@ -7,27 +8,8 @@ import {
   Menu,
   MenuItem,
   Subheader,
+  Icon,
 } from 'material-ui';
-import {
-  ActionHome,
-  ActionEvent,
-  ActionLoyalty,
-  ImageColorLens,
-  MapsLocalActivity,
-  MapsLocalBar,
-  MapsLocalLibrary,
-  PlacesPool,
-  SocialWhatshot,
-} from 'material-ui/svg-icons';
-import {
-  red800,
-  deepPurple500,
-  lightBlue500,
-  green500,
-  amber500,
-  deepOrange500,
-  blueGrey500,
-} from 'material-ui/styles/colors';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -36,31 +18,31 @@ if (process.env.BROWSER) {
 const categories = [
   {
     title: 'Arte e Cultura',
-    icon: <ImageColorLens color={red800} />,
+    icon: <Icon>color_lens</Icon>, // red800
   },
   {
     title: 'Baladas',
-    icon: <SocialWhatshot color={deepPurple500} />,
+    icon: <Icon>whatshot</Icon>, // deeppurple500
   },
   {
     title: 'Cursos',
-    icon: <MapsLocalLibrary color={lightBlue500} />,
+    icon: <Icon>local_library</Icon>, // lightblue500
   },
   {
     title: 'Esportes',
-    icon: <PlacesPool color={green500} />,
+    icon: <Icon>pool</Icon>, // green500
   },
   {
     title: 'Shows',
-    icon: <MapsLocalActivity color={amber500} />,
+    icon: <Icon>local_activity</Icon>, // amber500
   },
   {
     title: 'Bares e Restaurantes',
-    icon: <MapsLocalBar color={deepOrange500} />,
+    icon: <Icon>local_bar</Icon>, // deeporange500
   },
   {
     title: 'Promoções',
-    icon: <ActionLoyalty color={blueGrey500} />,
+    icon: <Icon>loyalty</Icon>, // bluegray500
   },
 ];
 
@@ -81,12 +63,12 @@ export class SideNav extends React.Component {
           <MenuItem
             href="/landing"
             primaryText="Início"
-            leftIcon={<ActionHome />}
+            leftIcon={<Icon>home</Icon>}
           />
           <MenuItem
             href="/dashboard"
             primaryText="Meus Eventos"
-            leftIcon={<ActionEvent />}
+            leftIcon={<Icon>event</Icon>}
           />
           <Divider className="SideNav-divider" />
           <Subheader className="SideNav-subheader">Categorias</Subheader>

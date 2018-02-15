@@ -1,14 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { FloatingActionButton } from 'material-ui';
-import {
-  NavigationChevronLeft,
-  NavigationChevronRight,
-  NavigationExpandLess,
-  NavigationExpandMore,
-} from 'material-ui/svg-icons';
-import { grey200 } from 'material-ui/styles/colors';
+import { Button, Icon } from 'material-ui';
 
 const buildClasses = ({ direction, hide }) => classNames(
   'EventListArrow',
@@ -17,19 +10,19 @@ const buildClasses = ({ direction, hide }) => classNames(
 );
 
 const EventListArrow = ({ onClick, direction, hide }) => (
-  <FloatingActionButton
-    backgroundColor={grey200}
+  <Button
+    variant="fab"
     className={buildClasses({ direction, hide })}
     onClick={onClick}
     zDepth={4}
   >
     {{
-      left: (<NavigationChevronLeft />),
-      right: (<NavigationChevronRight />),
-      top: (<NavigationExpandLess />),
-      bottom: (<NavigationExpandMore />),
+      left: (<Icon>chevron_left</Icon>),
+      right: (<Icon>chevron_right</Icon>),
+      top: (<Icon>expand_less</Icon>),
+      bottom: (<Icon>expand_more</Icon>),
     }[direction]}
-  </FloatingActionButton>
+  </Button>
 );
 
 EventListArrow.propTypes = {

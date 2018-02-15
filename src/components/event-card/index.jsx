@@ -4,9 +4,7 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { upperFirst } from 'lodash';
 import moment from 'moment';
-import { CardHeader, CardMedia, CardText } from 'material-ui';
-import { ActionSchedule, MapsPlace } from 'material-ui/svg-icons';
-import { grey500 } from 'material-ui/styles/colors';
+import { Icon, CardHeader, CardMedia } from 'material-ui';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -46,6 +44,7 @@ const EventCard = ({ event, vertical }) => {
         <If condition={flyer}>
           <CardMedia
             className="EventCard-flyer"
+            image=""
             alt={`flyer do ${title}`}
           >
             <div
@@ -60,24 +59,22 @@ const EventCard = ({ event, vertical }) => {
           </CardMedia>
         </If>
         <CardHeader className="EventCard-title" title={title} />
-        <CardText className="EventCard-details">
-          <div className="EventCard-details-calendar">
-            <div className="EventCard-details-calendar-month">
-              {startMoment.format('MMM')}
-            </div>
-            <div className="EventCard-details-calendar-day">
-              {startMoment.format('DD')}
-            </div>
+        <div className="EventCard-details-calendar">
+          <div className="EventCard-details-calendar-month">
+            {startMoment.format('MMM')}
           </div>
-          <div className="EventCard-details-timeAndPlace">
-            <div className="EventCard-details-timeAndPlace-place">
-              <MapsPlace color={grey500} /><span>{place.name}</span>
-            </div>
-            <div className="EventCard-details-timeAndPlace-time">
-              <ActionSchedule color={grey500} /><span>{startMoment.format('HH')}h</span>
-            </div>
+          <div className="EventCard-details-calendar-day">
+            {startMoment.format('DD')}
           </div>
-        </CardText>
+        </div>
+        <div className="EventCard-details-timeAndPlace">
+          <div className="EventCard-details-timeAndPlace-place">
+            <Icon>place</Icon> <span>{place.name}</span>
+          </div>
+          <div className="EventCard-details-timeAndPlace-time">
+            <Icon>schedule</Icon> <span>{startMoment.format('HH')}h</span>
+          </div>
+        </div>
       </div>
     </Link>
   );
