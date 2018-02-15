@@ -1,7 +1,8 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { capitalize } from 'lodash';
 import { Button as SButton, Icon as SIcon } from 'semantic-ui-react';
-import { Button, withStyles } from 'material-ui-next';
+import { Button, withStyles } from 'material-ui';
 
 import config from '~/src/config';
 

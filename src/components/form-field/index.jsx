@@ -1,4 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import {
   FormControl,
   InputLabel,
@@ -6,12 +8,12 @@ import {
   Input,
   FormHelperText,
   withStyles,
-} from 'material-ui-next';
+} from 'material-ui';
 
 const FormField = ({
-  classes, fullWidth, margin, label, icon, error, ...inputProps
+  classes, className, fullWidth, margin, label, icon, error, ...inputProps
 }) => (
-  <div className={classes.formField}>
+  <div className={classNames(classes.formField, className)}>
     <If condition={icon}>
       <Icon className={classes.formFieldIcon}>{icon}</Icon>
     </If>
@@ -36,6 +38,7 @@ const styles = theme => ({
 });
 
 FormField.propTypes = {
+  className: PropTypes.string,
   label: PropTypes.string,
   margin: PropTypes.string,
   fullWidth: PropTypes.bool,

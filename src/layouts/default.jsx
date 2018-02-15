@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { ReactTitle } from 'react-meta-tags';
 
@@ -30,7 +31,7 @@ const DefaultLayout = ({
 );
 
 DefaultLayout.propTypes = {
-  children: React.PropTypes.oneOfType([
+  children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
