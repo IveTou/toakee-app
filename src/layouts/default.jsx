@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { ReactTitle } from 'react-meta-tags';
 import autoBind from 'react-autobind';
 import classNames from 'classnames';
@@ -48,7 +49,7 @@ export class DefaultLayout extends React.Component {
 }
 
 DefaultLayout.propTypes = {
-  children: React.PropTypes.oneOfType([
+  children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),

@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import { graphql, compose, withApollo } from 'react-apollo';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';

@@ -1,7 +1,9 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import { pick } from 'lodash';
+import { Typography } from 'material-ui';
 
 import { showSnackbar } from '~/src/ducks/snackbar';
 import { withViewer } from '~/src/hocs';
@@ -32,7 +34,7 @@ const NewEventPage = ({
       flyer: flyerUrl,
       categories: categories.map(({ id, title }) => (id ? { id } : { title })),
       status: isAdmin ? 'ACTIVE' : 'PENDING',
-      prices: prices.length === 1
+      prices: (prices.length === 1 && prices[0].value)
         ? [{ value: prices[0].value }]
         : prices.filter(p => p.description && p.value),
       place: place.id
@@ -48,7 +50,10 @@ const NewEventPage = ({
 
   return (
     <DefaultLayout>
-      <EventForm onSubmit={handleSubmit} onError={alertError} />
+      <div className="NewEventPage">
+        <Typography className="NewEventPage-title" variant="title">Novo Evento</Typography>
+        <EventForm onSubmit={handleSubmit} onError={alertError} />
+      </div>
     </DefaultLayout>
   );
 };

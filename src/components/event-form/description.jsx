@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { TextField, Chip } from 'material-ui';
-import { trim, reject } from 'lodash';
+import { reject } from 'lodash';
 
 import CategoriesAutocomplete from '~/src/components/categories-autocomplete';
 
@@ -8,14 +9,15 @@ const EventFormDescription = ({
   form: { values, handleChange, setFieldValue },
 }) => {
   const { categories } = values;
-  const addCategory = (_category) => {
-    const category = _category.id === -1
-      ? { title: trim(_category.title.slice(10)) }
-      : _category;
-    setFieldValue('categories', [...reject(categories, { title: category.title }), category]);
-  };
+
+  const addCategory = category =>
+    setFieldValue(
+      'categories',
+      reject(categories, { title: category.title }).concat([category])
+    );
+
   const removeCategory = idx =>
-    setFieldValue('categories', [...categories.slice(0, idx), ...categories.slice(idx + 1)]);
+    setFieldValue('categories', categories.filter((_, i) => idx !== i));
 
   declare var category;
   declare var idx;
@@ -24,27 +26,29 @@ const EventFormDescription = ({
     <div className="EventFormDescription">
       <TextField
         name="description"
-        floatingLabelText="Descrição"
+        label="Descrição"
         value={values.description}
         onChange={handleChange}
         fullWidth
-        multiLine
+        multiline
+        rowsMax="20"
       />
       <CategoriesAutocomplete
         name="categories"
-        placeholder="Selecione as categorias"
+        label="Selecione as categorias"
+        margin="normal"
         onSelect={addCategory}
         clearOnSelect
+        fullWidth
       />
       <div className="EventFormDescription-categories">
         <For each="category" of={values.categories} index="idx">
           <Chip
             className="EventFormDescription-categories-chip"
-            onRequestDelete={() => removeCategory(idx)}
+            onDelete={() => removeCategory(idx)}
             key={idx}
-          >
-            {category.title}
-          </Chip>
+            label={category.title}
+          />
         </For>
       </div>
     </div>
@@ -57,7 +61,5 @@ EventFormDescription.propTypes = {
     setFieldValue: PropTypes.func,
   }),
 };
-
-export const validation = {};
 
 export default EventFormDescription;

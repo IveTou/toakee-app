@@ -1,8 +1,9 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { graphql, withApollo } from 'react-apollo';
 import { compose } from 'recompose';
 import { Formik } from 'formik';
-import { Button } from 'material-ui-next';
+import { Button } from 'material-ui';
 
 import FormField from '~/src/components/form-field';
 import SocialLoginButton from '~/src/components/social-login-button';

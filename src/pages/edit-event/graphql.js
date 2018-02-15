@@ -15,7 +15,6 @@ export default gql`
       directions
       place { id, name, coordinates, address, city { name } }
       status
-      photos { src, thumb }
       creator { id }
     }
   }

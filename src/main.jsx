@@ -35,4 +35,7 @@ const app = (
   </ApolloProvider>
 );
 
-render(app, document.getElementById('app'));
+render(app, document.getElementById('app'), () => {
+  const jssStyles = document.getElementById('jss-ssr');
+  jssStyles.parentNode.removeChild(jssStyles);
+});

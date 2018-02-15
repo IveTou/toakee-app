@@ -1,19 +1,38 @@
-import React, { PropTypes } from 'react';
-import { Paper } from 'material-ui';
+import React from 'react';
+import PropTypes from 'prop-types';
+import {
+  ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails,
+  Typography, Icon,
+} from 'material-ui';
 
-const EventFormSection = ({ Section, title, form }) => (
-  <div className="EventFormSection">
-    <h3 className="EventFormSection-title">{title}</h3>
-    <Paper className="EventFormSection-content">
+import { withSectionStyle } from './styles';
+
+const EventFormSection = ({ classes, onToggle, expanded, Section, title, form }) => (
+  <ExpansionPanel
+    classes={{ expanded: classes.rootExpanded }}
+    CollapseProps={{ className: classes.collapse }}
+    expanded={expanded}
+    onChange={onToggle}
+  >
+    <ExpansionPanelSummary
+      classes={{ expanded: classes.summaryExpanded }}
+      expandIcon={<Icon>expand_more</Icon>}
+    >
+      <Typography variant="subheading">{title}</Typography>
+    </ExpansionPanelSummary>
+    <ExpansionPanelDetails className={classes.details}>
       <Section form={form} />
-    </Paper>
-  </div>
+    </ExpansionPanelDetails>
+  </ExpansionPanel>
 );
 
 EventFormSection.propTypes = {
   Section: PropTypes.func,
+  classes: PropTypes.object,
+  onToggle: PropTypes.func,
   title: PropTypes.string,
   form: PropTypes.object,
+  expanded: PropTypes.bool,
 };
 
-export default EventFormSection;
+export default withSectionStyle(EventFormSection);

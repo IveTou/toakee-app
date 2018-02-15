@@ -1,5 +1,7 @@
-import React, { PropTypes } from 'react';
-import { Link, Element } from 'react-scroll';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { graphql, compose } from 'react-apollo';
+import { Icon, Card, Image, Grid, Button } from 'semantic-ui-react';
 import Lightbox from 'react-images';
 import { graphql, compose } from 'react-apollo';
 import { take, map } from 'lodash';

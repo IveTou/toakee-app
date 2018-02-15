@@ -1,18 +1,17 @@
-import React, { PropTypes } from 'react';
-import Yup from 'yup';
-import { TextField } from 'material-ui';
+import React from 'react';
+import PropTypes from 'prop-types';
 import autoBind from 'react-autobind';
 
 import PlacesAutocomplete from '~/src/components/places-autocomplete';
+import FormField from '~/src/components/form-field';
 import Map from '~/src/components/map';
 import MaterialError from '~/src/components/material-error';
+import { required } from '~/src/utils/validation';
 
 export default class EventFormPlace extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      newPlace: false,
-    };
+    this.state = { newPlace: false };
     autoBind(this);
   }
 
@@ -39,7 +38,7 @@ export default class EventFormPlace extends React.Component {
   }
 
   handleAutocompleteSelection(place) {
-    if (place.id === -1) {
+    if (!place) {
       this.setState({ newPlace: true });
     } else {
       this.props.form.setFieldValue('place', place);
@@ -56,8 +55,8 @@ export default class EventFormPlace extends React.Component {
       ? {
         autocomplete: errors.place,
         map: !coordinates && newPlace && 'Por favor, centralize o mapa no local desejado.',
-        name: !name && 'Por favor, dê um nome ao local.',
-        address: !address && 'Por favor, insira o endereço.',
+        name: !name && required,
+        address: !address && required,
       }
       : {};
 
@@ -66,10 +65,22 @@ export default class EventFormPlace extends React.Component {
         <If condition={!newPlace}>
           <PlacesAutocomplete
             name="place"
-            placeholder="Local"
+            label="Nome do local"
             value={name}
             onSelect={this.handleAutocompleteSelection}
             error={errorMessages.autocomplete}
+            margin="normal"
+            fullWidth
+          />
+        </If>
+        <If condition={newPlace}>
+          <FormField
+            label="Nome do local"
+            name="name"
+            value={name || ''}
+            onChange={this.handleFieldChange}
+            error={errorMessages.name}
+            fullWidth
           />
         </If>
         <Map
@@ -83,22 +94,14 @@ export default class EventFormPlace extends React.Component {
           onPlacesChange={newPlace ? this.handlePlacesChange : null}
           centerMarker={newPlace}
         />
-        <MaterialError error={errorMessages.map} />
+        <MaterialError error={errorMessages.map || ' '} />
         <If condition={newPlace}>
-          <TextField
-            floatingLabelText="Nome"
-            name="name"
-            value={name}
-            onChange={this.handleFieldChange}
-            errorText={errorMessages.name}
-            fullWidth
-          />
-          <TextField
-            floatingLabelText="Endereço"
+          <FormField
+            label="Endereço"
             name="address"
-            value={address}
+            value={address || ''}
             onChange={this.handleFieldChange}
-            errorText={errorMessages.address}
+            error={errorMessages.address}
             fullWidth
           />
         </If>
@@ -114,13 +117,4 @@ EventFormPlace.propTypes = {
     setFieldValue: PropTypes.func,
     touched: PropTypes.object,
   }),
-};
-
-export const validation = {
-  place: Yup.mixed()
-    .test(
-      'placeConfigured',
-      'Por favor, adicione um local.',
-      place => (place.id || (place.name && place.address && place.coordinates)),
-    ),
 };
