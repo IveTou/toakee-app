@@ -11,7 +11,6 @@ import EventPage from '~/src/pages/event';
 import EventPhotos from '~/src/pages/event-photos';
 import EventFeed from '~/src/pages/event-feed';
 import SearchPage from '~/src/pages/search';
-import Landing from '~/src/pages/landing';
 import Dashboard from '~/src/pages/dashboard';
 import UseTerms from '~/src/pages/use-terms';
 import About from '~/src/pages/about';
@@ -39,13 +38,6 @@ const App = ({ userAgent }) => (
         <AuthModal />
         <Switch>
           <ProtectedRoute
-            auth={userIsLogged}
-            component={EventFeed}
-            path="/"
-            redirectTo="/landing"
-            exact
-          />
-          <ProtectedRoute
             auth={userIsAdmin}
             component={EventModeration}
             path="/moderacao"
@@ -66,7 +58,7 @@ const App = ({ userAgent }) => (
             redirectTo="/login"
             exact
           />
-          <Route path="/landing" component={Landing} />
+          <Route path="/" component={EventFeed} />
           <Route path="/login" component={Login} />
           <Route path="/cadastrar" component={SignUp} />
           <Route path="/search" component={SearchPage} />
