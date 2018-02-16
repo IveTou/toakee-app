@@ -1,34 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { Button, Icon } from 'material-ui';
+import { Button, Icon, Zoom } from 'material-ui';
 
-const buildClasses = ({ direction, hide }) => classNames(
-  'EventListArrow',
-  `EventListArrow--${direction}`,
-  { 'EventListArrow--hidden': hide },
-);
+import { withArrowStyle } from './styles';
 
-const EventListArrow = ({ onClick, direction, hide }) => (
-  <Button
-    variant="fab"
-    className={buildClasses({ direction, hide })}
-    onClick={onClick}
-    zDepth={4}
-  >
-    {{
-      left: (<Icon>chevron_left</Icon>),
-      right: (<Icon>chevron_right</Icon>),
-      top: (<Icon>expand_less</Icon>),
-      bottom: (<Icon>expand_more</Icon>),
-    }[direction]}
-  </Button>
+const icons = {
+  left: <Icon>chevron_left</Icon>,
+  right: <Icon>chevron_right</Icon>,
+  up: <Icon>expand_less</Icon>,
+  down: <Icon>expand_more</Icon>,
+};
+
+const EventListArrow = ({ classes, onClick, direction, hide }) => (
+  <Zoom in={!hide}>
+    <Button
+      className={`${classes.root} ${classes[direction]}`}
+      onClick={onClick}
+      color="primary"
+      variant="fab"
+    >
+      {icons[direction]}
+    </Button>
+  </Zoom>
 );
 
 EventListArrow.propTypes = {
+  classes: PropTypes.object,
   direction: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   hide: PropTypes.bool,
 };
 
-export default EventListArrow;
+export default withArrowStyle(EventListArrow);

@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { graphql } from 'react-apollo';
 import autoBind from 'react-autobind';
 import VisibilitySensor from 'react-visibility-sensor';
 import { range } from 'lodash';
+import { compose } from 'recompose';
+import { Typography } from 'material-ui';
 
 import { ease } from '~/src/utils/animation';
 import EventCard from '~/src/components/event-card';
@@ -12,10 +13,7 @@ import EventCardPlaceholder from '~/src/components/event-card/placeholder';
 
 import EventListArrow from './arrow';
 import { query } from './graphql';
-
-if (process.env.BROWSER) {
-  require('./style.scss');
-}
+import { withIndexStyle } from './styles';
 
 const FEED_LIMIT = 10;
 
@@ -50,40 +48,48 @@ class EventList extends React.Component {
   }
 
   render() {
-    const { title, viewer = {}, vertical, excludedEventId, inputRef } = this.props;
+    const { classes, title, viewer = {}, vertical, excludedEventId } = this.props;
     const { eventCount } = viewer;
     const events = viewer.events ? viewer.events.filter(e => e.id !== excludedEventId) : [];
 
     const node = this._listDOM || {};
-    const hideLeftArrow = !node.scrollLeft || vertical;
+    const arrows = vertical ? ['up', 'down'] : ['left', 'right'];
+    const hideLeftArrow = !node.scrollLeft;
     const hideRightArrow =
-      vertical
-      || (node.scrollLeft + node.offsetWidth >= node.scrollWidth && !this.state.hasMore);
-
-
-    const classes = classNames('EventList', { 'EventList--vertical': vertical });
+      (node.scrollLeft + node.offsetWidth) >= node.scrollWidth && !this.state.hasMore;
 
     declare var event;
     declare var placeholder;
     declare var idx;
 
+
     return !!eventCount && (
-      <div className={classes} ref={inputRef}>
+      <div>
         <If condition={title}>
-          <div className="EventList-title">{title} ({eventCount})</div>
+          <Typography className={classes.title} variant="title">{title} ({eventCount})</Typography>
         </If>
-        <div className="EventList-list" ref={(dom) => { this._listDOM = dom; }}>
-          <EventListArrow direction="left" onClick={() => this.scroll(-1)} hide={hideLeftArrow} />
-          <EventListArrow direction="right" onClick={() => this.scroll(1)} hide={hideRightArrow} />
-          <For each="event" index="idx" of={events}>
-            <EventCard key={idx} event={event} vertical={vertical} />
-          </For>
-          <If condition={this.state.hasMore}>
-            <VisibilitySensor onChange={isVisible => (isVisible && this.fetchEvents())} />
-            <For each="placeholder" of={range(Math.min(5, eventCount - events.length))}>
-              <EventCardPlaceholder key={placeholder} vertical={vertical} />
+        <div className={classes.listWrapper}>
+          <EventListArrow
+            direction={arrows[0]}
+            onClick={() => this.scroll(-1)}
+            hide={hideLeftArrow}
+          />
+          <EventListArrow
+            direction={arrows[1]}
+            onClick={() => this.scroll(1)}
+            hide={hideRightArrow}
+          />
+          <div ref={(dom) => { this._listDOM = dom; }} className={classes.list}>
+            <For each="event" index="idx" of={events}>
+              <EventCard className={classes.listItem} key={idx} event={event} />
             </For>
-          </If>
+            <If condition={this.state.hasMore}>
+              <VisibilitySensor onChange={isVisible => (isVisible && this.fetchEvents())} />
+              <For each="placeholder" of={range(Math.min(5, eventCount - events.length))}>
+                <EventCardPlaceholder key={placeholder} className={classes.listItem} />
+              </For>
+            </If>
+          </div>
         </div>
       </div>
     );
@@ -96,10 +102,10 @@ EventList.propTypes = {
   vertical: PropTypes.bool,
   excludedEventId: PropTypes.string,
   viewer: PropTypes.object,
-  inputRef: PropTypes.func,
+  classes: PropTypes.object,
 };
 
-export default graphql(query, {
+const injectQuery = graphql(query, {
   options: ({ start, end, categoryIds, strict, forceFetch, status = 'ACTIVE' }) => ({
     variables: {
       start,
@@ -147,4 +153,9 @@ export default graphql(query, {
       });
     },
   }),
-})(EventList);
+});
+
+export default compose(
+  injectQuery,
+  withIndexStyle,
+)(EventList);
