@@ -1,27 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { upperFirst } from 'lodash';
 import moment from 'moment';
-import { Icon, CardHeader, CardMedia } from 'material-ui';
+import { Card, CardMedia, CardContent, Typography, Icon } from 'material-ui';
 
-if (process.env.BROWSER) {
-  require('./style.scss');
-}
+import Calendar from '~/src/components/calendar';
 
-const renderLabel = (status, start, end) => {
-  if (status === 'PENDING' || status === 'REPROVED') {
-    return {
-      content: status === 'PENDING' ? 'Pendente de aprovação' : 'Reprovado',
-      color: status === 'PENDING' ? 'blue' : 'red',
-      ribbon: true,
-    };
-  }
+import Ribbon from '~/src/components/ribbon';
+import { withIndexStyle } from './styles';
 
+const renderLabel = (start, end) => {
   const now = moment();
-
-  if (end.isBefore(now) || start.isAfter(moment().add(4, 'hours'))) {
+  if (end.isBefore(now) || start.isAfter(moment().add(2, 'hours'))) {
     return null;
   }
 
@@ -32,56 +23,49 @@ const renderLabel = (status, start, end) => {
   };
 };
 
-const EventCard = ({ event, vertical }) => {
-  const { id, title, place, flyer, start, end, status } = event;
+const EventCard = ({ event, className, classes }) => {
+  const { id, title, place, flyer, start, end } = event;
   const startMoment = moment(start);
-  const ribbon = renderLabel(status, startMoment, moment(end));
-  const classes = classNames('EventCard', { 'EventCard--vertical': vertical });
+  const ribbon = renderLabel(startMoment, moment(end));
 
   return (
-    <Link className={classes} to={{ pathname: `/evento/${id}`, state: { event } }}>
-      <div>
-        <If condition={flyer}>
-          <CardMedia
-            className="EventCard-flyer"
-            image=""
-            alt={`flyer do ${title}`}
-          >
-            <div
-              className="EventCard-flyer-background"
-              style={{ backgroundImage: `url(${flyer})` }}
-            />
-            <If condition={ribbon}>
-              <div className="EventCard-flyer-ribbon">
-                {ribbon.content}
+    <Link className={className} to={{ pathname: `/evento/${id}`, state: { event } }}>
+      <Card className={classes.card}>
+        <CardMedia classes={{ root: classes.cardMedia }} image={flyer}>
+          <If condition={ribbon}>
+            <Ribbon color={ribbon.color}>{ribbon.content}</Ribbon>
+          </If>
+        </CardMedia>
+        <CardContent className={classes.cardContent}>
+          <Typography className={classes.cardContentHeader}>
+            {title}
+          </Typography>
+          <div className={classes.cardContentInfo}>
+            <Calendar date={startMoment} />
+            <Typography
+              className={classes.cardContentInfoDetails}
+              variant="body1"
+              component="div"
+            >
+              <div>
+                <Icon className={classes.cardContentInfoDetailsIcon}>place</Icon>
+                <span> {place.name}</span>
               </div>
-            </If>
-          </CardMedia>
-        </If>
-        <CardHeader className="EventCard-title" title={title} />
-        <div className="EventCard-details-calendar">
-          <div className="EventCard-details-calendar-month">
-            {startMoment.format('MMM')}
+              <div>
+                <Icon className={classes.cardContentInfoDetailsIcon}>schedule</Icon>
+                <span> {startMoment.format('HH:mm')}</span>
+              </div>
+            </Typography>
           </div>
-          <div className="EventCard-details-calendar-day">
-            {startMoment.format('DD')}
-          </div>
-        </div>
-        <div className="EventCard-details-timeAndPlace">
-          <div className="EventCard-details-timeAndPlace-place">
-            <Icon>place</Icon> <span>{place.name}</span>
-          </div>
-          <div className="EventCard-details-timeAndPlace-time">
-            <Icon>schedule</Icon> <span>{startMoment.format('HH')}h</span>
-          </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </Link>
   );
 };
 
 EventCard.propTypes = {
-  vertical: PropTypes.bool,
+  classes: PropTypes.object,
+  className: PropTypes.string,
   event: PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
@@ -91,4 +75,4 @@ EventCard.propTypes = {
   }),
 };
 
-export default EventCard;
+export default withIndexStyle(EventCard);

@@ -1,0 +1,14 @@
+@import '../../scss/variables';
+@import '../../scss/colors';
+
+.Calendar {
+  text-align: center;
+  font-weight: bold;
+  padding: 0;
+  padding-right: $spacer;
+  vertical-align: middle;
+
+  &-month {
+    text-transform: uppercase;
+  }
+}

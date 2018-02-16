@@ -1,26 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { CircularProgress } from 'material-ui';
 
-const EventCardPlaceholder = ({ vertical }) => {
-  const classes = classNames('EventCardPlaceholder', { 'EventCardPlaceholder--vertical': vertical });
+import { withPlaceholderStyle } from './styles';
 
-  return (
-    <div className={classes}>
-      <div className="EventCardPlaceholder-content">
-        <CircularProgress
-          className="EventCardPlaceholder-content-progress"
-          size={60}
-        />
-        <div>Carregando</div>
+const EventCardPlaceholder = ({ className, classes }) => (
+  <div className={className}>
+    <div className={classes.card}>
+      <div className={classes.cardMedia}>
+        <CircularProgress size={40} />
       </div>
     </div>
-  );
-};
+  </div>
+);
 
 EventCardPlaceholder.propTypes = {
-  vertical: PropTypes.bool,
+  className: PropTypes.string,
+  classes: PropTypes.object,
 };
 
-export default EventCardPlaceholder;
+export default withPlaceholderStyle(EventCardPlaceholder);
