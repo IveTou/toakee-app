@@ -91,6 +91,7 @@ $event-list-height: $spacer*29;
     position: absolute;
     top: 0;
     margin-left: $spacer*14;
+    margin-top: $spacer*7;
 
     &.EventListArrow--hidden {
       top: $spacer*-5;
@@ -134,8 +135,7 @@ $event-list-height: $spacer*29;
 
     &--vertical {
       position: absolute;
-      margin-bottom: $spacer;
-      margin-left: $spacer;
+      margin: $spacer*-2 $spacer $spacer;
 
       .EventList-list {
         display: block;
