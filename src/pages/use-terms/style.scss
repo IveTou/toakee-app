@@ -4,7 +4,8 @@
 
 
 .UseTerms {
-  margin: $topbar-height + $spacer*4 $spacer*4;
+  margin: 0  $spacer*4;
+  padding: $spacer*4 0 $spacer*10;
 
   .element.intro {
     text-align: justify;

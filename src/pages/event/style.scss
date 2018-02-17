@@ -3,213 +3,386 @@
 @import '../../scss/colors';
 
 .EventPage {
-  margin-top: $spacer*2 !important;
+  width: 100%;
+  display: inline-block;
   position: relative;
+  justify-content: center;
+  padding: 0 0 $spacer*4;
 
-  &--viewGallery .EventPage {
+  &-main {
+    display: block;
+    max-width: $spacer*110;
+    margin: 0;
+
     &-flyer {
-      margin-left: 50%;
+      height: $spacer*50;
+      overflow: hidden;
+
+      @keyframes bgAnimation {
+        0% { transform: scale(1) }
+        30% { transform: scale(1.15) }
+        100% { transform: scale(1) }
+      }
+
+      &-bg {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        animation: bgAnimation 20s linear infinite;
+      }
+
+      &-actions {
+        height: $spacer*50;
+        text-align: center;
+        position: absolute;
+
+        &-button {
+          color: $white !important;
+          background-color: $deepOrange580 !important;
+          top: $spacer*14 !important;
+          padding: $spacer !important;
+          height: $spacer*7 !important;
+          display: none !important;
+
+          span {
+            font-size: $spacer*3 !important;
+          }
+        }
+      }
+
+      &-overlay {
+        position: absolute;
+        bottom: 0;
+        background-color: $black54;
+        min-height: $spacer*11;
+        padding: $spacer*3 $spacer*2;
+        display: table;
+
+        &-title {
+          display: table-cell;
+          vertical-align: middle;
+          padding: $spacer;
+
+          h1 {
+            color: $white;
+            font-size: $spacer*4;
+          }
+        }
+
+        &-actions {
+          float: right;
+          min-width: $spacer*18;
+          text-align: center;
+
+          > div {
+            margin: $spacer;
+          }
+        }
+      }
     }
 
     &-gallery {
-      height: auto;
-      overflow-y: auto;
+      margin: $spacer 0 $spacer 0;
+      display: none;
+      position: relative;
+      border-left: 4px solid $deepPurple500;
+
+      > div {
+        overflow: hidden;
+        margin: 0 $spacer*2 0 0;
+        padding-bottom: $spacer*2 !important;
+      }
+
+      &-title {
+        + div {
+          padding: 0 $spacer*2 !important;
+        }
+
+        > div + div {
+          vertical-align: initial !important;
+
+          span {
+            font-size: 18px !important;
+          }
+        }
+      }
+
+      &-preview {
+        display: inline-block;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        height: $spacer*15;
+
+        > div {
+          flex-wrap: nowrap !important;
+          overflow-x: hidden;
+          overflow-y: hidden;
+          height: 100%;
+          width: 100%;
+          box-shadow: 0 0 4px;
+
+          > div {
+            height: 100% !important;
+            padding: 0 !important;
+
+            img {
+              height: 100% !important;
+            }
+          }
+        }
+      }
+
+      &-actions {
+        text-align: right;
+        margin-bottom: $spacer;
+      }
+
+      &-photos {
+        display: none;
+        height: $spacer*50;
+        overflow: overlay;
+
+        > div {
+          margin: auto !important;
+          max-width: $spacer*50;
+
+          > div {
+            max-width: $spacer*25;
+            max-height: $spacer*17;
+
+            img {
+              width: 100%;
+              cursor: pointer;
+            }
+          }
+        }
+      }
     }
 
     &-details {
-      height: calc(100vh - #{$topbar-height});
-      overflow: hidden;
+      margin: $spacer 0 $spacer 0;
+      width: 100%;
+
+
+      > div {
+        padding-bottom: 0 !important;
+      }
+
+      &-title {
+        span {
+          font-size: 18px !important;
+        }
+
+        + div {
+          padding: 0 $spacer $spacer !important;
+          display: block;
+          width: 100%;
+        }
+
+        > div + div {
+          vertical-align: initial !important;
+        }
+      }
+
+      &-info {
+        padding: $spacer 0 !important;
+        width: 100%;
+
+        * {
+          line-height: $spacer*4;
+        }
+
+        > div > div {
+          padding: $spacer $spacer*2 $spacer $spacer*7 !important;
+        }
+
+        &-button {
+          width: 100%;
+          text-align: right;
+        }
+      }
+
+      &-map {
+        width: 100%;
+        padding: $spacer;
+
+        .Map {
+          &-container {
+            height: $spacer*26;
+            box-shadow: 0 1px 3px $black12, 0 1px 2px $black26;
+          }
+
+          &-element {
+            height: 100%;
+          }
+        }
+      }
     }
-  }
 
-  &-gallery {
-    height: calc(100vh - #{$topbar-height + $spacer*2});
-    overflow-y: hidden;
-
-    .small.images {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-evenly;
+    &-prices {
+      margin: 0 0 $spacer 0;
       padding: $spacer;
+      width: 100%;
+      min-width: $spacer*25;
 
-      img.image {
-        margin: $spacer 0;
-        height: $spacer*19;
-        cursor: pointer;
-        background-size: cover;
+      * {
+        line-height: $spacer*3;
+      }
+
+      > div {
+        padding-bottom: 0 !important;
+      }
+
+      &-title {
+        span {
+          font-size: 18px !important;
+        }
+
+        + div {
+          padding: 0 $spacer $spacer !important;
+        }
+
+        > div + div {
+          vertical-align: initial !important;
+        }
+      }
+
+      &-info {
+        > div > div {
+          padding: 0 $spacer*2 $spacer !important;
+        }
+      }
+    }
+
+    &-description {
+      margin: 0 0 $spacer 0;
+      padding: $spacer;
+      width: 100%;
+      display: inline-block;
+
+      p {
+        font-size: 16px !important;
+      }
+
+      > div {
+        padding-bottom: 0 !important;
+      }
+
+
+      &-title {
+        span {
+          font-size: 18px !important;
+        }
+
+        + div {
+          padding: 0 $spacer $spacer*3 !important;
+        }
+
+        > div + div {
+          vertical-align: initial !important;
+        }
+      }
+
+      &-info {
+        padding: 0 $spacer*2;
+        font-size: 16px;
+        text-align: left;
       }
     }
   }
 
-  &-flyer {
-    position: absolute !important;
-    text-align: center;
-    transition: margin-left .5s ease;
-    height: calc(100% - #{$spacer*2});
-    top: 0;
-    left: 0;
-
-    &--right {
-      margin-left: calc(50% + #{$spacer*2 - 2px});
-    }
-
-    &:after {
-      content: '';
-      background-color: #ff6600;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      position: absolute;
-      opacity: .35;
-    }
-
-    &-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-size: cover;
-      background-attachment: fixed;
-    }
-
-    .ui.card {
-      padding: $spacer/2;
-      max-width: 60%;
-      margin: $spacer*3 auto;
-      z-index: 1;
-      position: sticky;
-      top: $spacer*20;
-      margin-bottom: $spacer*10 !important;
-      background: $transparent;
-      box-shadow: none;
-
-      img {
-        box-shadow: 0 0 12px $black87;
+  &--viewGallery {
+    .EventPage-main {
+      &-flyer-actions{
+        &-button {
+          display: inline-block !important;
+        }
       }
 
-      button {
-        border: 2px solid $white30;
-        margin: $spacer*2 auto;
-        width: fit-content;
-      }
-
-      &:before {
-        content: '';
-        background-color: $orange;
-        width: 100%;
-        height: 100;
-        top: 0;
-        left: 0;
-      }
-
-      .ui.image {
-        width: 100%;
+      &-gallery {
+        display: grid;
       }
     }
   }
 
-  &-details {
-    min-height: calc(100vh - #{$topbar-height});
+  &--galleryIsVisible {
+    .EventPage-main-gallery-photos {
+      display: block;
+    }
+  }
 
-    &-header {
-      padding: $spacer*2;
-      border-left: 4px solid $orange;
+  &--isAdmin {
+    .EventPage-main-flyer-actions {
+      background-color: $black54;
+      padding-top: $spacer*2;
 
-      &-title {
-        color: $orange;
-      }
-
-      &-place {
-        font-size: 15px;
-        text-transform: uppercase;
+      &-button {
+        margin: $spacer;
       }
     }
+  }
 
-    &-info {
-      padding: $spacer*2;
-      color: $white;
-      font-weight: 300;
-      background-color: $orange;
-      position: relative;
+  &-related {
+    display: block;
+    vertical-align: top;
+    white-space: nowrap;
+    margin: $spacer;
+    padding-top: $spacer*2;
+    position: relative;
 
-      &-item {
-        margin: $spacer 0;
-      }
-
-      &-social {
-        margin-top: $spacer*2;
-      }
-
-      &:before {
-        content: '';
-        position: absolute;
-        width: 300%;
-        top: 0;
-        left: -100%;
-        height: 100%;
-        z-index: -1;
-        background-color: $orange;
-      }
-
-      .Icon:before {
-        width: $spacer*2;
-        text-align: center;
-        margin-right: $spacer;
-        display: block;
-      }
+    h2 {
+      margin: 0 $spacer*2;
+      font-size: 20px;
     }
 
-    &-body {
-      &-title {
-        color: $orange;
-        font-size: 18px;
-        text-transform: uppercase;
-      }
-
-      &-content {
-        margin-top: $spacer*2;
-      }
-
-      &-description {
-        padding: $spacer*2 0;
-        margin: $spacer*2;
-        text-align: justify;
-        white-space: pre-wrap;
-      }
+    .EventList-list {
+      overflow-y: hidden;
     }
   }
 }
 
-@include media("<tablet") {
+@include media(">tablet") {
   .EventPage {
-    &-flyer,
-    &-gallery {
-      height: calc(100vh - #{$spacer*20});
-    }
+    padding: 0 $spacer*4;
+    display: flex;
 
-    &-flyer {
-      position: absolute !important;
+    &-main {
+      margin: $spacer;
+      position: relative;
 
-      &-bg.ui,
-      &:after {
-        left: $spacer*2;
+      &-details {
+        margin: $spacer $spacer $spacer 0;
+
+        &-title {
+          + div {
+            display: inline-flex;
+          }
+        }
+
+        &-info {
+          width: 66%;
+        }
+
+        &-map {
+          width: 33%;
+        }
       }
 
-      .ui.card {
-        width: 90%;
-        max-width: $spacer*60;
-        margin-left: 5%;
+      &-gallery {
+        &-photos {
+          > div {
+            max-width: $spacer*100;
+          }
+        }
       }
     }
 
-    &-details-body-description {
-      padding: $spacer;
-    }
-
-    &--viewGallery .EventPage-flyer {
-      margin-left: 100%;
+    &-related {
+      display: table-cell;
+      overflow-x: visible;
+      width: $spacer*39;
     }
   }
 }

@@ -8,10 +8,10 @@
   }
 
   &--small {
-    margin: 0 $spacer;
+    margin: $spacer $spacer 0;
 
     img {
-      width: $spacer*4;
+      width: $spacer*5;
     }
   }
 }

@@ -1,23 +1,27 @@
-import React from 'react';
-import { Card, Dimmer, Image, Loader } from 'semantic-ui-react';
+import React, { PropTypes } from 'react';
+import classNames from 'classnames';
+import { CircularProgress } from 'material-ui';
+import { deepOrange500 } from 'material-ui/styles/colors';
 
-const EventCardPlaceholder = () => (
-  <div className="EventCardPlaceholder">
-    <Dimmer inverted active><Loader content="Carregando" /></Dimmer>
-    <Card>
-      <Image className="EventCardPlaceholder-background" />
-      <Card.Content className="EventCard-main">
-        <Card.Header>Lorem ipsum</Card.Header>
-      </Card.Content>
-      <Card.Content className="EventCardPlaceholder-details" extra>
-        <div className="EventCardPlaceholder-details-calendar">
-          <div className="EventCardPlaceholder-details-calendar-month">Lor</div>
-          <div className="EventCardPlaceholder-details-calendar-day">0</div>
-        </div>
-        <div className="EventCardPlaceholder-details-timeAndPlace" />
-      </Card.Content>
-    </Card>
-  </div>
-);
+const EventCardPlaceholder = ({ vertical }) => {
+  const classes = classNames('EventCardPlaceholder', { 'EventCardPlaceholder--vertical': vertical });
+
+  return (
+    <div className={classes}>
+      <div className="EventCardPlaceholder-content">
+        <CircularProgress
+          className="EventCardPlaceholder-content-progress"
+          size={60}
+          color={deepOrange500}
+        />
+        <div>Carregando</div>
+      </div>
+    </div>
+  );
+};
+
+EventCardPlaceholder.propTypes = {
+  vertical: PropTypes.bool,
+};
 
 export default EventCardPlaceholder;

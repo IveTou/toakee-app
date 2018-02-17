@@ -38,14 +38,14 @@ const getMetaTags = (obj, url) => {
   const { title, description, flyer: image } = obj[eventKey] || {};
 
   return /^.+\/evento\/.+$/.test(url)
-  ? { title, description: htmlToText.fromString(description, htmlOptions), image, appId, url }
-  : {
-    title: 'Descubra o que fazer em Salvador',
-    description: 'Descubra o que fazer em Salvador. No seu guia de eventos você encontra baladas, teatro, festas, shows, restaurantes, exposições, esportes, seminários, workshops, cursos, promoções, corridas, tudo que acontece na cidade em um só lugar.',
-    image: `${config.ASSETS_BASE_URI}/core/site/brand.png`,
-    url: 'www.toakee.com.br',
-    appId,
-  };
+    ? { title, description: htmlToText.fromString(description, htmlOptions), image, appId, url }
+    : {
+      title: 'Descubra o que fazer em Salvador',
+      description: 'Descubra o que fazer em Salvador. No seu guia de eventos você encontra baladas, teatro, festas, shows, restaurantes, exposições, esportes, seminários, workshops, cursos, promoções, corridas, tudo que acontece na cidade em um só lugar.',
+      image: `${config.ASSETS_BASE_URI}/core/site/brand.png`,
+      url: 'www.toakee.com.br',
+      appId,
+    };
 };
 
 export const exposeSSRRoutes = (app, assets) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import DefaultLayout from '~/src/layouts/default';
-import BannerCarousel from '~/src/components/banner-carousel';
+import Banner from '~/src/components/banner';
 import EventBox from '~/src/components/event-box';
 
 if (process.env.BROWSER) {
@@ -12,7 +12,7 @@ const Landing = () => (
   <DefaultLayout>
     <div className="Landing">
       <div className="Landing-banner">
-        <BannerCarousel />
+        <Banner />
       </div>
       <div className="Landing-lists">
         <EventBox />

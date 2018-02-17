@@ -30,10 +30,10 @@ export default class EventFormPlace extends React.Component {
   }
 
   handlePlacesChange() {
-    const [{ name, formatted_address, geometry }] = this.searchBox.getPlaces();
+    const [{ name, formatted_address: address, geometry }] = this.searchBox.getPlaces();
     this.props.form.setFieldValue('place', {
       name,
-      address: formatted_address,
+      address,
       coordinates: [geometry.location.lng(), geometry.location.lat()],
     });
   }

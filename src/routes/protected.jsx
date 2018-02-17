@@ -3,9 +3,14 @@ import { Route, Redirect } from 'react-router-dom';
 import { withViewer } from '~/src/hocs';
 
 const renderOrRedirect = (Component, componentProps, shouldRender, redirectTo) => (
-  shouldRender
-    ? <Component {...componentProps} />
-    : <Redirect to={{ pathname: redirectTo, state: { from: componentProps.location } }} />
+  <Choose>
+    <When condition={shouldRender}>
+      <Component {...componentProps} />
+    </When>
+    <Otherwise>
+      <Redirect to={{ pathname: redirectTo, state: { from: componentProps.location } }} />
+    </Otherwise>
+  </Choose>
 );
 
 const ProtectedRoute = ({ auth, redirectTo, component, viewer = {}, ...rest }) => (

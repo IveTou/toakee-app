@@ -1,0 +1,132 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
+@import '../../scss/variables';
+@import '../../scss/colors';
+
+.Banner {
+  height: $spacer*30;
+  max-width: $spacer*100;
+  background-color: $orange;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  white-space: nowrap;
+  margin: 0 auto;
+  display: block;
+  position: relative;
+
+  &-description {
+    width: 100%;
+    float: right;
+    background-color: $black54;
+    color: $white;
+    padding: $spacer*2;
+    position: absolute;
+    bottom: 0;
+    display: inline-block;
+
+    &-title {
+      max-height: $spacer*6;
+      font-size: 20px;
+      overflow: hidden;
+      white-space: normal;
+      text-overflow: ellipsis;
+      margin-bottom: 0;
+    }
+
+    &-calendar {
+      text-align: center;
+      font-weight: bold;
+      padding: 0 $spacer;
+      border-right: 1px solid rgba(0,0,0,.05);
+      display: inline-block;
+      vertical-align: middle;
+
+      &-month {
+        font-size: 12px;
+        text-transform: uppercase;
+        padding: 0;
+      }
+
+      &-day {
+        font-weight: 300;
+        font-size: 32px;
+        padding: 0;
+      }
+    }
+
+    &-timeAndPlace {
+      font-size: 14px;
+      width: calc(100% - #{$spacer*7});
+      padding-top: $spacer;
+      display: inline-block;
+      vertical-align: middle;
+      overflow: hidden;
+
+      &-time, &-place {
+        position: relative;
+
+        svg {
+          height: $spacer*2 !important;
+        }
+
+        span {
+          position: absolute;
+        }
+      }
+    }
+
+    &-call {
+      text-align: center;
+      display: none;
+    }
+  }
+}
+
+@include media(">tablet") {
+  .Banner {
+    height: $spacer*50;
+
+    &-description {
+      height: 100%;
+      width: $spacer*30;
+      position: relative;
+
+      &-title {
+        max-height: $spacer*9;
+        margin-bottom: $spacer*2;
+        font-size: 28px;
+      }
+
+      &-calendar {
+        &-month {
+          font-size: 20px;
+          padding: $spacer 0;
+        }
+
+        &-day {
+          font-size: 38px;
+          padding: $spacer 0;
+        }
+      }
+
+      &-timeAndPlace {
+        font-size: 18px;
+        padding-top: $spacer*2;
+
+        &-time, &-place {
+          svg {
+            height: $spacer*4 !important;
+          }
+
+          span {
+            padding: $spacer;
+          }
+        }
+      }
+    }
+
+    &-call {
+      display: block;
+    }
+  }
+}
