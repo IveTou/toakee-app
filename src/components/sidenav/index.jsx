@@ -11,34 +11,13 @@ import {
 import { withIndexStyle } from './styles';
 
 const categories = [
-  {
-    title: 'Arte e Cultura',
-    icon: <Icon>color_lens</Icon>, // red800
-  },
-  {
-    title: 'Baladas',
-    icon: <Icon>whatshot</Icon>, // deeppurple500
-  },
-  {
-    title: 'Cursos',
-    icon: <Icon>local_library</Icon>, // lightblue500
-  },
-  {
-    title: 'Esportes',
-    icon: <Icon>pool</Icon>, // green500
-  },
-  {
-    title: 'Shows',
-    icon: <Icon>local_activity</Icon>, // amber500
-  },
-  {
-    title: 'Bares e Restaurantes',
-    icon: <Icon>local_bar</Icon>, // deeporange500
-  },
-  {
-    title: 'Promoções',
-    icon: <Icon>loyalty</Icon>, // bluegray500
-  },
+  { title: 'Arte e Cultura', icon: 'color_lens', color: 'red' },
+  { title: 'Baladas', icon: 'whatshot', color: 'purple' },
+  { title: 'Cursos', icon: 'local_library', color: 'blue' },
+  { title: 'Esportes', icon: 'pool', color: 'green' },
+  { title: 'Shows', icon: 'local_activity', color: 'amber' },
+  { title: 'Bares e Restaurantes', icon: 'local_bar', color: 'orange' },
+  { title: 'Promoções', icon: 'loyalty', color: 'blueGrey' },
 ];
 
 export class SideNav extends React.Component {
@@ -81,7 +60,9 @@ export class SideNav extends React.Component {
                 component={Link}
                 to={`/search?q=${category.title}`}
               >
-                <ListItemIcon>{category.icon}</ListItemIcon>
+                <ListItemIcon className={classes[category.color]}>
+                  <Icon>{category.icon}</Icon>
+                </ListItemIcon>
                 <ListItemText primary={category.title} />
               </ListItem>
             </For>
