@@ -1,20 +1,21 @@
 import React from 'react';
 
-import DefaultLayout from '~/src/layouts/default';
 import EventBox from '~/src/components/event-box';
+import Banner from '~/src/components/banner';
 
 if (process.env.BROWSER) {
   require('./style.scss');
 }
 
 const EventFeed = () => (
-  <DefaultLayout>
-    <div className="EventFeed">
-      <div className="EventFeed-content">
-        <EventBox />
-      </div>
+  <div className="EventFeed">
+    <div className="EventFeed-banner">
+      <Banner />
     </div>
-  </DefaultLayout>
+    <div className="EventFeed-lists">
+      <EventBox />
+    </div>
+  </div>
 );
 
 export default EventFeed;

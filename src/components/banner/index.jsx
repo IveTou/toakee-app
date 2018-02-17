@@ -26,9 +26,7 @@ const Banner = () => (
           <Icon>schedule</Icon><span>17h</span>
         </div>
       </div>
-      <If condition={true}>
-        <h2 className="Banner-description-call">Veja como foi</h2>
-      </If>
+      <h2 className="Banner-description-call">Veja como foi</h2>
     </div>
   </Link>
 );

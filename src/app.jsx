@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import { MuiThemeProvider } from 'material-ui';
 
 import ProtectedRoute from '~/src/routes/protected';
+import DefaultLayout from '~/src/layouts/default';
 
 import NewEventPage from '~/src/pages/new-event';
 import EditEventPage from '~/src/pages/edit-event';
@@ -16,14 +17,12 @@ import UseTerms from '~/src/pages/use-terms';
 import About from '~/src/pages/about';
 import EventModeration from '~/src/pages/event-moderation';
 
+import ContextProvider from '~/src/components/context-provider';
 import Login from '~/src/components/auth-wrapper/login';
 import SignUp from '~/src/components/auth-wrapper/sign-up';
 import Scroller from '~/src/components/scroller';
 import Snackbar from '~/src/components/snackbar';
 import AuthModal from '~/src/components/auth-modal';
-
-import ViewerProvider from '~/src/components/viewer-provider';
-import DeviceInfoProvider from '~/src/components/device-info-provider';
 
 import { userIsLogged, userIsAdmin } from '~/src/auth';
 
@@ -31,11 +30,11 @@ import { theme } from '~/src/mui/theme';
 
 const App = ({ userAgent }) => (
   <MuiThemeProvider theme={theme}>
-    <ViewerProvider>
-      <DeviceInfoProvider userAgent={userAgent || window.navigator.userAgent}>
-        <Scroller />
-        <Snackbar />
-        <AuthModal />
+    <ContextProvider userAgent={userAgent || window.navigator.userAgent}>
+      <Scroller />
+      <Snackbar />
+      <AuthModal />
+      <DefaultLayout>
         <Switch>
           <ProtectedRoute
             auth={userIsAdmin}
@@ -58,7 +57,7 @@ const App = ({ userAgent }) => (
             redirectTo="/login"
             exact
           />
-          <Route path="/" component={EventFeed} />
+          <Route path="/" exact component={EventFeed} />
           <Route path="/login" component={Login} />
           <Route path="/cadastrar" component={SignUp} />
           <Route path="/search" component={SearchPage} />
@@ -68,8 +67,8 @@ const App = ({ userAgent }) => (
           <Route path="/termos-de-uso" component={UseTerms} />
           <Route path="/quem-somos" component={About} />
         </Switch>
-      </DeviceInfoProvider>
-    </ViewerProvider>
+      </DefaultLayout>
+    </ContextProvider>
   </MuiThemeProvider>
 );
 

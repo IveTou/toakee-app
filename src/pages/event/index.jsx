@@ -13,9 +13,6 @@ import {
   CardHeader,
   CardMedia,
   CardContent,
-  FlatButton,
-  RaisedButton,
-  FloatingActionButton,
   GridList,
   GridTile,
   List,
@@ -26,10 +23,7 @@ import classNames from 'classnames';
 import autoBind from 'react-autobind';
 import { Link } from 'react-router-dom';
 
-import AttendButton from '~/src/components/attend-button';
-import { ease } from '~/src/utils/animation';
 import EventList from '~/src/components/event-list';
-import EventListArrow from '~/src/components/event-list/arrow';
 import Wrapper from '~/src/components/map';
 import { fullDateFormat, timeFormat } from '~/src/utils/moment';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
@@ -93,16 +87,6 @@ export class EventPage extends React.Component {
     });
   }
 
-  scroll(direction) {
-    const node = this._listDOM || {};
-    const startingPoint = node.scrollTop;
-    const amount = node.offsetHeight * 0.8 * direction;
-
-    ease(500, (tweaker) => {
-      node.scrollTop = startingPoint + (tweaker * amount);
-    }, () => this.forceUpdate());
-  }
-
   renderModerationButtons() {
     const { setStatus, event } = this.props;
     const { status: eventStatus } = event || {};
@@ -147,10 +131,6 @@ export class EventPage extends React.Component {
     const isMobile = !this.props.deviceInfo.is('desktop');
     const previewThumbs = take(photos, isMobile ? 8 : 16);
 
-    const node = this._listDOM || {};
-    const hideTopArrow = !node.scrollTop;
-    const hideBottomArrow = node.scrollTop + node.offsetHeight >= node.scrollHeight;
-
     const classes = classNames('EventPage', {
       'EventPage--viewGallery': photos.length,
       'EventPage--galleryIsVisible': galleryIsVisible,
@@ -166,13 +146,9 @@ export class EventPage extends React.Component {
       <div className={classes}>
         <div className="EventPage-main">
           <Card>
-            <CardMedia className="EventPage-main-flyer" alt={flyerAlt}>
-              <div
-                className="EventPage-main-flyer-bg"
-                style={{ backgroundImage: `url(${flyer})` }}
-              />
+            <CardMedia image={flyer} className="EventPage-main-flyer" alt={flyerAlt}>
               <div className="EventPage-main-flyer-actions">
-                <FlatButton
+                <Button
                   className="EventPage-main-flyer-actions-button"
                   label="VEJA COMO FOI!"
                   onClick={this.openGallery}
@@ -180,41 +156,30 @@ export class EventPage extends React.Component {
                     <Link to="gallery-header" smooth offset={300} duration={500} />
                   }
                 />
-                <div className="EventPage-main-flyer-actions">
-                  <Button
-                    className="EventPage-main-flyer-actions-button"
-                    label="VEJA COMO FOI!"
-                    onClick={this.openGallery}
-                    containerElement={
-                      <Link to="gallery-header" smooth offset={300} duration={500} />
-                    }
-                  />
-                  <If condition={viewer.isAdmin}>{this.renderModerationButtons()}</If>
+                <If condition={viewer.isAdmin}>{this.renderModerationButtons()}</If>
+              </div>
+              <div className="EventPage-main-flyer-overlay">
+                <div className="EventPage-main-flyer-overlay-title">
+                  <h1>{title}</h1>
                 </div>
-                <div className="EventPage-main-flyer-overlay">
-                  <div className="EventPage-main-flyer-overlay-title">
-                    <h1>{title}</h1>
-                  </div>
-                  <div className="EventPage-main-flyer-overlay-actions">
-                    <If condition={creator.id === viewer.id}>
-                      <FloatingActionButton
-                        title="Editar"
-                        href={`/evento/${id}/editar`}
-                      >
-                        <Icon>mode_edit</Icon>
-                      </FloatingActionButton>
-                    </If>
-                    <FloatingActionButton title="Compartilhar" onClick={this.fbShare} secondary>
-                      <Icon>share</Icon>
-                    </FloatingActionButton>
+                <div className="EventPage-main-flyer-overlay-actions">
+                  <If condition={creator.id === viewer.id}>
+                    <Button
+                      variant="fab"
+                      title="Editar"
+                      href={`/evento/${id}/editar`}
+                    >
+                      <Icon>mode_edit</Icon>
+                    </Button>
                   </If>
-                  <FloatingActionButton title="Compartilhar" onClick={this.fbShare} secondary>
-                    <SocialShare />
-                  </FloatingActionButton>
+                  <Button variant="fab" title="Compartilhar" onClick={this.fbShare} secondary>
+                    <Icon>share</Icon>
+                  </Button>
                 </div>
               </div>
             </CardMedia>
           </Card>
+
           <If condition={photos.length}>
             <Card className="EventPage-main-gallery">
               <Lightbox
@@ -230,96 +195,125 @@ export class EventPage extends React.Component {
                   className="EventPage-main-gallery-title"
                   title="Galeria de Fotos"
                   avatar={
-                    <Avatar
-                      icon={<ImagePhotoCamera />}
-                      backgroundColor={deepPurple500}
-                      size={30}
-                    />
+                    <Avatar icon={<Icon>photo_camera</Icon>} size={30} />
                   }
                 />
-                <Element name="gallery-header">
-                  <CardHeader
-                    className="EventPage-main-gallery-title"
-                    title="Galeria de Fotos"
-                    avatar={
-                      <Avatar icon={<Icon>photo_camera</Icon>} size={30} />
-                    }
-                  />
-                </Element>
-                <If condition={!galleryIsVisible}>
-                  <CardText className="EventPage-main-gallery-preview">
-                    <GridList cols={2.2}>
-                      <For each="previewItem" of={previewThumbs}>
-                        <GridTile key={previewItem.thumb}><img src={previewItem.thumb} /></GridTile>
-                      </For>
-                    </GridList>
-                  </CardText>
-                </If>
-                <div className="EventPage-main-gallery-actions">
-                  <Button
-                    variant="raised"
-                    label={galleryIsVisible ? 'Fechar Galeria' : 'Abrir Galeria'}
-                    onClick={this.toggleGallery}
-                    secondary
-                  />
-                </If>
-              </Card>
-            </If>
-            <Card className="EventPage-main-details" initiallyExpanded>
-              <CardHeader
-                className="EventPage-main-details-title"
-                title="Detalhes"
-                actAsExpander={isMobile}
-                showExpandableButton={isMobile}
-                avatar={
-                  <Avatar icon={<Icon>event</Icon>} size={30} />
-                }
-              />
-              <CardText expandable>
-                <List className="EventPage-main-details-info">
-                  <If condition={start}>
-                    <ListItem
-                      disabled
-                      primaryText={fullDateFormat(start)}
-                      leftIcon={<Icon>date_range</Icon>}
-                    />
-                    <ListItem
-                      disabled
-                      primaryText={timeFormat(start)}
-                      leftIcon={<Icon>schedule</Icon>}
-                    />
-                  </If>
-                  <If condition={place && place.address}>
-                    <ListItem
-                      disabled
-                      primaryText={place.address}
-                      leftIcon={<Icon>place</Icon>}
-                    />
-                    <If condition={directions}>
-                      <div className="EventPage-main-details-info-button">
-                        <Button
-                          label="Ver Mapa"
-                          secondary
-                          containerElement={<Link to="map" smooth offset={-200} duration={500} />}
-                        />
-                      </div>
-                    </If>
-                  </If>
-                </List>
-              </CardText>
+              </Element>
+              <If condition={!galleryIsVisible}>
+                <CardContent className="EventPage-main-gallery-preview">
+                  <GridList cols={2.2}>
+                    <For each="previewItem" of={previewThumbs}>
+                      <GridTile key={previewItem.thumb}><img src={previewItem.thumb} /></GridTile>
+                    </For>
+                  </GridList>
+                </CardContent>
+              </If>
+              <div className="EventPage-main-gallery-actions">
+                <Button
+                  variant="raised"
+                  label={galleryIsVisible ? 'Fechar Galeria' : 'Abrir Galeria'}
+                  onClick={this.toggleGallery}
+                  secondary
+                />
+              </div>
+              <If condition={galleryIsVisible}>
+                <CardContent className="EventPage-main-gallery-photos">
+                  <GridList cellHeight="auto">
+                    <For each="photosItem" of={photos} index="index">
+                      <GridTile key={index}>
+                        <img src={photosItem.thumb} onClick={() => this.openPhoto(index)} />
+                      </GridTile>
+                    </For>
+                  </GridList>
+                </CardContent>
+              </If>
             </Card>
-            <Card className="EventPage-main-prices" initiallyExpanded>
-              <CardHeader
-                className="EventPage-main-prices-title"
-                title="Preços"
-                actAsExpander={isMobile}
-                showExpandableButton={isMobile}
-                avatar={
-                  <Avatar icon={<Icon>attach_money</Icon>} size={30} />
-                }
+          </If>
+
+          <Card className="EventPage-main-details" initiallyExpanded>
+            <CardHeader
+              className="EventPage-main-details-title"
+              title="Detalhes"
+              actAsExpander={isMobile}
+              showExpandableButton={isMobile}
+              avatar={
+                <Avatar icon={<Icon>event</Icon>} size={30} />
+              }
+            />
+            <CardContent expandable>
+              <List className="EventPage-main-details-info">
+                <If condition={start}>
+                  <ListItem
+                    disabled
+                    primaryText={fullDateFormat(start)}
+                    leftIcon={<Icon>date_range</Icon>}
+                  />
+                  <ListItem
+                    disabled
+                    primaryText={timeFormat(start)}
+                    leftIcon={<Icon>schedule</Icon>}
+                  />
+                </If>
+                <If condition={place && place.address}>
+                  <ListItem
+                    disabled
+                    primaryText={place.address}
+                    leftIcon={<Icon>place</Icon>}
+                  />
+                  <If condition={directions}>
+                    <div className="EventPage-main-details-info-button">
+                      <Button
+                        label="Ver Mapa"
+                        secondary
+                        containerElement={<Link to="map" smooth offset={-200} duration={500} />}
+                      />
+                    </div>
+                  </If>
+                </If>
+              </List>
+            </CardContent>
+          </Card>
+
+          <Card className="EventPage-main-prices" initiallyExpanded>
+            <CardHeader
+              className="EventPage-main-prices-title"
+              title="Preços"
+              actAsExpander={isMobile}
+              showExpandableButton={isMobile}
+              avatar={
+                <Avatar icon={<Icon>attach_money</Icon>} size={30} />
+              }
+            />
+            <CardContent expandable>
+              <List className="EventPage-main-prices-info">
+                <For each="priceItem" of={mappedPrice}>
+                  <ListItem
+                    disabled
+                    key={`${priceItem.description}${priceItem.value}`}
+                    primaryText={priceItem.description || 'Entrada'}
+                    secondaryText={priceItem.value ? `R$ ${priceItem.value}` : ''}
+                  />
+                </For>
+              </List>
+            </CardContent>
+          </Card>
+
+          <Card className="EventPage-main-description" initiallyExpanded>
+            <CardHeader
+              className="EventPage-main-description-title"
+              title="Descrição"
+              actAsExpander={isMobile}
+              showExpandableButton={isMobile}
+              avatar={<Avatar icon={<Icon>description</Icon>} size={30} />}
+            />
+            <CardContent expandable>
+              <div
+                className="EventPage-main-description-info"
+                dangerouslySetInnerHTML={{ __html: description }}
               />
             </CardContent>
           </Card>
+
           <If condition={directions}>
             <Card className="EventPage-main-map" name="map" initiallyExpanded>
               <CardHeader
@@ -327,7 +321,9 @@ export class EventPage extends React.Component {
                 title="Mapa"
                 actAsExpander={isMobile}
                 showExpandableButton={isMobile}
-                avatar={<Avatar icon={<Icon>description</Icon>} size={30} />}
+                avatar={
+                  <Avatar icon={<Icon>map</Icon>} size={30} />
+                }
               />
               <CardContent expandable>
                 <Element name="map">
@@ -335,34 +331,17 @@ export class EventPage extends React.Component {
                 </Element>
               </CardContent>
             </Card>
-            <If condition={directions}>
-              <Card className="EventPage-main-map" name="map" initiallyExpanded>
-                <CardHeader
-                  className="EventPage-main-map-title"
-                  title="Mapa"
-                  actAsExpander={isMobile}
-                  showExpandableButton={isMobile}
-                  avatar={
-                    <Avatar icon={<Icon>map</Icon>} size={30} />
-                  }
-                />
-                <CardText expandable>
-                  <Element name="map">
-                    <Wrapper center={directions} />
-                  </Element>
-                </CardText>
-              </Card>
-            </If>
-          </div>
+          </If>
+        </div>
 
         <div className="EventPage-related">
+          <If condition={categories.length}>
             <EventList
-              title="Eventos relacionados"
+              title="Eventos Relacionados"
               start={moment().startOf('hour')}
               categoryIds={map(categories, 'id')}
               excludedEventId={id}
               vertical={!isMobile}
-              inputRef={dom => this._listDOM = dom}
             />
           </If>
         </div>

@@ -13,6 +13,9 @@ export const withIndexStyle = withStyles(theme => ({
       overflowX: 'auto',
     },
   },
+  listVertical: {
+    flexDirection: 'column',
+  },
   listItem: {
     flex: '0 0 auto',
     margin: theme.spacing.unit,

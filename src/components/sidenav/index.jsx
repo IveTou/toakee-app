@@ -2,18 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import autoBind from 'react-autobind';
 import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 import {
-  Drawer,
-  Divider,
-  Menu,
-  MenuItem,
-  Subheader,
-  Icon,
+  List, ListItem, ListItemIcon, ListItemText, ListSubheader,
+  Drawer, Divider, Icon,
 } from 'material-ui';
 
-if (process.env.BROWSER) {
-  require('./style.scss');
-}
+import { withIndexStyle } from './styles';
 
 const categories = [
   {
@@ -54,41 +49,54 @@ export class SideNav extends React.Component {
 
   render() {
     declare var category;
-    const { open } = this.props;
-    const classes = classNames('SideNav', { 'SideNav--open': open });
+    const { classes, open, mobile, onToggle } = this.props;
+
+    const variant = mobile ? 'temporary' : 'permanent';
+    const onClose = mobile ? onToggle : undefined;
+    const rootClasses = {
+      paper: classNames(classes.paper, !open && classes.paperClose),
+      modal: mobile && classes.mobileRoot,
+    };
 
     return (
-      <Drawer zDepth={0} className={classes} open={open}>
-        <Menu>
-          <MenuItem
-            href="/landing"
-            primaryText="Início"
-            leftIcon={<Icon>home</Icon>}
-          />
-          <MenuItem
-            href="/dashboard"
-            primaryText="Meus Eventos"
-            leftIcon={<Icon>event</Icon>}
-          />
-          <Divider className="SideNav-divider" />
-          <Subheader className="SideNav-subheader">Categorias</Subheader>
-          <For each="category" of={categories}>
-            <MenuItem
-              key={category.title}
-              href={`/search?q=${category.title}`}
-              primaryText={category.title}
-              leftIcon={category.icon}
-              name={category.title}
-            />
-          </For>
-        </Menu>
+      <Drawer variant={variant} classes={rootClasses} onClose={onClose} open={open}>
+        <div role="button" className={classes.inner} onClick={onClose}>
+          <List component="nav">
+            <ListItem button component={Link} to="/">
+              <ListItemIcon><Icon>home</Icon></ListItemIcon>
+              <ListItemText primary="Início" />
+            </ListItem>
+            <ListItem button component={Link} to="/dashboard">
+              <ListItemIcon><Icon>event</Icon></ListItemIcon>
+              <ListItemText primary="Meus eventos" />
+            </ListItem>
+            <Divider />
+            <If condition={open}>
+              <ListSubheader>Categorias</ListSubheader>
+            </If>
+            <For each="category" of={categories}>
+              <ListItem
+                button
+                key={category.title}
+                component={Link}
+                to={`/search?q=${category.title}`}
+              >
+                <ListItemIcon>{category.icon}</ListItemIcon>
+                <ListItemText primary={category.title} />
+              </ListItem>
+            </For>
+          </List>
+        </div>
       </Drawer>
     );
   }
 }
 
 SideNav.propTypes = {
+  classes: PropTypes.object,
+  mobile: PropTypes.bool,
+  onToggle: PropTypes.func,
   open: PropTypes.bool,
 };
 
-export default SideNav;
+export default withIndexStyle(SideNav);

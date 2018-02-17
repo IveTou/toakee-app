@@ -17,6 +17,7 @@
     &-flyer {
       height: $spacer*50;
       overflow: hidden;
+      position: relative;
 
       @keyframes bgAnimation {
         0% { transform: scale(1) }
@@ -59,6 +60,7 @@
         min-height: $spacer*11;
         padding: $spacer*3 $spacer*2;
         display: table;
+        width: 100%;
 
         &-title {
           display: table-cell;
@@ -349,20 +351,8 @@
   }
 
   &-related {
-    display: block;
-    vertical-align: top;
     white-space: nowrap;
-    margin: $spacer;
-    padding-top: $spacer*2;
-    position: relative;
-
-    h2 {
-      margin: 0 $spacer*2;
-    }
-
-    .EventList-list {
-      overflow-y: hidden;
-    }
+    padding-top: $spacer;
   }
 }
 

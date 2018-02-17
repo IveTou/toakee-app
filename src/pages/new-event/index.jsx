@@ -7,7 +7,6 @@ import { Typography } from 'material-ui';
 
 import { showSnackbar } from '~/src/ducks/snackbar';
 import { withViewer } from '~/src/hocs';
-import DefaultLayout from '~/src/layouts/default';
 import CloudinaryApi from '~/src/toakee-core/apis/cloudinary.js';
 
 import EventForm from '~/src/components/event-form';
@@ -49,12 +48,10 @@ const NewEventPage = ({
   };
 
   return (
-    <DefaultLayout>
-      <div className="NewEventPage">
-        <Typography className="NewEventPage-title" variant="title">Novo Evento</Typography>
-        <EventForm onSubmit={handleSubmit} onError={alertError} />
-      </div>
-    </DefaultLayout>
+    <div className="NewEventPage">
+      <Typography className="NewEventPage-title" variant="title">Novo Evento</Typography>
+      <EventForm onSubmit={handleSubmit} onError={alertError} />
+    </div>
   );
 };
 

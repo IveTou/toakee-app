@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { graphql } from 'react-apollo';
 import autoBind from 'react-autobind';
 import VisibilitySensor from 'react-visibility-sensor';
@@ -50,10 +51,11 @@ class EventList extends React.Component {
   render() {
     const { classes, title, viewer = {}, vertical, excludedEventId } = this.props;
     const { eventCount } = viewer;
+
     const events = viewer.events ? viewer.events.filter(e => e.id !== excludedEventId) : [];
+    const listClasses = classNames(classes.list, vertical && classes.listVertical);
 
     const node = this._listDOM || {};
-    const arrows = vertical ? ['up', 'down'] : ['left', 'right'];
     const hideLeftArrow = !node.scrollLeft;
     const hideRightArrow =
       (node.scrollLeft + node.offsetWidth) >= node.scrollWidth && !this.state.hasMore;
@@ -69,21 +71,23 @@ class EventList extends React.Component {
           <Typography className={classes.title} variant="title">{title} ({eventCount})</Typography>
         </If>
         <div className={classes.listWrapper}>
-          <EventListArrow
-            direction={arrows[0]}
-            onClick={() => this.scroll(-1)}
-            hide={hideLeftArrow}
-          />
-          <EventListArrow
-            direction={arrows[1]}
-            onClick={() => this.scroll(1)}
-            hide={hideRightArrow}
-          />
-          <div ref={(dom) => { this._listDOM = dom; }} className={classes.list}>
+          <If condition={!vertical}>
+            <EventListArrow
+              direction="left"
+              onClick={() => this.scroll(-1)}
+              hide={hideLeftArrow}
+            />
+            <EventListArrow
+              direction="right"
+              onClick={() => this.scroll(1)}
+              hide={hideRightArrow}
+            />
+          </If>
+          <div ref={(dom) => { this._listDOM = dom; }} className={listClasses}>
             <For each="event" index="idx" of={events}>
               <EventCard className={classes.listItem} key={idx} event={event} />
             </For>
-            <If condition={this.state.hasMore}>
+            <If condition={this.state.hasMore && (!vertical || !events.length)}>
               <VisibilitySensor onChange={isVisible => (isVisible && this.fetchEvents())} />
               <For each="placeholder" of={range(Math.min(5, eventCount - events.length))}>
                 <EventCardPlaceholder key={placeholder} className={classes.listItem} />
