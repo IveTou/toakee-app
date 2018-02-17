@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql, compose } from 'react-apollo';
-import { Icon, Card, Image, Grid, Button } from 'semantic-ui-react';
 import Lightbox from 'react-images';
 import { take, map } from 'lodash';
 import moment from 'moment';
@@ -17,6 +16,8 @@ import {
   GridTile,
   List,
   ListItem,
+  ListItemIcon,
+  ListItemText,
 } from 'material-ui';
 
 import classNames from 'classnames';
@@ -101,10 +102,11 @@ export class EventPage extends React.Component {
         variant="raised"
         className="EventPage-main-flyer-actions-button"
         key={label}
-        label={label}
         disabled={status === eventStatus}
         onClick={() => setStatus(status)}
-      />
+      >
+        {label}
+      </Button>
     ));
   }
 
@@ -155,7 +157,9 @@ export class EventPage extends React.Component {
                   containerElement={
                     <Link to="gallery-header" smooth offset={300} duration={500} />
                   }
-                />
+                >
+                  Veja como foi!
+                </Button>
                 <If condition={viewer.isAdmin}>{this.renderModerationButtons()}</If>
               </div>
               <div className="EventPage-main-flyer-overlay">
@@ -164,15 +168,16 @@ export class EventPage extends React.Component {
                 </div>
                 <div className="EventPage-main-flyer-overlay-actions">
                   <If condition={creator.id === viewer.id}>
-                    <Button
-                      variant="fab"
-                      title="Editar"
-                      href={`/evento/${id}/editar`}
-                    >
+                    <Button variant="fab" title="Editar" href={`/evento/${id}/editar`}>
                       <Icon>mode_edit</Icon>
                     </Button>
                   </If>
-                  <Button variant="fab" title="Compartilhar" onClick={this.fbShare} secondary>
+                  <Button
+                    variant="fab"
+                    title="Compartilhar"
+                    onClick={this.fbShare}
+                    color="secondary"
+                  >
                     <Icon>share</Icon>
                   </Button>
                 </div>
@@ -209,12 +214,9 @@ export class EventPage extends React.Component {
                 </CardContent>
               </If>
               <div className="EventPage-main-gallery-actions">
-                <Button
-                  variant="raised"
-                  label={galleryIsVisible ? 'Fechar Galeria' : 'Abrir Galeria'}
-                  onClick={this.toggleGallery}
-                  secondary
-                />
+                <Button variant="raised" onClick={this.toggleGallery} color="secondary">
+                  {galleryIsVisible ? 'Fechar Galeria' : 'Abrir Galeria'}
+                </Button>
               </div>
               <If condition={galleryIsVisible}>
                 <CardContent className="EventPage-main-gallery-photos">
@@ -230,83 +232,64 @@ export class EventPage extends React.Component {
             </Card>
           </If>
 
-          <Card className="EventPage-main-details" initiallyExpanded>
+          <Card className="EventPage-main-details">
             <CardHeader
               className="EventPage-main-details-title"
               title="Detalhes"
-              actAsExpander={isMobile}
-              showExpandableButton={isMobile}
-              avatar={
-                <Avatar icon={<Icon>event</Icon>} size={30} />
-              }
+              avatar={<Avatar icon={<Icon>event</Icon>} size={30} />}
             />
-            <CardContent expandable>
+            <CardContent>
               <List className="EventPage-main-details-info">
                 <If condition={start}>
-                  <ListItem
-                    disabled
-                    primaryText={fullDateFormat(start)}
-                    leftIcon={<Icon>date_range</Icon>}
-                  />
-                  <ListItem
-                    disabled
-                    primaryText={timeFormat(start)}
-                    leftIcon={<Icon>schedule</Icon>}
-                  />
+                  <ListItem>
+                    <ListItemIcon><Icon>date_range</Icon></ListItemIcon>
+                    <ListItemText primary={fullDateFormat(start)} />
+                  </ListItem>
+
+                  <ListItem>
+                    <ListItemIcon><Icon>schedule</Icon></ListItemIcon>
+                    <ListItemText primary={timeFormat(start)} />
+                  </ListItem>
                 </If>
                 <If condition={place && place.address}>
-                  <ListItem
-                    disabled
-                    primaryText={place.address}
-                    leftIcon={<Icon>place</Icon>}
-                  />
-                  <If condition={directions}>
-                    <div className="EventPage-main-details-info-button">
-                      <Button
-                        label="Ver Mapa"
-                        secondary
-                        containerElement={<Link to="map" smooth offset={-200} duration={500} />}
-                      />
-                    </div>
-                  </If>
+                  <ListItem>
+                    <ListItemIcon><Icon>place</Icon></ListItemIcon>
+                    <ListItemText primary={place.address} />
+                  </ListItem>
                 </If>
               </List>
             </CardContent>
           </Card>
 
-          <Card className="EventPage-main-prices" initiallyExpanded>
+          <Card className="EventPage-main-prices">
             <CardHeader
               className="EventPage-main-prices-title"
               title="Preços"
-              actAsExpander={isMobile}
-              showExpandableButton={isMobile}
               avatar={
                 <Avatar icon={<Icon>attach_money</Icon>} size={30} />
               }
             />
-            <CardContent expandable>
+            <CardContent>
               <List className="EventPage-main-prices-info">
                 <For each="priceItem" of={mappedPrice}>
-                  <ListItem
-                    disabled
-                    key={`${priceItem.description}${priceItem.value}`}
-                    primaryText={priceItem.description || 'Entrada'}
-                    secondaryText={priceItem.value ? `R$ ${priceItem.value}` : ''}
-                  />
+                  <ListItem key={priceItem.description}>
+                    <ListItemText
+                      primary={priceItem.description || 'Entrada'}
+                      secondary={priceItem.value}
+                    />
+                  </ListItem>
                 </For>
               </List>
             </CardContent>
           </Card>
 
-          <Card className="EventPage-main-description" initiallyExpanded>
+          <Card className="EventPage-main-description">
             <CardHeader
               className="EventPage-main-description-title"
               title="Descrição"
-              actAsExpander={isMobile}
-              showExpandableButton={isMobile}
               avatar={<Avatar icon={<Icon>description</Icon>} size={30} />}
             />
-            <CardContent expandable>
+            <CardContent>
               <div
                 className="EventPage-main-description-info"
                 dangerouslySetInnerHTML={{ __html: description }}
@@ -315,17 +298,15 @@ export class EventPage extends React.Component {
           </Card>
 
           <If condition={directions}>
-            <Card className="EventPage-main-map" name="map" initiallyExpanded>
+            <Card className="EventPage-main-map" name="map">
               <CardHeader
                 className="EventPage-main-map-title"
                 title="Mapa"
-                actAsExpander={isMobile}
-                showExpandableButton={isMobile}
                 avatar={
                   <Avatar icon={<Icon>map</Icon>} size={30} />
                 }
               />
-              <CardContent expandable>
+              <CardContent>
                 <Element name="map">
                   <Wrapper center={directions} />
                 </Element>
