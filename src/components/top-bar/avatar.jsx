@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Avatar, IconButton, Menu, MenuItem } from 'material-ui';
 import { withState } from 'recompose';
 
-const TopBarAvatar = ({ viewer, classes, anchor, setAnchor }) => {
+const TopBarAvatar = ({ viewer, anchor, setAnchor }) => {
   return (
     <If condition={viewer.id}>
       <IconButton onClick={e => setAnchor(e.target)}>
@@ -20,7 +20,6 @@ const TopBarAvatar = ({ viewer, classes, anchor, setAnchor }) => {
 
 TopBarAvatar.propTypes = {
   viewer: PropTypes.object,
-  classes: PropTypes.object,
   anchor: PropTypes.object,
   setAnchor: PropTypes.func,
 };

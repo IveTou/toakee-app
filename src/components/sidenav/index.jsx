@@ -39,7 +39,7 @@ export class SideNav extends React.Component {
 
     return (
       <Drawer variant={variant} classes={rootClasses} onClose={onClose} open={open}>
-        <div role="button" className={classes.inner} onClick={onClose}>
+        <div role="button" className={classes.inner} onClick={onClose} tabIndex="-1">
           <List component="nav">
             <ListItem button component={Link} to="/">
               <ListItemIcon><Icon>home</Icon></ListItemIcon>
