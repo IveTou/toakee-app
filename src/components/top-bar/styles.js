@@ -7,13 +7,15 @@ export const withIndexStyle = withStyles(theme => ({
   root: {
     position: 'absolute',
     backgroundColor: theme.palette.common.white,
-    zIndex: theme.zIndex.drawer + 1,
+    zIndex: theme.zIndex.drawer + 100,
   },
   toolbar: {
     paddingLeft: theme.spacing.unit / 2,
   },
   searchWrapper: {
     flex: 1,
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
   },
   publishButton: {
     marginLeft: theme.spacing.unit * 2,

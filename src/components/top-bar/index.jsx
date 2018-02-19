@@ -14,6 +14,7 @@ import Logo from '~/src/components/logo';
 import SearchBar from '~/src/components/search-bar';
 
 import TopBarAvatar from './avatar';
+import TopBarMore from './more';
 import { withIndexStyle } from './styles';
 
 const trackPageView = once((viewer, pid) => TrackingAPI.viewerSafeTrack(viewer, pid));
@@ -71,29 +72,41 @@ export class TopBar extends React.Component {
           <Logo small={small} />
 
           <div className={classes.searchWrapper}>
-            <If condition={!small}>
-              <SearchBar onSearch={this.onSearch} />
-            </If>
+            <SearchBar onSearch={this.onSearch} />
           </div>
 
-          <If condition={!small}>
-            <div>
-              <Button
-                className={classes.publishButton}
-                variant="raised"
-                color="primary"
-                onClick={this.newEvent}
-              >
-                Publicar
-              </Button>
-              <If condition={!viewer.id}>
-                <Button onClick={this.signUp}>Cadastrar</Button>
-                <Button onClick={this.login}>Entrar</Button>
-              </If>
-            </div>
-          </If>
+          <Choose>
+            <When condition={!small}>
+              <div>
+                <Button
+                  className={classes.publishButton}
+                  variant="raised"
+                  color="primary"
+                  onClick={this.newEvent}
+                >
+                  Publicar
+                </Button>
+                <If condition={!viewer.id}>
+                  <Button onClick={this.signUp}>Cadastrar</Button>
+                  <Button onClick={this.login}>Entrar</Button>
+                </If>
+              </div>
+            </When>
+            <Otherwise>
+              <TopBarMore
+                viewer={viewer}
+                login={() => this.login}
+                signUp={() => this.signUp}
+                newEvent={() => this.newEvent}
+              />
+            </Otherwise>
+          </Choose>
 
-          <TopBarAvatar viewer={viewer} />
+          <TopBarAvatar
+            viewer={viewer}
+            logout={() => this.logout}
+            dashboard={() => this.dashboard}
+          />
         </Toolbar>
       </AppBar>
     );
