@@ -91,22 +91,23 @@ export class TopBar extends React.Component {
                   <Button onClick={this.login}>Entrar</Button>
                 </If>
               </div>
+
+              <TopBarAvatar
+                viewer={viewer}
+                logout={() => this.logout}
+                dashboard={() => this.dashboard}
+              />
             </When>
             <Otherwise>
               <TopBarMore
                 viewer={viewer}
                 login={() => this.login}
+                logout={() => this.logout}
                 signUp={() => this.signUp}
                 newEvent={() => this.newEvent}
               />
             </Otherwise>
           </Choose>
-
-          <TopBarAvatar
-            viewer={viewer}
-            logout={() => this.logout}
-            dashboard={() => this.dashboard}
-          />
         </Toolbar>
       </AppBar>
     );
