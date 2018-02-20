@@ -3,7 +3,7 @@ import { topbarHeight, topbarMobileHeight } from '~/src/components/top-bar/style
 
 export const withDefaultStyle = withStyles(theme => ({
   root: {
-    backgroundColor: theme.palette.grey[50],
+    backgroundColor: theme.palette.grey[100],
     position: 'relative',
     display: 'flex',
     width: '100%',

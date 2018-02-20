@@ -3,6 +3,7 @@ import { withStyles } from 'material-ui';
 export const withIndexStyle = withStyles(theme => ({
   title: {
     marginLeft: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
   },
   list: {
     display: 'flex',
@@ -15,11 +16,6 @@ export const withIndexStyle = withStyles(theme => ({
   },
   listVertical: {
     flexDirection: 'column',
-  },
-  listItem: {
-    flex: '0 0 auto',
-    margin: theme.spacing.unit,
-    marginRight: 0,
   },
   listWrapper: {
     position: 'relative',

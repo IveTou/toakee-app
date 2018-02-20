@@ -3,15 +3,14 @@
 @import '../../scss/colors';
 
 .EventFeed {
-  padding: $spacer*3;
-
   &-banner {
+    background-color: $grey50;
     margin-bottom: $spacer*2;
     padding: 0;
   }
 
   &-lists {
-    padding-bottom: $spacer*3;
+    padding: $spacer*3 0;
   }
 }
 
@@ -20,6 +19,10 @@
     &-banner {
       padding: $spacer*3 0 $spacer*6;
       margin-bottom: $spacer*5;
+    }
+
+    &-lists {
+      padding: $spacer*3;
     }
   }
 }

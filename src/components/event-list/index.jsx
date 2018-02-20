@@ -85,12 +85,12 @@ class EventList extends React.Component {
           </If>
           <div ref={(dom) => { this._listDOM = dom; }} className={listClasses}>
             <For each="event" index="idx" of={events}>
-              <EventCard className={classes.listItem} key={idx} event={event} />
+              <EventCard key={idx} event={event} />
             </For>
             <If condition={this.state.hasMore && (!vertical || !events.length)}>
               <VisibilitySensor onChange={isVisible => (isVisible && this.fetchEvents())} />
               <For each="placeholder" of={range(Math.min(5, eventCount - events.length))}>
-                <EventCardPlaceholder key={placeholder} className={classes.listItem} />
+                <EventCardPlaceholder key={placeholder} />
               </For>
             </If>
           </div>
