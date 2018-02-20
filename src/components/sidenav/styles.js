@@ -22,12 +22,36 @@ export const withIndexStyle = withStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
   },
+  modal: {
+    paddingTop: 0,
+  },
   paperClose: {
     width: closedSideNavWidth,
     overflowX: 'hidden',
   },
   inner: {
     width: sideNavWidth,
+  },
+  modalHeader: {
+    height: topbarHeight,
+    paddingTop: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
+    paddingLeft: 0,
+    paddingRight: 0,
+  },
+  userModalHeader: {
+    padding: theme.spacing.unit * 2,
+    display: 'inline-flex',
+  },
+  userTitle: {
+    height: theme.spacing.unit * 5,
+    lineHeight: theme.spacing.unit / 4,
+    paddingLeft: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+    overflowY: 'hidden',
+  },
+  categoryHeaderMini: {
+    visibility: 'hidden'
   },
   red: { color: red[500] },
   purple: { color: deepPurple[500] },

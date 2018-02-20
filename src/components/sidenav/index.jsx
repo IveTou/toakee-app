@@ -5,9 +5,11 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import {
   List, ListItem, ListItemIcon, ListItemText, ListSubheader,
-  Drawer, Divider, Icon,
+  Drawer, Divider, Icon, Avatar, Typography,
 } from 'material-ui';
-
+import { compose } from 'recompose';
+import { withInfo } from '~/src/hocs';
+import Logo from '~/src/components/logo';
 import { withIndexStyle } from './styles';
 
 const categories = [
@@ -28,17 +30,32 @@ export class SideNav extends React.Component {
 
   render() {
     declare var category;
-    const { classes, open, mobile, onToggle } = this.props;
+    const { classes, open, mobile, onToggle, viewer = {} } = this.props;
 
     const variant = mobile ? 'temporary' : 'permanent';
     const onClose = mobile ? onToggle : undefined;
     const rootClasses = {
-      paper: classNames(classes.paper, !open && classes.paperClose),
+      paper: classNames(classes.paper, !open && classes.paperClose, mobile && classes.modal),
       modal: mobile && classes.mobileRoot,
     };
 
     return (
       <Drawer variant={variant} classes={rootClasses} onClose={onClose} open={open}>
+        <If condition={mobile}>
+          <div className={viewer.id ? classes.userModalHeader : classes.modalHeader}>
+            <Choose>
+              <When condition={viewer.id}>
+                <Avatar>{viewer.firstName[0]}</Avatar>
+                <Typography className={classes.userTitle} variant="title">
+                  {viewer.firstName}
+                </Typography>
+              </When>
+              <Otherwise>
+                <Logo small={false} />
+              </Otherwise>
+            </Choose>
+          </div>
+        </If>
         <div role="button" className={classes.inner} onClick={onClose} tabIndex="-1">
           <List component="nav">
             <ListItem button component={Link} to="/">
@@ -50,9 +67,9 @@ export class SideNav extends React.Component {
               <ListItemText primary="Meus eventos" />
             </ListItem>
             <Divider />
-            <If condition={open}>
-              <ListSubheader>Categorias</ListSubheader>
-            </If>
+            <ListSubheader className={open ? undefined : classes.categoryHeaderMini}>
+              Categorias
+            </ListSubheader>
             <For each="category" of={categories}>
               <ListItem
                 button
@@ -78,6 +95,10 @@ SideNav.propTypes = {
   mobile: PropTypes.bool,
   onToggle: PropTypes.func,
   open: PropTypes.bool,
+  viewer: PropTypes.object,
 };
 
-export default withIndexStyle(SideNav);
+export default compose(
+  withIndexStyle,
+  withInfo(['viewer']),
+)(SideNav);
