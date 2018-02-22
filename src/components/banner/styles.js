@@ -1,0 +1,46 @@
+import { withStyles } from 'material-ui';
+
+export const withIndexStyle = withStyles(theme => ({
+  wrapper: {
+    height: theme.spacing.unit * 50,
+    width: theme.spacing.unit * 100,
+    backgroundColor: theme.palette.primary.light,
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    whiteSpace: 'nowrap',
+    position: 'relative',
+    margin: '0 auto',
+    display: 'table',
+  },
+  mobileWrapper: {
+  },
+  description: {
+    height: '100%',
+    width: theme.spacing.unit * 34,
+    position: 'relative',
+    backgroundColor: theme.palette.action.disabled,
+    color: theme.palette.grey[50],
+    padding: theme.spacing.unit * 2,
+    display: 'inline-block',
+    float: 'right',
+  },
+  title: {
+    overflow: 'hidden',
+    whiteSpace: 'normal',
+    maxHeight: theme.spacing.unit * 10,
+  },
+  calendar: {
+    float: 'left',
+    marginRight: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+    borderRight: '2px solid rgba(255, 255, 255,.26)',
+  },
+  timePlace: {
+    paddingTop: theme.spacing.unit,
+  },
+  icon: {
+    float: 'left',
+    marginRight: theme.spacing.unit / 2,
+  },
+}));
