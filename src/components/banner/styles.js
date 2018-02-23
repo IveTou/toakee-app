@@ -2,9 +2,17 @@ import { withStyles } from 'material-ui';
 
 export const withIndexStyle = withStyles(theme => ({
   wrapper: {
-    height: theme.spacing.unit * 50,
-    width: theme.spacing.unit * 100,
-    backgroundColor: theme.palette.primary.light,
+    maxWidth: theme.spacing.unit * 100,
+    [theme.breakpoints.up('md')]: {
+      backgroundColor: theme.palette.primary.light,
+      width: '80%',
+      height: theme.spacing.unit * 50,
+    },
+    [theme.breakpoints.down('sm')]: {
+      backgroundColor: theme.palette.secondary.main,
+      width: '100%',
+      height: theme.spacing.unit * 30,
+    },
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
