@@ -16,7 +16,7 @@ const EventListArrow = ({ classes, onClick, direction, hide }) => (
     <Button
       className={`${classes.root} ${classes[direction]}`}
       onClick={onClick}
-      color="primary"
+      color="inherit"
       variant="fab"
     >
       {icons[direction]}

@@ -9,6 +9,12 @@ export const theme = createMuiTheme({
       dark: deepOrange[700],
       contrastText: white,
     },
+    secondary: {
+      light: blue[300],
+      main: blue[500],
+      dark: blue[700],
+      contrastText: white,
+    }
   },
   overrides: {
     MuiInput: {
