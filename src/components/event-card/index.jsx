@@ -37,7 +37,7 @@ const EventCard = ({ event, className, classes }) => {
           </If>
         </CardMedia>
         <CardContent className={classes.cardContent}>
-          <Typography className={classes.cardContentHeader}>
+          <Typography variant="subheading" className={classes.cardContentHeader}>
             {title}
           </Typography>
           <div className={classes.cardContentInfo}>

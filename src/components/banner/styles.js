@@ -21,8 +21,6 @@ export const withIndexStyle = withStyles(theme => ({
     margin: '0 auto',
     display: 'table',
   },
-  mobileWrapper: {
-  },
   description: {
     height: '100%',
     width: theme.spacing.unit * 34,

@@ -29,6 +29,7 @@ export const withIndexStyle = withStyles(theme => ({
   },
   cardContentHeader: {
     padding: [theme.spacing.unit / 2, 0].join('px '),
+    marginBottom: theme.spacing.unit / 2,
     overflow: 'hidden',
     maxHeight: theme.spacing.unit * 6,
     whiteSpace: 'normal',
@@ -50,13 +51,15 @@ export const withIndexStyle = withStyles(theme => ({
 
 export const withPlaceholderStyle = withStyles(theme => ({
   card: {
+    margin: theme.spacing.unit,
+    marginRight: 0,
     width: theme.spacing.unit * cardWidth,
     height: theme.spacing.unit * cardHeight,
   },
   cardMedia: {
     width: theme.spacing.unit * cardWidth,
     height: theme.spacing.unit * 15,
-    backgroundColor: theme.palette.grey[100],
+    backgroundColor: theme.palette.grey[200],
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Icon, Typography } from 'material-ui';
 
+import Calendar from '~/src/components/calendar';
 import { withIndexStyle } from './styles';
 
 const Banner = ({ classes }) => {
@@ -18,14 +19,7 @@ const Banner = ({ classes }) => {
         >
           Title more title titled is that right?
         </Typography>
-        <div className={classes.calendar}>
-          <Typography variant="title" color="inherit">
-            Jan
-          </Typography>
-          <Typography variant="display1" color="inherit">
-            23
-          </Typography>
-        </div>
+        <Calendar className={classes.calendar} monthVariant="title" dayVariant="display1" />
         <div className={classes.timePlace}>
           <div>
             <Icon className={classes.icon}>place</Icon>
