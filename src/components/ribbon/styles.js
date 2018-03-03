@@ -12,5 +12,8 @@ export const withRibbonStyle = withStyles(theme => ({
       ''
     ].join('px '),
   },
+  caption: {
+    fontWeight: 700,
+  },
 }));
 

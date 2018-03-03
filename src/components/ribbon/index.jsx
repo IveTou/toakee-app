@@ -6,7 +6,9 @@ import { withRibbonStyle } from './styles';
 
 const EventCardRibbon = ({ classes, children }) => (
   <Paper className={classes.root}>
-    <Typography variant="caption" color="inherit">{children}</Typography>
+    <Typography className={classes.caption} variant="caption" color="inherit">
+      {children}
+    </Typography>
   </Paper>
 );
 

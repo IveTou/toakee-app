@@ -10,6 +10,7 @@ export const withIndexStyle = withStyles(theme => ({
     flex: '0 0 auto',
     margin: theme.spacing.unit,
     marginRight: 0,
+    marginBottom: theme.spacing.unit * 3,
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     boxShadow: 'none',
@@ -22,6 +23,7 @@ export const withIndexStyle = withStyles(theme => ({
     position: 'relative',
     height: theme.spacing.unit * 15,
     backgroundSize: '100%',
+    backgroundColor: theme.palette.grey[200],
     transition: 'background-size .3s ease-in-out',
   },
   cardContent: {
