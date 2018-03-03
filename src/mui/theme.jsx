@@ -16,6 +16,9 @@ export const theme = createMuiTheme({
       contrastText: white,
     }
   },
+  typography: {
+    fontWeightLarge: 700,
+  },
   overrides: {
     MuiInput: {
       inkbar: {
