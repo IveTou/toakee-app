@@ -2,12 +2,9 @@
 @import '../../scss/variables';
 @import '../../scss/colors';
 
-.SearchPage {
-  margin-top: $topbar-height;
-}
-
 .SearchPageResults {
   padding: $spacer*3;
+  padding-bottom: $spacer*5;
 
   &-title {
     margin-bottom: $spacer*2;

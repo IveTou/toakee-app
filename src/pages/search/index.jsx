@@ -1,9 +1,8 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import qs from 'query-string';
 import { join } from 'lodash';
-
-import DefaultLayout from '~/src/layouts/default';
 
 import SearchPageResults from './results';
 
@@ -53,18 +52,14 @@ const categories = {
 
 const SearchPage = ({ location: { search } }) => {
   const q = qs.parse(search).q;
-  const query = join(categories[q], ' ') || q;
+  const categoryIds = categories[q];
+
+  const query = categoryIds ? join(categoryIds, ' ') : q;
 
   return (
-    <DefaultLayout>
-      <div className="SearchPage">
-        <SearchPageResults
-          title={`Termo buscado: ${q}`}
-          start={moment().startOf('day')}
-          q={query}
-        />
-      </div>
-    </DefaultLayout>
+    <div className="SearchPage">
+      <SearchPageResults start={moment().startOf('day')} q={query} />
+    </div>
   );
 };
 

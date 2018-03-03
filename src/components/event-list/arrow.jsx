@@ -1,40 +1,34 @@
-import React, { PropTypes } from 'react';
-import classNames from 'classnames';
-import { FloatingActionButton } from 'material-ui';
-import {
-  NavigationChevronLeft,
-  NavigationChevronRight,
-  NavigationExpandLess,
-  NavigationExpandMore,
-} from 'material-ui/svg-icons';
-import { grey200 } from 'material-ui/styles/colors';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Button, Icon, Zoom } from 'material-ui';
 
-const buildClasses = ({ direction, hide }) => classNames(
-  'EventListArrow',
-  `EventListArrow--${direction}`,
-  { 'EventListArrow--hidden': hide },
-);
+import { withArrowStyle } from './styles';
 
-const EventListArrow = ({ onClick, direction, hide }) => (
-  <FloatingActionButton
-    backgroundColor={grey200}
-    className={buildClasses({ direction, hide })}
-    onClick={onClick}
-    zDepth={4}
-  >
-    {{
-      left: (<NavigationChevronLeft />),
-      right: (<NavigationChevronRight />),
-      top: (<NavigationExpandLess />),
-      bottom: (<NavigationExpandMore />),
-    }[direction]}
-  </FloatingActionButton>
+const icons = {
+  left: <Icon>chevron_left</Icon>,
+  right: <Icon>chevron_right</Icon>,
+  up: <Icon>expand_less</Icon>,
+  down: <Icon>expand_more</Icon>,
+};
+
+const EventListArrow = ({ classes, onClick, direction, hide }) => (
+  <Zoom in={!hide}>
+    <Button
+      className={`${classes.root} ${classes[direction]}`}
+      onClick={onClick}
+      color="inherit"
+      variant="fab"
+    >
+      {icons[direction]}
+    </Button>
+  </Zoom>
 );
 
 EventListArrow.propTypes = {
+  classes: PropTypes.object,
   direction: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   hide: PropTypes.bool,
 };
 
-export default EventListArrow;
+export default withArrowStyle(EventListArrow);

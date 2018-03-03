@@ -1,9 +1,29 @@
+@import 'node_modules/include-media/dist/_include-media.scss';
 @import '../../scss/variables';
+@import '../../scss/colors';
 
 .EventFeed {
-  height: 100%;
+  &-banner {
+    background-color: $grey50;
+    margin-bottom: $spacer*2;
+    padding: 0;
+  }
 
-  &-content {
-    padding: $spacer*5 0 0 $spacer;
+  &-lists {
+    padding: $spacer*3 0;
+  }
+}
+
+@include media(">tablet") {
+  .EventFeed {
+    &-banner {
+      padding: $spacer*3 0 $spacer*6;
+      margin-bottom: $spacer*5;
+    }
+
+    &-lists {
+      padding: $spacer*3;
+      padding-bottom: $spacer*5;
+    }
   }
 }

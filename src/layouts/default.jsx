@@ -1,16 +1,15 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { ReactTitle } from 'react-meta-tags';
 import autoBind from 'react-autobind';
-import classNames from 'classnames';
+import { compose } from 'recompose';
 
 import { withInfo } from '~/src/hocs';
 import TopBar from '~/src/components/top-bar';
 import Footer from '~/src/components/footer';
 import SideNav from '~/src/components/sidenav';
 
-if (process.env.BROWSER) {
-  require('./style.scss');
-}
+import { withDefaultStyle } from './styles';
 
 export class DefaultLayout extends React.Component {
   constructor(props) {
@@ -25,36 +24,42 @@ export class DefaultLayout extends React.Component {
 
   render() {
     const {
+      classes,
       children,
       hideFooter,
       title = 'Descubra o que fazer em Salvador',
     } = this.props;
     const { navOpen } = this.state;
-    const classes = classNames('main', { 'main--compressed': navOpen });
     const small = !this.props.deviceInfo.is('desktop');
 
     return (
-      <div className="DefaultLayout">
+      <div className={classes.root}>
         <ReactTitle title={`Toakee - ${title}`} />
         <TopBar onToggle={this.toggleNav} small={small} />
-        <SideNav open={navOpen} />
-        <main className={classes}>{children}</main>
-        <If condition={!hideFooter}>
-          <Footer compressed={navOpen} />
-        </If>
+        <SideNav mobile={small} open={navOpen} onToggle={this.toggleNav} />
+        <main className={classes.main}>
+          {children}
+          <If condition={!hideFooter}>
+            <Footer />
+          </If>
+        </main>
       </div>
     );
   }
 }
 
 DefaultLayout.propTypes = {
-  children: React.PropTypes.oneOfType([
+  children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
+  classes: PropTypes.object,
   deviceInfo: PropTypes.object,
   hideFooter: PropTypes.bool,
   title: PropTypes.string,
 };
 
-export default withInfo(DefaultLayout, ['deviceInfo']);
+export default compose(
+  withInfo(['deviceInfo']),
+  withDefaultStyle,
+)(DefaultLayout);

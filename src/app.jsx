@@ -1,15 +1,10 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import {
-  deepOrange700,
-  deepOrange500,
-  blue500,
-  white,
-} from 'material-ui/styles/colors';
+import { MuiThemeProvider } from 'material-ui';
 
 import ProtectedRoute from '~/src/routes/protected';
+import DefaultLayout from '~/src/layouts/default';
 
 import NewEventPage from '~/src/pages/new-event';
 import EditEventPage from '~/src/pages/edit-event';
@@ -17,48 +12,30 @@ import EventPage from '~/src/pages/event';
 import EventPhotos from '~/src/pages/event-photos';
 import EventFeed from '~/src/pages/event-feed';
 import SearchPage from '~/src/pages/search';
-import Landing from '~/src/pages/landing';
 import Dashboard from '~/src/pages/dashboard';
 import UseTerms from '~/src/pages/use-terms';
 import About from '~/src/pages/about';
 import EventModeration from '~/src/pages/event-moderation';
 
+import ContextProvider from '~/src/components/context-provider';
 import Login from '~/src/components/auth-wrapper/login';
 import SignUp from '~/src/components/auth-wrapper/sign-up';
 import Scroller from '~/src/components/scroller';
 import Snackbar from '~/src/components/snackbar';
-
-import ViewerProvider from '~/src/components/viewer-provider';
-import DeviceInfoProvider from '~/src/components/device-info-provider';
+import AuthModal from '~/src/components/auth-modal';
 
 import { userIsLogged, userIsAdmin } from '~/src/auth';
 
-const theme = getMuiTheme({
-  palette: {
-    primary1Color: deepOrange500,
-    primary2Color: deepOrange700,
-    accent1Color: blue500,
-    pickerHeaderColor: blue500,
-  },
-  toolbar: {
-    backgroundColor: white,
-  },
-});
+import { theme } from '~/src/mui/theme';
 
 const App = ({ userAgent }) => (
-  <MuiThemeProvider muiTheme={theme}>
-    <ViewerProvider>
-      <DeviceInfoProvider userAgent={userAgent || window.navigator.userAgent}>
-        <Scroller />
-        <Snackbar />
+  <MuiThemeProvider theme={theme}>
+    <ContextProvider userAgent={userAgent || window.navigator.userAgent}>
+      <Scroller />
+      <Snackbar />
+      <AuthModal />
+      <DefaultLayout>
         <Switch>
-          <ProtectedRoute
-            auth={userIsLogged}
-            component={EventFeed}
-            path="/"
-            redirectTo="/landing"
-            exact
-          />
           <ProtectedRoute
             auth={userIsAdmin}
             component={EventModeration}
@@ -80,7 +57,7 @@ const App = ({ userAgent }) => (
             redirectTo="/login"
             exact
           />
-          <Route path="/landing" component={Landing} />
+          <Route path="/" exact component={EventFeed} />
           <Route path="/login" component={Login} />
           <Route path="/cadastrar" component={SignUp} />
           <Route path="/search" component={SearchPage} />
@@ -90,8 +67,8 @@ const App = ({ userAgent }) => (
           <Route path="/termos-de-uso" component={UseTerms} />
           <Route path="/quem-somos" component={About} />
         </Switch>
-      </DeviceInfoProvider>
-    </ViewerProvider>
+      </DefaultLayout>
+    </ContextProvider>
   </MuiThemeProvider>
 );
 

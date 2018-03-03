@@ -1,67 +1,25 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import autoBind from 'react-autobind';
 import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 import {
-  Drawer,
-  Divider,
-  Menu,
-  MenuItem,
-  Subheader,
+  List, ListItem, ListItemIcon, ListItemText, ListSubheader,
+  Drawer, Divider, Icon, Avatar, Typography,
 } from 'material-ui';
-import {
-  ActionHome,
-  ActionEvent,
-  ActionLoyalty,
-  ImageColorLens,
-  MapsLocalActivity,
-  MapsLocalBar,
-  MapsLocalLibrary,
-  PlacesPool,
-  SocialWhatshot,
-} from 'material-ui/svg-icons';
-import {
-  red800,
-  deepPurple500,
-  lightBlue500,
-  green500,
-  amber500,
-  deepOrange500,
-  blueGrey500,
-} from 'material-ui/styles/colors';
-
-if (process.env.BROWSER) {
-  require('./style.scss');
-}
+import { compose } from 'recompose';
+import { withInfo } from '~/src/hocs';
+import Logo from '~/src/components/logo';
+import { withIndexStyle } from './styles';
 
 const categories = [
-  {
-    title: 'Arte e Cultura',
-    icon: <ImageColorLens color={red800} />,
-  },
-  {
-    title: 'Baladas',
-    icon: <SocialWhatshot color={deepPurple500} />,
-  },
-  {
-    title: 'Cursos',
-    icon: <MapsLocalLibrary color={lightBlue500} />,
-  },
-  {
-    title: 'Esportes',
-    icon: <PlacesPool color={green500} />,
-  },
-  {
-    title: 'Shows',
-    icon: <MapsLocalActivity color={amber500} />,
-  },
-  {
-    title: 'Bares e Restaurantes',
-    icon: <MapsLocalBar color={deepOrange500} />,
-  },
-  {
-    title: 'Promoções',
-    icon: <ActionLoyalty color={blueGrey500} />,
-  },
+  { title: 'Arte e Cultura', icon: 'color_lens', color: 'red' },
+  { title: 'Baladas', icon: 'whatshot', color: 'purple' },
+  { title: 'Cursos', icon: 'local_library', color: 'blue' },
+  { title: 'Esportes', icon: 'pool', color: 'green' },
+  { title: 'Shows', icon: 'local_activity', color: 'amber' },
+  { title: 'Bares e Restaurantes', icon: 'local_bar', color: 'orange' },
+  { title: 'Promoções', icon: 'loyalty', color: 'blueGrey' },
 ];
 
 export class SideNav extends React.Component {
@@ -72,41 +30,75 @@ export class SideNav extends React.Component {
 
   render() {
     declare var category;
-    const { open } = this.props;
-    const classes = classNames('SideNav', { 'SideNav--open': open });
+    const { classes, open, mobile, onToggle, viewer = {} } = this.props;
+
+    const variant = mobile ? 'temporary' : 'permanent';
+    const onClose = mobile ? onToggle : undefined;
+    const rootClasses = {
+      paper: classNames(classes.paper, !open && classes.paperClose, mobile && classes.modal),
+      modal: mobile && classes.mobileRoot,
+    };
 
     return (
-      <Drawer zDepth={0} className={classes} open={open}>
-        <Menu>
-          <MenuItem
-            href="/landing"
-            primaryText="Início"
-            leftIcon={<ActionHome />}
-          />
-          <MenuItem
-            href="/dashboard"
-            primaryText="Meus Eventos"
-            leftIcon={<ActionEvent />}
-          />
-          <Divider className="SideNav-divider" />
-          <Subheader className="SideNav-subheader">Categorias</Subheader>
-          <For each="category" of={categories}>
-            <MenuItem
-              key={category.title}
-              href={`/search?q=${category.title}`}
-              primaryText={category.title}
-              leftIcon={category.icon}
-              name={category.title}
-            />
-          </For>
-        </Menu>
+      <Drawer variant={variant} classes={rootClasses} onClose={onClose} open={open}>
+        <If condition={mobile}>
+          <div className={viewer.id ? classes.userModalHeader : classes.modalHeader}>
+            <Choose>
+              <When condition={viewer.id}>
+                <Avatar>{viewer.firstName[0]}</Avatar>
+                <Typography className={classes.userTitle} variant="title">
+                  {viewer.firstName}
+                </Typography>
+              </When>
+              <Otherwise>
+                <Logo small={false} />
+              </Otherwise>
+            </Choose>
+          </div>
+        </If>
+        <div role="button" className={classes.inner} onClick={onClose} tabIndex="-1">
+          <List component="nav">
+            <ListItem button component={Link} to="/">
+              <ListItemIcon><Icon>home</Icon></ListItemIcon>
+              <ListItemText primary="Início" />
+            </ListItem>
+            <ListItem button component={Link} to="/dashboard">
+              <ListItemIcon><Icon>event</Icon></ListItemIcon>
+              <ListItemText primary="Meus eventos" />
+            </ListItem>
+            <Divider />
+            <ListSubheader className={open ? undefined : classes.categoryHeaderMini}>
+              Categorias
+            </ListSubheader>
+            <For each="category" of={categories}>
+              <ListItem
+                button
+                key={category.title}
+                component={Link}
+                to={`/search?q=${category.title}`}
+              >
+                <ListItemIcon className={classes[category.color]}>
+                  <Icon>{category.icon}</Icon>
+                </ListItemIcon>
+                <ListItemText primary={category.title} />
+              </ListItem>
+            </For>
+          </List>
+        </div>
       </Drawer>
     );
   }
 }
 
 SideNav.propTypes = {
+  classes: PropTypes.object,
+  mobile: PropTypes.bool,
+  onToggle: PropTypes.func,
   open: PropTypes.bool,
+  viewer: PropTypes.object,
 };
 
-export default SideNav;
+export default compose(
+  withIndexStyle,
+  withInfo(['viewer']),
+)(SideNav);

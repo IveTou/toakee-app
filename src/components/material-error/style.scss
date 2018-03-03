@@ -8,6 +8,7 @@ $material-red: #f44336;
   font-size: 12px;
   line-height: 12px;
   transition: all 450ms $bezier-curve 0ms;
+  margin-top: $spacer;
 
   &--center {
     text-align: center;

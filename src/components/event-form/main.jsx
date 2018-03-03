@@ -1,32 +1,34 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import moment from 'moment';
 import Dropzone from 'react-dropzone';
-import Yup from 'yup';
 import classNames from 'classnames';
-import { TextField, FontIcon } from 'material-ui';
+import { Icon } from 'material-ui';
+import FormField from '~/src/components/form-field';
+import { DateTimePicker } from 'material-ui-pickers';
 
 import MaterialError from '~/src/components/material-error';
+import { withMainStyle } from './styles';
 
-const MAX_IMAGE_SIZE = 3145728;
-const MAX_TITLE_LEN = 40;
+moment.locale('pt-br');
+const dateFormat = 'D [de] MMM [às] HH:mm';
 
 const EventFormMain = ({
   form: { values, errors, handleChange, setFieldValue, touched },
+  classes,
 }) => {
   const handleDropzoneChange = ([file]) => setFieldValue('flyer', file);
-  const dropzoneClasses = classNames('EventFormMain-dropzone', {
-    'EventFormMain-dropzone--error': touched.flyer && !!errors.flyer,
+  const dropzoneClasses = classNames(classes.dropzone, {
+    [classes.dropzoneError]: touched.flyer && !!errors.flyer,
   });
 
   const flyer = values.flyer.url || values.flyer.preview;
 
   return (
-    <div className="EventFormMain">
+    <div className={classes.root}>
       <If condition={flyer}>
-        <div className="EventFormMain-preview">
-          <img
-            src={flyer}
-            className="EventFormMain-preview-img"
-          />
+        <div className={classes.preview}>
+          <img src={flyer} className={classes.previewImg} />
         </div>
       </If>
       <Dropzone
@@ -35,25 +37,55 @@ const EventFormMain = ({
         accept="image/*"
         onDrop={handleDropzoneChange}
       >
-        <FontIcon className="EventFormMain-dropzone-icon material-icons">file_upload</FontIcon>
-        <div className="EventFormMain-dropzone-disclaimer">
-          Clique para adicionar flyer
-        </div>
+        <Icon className={classes.dropzoneIcon}>file_upload</Icon>
+        Clique para adicionar flyer
       </Dropzone>
       <MaterialError error={touched.flyer && errors.flyer} center />
-      <TextField
+      <FormField
+        className={classes.formField}
         name="title"
-        floatingLabelText="Título"
+        label="Título"
         value={values.title}
         onChange={handleChange}
-        errorText={touched.title && errors.title}
+        error={touched.title && errors.title}
         fullWidth
       />
+      <div className={classes.dates}>
+        <div>
+          <DateTimePicker
+            label="Data início"
+            cancelLabel="Cancelar"
+            value={values.start}
+            onChange={dateTime => setFieldValue('start', dateTime)}
+            error={touched.start && !!errors.start}
+            format={dateFormat}
+            ampm={false}
+            fullWidth
+            autoOk
+          />
+          <MaterialError error={touched.start && errors.start} />
+        </div>
+        <div>
+          <DateTimePicker
+            label="Data término"
+            cancelLabel="Cancelar"
+            value={values.end}
+            onChange={dateTime => setFieldValue('end', dateTime)}
+            error={touched.end && errors.end}
+            format={dateFormat}
+            ampm={false}
+            fullWidth
+            autoOk
+          />
+          <MaterialError error={touched.end && errors.end} />
+        </div>
+      </div>
     </div>
   );
 };
 
 EventFormMain.propTypes = {
+  classes: PropTypes.object,
   form: PropTypes.shape({
     values: PropTypes.object,
     errors: PropTypes.object,
@@ -63,26 +95,4 @@ EventFormMain.propTypes = {
   }),
 };
 
-export const validation = {
-  title: Yup.string()
-    .required('O título é obrigatório')
-    .max(MAX_TITLE_LEN, 'O título não pode conter mais de ${max} caracteres'), // eslint-disable-line no-template-curly-in-string
-  flyer: Yup.mixed()
-    .test(
-      'existence',
-      'Por favor, adicione um flyer para o seu evento.',
-      file => file.url || !!file.size,
-    )
-    .test(
-      'format',
-      'A imagem deve ser do formato \'.png\' ou \'.jpg\'.',
-      file => file.url || /image\/*/.test(file.type),
-    )
-    .test(
-      'size',
-      'A imagem não pode ter mais de 5mb.',
-      file => file.url || file.size <= MAX_IMAGE_SIZE,
-    ),
-};
-
-export default EventFormMain;
+export default withMainStyle(EventFormMain);

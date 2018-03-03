@@ -17,6 +17,7 @@
     &-flyer {
       height: $spacer*50;
       overflow: hidden;
+      position: relative;
 
       @keyframes bgAnimation {
         0% { transform: scale(1) }
@@ -59,6 +60,7 @@
         min-height: $spacer*11;
         padding: $spacer*3 $spacer*2;
         display: table;
+        width: 100%;
 
         &-title {
           display: table-cell;
@@ -285,10 +287,48 @@
         }
       }
 
+      &:before {
+        content: '';
+        position: absolute;
+        width: 300%;
+        top: 0;
+        left: -100%;
+        height: 100%;
+        z-index: -1;
+        background-color: $orange;
+      }
+
       &-info {
         padding: 0 $spacer*2;
         font-size: 16px;
         text-align: left;
+      }
+    }
+
+    &-map {
+      border-left: 4px solid $green500;
+
+      &-title > div + div {
+        vertical-align: initial !important;
+
+        span {
+          font-size: 18px !important;
+        }
+      }
+    }
+
+    &-body {
+      padding: $spacer*2;
+      padding-left: 0;
+
+      &-social {
+        margin-bottom: $spacer*2;
+      }
+
+      &-title {
+        color: $orange;
+        font-size: 18px;
+        text-transform: uppercase;
       }
     }
   }
@@ -303,6 +343,11 @@
 
       &-gallery {
         display: grid;
+      }
+
+      &-description {
+        text-align: justify;
+        white-space: pre-wrap;
       }
     }
   }
@@ -325,21 +370,8 @@
   }
 
   &-related {
-    display: block;
-    vertical-align: top;
     white-space: nowrap;
-    margin: $spacer;
-    padding-top: $spacer*2;
-    position: relative;
-
-    h2 {
-      margin: 0 $spacer*2;
-      font-size: 20px;
-    }
-
-    .EventList-list {
-      overflow-y: hidden;
-    }
+    padding-top: $spacer;
   }
 }
 

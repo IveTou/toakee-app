@@ -1,11 +1,11 @@
 @import 'node_modules/include-media/dist/_include-media.scss';
+@import '../scss/colors';
 @import '../scss/variables';
 @import '../scss/colors';
 
 .DefaultLayout {
-  .main {
+  main {
     margin-top: $topbar-height;
-    background: $gray50;
     transition: padding-left 450ms $bezier-curve 0ms !important;
   }
 }

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import { Card } from 'semantic-ui-react';
 
@@ -8,9 +9,9 @@ import { query } from './graphql';
 
 declare var event;
 
-const SearchPageResults = ({ title, loading, nextEvents, previousEvents }) => (
+const SearchPageResults = ({ loading, nextEvents, previousEvents }) => (
   <div className="SearchPageResults">
-    <h3 className="SearchPageResults-title">{title}</h3>
+    <h3 className="SearchPageResults-title">Resultados</h3>
     <Choose>
       <When condition={!loading && nextEvents && nextEvents.length}>
         <Card.Group>
@@ -41,7 +42,6 @@ const SearchPageResults = ({ title, loading, nextEvents, previousEvents }) => (
 );
 
 SearchPageResults.propTypes = {
-  title: PropTypes.string,
   loading: PropTypes.bool,
   nextEvents: PropTypes.array,
   previousEvents: PropTypes.array,
