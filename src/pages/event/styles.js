@@ -8,12 +8,31 @@ export const withIndexStyle = withStyles(theme => ({
   media: {
     height: theme.spacing.unit * 40,
   },
+  title: {
+    marginTop: theme.spacing.unit,
+  },
   calendar: {
     float: 'left',
     marginRight: theme.spacing.unit,
     paddingRight: theme.spacing.unit,
     borderRight: '2px solid rgba(0, 0, 0,.13)',
-    color: 'rgba(0, 0, 0,.54)',
+    color: theme.typography.display1.color,
+  },
+  listItem: {
+    paddingBottom: 0,
+  },
+  listSubheader: {
+    paddingTop: theme.spacing.unit * 2,
+  },
+  listItemText: {
+    color: theme.typography.display1.color,
+    fontSize: theme.typography.subheading.fontSize,
+  },
+  listButton: {
+    margin: theme.spacing.unit,
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
   },
 }));
 

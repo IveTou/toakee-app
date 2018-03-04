@@ -9,6 +9,12 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Icon,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListSubheader,
   Typography,
 } from 'material-ui';
 
@@ -92,6 +98,7 @@ export class EventPage extends React.Component {
         variant="raised"
         key={label}
         disabled={status === eventStatus}
+        className={this.props.classes.listButton}
         onClick={() => setStatus(status)}
       >
         {label}
@@ -145,8 +152,81 @@ export class EventPage extends React.Component {
               monthVariant="title"
               dayVariant="display1"
             />
-            <Typography variant="display1" component="h1">{title}</Typography>
-
+            <Typography className={classes.title} variant="display1" component="h1">
+              {title}
+            </Typography>
+            <List dense>
+              <If condition={place && place.address}>
+                <ListItem className={classes.listItem}>
+                  <ListItemIcon>
+                    <Icon>place</Icon>
+                  </ListItemIcon>
+                  <ListItemText
+                    disableTypography
+                    className={classes.listItemText}
+                    primary={place.address}
+                  />
+                </ListItem>
+              </If>
+              <If condition={start}>
+                <ListItem className={classes.listItem}>
+                  <ListItemIcon>
+                    <Icon>event</Icon>
+                  </ListItemIcon>
+                  <ListItemText
+                    disableTypography
+                    className={classes.listItemText}
+                    primary={fullDateFormat(start)}
+                  />
+                </ListItem>
+                <ListItem className={classes.listItem}>
+                  <ListItemIcon>
+                    <Icon>schedule</Icon>
+                  </ListItemIcon>
+                  <ListItemText
+                    disableTypography
+                    className={classes.listItemText}
+                    primary={timeFormat(start)}
+                  />
+                </ListItem>
+              </If>
+              <Choose>
+                <When condition={viewer.isAdmin}>
+                  <ListSubheader className={classes.listSubheader}component="div">
+                    Moderação
+                  </ListSubheader>
+                  <ListItem>{this.renderModerationButtons()}</ListItem>
+                </When>
+                <Otherwise>
+                  <ListItem>
+                    <Button className={classes.listButton} variant="raised" color="primary">
+                      Vou
+                      <Icon className={classes.rightIcon}>thumb_up</Icon>
+                    </Button>
+                    <Button
+                      className={classes.listButton}
+                      onClick={this.fbShare}
+                      variant="raised"
+                      color="default"
+                    >
+                      Compartilhar
+                      <Icon className={classes.rightIcon}>share</Icon>
+                    </Button>
+                    <If condition={creator.id === viewer.id}>
+                      <Button
+                        variant="raised"
+                        color="default"
+                        className={classes.listButton}
+                        href={`/evento/${id}/editar`}
+                      >
+                        Editar
+                        <Icon className={classes.rightIcon}>mode_edit</Icon>
+                      </Button>
+                    </If>
+                  </ListItem>
+                </Otherwise>
+              </Choose>
+            </List>
           </CardContent>
         </Card>
       </div>
