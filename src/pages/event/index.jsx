@@ -8,6 +8,7 @@ import {
   Button,
   Card,
   CardContent,
+  CardHeader,
   CardMedia,
   Divider,
   Icon,
@@ -143,7 +144,7 @@ export class EventPage extends React.Component {
     declare var previewItem;
 
     return (
-      <Grid container spacing={16} style={{ paddingTop: 16, paddingBottom: 80 }}>
+      <Grid container spacing={16} style={{ paddingTop: 16 }}>
         <Card className={classes.root}>
           <CardMedia
             className={classes.media}
@@ -266,6 +267,17 @@ export class EventPage extends React.Component {
               <Grid item sm={6}>
               </Grid>
             </Grid>
+          </CardContent>
+          <Divider light />
+          <CardContent>
+            <Typography variant="body2" style={{ paddingBottom: 8 }}>
+              Descrição
+            </Typography>
+            <Typography
+              align="inherit"
+              component="div"
+              children={<div dangerouslySetInnerHTML={{ __html: description }} />}
+            />
           </CardContent>
         </Card>
       </Grid>
