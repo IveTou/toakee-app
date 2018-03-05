@@ -10,6 +10,7 @@ import {
   CardContent,
   CardMedia,
   Icon,
+  Grid,
   List,
   ListItem,
   ListItemIcon,
@@ -24,7 +25,7 @@ import { Link } from 'react-router-dom';
 
 import EventList from '~/src/components/event-list';
 import Calendar from '~/src/components/calendar';
-import Wrapper from '~/src/components/map';
+import Wrapper, { Map } from '~/src/components/map';
 import { fullDateFormat, timeFormat } from '~/src/utils/moment';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import { withInfo } from '~/src/hocs';
@@ -138,7 +139,7 @@ export class EventPage extends React.Component {
     declare var previewItem;
 
     return (
-      <div style={{ paddingTop: 16, paddingBottom: 80 }}>
+      <Grid container spacing={16} style={{ paddingTop: 16, paddingBottom: 80 }}>
         <Card className={classes.root}>
           <CardMedia
             className={classes.media}
@@ -155,81 +156,90 @@ export class EventPage extends React.Component {
             <Typography className={classes.title} variant="display1" component="h1">
               {title}
             </Typography>
-            <List dense>
-              <If condition={place && place.address}>
-                <ListItem className={classes.listItem}>
-                  <ListItemIcon>
-                    <Icon>place</Icon>
-                  </ListItemIcon>
-                  <ListItemText
-                    disableTypography
-                    className={classes.listItemText}
-                    primary={place.address}
-                  />
-                </ListItem>
-              </If>
-              <If condition={start}>
-                <ListItem className={classes.listItem}>
-                  <ListItemIcon>
-                    <Icon>event</Icon>
-                  </ListItemIcon>
-                  <ListItemText
-                    disableTypography
-                    className={classes.listItemText}
-                    primary={fullDateFormat(start)}
-                  />
-                </ListItem>
-                <ListItem className={classes.listItem}>
-                  <ListItemIcon>
-                    <Icon>schedule</Icon>
-                  </ListItemIcon>
-                  <ListItemText
-                    disableTypography
-                    className={classes.listItemText}
-                    primary={timeFormat(start)}
-                  />
-                </ListItem>
-              </If>
-              <Choose>
-                <When condition={viewer.isAdmin}>
-                  <ListSubheader className={classes.listSubheader}component="div">
-                    Moderação
-                  </ListSubheader>
-                  <ListItem>{this.renderModerationButtons()}</ListItem>
-                </When>
-                <Otherwise>
-                  <ListItem>
-                    <Button className={classes.listButton} variant="raised" color="primary">
-                      Vou
-                      <Icon className={classes.rightIcon}>thumb_up</Icon>
-                    </Button>
-                    <Button
-                      className={classes.listButton}
-                      onClick={this.fbShare}
-                      variant="raised"
-                      color="default"
-                    >
-                      Compartilhar
-                      <Icon className={classes.rightIcon}>share</Icon>
-                    </Button>
-                    <If condition={creator.id === viewer.id}>
-                      <Button
-                        variant="raised"
-                        color="default"
-                        className={classes.listButton}
-                        href={`/evento/${id}/editar`}
-                      >
-                        Editar
-                        <Icon className={classes.rightIcon}>mode_edit</Icon>
-                      </Button>
-                    </If>
-                  </ListItem>
-                </Otherwise>
-              </Choose>
-            </List>
+
+            <Grid container spacing={8}>
+              <Grid item xs={12} sm={9}>
+                <List dense>
+                  <If condition={place && place.address}>
+                    <ListItem className={classes.listItem}>
+                      <ListItemIcon>
+                        <Icon>place</Icon>
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        className={classes.listItemText}
+                        primary={place.address}
+                      />
+                    </ListItem>
+                  </If>
+                  <If condition={start}>
+                    <ListItem className={classes.listItem}>
+                      <ListItemIcon>
+                        <Icon>event</Icon>
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        className={classes.listItemText}
+                        primary={fullDateFormat(start)}
+                      />
+                    </ListItem>
+                    <ListItem className={classes.listItem}>
+                      <ListItemIcon>
+                        <Icon>schedule</Icon>
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        className={classes.listItemText}
+                        primary={timeFormat(start)}
+                      />
+                    </ListItem>
+                  </If>
+                  <Choose>
+                    <When condition={viewer.isAdmin}>
+                      <ListSubheader className={classes.listSubheader}component="div">
+                        Moderação
+                      </ListSubheader>
+                      <ListItem>{this.renderModerationButtons()}</ListItem>
+                    </When>
+                    <Otherwise>
+                      <ListItem>
+                        <Button className={classes.listButton} variant="raised" color="primary">
+                          Vou
+                          <Icon className={classes.rightIcon}>thumb_up</Icon>
+                        </Button>
+                        <Button
+                          className={classes.listButton}
+                          onClick={this.fbShare}
+                          variant="raised"
+                          color="default"
+                        >
+                          Compartilhar
+                          <Icon className={classes.rightIcon}>share</Icon>
+                        </Button>
+                        <If condition={creator.id === viewer.id}>
+                          <Button
+                            variant="raised"
+                            color="default"
+                            className={classes.listButton}
+                            href={`/evento/${id}/editar`}
+                          >
+                            Editar
+                            <Icon className={classes.rightIcon}>mode_edit</Icon>
+                          </Button>
+                        </If>
+                      </ListItem>
+                    </Otherwise>
+                  </Choose>
+                </List>
+              </Grid>
+
+              <Grid className={classes.mapGrid} item xs={12} sm={3}>
+                <Wrapper mini center={coordinates} centerMarker />
+              </Grid>
+            </Grid>
           </CardContent>
         </Card>
-      </div>
+      </Grid>
     );
   }
 }

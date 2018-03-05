@@ -15,7 +15,7 @@ export const withIndexStyle = withStyles(theme => ({
     float: 'left',
     marginRight: theme.spacing.unit,
     paddingRight: theme.spacing.unit,
-    borderRight: '2px solid rgba(0, 0, 0,.13)',
+    borderRight: '1px solid rgba(0, 0, 0,.13)',
     color: theme.typography.display1.color,
   },
   listItem: {
@@ -33,6 +33,9 @@ export const withIndexStyle = withStyles(theme => ({
   },
   rightIcon: {
     marginLeft: theme.spacing.unit,
+  },
+  mapGrid: {
+    minWidth: theme.spacing.unit * 17,
   },
 }));
 

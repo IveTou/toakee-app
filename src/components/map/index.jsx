@@ -1,58 +1,71 @@
 import React from 'react';
+import classNames from 'classnames';
 import { GoogleMap, Marker, withGoogleMap, withScriptjs } from 'react-google-maps';
 import { SearchBox } from 'react-google-maps/lib/components/places/SearchBox';
 
 import config from '~/src/config';
 
-if (process.env.BROWSER) {
-  require('./style.scss');
-}
+import { withIndexStyle } from './styles';
 
 const defaultCoordinates = { lat: -12.9722, lng: -38.5014 };
 const googleMapURL = `https://maps.googleapis.com/maps/api/js?key=${config.GOOGLE_MAPS_API_KEY}&libraries=places`;
 
-const Map = withScriptjs(withGoogleMap((props) => {
-  declare var google;
+  const Map = withScriptjs(withGoogleMap((props) => {
+    declare var google;
+    const {
+      center,
+      onCenterChange,
+      getMap,
+      withMarker,
+      markerPoisition,
+      centerMarker,
+      searchBox,
+      onPlaceChange,
+      classes,
+    } = props;
 
+    return (
+      <GoogleMap
+        defaultZoom={14}
+        center={center || defaultCoordinates}
+        onCenterChanged={onCenterChange}
+        ref={getMap}
+      >
+        <If condition={withMarker}>
+          <Marker position={markerPosition || defaultCoordinates} />
+        </If>
+
+        <If condition={centerMarker}>
+          <div className={classes.centerMarker} />
+        </If>
+
+        <If condition={searchBox}>
+          <SearchBox
+            controlPosition={google.maps.ControlPosition.TOP_LEFT}
+            onPlacesChanged={onPlacesChange}
+            ref={getSearchBox}
+          >
+            <input className={classes.searchBox} />
+          </SearchBox>
+        </If>
+      </GoogleMap>
+    );
+  }));
+
+const Wrapper = props => {
+  const rootClasses = classNames(props.classes.root, props.mini && props.classes.mini);
   return (
-    <GoogleMap
-      defaultZoom={14}
-      center={props.center || defaultCoordinates}
-      onCenterChanged={props.onCenterChange}
-      ref={props.getMap}
-    >
-      <If condition={props.withMarker}>
-        <Marker position={props.markerPosition || defaultCoordinates} />
-      </If>
-
-
-      <If condition={props.centerMarker}>
-        <div className="CenterMarker" />
-      </If>
-
-      <If condition={props.searchBox}>
-        <SearchBox
-          controlPosition={google.maps.ControlPosition.TOP_LEFT}
-          onPlacesChanged={props.onPlacesChange}
-          ref={props.getSearchBox}
-        >
-          <input className="SearchBox" />
-        </SearchBox>
-      </If>
-    </GoogleMap>
+    <div className={rootClasses}>
+      <Map
+        googleMapURL={googleMapURL}
+        loadingElement={<div className={rootClasses} />}
+        containerElement={<div className={rootClasses} />}
+        mapElement={<div className={rootClasses} />}
+        classes = {props.classes}
+        {...props}
+      />
+    </div>
   );
-}));
+}
 
-const Wrapper = props => (
-  <div className="Map">
-    <Map
-      googleMapURL={googleMapURL}
-      loadingElement={<div className="Map-loading" />}
-      containerElement={<div className="Map-container" />}
-      mapElement={<div className="Map-element" />}
-      {...props}
-    />
-  </div>
-);
-
-export default Wrapper;
+export default withIndexStyle(Wrapper);
