@@ -4,6 +4,7 @@ export const withIndexStyle = withStyles(theme => ({
   root: {
     margin: '0 auto',
     maxWidth: theme.spacing.unit * 100,
+    paddingBottom: 0,
   },
   media: {
     height: theme.spacing.unit * 40,

@@ -9,13 +9,17 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Divider,
   Icon,
   Grid,
+  GridList,
+  GridListTile,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   ListSubheader,
+  Paper,
   Typography,
 } from 'material-ui';
 
@@ -131,7 +135,7 @@ export class EventPage extends React.Component {
     const previewThumbs = take(photos, isMobile ? 8 : 16);
     const coordinates = place && place.coordinates
       ? { lat: place.coordinates[1], lng: place.coordinates[0] }
-      : {};
+      : undefined;
 
     declare var index;
     declare var priceItem;
@@ -196,13 +200,13 @@ export class EventPage extends React.Component {
                   </If>
                   <Choose>
                     <When condition={viewer.isAdmin}>
-                      <ListSubheader className={classes.listSubheader}component="div">
+                      <ListSubheader className={classes.listSubheader} component="div">
                         Moderação
                       </ListSubheader>
                       <ListItem>{this.renderModerationButtons()}</ListItem>
                     </When>
                     <Otherwise>
-                      <ListItem>
+                      <ListItem className={classes.lisItem}>
                         <Button className={classes.listButton} variant="raised" color="primary">
                           Vou
                           <Icon className={classes.rightIcon}>thumb_up</Icon>
@@ -234,7 +238,32 @@ export class EventPage extends React.Component {
               </Grid>
 
               <Grid className={classes.mapGrid} item xs={12} sm={3}>
-                <Wrapper mini center={coordinates} centerMarker />
+                <Paper elevation={1}>
+                  <Wrapper mini center={coordinates} centerMarker />
+                </Paper>
+              </Grid>
+            </Grid>
+          </CardContent>
+          <Divider light />
+          <CardContent>
+            <Grid container spacing={8}>
+              <Grid item sm={6}>
+                <GridList cellHeight={48}>
+                  <For each="priceItem" of={mappedPrice}>
+                    <GridListTile
+                      key={`${priceItem.description}${priceItem.value}`}
+                      style={{ heigth: 48}}
+                    >
+                      <ListItemText
+                        style={{ paddingLeft: 16 }}
+                        primary={priceItem.description || 'Entrada'}
+                        secondary={priceItem.value ? `R$ ${priceItem.value}` : ''}
+                      />
+                    </GridListTile>
+                  </For>
+                </GridList>
+              </Grid>
+              <Grid item sm={6}>
               </Grid>
             </Grid>
           </CardContent>
