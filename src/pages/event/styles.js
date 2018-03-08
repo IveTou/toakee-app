@@ -2,14 +2,20 @@ import { withStyles } from 'material-ui';
 
 export const withIndexStyle = withStyles(theme => ({
   root: {
+    [theme.breakpoints.up('md')]: {
+      paddingTop: theme.spacing.unit * 2,
+    },
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: 0,
+    },
+  },
+  card: {
     paddingBottom: 0,
+    width: '100%',
     [theme.breakpoints.up('md')]: {
       margin: '0 auto',
       maxWidth: theme.spacing.unit * 100,
       marginBottom: theme.spacing.unit * 10,
-    },
-    [theme.breakpoints.down('sm')]: {
-      width: '100%',
     },
   },
   media: {
@@ -21,7 +27,7 @@ export const withIndexStyle = withStyles(theme => ({
     },
   },
   title: {
-    marginTop: theme.spacing.unit,
+    marginTop: theme.spacing.unit * 2,
   },
   calendar: {
     float: 'left',

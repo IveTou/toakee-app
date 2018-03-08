@@ -135,7 +135,7 @@ export class EventPage extends React.Component {
     const startMoment = moment(start);
     const previewThumbs = take(photos, isMobile ? 8 : 16);
     const coordinates = place && place.coordinates
-      ? { lat: place.coordinates[1], lng: place.coordinates[0] }
+      ? { lat: place.coordinates[0], lng: place.coordinates[1] }
       : undefined;
 
     declare var index;
@@ -144,142 +144,146 @@ export class EventPage extends React.Component {
     declare var previewItem;
 
     return (
-      <Grid container spacing={16} style={{ paddingTop: 16 }}>
-        <Card className={classes.root}>
-          <CardMedia
-            className={classes.media}
-            image={flyer}
-            title={title}
-          />
-          <CardContent>
-            <Calendar
-              className={classes.calendar}
-              date={startMoment}
-              monthVariant="title"
-              dayVariant="display1"
+      <Grid container className={classes.root} spacing={0}>
+        <Grid item xs={12} sm={12} md={9}>
+          <Card className={classes.card}>
+            <CardMedia
+              className={classes.media}
+              image={flyer}
+              title={title}
             />
-            <Typography className={classes.title} variant="display1" component="h1">
-              {title}
-            </Typography>
+            <CardContent>
+              <Calendar
+                className={classes.calendar}
+                date={startMoment}
+                monthVariant="title"
+                dayVariant="display1"
+              />
+              <Typography className={classes.title} variant="display1" component="h1">
+                {title}
+              </Typography>
 
-            <Grid container spacing={8}>
-              <Grid item xs={12} sm={9}>
-                <List dense>
-                  <If condition={place && place.address}>
-                    <ListItem className={classes.listItem}>
-                      <ListItemIcon>
-                        <Icon>place</Icon>
-                      </ListItemIcon>
-                      <ListItemText
-                        disableTypography
-                        className={classes.listItemText}
-                        primary={place.address}
-                      />
-                    </ListItem>
-                  </If>
-                  <If condition={start}>
-                    <ListItem className={classes.listItem}>
-                      <ListItemIcon>
-                        <Icon>event</Icon>
-                      </ListItemIcon>
-                      <ListItemText
-                        disableTypography
-                        className={classes.listItemText}
-                        primary={fullDateFormat(start)}
-                      />
-                    </ListItem>
-                    <ListItem className={classes.listItem}>
-                      <ListItemIcon>
-                        <Icon>schedule</Icon>
-                      </ListItemIcon>
-                      <ListItemText
-                        disableTypography
-                        className={classes.listItemText}
-                        primary={timeFormat(start)}
-                      />
-                    </ListItem>
-                  </If>
-                  <Choose>
-                    <When condition={viewer.isAdmin}>
-                      <ListSubheader className={classes.listSubheader} component="div">
-                        Moderação
-                      </ListSubheader>
-                      <ListItem>{this.renderModerationButtons()}</ListItem>
-                    </When>
-                    <Otherwise>
-                      <ListItem className={classes.lisItem}>
-                        <Button className={classes.listButton} variant="raised" color="primary">
-                          Vou
-                          <Icon className={classes.rightIcon}>thumb_up</Icon>
-                        </Button>
-                        <Button
-                          className={classes.listButton}
-                          onClick={this.fbShare}
-                          variant="raised"
-                          color="default"
-                        >
-                          Compartilhar
-                          <Icon className={classes.rightIcon}>share</Icon>
-                        </Button>
-                        <If condition={creator.id === viewer.id}>
+              <Grid container spacing={8}>
+                <Grid item xs={12} sm={9} style={{ paddingTop: 8 }}>
+                  <List dense>
+                    <If condition={place && place.address}>
+                      <ListItem className={classes.listItem}>
+                        <ListItemIcon>
+                          <Icon>place</Icon>
+                        </ListItemIcon>
+                        <ListItemText
+                          disableTypography
+                          className={classes.listItemText}
+                          primary={place.address}
+                        />
+                      </ListItem>
+                    </If>
+                    <If condition={start}>
+                      <ListItem className={classes.listItem}>
+                        <ListItemIcon>
+                          <Icon>event</Icon>
+                        </ListItemIcon>
+                        <ListItemText
+                          disableTypography
+                          className={classes.listItemText}
+                          primary={fullDateFormat(start)}
+                        />
+                      </ListItem>
+                      <ListItem className={classes.listItem}>
+                        <ListItemIcon>
+                          <Icon>schedule</Icon>
+                        </ListItemIcon>
+                        <ListItemText
+                          disableTypography
+                          className={classes.listItemText}
+                          primary={timeFormat(start)}
+                        />
+                      </ListItem>
+                    </If>
+                    <Choose>
+                      <When condition={viewer.isAdmin}>
+                        <ListSubheader className={classes.listSubheader} component="div">
+                          Moderação
+                        </ListSubheader>
+                        <ListItem>{this.renderModerationButtons()}</ListItem>
+                      </When>
+                      <Otherwise>
+                        <ListItem className={classes.lisItem}>
+                          <Button className={classes.listButton} variant="raised" color="primary">
+                            Vou
+                            <Icon className={classes.rightIcon}>thumb_up</Icon>
+                          </Button>
                           <Button
+                            className={classes.listButton}
+                            onClick={this.fbShare}
                             variant="raised"
                             color="default"
-                            className={classes.listButton}
-                            href={`/evento/${id}/editar`}
                           >
-                            Editar
-                            <Icon className={classes.rightIcon}>mode_edit</Icon>
+                            Compartilhar
+                            <Icon className={classes.rightIcon}>share</Icon>
                           </Button>
-                        </If>
-                      </ListItem>
-                    </Otherwise>
-                  </Choose>
-                </List>
-              </Grid>
+                          <If condition={creator.id === viewer.id}>
+                            <Button
+                              variant="raised"
+                              color="default"
+                              className={classes.listButton}
+                              href={`/evento/${id}/editar`}
+                            >
+                              Editar
+                              <Icon className={classes.rightIcon}>mode_edit</Icon>
+                            </Button>
+                          </If>
+                        </ListItem>
+                      </Otherwise>
+                    </Choose>
+                  </List>
+                </Grid>
 
-              <Grid className={classes.mapGrid} item xs={12} sm={3}>
-                <Paper elevation={1}>
-                  <Wrapper mini center={coordinates} centerMarker />
-                </Paper>
+                <Grid className={classes.mapGrid} item xs={12} sm={3}>
+                  <Paper elevation={1}>
+                    <Wrapper mini center={coordinates} centerMarker />
+                  </Paper>
+                </Grid>
               </Grid>
-            </Grid>
-          </CardContent>
-          <Divider light />
-          <CardContent>
-            <Grid container spacing={8}>
-              <Grid item sm={6}>
-                <GridList cellHeight={48}>
-                  <For each="priceItem" of={mappedPrice}>
-                    <GridListTile
-                      key={`${priceItem.description}${priceItem.value}`}
-                      style={{ heigth: 48}}
-                    >
-                      <ListItemText
-                        style={{ paddingLeft: 16 }}
-                        primary={priceItem.description || 'Entrada'}
-                        secondary={priceItem.value ? `R$ ${priceItem.value}` : ''}
-                      />
-                    </GridListTile>
-                  </For>
-                </GridList>
+            </CardContent>
+            <Divider light />
+            <CardContent>
+              <Grid container spacing={8}>
+                <Grid item sm={12} md={6} style={{ width: '100%' }}>
+                  <GridList cellHeight="auto">
+                    <For each="priceItem" of={mappedPrice}>
+                      <GridListTile
+                        key={`${priceItem.description}${priceItem.value}`}
+                      >
+                        <ListItemText
+                          style={{ paddingLeft: 16 }}
+                          primary={priceItem.description || 'Entrada'}
+                          secondary={priceItem.value ? `R$ ${priceItem.value}` : ''}
+                        />
+                      </GridListTile>
+                    </For>
+                  </GridList>
+                </Grid>
+                <Grid item sm={12} md={6}>
+                </Grid>
               </Grid>
-              <Grid item sm={6}>
-              </Grid>
-            </Grid>
-          </CardContent>
-          <Divider light />
-          <CardContent>
-            <Typography variant="body2" style={{ paddingBottom: 8 }}>
-              Descrição
-            </Typography>
-            <Typography
-              align="inherit"
-              component="div"
-              children={<div dangerouslySetInnerHTML={{ __html: description }} />}
-            />
-          </CardContent>
-        </Card>
+            </CardContent>
+            <Divider light />
+            <CardContent>
+              <Typography variant="body2" style={{ paddingBottom: 8 }}>
+                Descrição
+              </Typography>
+              <Typography
+                align="inherit"
+                component="div"
+                children={<div dangerouslySetInnerHTML={{ __html: description }} />}
+              />
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={12} md={3}>
+          <Card stype={{ width: '100%' }}/>
+        </Grid>
       </Grid>
     );
   }
