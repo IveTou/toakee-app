@@ -3,7 +3,10 @@ import { withStyles } from 'material-ui';
 export const withIndexStyle = withStyles(theme => ({
   root: {
     [theme.breakpoints.up('md')]: {
+      margin: '0 auto',
       paddingTop: theme.spacing.unit * 2,
+      marginBottom: theme.spacing.unit * 10,
+      maxWidth: theme.spacing.unit * 140,
     },
     [theme.breakpoints.down('sm')]: {
       paddingTop: 0,
@@ -11,11 +14,8 @@ export const withIndexStyle = withStyles(theme => ({
   },
   card: {
     paddingBottom: 0,
-    width: '100%',
     [theme.breakpoints.up('md')]: {
-      margin: '0 auto',
-      maxWidth: theme.spacing.unit * 100,
-      marginBottom: theme.spacing.unit * 10,
+      marginRight: theme.spacing.unit * 2,
     },
   },
   media: {
@@ -54,6 +54,24 @@ export const withIndexStyle = withStyles(theme => ({
   },
   mapGrid: {
     minWidth: theme.spacing.unit * 17,
+  },
+  eventsCard: {
+    paddingTop: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing.unit,
+  },
+  gridList: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper,
+    marginTop: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 2,
+  },
+  gridListTitle: {
+    marginTop: 24,
+    color: theme.typography.display1.color,
   },
 }));
 

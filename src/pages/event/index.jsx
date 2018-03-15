@@ -133,7 +133,6 @@ export class EventPage extends React.Component {
     const mappedPrice = price ? [{ value: price }] : prices;
     const isMobile = !this.props.deviceInfo.is('desktop');
     const startMoment = moment(start);
-    const previewThumbs = take(photos, isMobile ? 8 : 16);
     const coordinates = place && place.coordinates
       ? { lat: place.coordinates[0], lng: place.coordinates[1] }
       : undefined;
@@ -141,7 +140,6 @@ export class EventPage extends React.Component {
     declare var index;
     declare var priceItem;
     declare var photosItem;
-    declare var previewItem;
 
     return (
       <Grid container className={classes.root} spacing={0}>
@@ -163,6 +161,29 @@ export class EventPage extends React.Component {
                 {title}
               </Typography>
 
+              <If condition={photos.length}>
+                <Lightbox
+                  images={photos.map(({ src }) => ({ src }))}
+                  isOpen={this.state.lightboxIsOpen}
+                  onClickPrev={this.handleClickPrev}
+                  onClickNext={this.handleClickNext}
+                  onClose={this.closeLightBox}
+                  currentImage={this.state.currentImage}
+                />
+                <Typography variant="title" className={classes.gridListTitle}>
+                  Galeria de Fotos
+                </Typography>
+                <div className={classes.gridList}>
+                  <GridList cellHeight={144} style={{ height: 336 }} cols={3}>
+                    <For each="photosItem" of={photos} index="index">
+                      <GridListTile key={index} cols={1}>
+                        <img src={photosItem.thumb} onClick={() => this.openPhoto(index)} />
+                      </GridListTile>
+                    </For>
+                  </GridList>
+                </div>
+              </If>
+              <Divider light />
               <Grid container spacing={8}>
                 <Grid item xs={12} sm={9} style={{ paddingTop: 8 }}>
                   <List dense>
@@ -281,9 +302,21 @@ export class EventPage extends React.Component {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={12} md={3}>
-          <Card stype={{ width: '100%' }}/>
-        </Grid>
+        <If condition={categories.length}>
+          <Grid item xs={12} sm={12} md={3}>
+            <Card className={classes.eventsCard}>
+              <EventList
+                title="Eventos Relacionados"
+                vertical={!isMobile}
+                excludedEventId={id}
+                start={moment().startOf('day')}
+                end={moment().endOf('day')}
+                categoryIds={map(categories, 'id')}
+                limit={5}
+              />
+            </Card>
+          </Grid>
+        </If>
       </Grid>
     );
   }
