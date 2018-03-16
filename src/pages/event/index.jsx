@@ -11,6 +11,9 @@ import {
   CardHeader,
   CardMedia,
   Divider,
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
   Icon,
   Grid,
   GridList,
@@ -44,7 +47,7 @@ export class EventPage extends React.Component {
     this.state = {
       lightboxIsOpen: false,
       currentImage: 0,
-      galleryIsVisible: false,
+      galleryIsOpen: false,
     };
     autoBind(this);
   }
@@ -53,12 +56,8 @@ export class EventPage extends React.Component {
     TrackingAPI.viewerSafeTrack(viewer, 'Event Page View');
   }
 
-  toggleGallery() {
-    this.setState({ galleryIsVisible: !this.state.galleryIsVisible });
-  }
-
-  openGallery() {
-    this.setState({ galleryIsVisible: true });
+  toggleGallery(event, expanded) {
+    this.setState({ galleryIsOpen: expanded });
   }
 
   handleClickPrev() {
@@ -114,7 +113,7 @@ export class EventPage extends React.Component {
 
   render() {
     const { event: preEvent } = this.props.location.state || {};
-    const { galleryIsVisible } = this.state;
+    const { galleryIsOpen } = this.state;
     const { viewer = {}, event = preEvent, classes } = this.props;
     const {
       id,
@@ -170,18 +169,32 @@ export class EventPage extends React.Component {
                   onClose={this.closeLightBox}
                   currentImage={this.state.currentImage}
                 />
-                <Typography variant="title" className={classes.gridListTitle}>
-                  Galeria de Fotos
-                </Typography>
-                <div className={classes.gridList}>
-                  <GridList cellHeight={144} style={{ height: 336 }} cols={3}>
-                    <For each="photosItem" of={photos} index="index">
-                      <GridListTile key={index} cols={1}>
-                        <img src={photosItem.thumb} onClick={() => this.openPhoto(index)} />
-                      </GridListTile>
-                    </For>
-                  </GridList>
-                </div>
+                <ExpansionPanel className={classes.galleryRoot} onChange={this.toggleGallery}>
+                  <ExpansionPanelSummary
+                    className={classes.galleryTitle}
+                    expandIcon={<Icon style={{ color: "white" }}>expand_more</Icon>}
+                  >
+                    <If condition={!galleryIsOpen}>
+                      <Typography variant="title" color="inherit">
+                        Clique e veja como foi!
+                      </Typography>
+                    </If>
+                    <If condition={galleryIsOpen}>
+                      <Typography variant="title" color="inherit">Galeria de Fotos</Typography>
+                    </If>
+                  </ExpansionPanelSummary>
+                    <If condition={galleryIsOpen}>
+                      <div className={classes.gridList}>
+                        <GridList cellHeight={144} style={{ height: 336 }} cols={3}>
+                          <For each="photosItem" of={photos} index="index">
+                            <GridListTile key={index} cols={1}>
+                              <img src={photosItem.thumb} onClick={() => this.openPhoto(index)} />
+                            </GridListTile>
+                          </For>
+                        </GridList>
+                      </div>
+                    </If>
+                </ExpansionPanel>
               </If>
               <Divider light />
               <Grid container spacing={8}>

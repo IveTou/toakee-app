@@ -54,6 +54,7 @@ export const withIndexStyle = withStyles(theme => ({
   },
   mapGrid: {
     minWidth: theme.spacing.unit * 17,
+    marginTop: theme.spacing.unit,
   },
   eventsCard: {
     paddingTop: theme.spacing.unit * 2,
@@ -66,12 +67,25 @@ export const withIndexStyle = withStyles(theme => ({
     justifyContent: 'space-around',
     overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
-    marginTop: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 2,
+    padding: theme.spacing.unit * 2,
   },
   gridListTitle: {
     marginTop: 24,
     color: theme.typography.display1.color,
+  },
+  column: {
+    flexBasis: '33.33%',
+  },
+  galleryRoot: {
+    marginTop: theme.spacing.unit * 3,
+    marginBottom: theme.spacing.unit * 2,
+  },
+  galleryTitle: {
+    cursor: 'pointer',
+    margin: 0,
+    border: 0,
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
   },
 }));
 
