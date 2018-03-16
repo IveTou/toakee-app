@@ -28,6 +28,7 @@ export const withIndexStyle = withStyles(theme => ({
   },
   title: {
     marginTop: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 2,
   },
   calendar: {
     float: 'left',

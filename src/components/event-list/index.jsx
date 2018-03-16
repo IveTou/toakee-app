@@ -6,7 +6,7 @@ import autoBind from 'react-autobind';
 import VisibilitySensor from 'react-visibility-sensor';
 import { range } from 'lodash';
 import { compose } from 'recompose';
-import { Typography } from 'material-ui';
+import { Divider, Typography } from 'material-ui';
 
 import { ease } from '~/src/utils/animation';
 import EventCard from '~/src/components/event-card';
@@ -53,6 +53,7 @@ class EventList extends React.Component {
     const { eventCount } = viewer;
 
     const events = viewer.events ? viewer.events.filter(e => e.id !== excludedEventId) : [];
+    const eventTrueCount = events.length;
     const listClasses = classNames(classes.list, vertical && classes.listVertical);
 
     const node = this._listDOM || {};
@@ -68,7 +69,7 @@ class EventList extends React.Component {
     return !!eventCount && (
       <div>
         <If condition={title}>
-          <Typography className={classes.title} variant="title">{title} ({eventCount})</Typography>
+          <Typography className={classes.title} variant="title">{title} ({eventTrueCount})</Typography>
         </If>
         <div className={classes.listWrapper}>
           <If condition={!vertical}>
@@ -85,7 +86,10 @@ class EventList extends React.Component {
           </If>
           <div ref={(dom) => { this._listDOM = dom; }} className={listClasses}>
             <For each="event" index="idx" of={events}>
-              <EventCard key={idx} event={event} />
+              <div key={idx}>
+                <EventCard event={event} />
+                <If condition={vertical && events.length> 1}><Divider light /></If>
+              </div>
             </For>
             <If condition={this.state.hasMore && (!vertical || !events.length)}>
               <VisibilitySensor onChange={isVisible => (isVisible && this.fetchEvents())} />

@@ -10,7 +10,7 @@ export const withIndexStyle = withStyles(theme => ({
     flex: '0 0 auto',
     margin: theme.spacing.unit,
     marginRight: 0,
-    marginBottom: theme.spacing.unit * 3,
+    marginTop: theme.spacing.unit * 2,
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     boxShadow: 'none',
