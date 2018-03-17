@@ -34,6 +34,7 @@ import { Link } from 'react-router-dom';
 import EventList from '~/src/components/event-list';
 import Calendar from '~/src/components/calendar';
 import Wrapper, { Map } from '~/src/components/map';
+import AttendButton from '~/src/components/attend-button';
 import { fullDateFormat, timeFormat } from '~/src/utils/moment';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import { withInfo } from '~/src/hocs';
@@ -243,10 +244,7 @@ export class EventPage extends React.Component {
                       </When>
                       <Otherwise>
                         <ListItem className={classes.lisItem}>
-                          <Button className={classes.listButton} variant="raised" color="primary">
-                            Vou
-                            <Icon className={classes.rightIcon}>thumb_up</Icon>
-                          </Button>
+                          <AttendButton className={classes.listButton} eventId={id} />
                           <Button
                             className={classes.listButton}
                             onClick={this.fbShare}
@@ -303,7 +301,7 @@ export class EventPage extends React.Component {
               </Grid>
             </CardContent>
             <Divider light />
-            <CardContent>
+            <CardContent style={{ paddingRight: 32, paddingLeft: 32 }}>
               <Typography variant="body2" style={{ paddingBottom: 8 }}>
                 Descrição
               </Typography>

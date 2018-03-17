@@ -61,6 +61,9 @@ export const withIndexStyle = withStyles(theme => ({
     paddingTop: theme.spacing.unit * 2,
     paddingRight: theme.spacing.unit * 2,
     paddingLeft: theme.spacing.unit,
+    [theme.breakpoints.down('sm')]: {
+      paddingBottom: theme.spacing.unit * 4,
+    },
   },
   gridList: {
     display: 'flex',

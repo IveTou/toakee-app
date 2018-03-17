@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'recompose';
 import { graphql } from 'react-apollo';
-import { Button } from 'semantic-ui-react';
+import { Button, Icon } from 'material-ui';
 import { withAuth } from '~/src/components/auth-modal/hoc';
 
 import query, { registerAttendance, unregisterAttendance } from './graphql';
@@ -10,12 +10,13 @@ import query, { registerAttendance, unregisterAttendance } from './graphql';
 const AttendButton = ({ attendance, toggle }) => (
   <Button
     onClick={toggle}
-    basic={!attendance}
-    size="small"
-    content="Vou"
-    icon="checkmark"
-    color="green"
-  />
+    color={!attendance ? 'primary' : 'default'}
+    variant="raised"
+    style={{ margin: 8 }}
+  >
+    Vou
+    <Icon style={{ marginLeft: 8 }}>thumb_up</Icon>
+  </Button>
 );
 
 AttendButton.propTypes = {
