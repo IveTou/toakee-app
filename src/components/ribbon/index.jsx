@@ -5,7 +5,7 @@ import { Paper, Typography } from 'material-ui';
 import { withRibbonStyle } from './styles';
 
 const EventCardRibbon = ({ classes, children }) => (
-  <Paper className={classes.root}>
+  <Paper className={classes.root} elevation={4}>
     <Typography className={classes.caption} variant="caption" color="inherit">
       {children}
     </Typography>

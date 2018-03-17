@@ -15,16 +15,22 @@ export const withIndexStyle = withStyles(theme => ({
     whiteSpace: 'nowrap',
     boxShadow: 'none',
     background: 'none',
-    '&:hover $cardMedia': {
-      backgroundSize: '120%',
+    '&:hover $cardImage': {
+      transform: 'scale(1.2)',
     }
   },
   cardMedia: {
     position: 'relative',
+    overflow: 'hidden',
     height: theme.spacing.unit * 15,
-    backgroundSize: '100%',
+  },
+  cardImage: {
+    height: '100%',
+    width: '100%',
+    backgroundSize: 'cover',
     backgroundColor: theme.palette.grey[200],
-    transition: 'background-size .3s ease-in-out',
+    backgroundPosition: 'center',
+    transition: 'transform .3s ease-in-out',
   },
   cardContent: {
     padding: 0,

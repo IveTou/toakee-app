@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { upperFirst } from 'lodash';
 import moment from 'moment';
-import { Card, CardMedia, CardContent, Typography, Icon } from 'material-ui';
+import { Card, CardContent, Typography, Icon } from 'material-ui';
 
 import Calendar from '~/src/components/calendar';
 
@@ -31,11 +31,16 @@ const EventCard = ({ event, className, classes }) => {
   return (
     <Link className={className} to={{ pathname: `/evento/${id}`, state: { event } }}>
       <Card className={classes.card}>
-        <CardMedia classes={{ root: classes.cardMedia }} image={flyer}>
+        <div className={classes.cardMedia}>
+          <div
+            className={classes.cardImage}
+            alt={title}
+            style={{ backgroundImage: `url("${flyer}")` }}
+          />
           <If condition={ribbon}>
             <Ribbon color={ribbon.color}>{ribbon.content}</Ribbon>
           </If>
-        </CardMedia>
+        </div>
         <CardContent className={classes.cardContent}>
           <Typography variant="subheading" className={classes.cardContentHeader}>
             {title}
