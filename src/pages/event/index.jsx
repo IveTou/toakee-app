@@ -2,17 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql, compose } from 'react-apollo';
 import Lightbox from 'react-images';
-import { take, map } from 'lodash';
+import { map } from 'lodash';
 import moment from 'moment';
 import {
   Button,
   Card,
   CardContent,
-  CardHeader,
   CardMedia,
   Divider,
   ExpansionPanel,
-  ExpansionPanelDetails,
   ExpansionPanelSummary,
   Icon,
   Grid,
@@ -27,13 +25,11 @@ import {
   Typography,
 } from 'material-ui';
 
-import classNames from 'classnames';
 import autoBind from 'react-autobind';
-import { Link } from 'react-router-dom';
 
 import EventList from '~/src/components/event-list';
 import Calendar from '~/src/components/calendar';
-import Wrapper, { Map } from '~/src/components/map';
+import Wrapper from '~/src/components/map';
 import AttendButton from '~/src/components/attend-button';
 import { fullDateFormat, timeFormat } from '~/src/utils/moment';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
@@ -149,6 +145,7 @@ export class EventPage extends React.Component {
               className={classes.media}
               image={flyer}
               title={title}
+              alt={flyerAlt}
             />
             <CardContent>
               <Calendar
@@ -184,17 +181,17 @@ export class EventPage extends React.Component {
                       <Typography variant="title" color="inherit">Galeria de Fotos</Typography>
                     </If>
                   </ExpansionPanelSummary>
-                    <If condition={galleryIsOpen}>
-                      <div className={classes.gridList}>
-                        <GridList cellHeight={144} style={{ height: 336 }} cols={3}>
-                          <For each="photosItem" of={photos} index="index">
-                            <GridListTile key={index} cols={1}>
-                              <img src={photosItem.thumb} onClick={() => this.openPhoto(index)} />
-                            </GridListTile>
-                          </For>
-                        </GridList>
-                      </div>
-                    </If>
+                  <If condition={galleryIsOpen}>
+                    <div className={classes.gridList}>
+                      <GridList cellHeight={144} style={{ height: 336 }} cols={3}>
+                        <For each="photosItem" of={photos} index="index">
+                          <GridListTile key={index} cols={1}>
+                            <img src={photosItem.thumb} onClick={() => this.openPhoto(index)} />
+                          </GridListTile>
+                        </For>
+                      </GridList>
+                    </div>
+                  </If>
                 </ExpansionPanel>
               </If>
               <Divider light />
@@ -296,8 +293,7 @@ export class EventPage extends React.Component {
                     </For>
                   </GridList>
                 </Grid>
-                <Grid item sm={12} md={6}>
-                </Grid>
+                <Grid item sm={12} md={6} />
               </Grid>
             </CardContent>
             <Divider light />
@@ -305,11 +301,9 @@ export class EventPage extends React.Component {
               <Typography variant="body2" style={{ paddingBottom: 8 }}>
                 Descrição
               </Typography>
-              <Typography
-                align="inherit"
-                component="div"
-                children={<div dangerouslySetInnerHTML={{ __html: description }} />}
-              />
+              <Typography align="inherit" component="div">
+                <div dangerouslySetInnerHTML={{ __html: description }} />
+              </Typography>
             </CardContent>
           </Card>
         </Grid>
@@ -339,6 +333,7 @@ EventPage.propTypes = {
   setStatus: PropTypes.func,
   deviceInfo: PropTypes.object,
   location: PropTypes.object,
+  classes: PropTypes.object,
 };
 
 const injectSetEventStatusMutation = graphql(setEventStatusMutation, {

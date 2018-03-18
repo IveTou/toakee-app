@@ -16,8 +16,6 @@ import EventListArrow from './arrow';
 import { query } from './graphql';
 import { withIndexStyle } from './styles';
 
-const FEED_LIMIT = 10;
-
 class EventList extends React.Component {
   constructor(props) {
     super(props);
@@ -68,7 +66,7 @@ class EventList extends React.Component {
 
     return !!eventCount && (
       <div>
-        <If condition={ eventTrueCount && title }>
+        <If condition={eventTrueCount && title}>
           <Typography className={classes.title} variant="title">{title} ({eventTrueCount})</Typography>
         </If>
         <div className={classes.listWrapper}>
@@ -111,7 +109,6 @@ EventList.propTypes = {
   excludedEventId: PropTypes.string,
   viewer: PropTypes.object,
   classes: PropTypes.object,
-  limit: PropTypes.number,
 };
 
 const injectQuery = graphql(query, {
