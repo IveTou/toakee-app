@@ -2,8 +2,9 @@ import { withStyles } from 'material-ui';
 
 export const withIndexStyle = withStyles(theme => ({
   title: {
-    marginLeft: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
+    paddingTop: theme.spacing.unit * 2,
   },
   list: {
     display: 'flex',

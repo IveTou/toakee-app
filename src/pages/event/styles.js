@@ -58,7 +58,6 @@ export const withIndexStyle = withStyles(theme => ({
     marginTop: theme.spacing.unit,
   },
   eventsCard: {
-    paddingTop: theme.spacing.unit * 2,
     paddingRight: theme.spacing.unit * 2,
     paddingLeft: theme.spacing.unit,
     [theme.breakpoints.down('sm')]: {

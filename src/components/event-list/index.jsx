@@ -68,7 +68,7 @@ class EventList extends React.Component {
 
     return !!eventCount && (
       <div>
-        <If condition={title}>
+        <If condition={ eventTrueCount && title }>
           <Typography className={classes.title} variant="title">{title} ({eventTrueCount})</Typography>
         </If>
         <div className={classes.listWrapper}>
@@ -111,16 +111,17 @@ EventList.propTypes = {
   excludedEventId: PropTypes.string,
   viewer: PropTypes.object,
   classes: PropTypes.object,
+  limit: PropTypes.number,
 };
 
 const injectQuery = graphql(query, {
-  options: ({ start, end, categoryIds, strict, forceFetch, status = 'ACTIVE' }) => ({
+  options: ({ start, end, categoryIds, strict, forceFetch, limit, status = 'ACTIVE' }) => ({
     variables: {
       start,
       end,
       skip: 0,
       categoryIds,
-      limit: FEED_LIMIT,
+      limit,
       strict,
       status,
       skipList: !forceFetch,
