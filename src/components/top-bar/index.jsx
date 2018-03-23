@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withApollo } from 'react-apollo';
+import { connect } from 'react-redux';
 import autoBind from 'react-autobind';
 import { once } from 'lodash';
 import { withRouter } from 'react-router';
@@ -8,6 +9,7 @@ import { AppBar, Toolbar, Icon, IconButton, Button } from 'material-ui';
 import { compose } from 'recompose';
 
 import { withInfo } from '~/src/hocs';
+import { openAuthModal } from '~/src/ducks/auth-modal';
 import { logout } from '~/src/utils/session';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import Logo from '~/src/components/logo';
@@ -39,31 +41,21 @@ export class TopBar extends React.Component {
     this.props.history.push('/');
   }
 
-  login() {
-    TrackingAPI.track({ name: 'Landing Login Trigger', pid: 'Guest' });
-    this.props.history.push('/login');
-  }
-
-  signUp() {
-    TrackingAPI.track({ name: 'Landing SignUp Trigger', pid: 'Guest' });
-    this.props.history.push('/cadastrar');
-  }
-
   dashboard() {
     this.props.history.push('/dashboard');
   }
 
   newEvent() {
-    const { viewer } = this.props;
+    const { viewer, auth } = this.props;
     const pid = (viewer && viewer.id) || null;
     const logged = !!pid;
 
     TrackingAPI.track({ name: 'New Event Trigger', logged, pid });
-    this.props.history.push('/evento/novo');
+    logged ? this.props.history.push('/evento/novo') : auth();
   }
 
   render() {
-    const { classes, viewer = {}, onToggle, small } = this.props;
+    const { classes, viewer = {}, onToggle, small, auth } = this.props;
 
     return (
       <AppBar className={classes.root}>
@@ -87,8 +79,8 @@ export class TopBar extends React.Component {
                   Publicar
                 </Button>
                 <If condition={!viewer.id}>
-                  <Button onClick={this.signUp}>Cadastrar</Button>
-                  <Button onClick={this.login}>Entrar</Button>
+                  <Button onClick={() => auth('signUp')}>Cadastrar</Button>
+                  <Button onClick={() => auth('login')}>Entrar</Button>
                 </If>
               </div>
 
@@ -101,9 +93,9 @@ export class TopBar extends React.Component {
             <Otherwise>
               <TopBarMore
                 viewer={viewer}
-                login={() => this.login}
+                login={() => auth('login')}
+                signUp={() => auth('signUp')}
                 logout={() => this.logout}
-                signUp={() => this.signUp}
                 newEvent={() => this.newEvent}
               />
             </Otherwise>
@@ -121,10 +113,24 @@ TopBar.propTypes = {
   client: PropTypes.object,
   small: PropTypes.bool,
   onToggle: PropTypes.func,
+  auth: PropTypes.func,
 };
+
+const injectStore = connect(
+  ({ authModal }) => authModal.toJS(),
+  dispatch => ({
+    auth: (mode) => {
+      dispatch(openAuthModal(_, mode));
+      mode == 'login'
+        ? TrackingAPI.track({ name: 'Landing Login Trigger', pid: 'Guest' })
+        : TrackingAPI.track({ name: 'Landing SignUp Trigger', pid: 'Guest' })
+    },
+  }),
+);
 
 export default compose(
   withApollo,
+  injectStore,
   withRouter,
   withInfo(['viewer']),
   withIndexStyle,
