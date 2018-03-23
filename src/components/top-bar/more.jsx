@@ -16,8 +16,8 @@ const TopBarMore = ({ viewer, anchor, setAnchor, login, signUp, logout, newEvent
             <MenuItem onClick={logout()}>Sair</MenuItem>
           </When>
           <Otherwise>
-            <MenuItem onClick={signUp()}>Cadastrar</MenuItem>
-            <MenuItem onClick={login()}>Entrar</MenuItem>
+            <MenuItem onClick={signUp}>Cadastrar</MenuItem>
+            <MenuItem onClick={login}>Entrar</MenuItem>
           </Otherwise>
         </Choose>
       </Menu>
