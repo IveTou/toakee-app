@@ -2,13 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import { connect } from 'react-redux';
+
+import { openAuthModal } from '~/src/ducks/auth-modal';
 import  { Facebook, Instagram, Linkedin } from './social-icons';
 
 if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-const Footer = ({ compressed }) => {
+const Footer = ({ compressed, signUp }) => {
   const classes = classNames('Footer', { 'Footer--compressed': compressed });
 
   return (
@@ -32,9 +35,14 @@ const Footer = ({ compressed }) => {
                 </Link>
               </li>
               <li>
-                <Link className="Footer-content-row-services-signup" to="/cadastrar">
+                <div
+                  role="button"
+                  tabIndex="0"
+                  className="Footer-content-row-services-signup"
+                  onClick={signUp}
+                >
                   <span>Cadastre-se</span>
-                </Link>
+                </div>
               </li>
               <li>
                 <Link className="Footer-content-row-services-dashboard" to="/dashboard">
@@ -88,6 +96,14 @@ const Footer = ({ compressed }) => {
 
 Footer.propTypes = {
   compressed: PropTypes.bool,
+  signUp: PropTypes.func,
 };
 
-export default Footer;
+const injectStore = connect(
+  ({ authModal }) => authModal.toJS(),
+  dispatch => ({
+    signUp: () => dispatch(openAuthModal(_, 'signUp'))
+  }),
+);
+
+export default injectStore(Footer);

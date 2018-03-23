@@ -18,8 +18,6 @@ import About from '~/src/pages/about';
 import EventModeration from '~/src/pages/event-moderation';
 
 import ContextProvider from '~/src/components/context-provider';
-import Login from '~/src/components/auth-wrapper/login';
-import SignUp from '~/src/components/auth-wrapper/sign-up';
 import Scroller from '~/src/components/scroller';
 import Snackbar from '~/src/components/snackbar';
 import AuthModal from '~/src/components/auth-modal';
@@ -58,8 +56,6 @@ const App = ({ userAgent }) => (
             exact
           />
           <Route path="/" exact component={EventFeed} />
-          <Route path="/login" component={Login} />
-          <Route path="/cadastrar" component={SignUp} />
           <Route path="/search" component={SearchPage} />
           <Route path="/evento/:id" exact component={EventPage} />
           <Route path="/evento/:id/fotos" component={EventPhotos} />
