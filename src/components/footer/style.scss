@@ -20,6 +20,10 @@
       display: table;
       margin: 0 auto;
 
+      &-services-signup {
+        cursor: pointer;
+      }
+
       p {
         padding: 0 $spacer;
         margin-bottom: 0;

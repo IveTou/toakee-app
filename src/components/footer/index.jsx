@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 
-import  { Facebook, Instagram, Linkedin } from './social-icons';
 import { openAuthModal } from '~/src/ducks/auth-modal';
+import  { Facebook, Instagram, Linkedin } from './social-icons';
 
 if (process.env.BROWSER) {
   require('./style.scss');
@@ -35,9 +35,14 @@ const Footer = ({ compressed, signUp }) => {
                 </Link>
               </li>
               <li>
-                <Link className="Footer-content-row-services-signup" to="" onClick={signUp}>
+                <div
+                  role="button"
+                  tabIndex="0"
+                  className="Footer-content-row-services-signup"
+                  onClick={signUp}
+                >
                   <span>Cadastre-se</span>
-                </Link>
+                </div>
               </li>
               <li>
                 <Link className="Footer-content-row-services-dashboard" to="/dashboard">
