@@ -121,9 +121,8 @@ const injectStore = connect(
   dispatch => ({
     auth: (mode) => {
       dispatch(openAuthModal(_, mode));
-      mode == 'login'
-        ? TrackingAPI.track({ name: 'Landing Login Trigger', pid: 'Guest' })
-        : TrackingAPI.track({ name: 'Landing SignUp Trigger', pid: 'Guest' })
+      mode == 'signUp' && TrackingAPI.track({ name: 'Landing SignUp Trigger', pid: 'Guest' });
+      mode == 'login' && TrackingAPI.track({ name: 'Landing Login Trigger', pid: 'Guest' });
     },
   }),
 );
