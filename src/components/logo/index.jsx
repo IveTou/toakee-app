@@ -13,12 +13,12 @@ const Logo = ({ classes, size, small }) => {
     : `${config.ASSETS_BASE_URI}/core/site/logo.png`;
   const rootClasses = classNames(classes.root, small && classes.rootSmall);
   const imageClasses = classNames(classes.image, small && classes.imageSmall);
-console.log(size);
+
   return(
     <Link className={rootClasses} to="/">
       <img className={imageClasses} alt="toakee logo" src={imgSrc} style={{ width: size }} />
     </Link>
-    );
+  );
 };
 
 Logo.propTypes = {

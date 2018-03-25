@@ -21,7 +21,7 @@ export const withIndexStyle = withStyles(theme => ({
     margin: '0 auto',
     display: 'table',
   },
-  description: {
+  overlay: {
     height: '100%',
     width: theme.spacing.unit * 34,
     position: 'relative',
@@ -34,7 +34,18 @@ export const withIndexStyle = withStyles(theme => ({
   title: {
     overflow: 'hidden',
     whiteSpace: 'normal',
-    maxHeight: theme.spacing.unit * 10,
+    maxHeight: theme.spacing.unit * 20,
+  },
+  description: {
+    overflow: 'hidden',
+    whiteSpace: 'normal',
+    maxHeight: theme.spacing.unit * 20,
+    [theme.breakpoints.up('md')]: {
+      fontSize: theme.typography.headline.fontSize,
+    },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: theme.typography.title.fontSize,
+    },
   },
   calendar: {
     float: 'left',

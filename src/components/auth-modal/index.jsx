@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withApollo } from 'react-apollo';
 import { sessionLogin } from '~/src/utils/session';
-import { Modal, Fade, Paper, Icon, Typography } from 'material-ui';
+import { Modal, Fade, Paper, Typography } from 'material-ui';
 
 import { closeAuthModal, goToLogin, goToSignUp } from '~/src/ducks/auth-modal';
 import Logo from '~/src/components/logo';
