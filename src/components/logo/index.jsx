@@ -5,21 +5,26 @@ import classNames from 'classnames';
 
 import config from '~/src/config';
 
-if (process.env.BROWSER) {
-  require('./style.scss');
-}
+import { withIndexStyle } from './styles';
 
-const Logo = ({ small }) => {
+const Logo = ({ classes, size, small }) => {
   const imgSrc = small
     ? `${config.ASSETS_BASE_URI}/core/site/logo-x64.png`
     : `${config.ASSETS_BASE_URI}/core/site/logo.png`;
-  const classes = classNames('Logo', { 'Logo--small': small });
-
-  return <Link className={classes} to="/"><img alt="toakee logo" src={imgSrc} /></Link>;
+  const rootClasses = classNames(classes.root, small && classes.rootSmall);
+  const imageClasses = classNames(classes.image, small && classes.imageSmall);
+console.log(size);
+  return(
+    <Link className={rootClasses} to="/">
+      <img className={imageClasses} alt="toakee logo" src={imgSrc} style={{ width: size }} />
+    </Link>
+    );
 };
 
 Logo.propTypes = {
   small: PropTypes.bool.isRequired,
+  classes: PropTypes.object,
+  size: PropTypes.number,
 };
 
-export default Logo;
+export default withIndexStyle(Logo);

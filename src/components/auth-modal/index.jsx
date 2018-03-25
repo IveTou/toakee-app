@@ -7,6 +7,7 @@ import { sessionLogin } from '~/src/utils/session';
 import { Modal, Fade, Paper, Icon, Typography } from 'material-ui';
 
 import { closeAuthModal, goToLogin, goToSignUp } from '~/src/ducks/auth-modal';
+import Logo from '~/src/components/logo';
 import { alertGraphQLError } from '~/src/ducks/snackbar';
 
 import { withIndexStyle } from './styles';
@@ -24,9 +25,9 @@ const AuthModal = ({
   onGraphqlError,
   classes,
 }) => {
-  const [headerTitle, headerIcon] = {
-    login: ['Entre com suas credenciais', 'account_circle'],
-    signUp: ['Nova conta', 'person_add'],
+  const headerTitle = {
+    login: 'Entre no Toakee',
+    signUp: 'Cadastre-se no Toakee',
   }[mode];
 
   const onLogin = (token) => {
@@ -40,12 +41,10 @@ const AuthModal = ({
     <Modal open={open} onClose={onClose} disableAutoFocus>
       <Fade in={open}>
         <Paper classes={{ root: classes.root }}>
-          <Paper classes={{ root: classes.header }}>
-            <Icon className={classes.headerIcon}>{headerIcon}</Icon>
-            <Typography variant="title" className={classes.headerTitle}>
-              {headerTitle}
-            </Typography>
-          </Paper>
+          <div className={classes.header}>
+            <Logo small size={72} />
+            <Typography variant="headline" className={classes.headerTitle}>{headerTitle}</Typography>
+          </div>
           <Choose>
             <When condition={mode === 'login'}>
               <Login
