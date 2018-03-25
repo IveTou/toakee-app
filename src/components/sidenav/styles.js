@@ -34,7 +34,7 @@ export const withIndexStyle = withStyles(theme => ({
   },
   modalHeader: {
     height: topbarHeight,
-    paddingTop: theme.spacing.unit,
+    paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit,
     paddingLeft: 0,
     paddingRight: 0,
