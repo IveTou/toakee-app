@@ -111,9 +111,9 @@ EventList.propTypes = {
   classes: PropTypes.object,
 };
 
-export default graphql(query, {
+const injectQuery = graphql(query, {
   options: ({
-    start, end, categoryIds, strict, forceFetch, has, sort, status = 'ACTIVE',
+    start, end, categoryIds, strict, forceFetch, has, sort, limit, status = 'ACTIVE',
   }) => ({
     variables: {
       start,
