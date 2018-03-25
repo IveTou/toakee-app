@@ -100,6 +100,33 @@ export class Footer extends React.Component {
             </Typography>
           </Grid>
         </Grid>
+<<<<<<< HEAD
+=======
+        <Divider className="Footer-divider" clearing />
+        <Segment basic>
+          <Image
+            className="Footer-image"
+            src={assetsUrl('/core/site/logo-white-x64.png')}
+            size="mini"
+            alt="Toakee.com"
+            centered
+          />
+          <Link className="Footer-link about" to="/quem-somos">
+            <span>Quem somos?</span>
+          </Link>
+          <Link className="Footer-link terms" to="/termos-de-uso">
+            <span>Termos de Uso</span>
+          </Link>
+          <If condition={!viewer.id}>
+            <Link className="Footer-link signup" to="/cadastrar">
+              <span>Cadastre-se</span>
+            </Link>
+          </If>
+          <Segment className="Footer-copyright" basic>
+            Copyright &copy; 2017 Toakee. Todos os direitos reservados.
+          </Segment>
+        </Segment>
+>>>>>>> Improve event list skip
       </footer>
     );
   }
