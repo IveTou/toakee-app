@@ -6,6 +6,8 @@
     "add-module-exports",
     "babel-root-import",
     "transform-class-properties",
-    "jsx-control-statements"
+    "jsx-control-statements",
+    "lodash",
+    ["direct-import", ["material-ui", "react-router", "react-router-dom"]]
   ]
 }
