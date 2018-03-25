@@ -130,7 +130,7 @@ export class EventPage extends React.Component {
     const isMobile = !this.props.deviceInfo.is('desktop');
     const startMoment = moment(start);
     const coordinates = place && place.coordinates
-      ? { lat: place.coordinates[0], lng: place.coordinates[1] }
+      ? { lat: place.coordinates[1], lng: place.coordinates[0] }
       : undefined;
 
     declare var index;
