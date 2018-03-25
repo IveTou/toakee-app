@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Snackbar as MaterialSnackbar } from 'material-ui';
 
@@ -7,7 +8,11 @@ if (process.env.BROWSER) {
 }
 
 const Snackbar = ({ visible, props: { message } }) => (
-  <MaterialSnackbar open={!!visible} message={message || ''} />
+  <MaterialSnackbar
+    open={!!visible}
+    message={message || ''}
+    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+  />
 );
 
 Snackbar.propTypes = {

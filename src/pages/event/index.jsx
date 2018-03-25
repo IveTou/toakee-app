@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { graphql, compose } from 'react-apollo';
 import { Icon, Card, Image, Grid, Button } from 'semantic-ui-react';
 import Lightbox from 'react-images';
@@ -6,6 +7,7 @@ import classNames from 'classnames';
 import autoBind from 'react-autobind';
 import { Link } from 'react-router-dom';
 
+import AttendButton from '~/src/components/attend-button';
 import DefaultLayout from '~/src/layouts/default';
 import { fullDateFormat, timeFormat, dateFormat } from '~/src/utils/moment';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
@@ -219,7 +221,10 @@ export class EventPage extends React.Component {
                   <span itemProp="price">{mappedPrice}</span>
                 </div>
               </If>
-              <div className="EventPage-details-info-social">
+            </div>
+
+            <div className="EventPage-details-body">
+              <div className="EventPage-details-body-social">
                 <Button
                   onClick={this.fbShare}
                   color="facebook"
@@ -227,10 +232,8 @@ export class EventPage extends React.Component {
                   content="Compartilhar"
                   icon="share"
                 />
+                <AttendButton eventId={id} />
               </div>
-            </div>
-
-            <div className="EventPage-details-body">
               <div className="EventPage-details-body-description">
                 <div className="EventPage-details-body-title">Descrição</div>
                 <div

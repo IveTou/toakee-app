@@ -1,7 +1,8 @@
-import React, { PropTypes } from 'react';
-import autoBind from 'react-autobind';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { capitalize } from 'lodash';
-import { Button, Icon } from 'semantic-ui-react';
+import { Button as SButton, Icon as SIcon } from 'semantic-ui-react';
+import { Button, withStyles } from 'material-ui';
 
 import config from '~/src/config';
 
@@ -29,46 +30,46 @@ const icon = {
   instagram: 'instagram',
 };
 
-const propTypes = {
-  onReceiveToken: PropTypes.func,
-  network: PropTypes.string,
-};
+const styles = theme => ({
+  facebook: {
+    backgroundColor: '#3B5998',
+    color: theme.palette.common.white,
+    '&:hover': {
+      backgroundColor: '#304D8A',
+    },
+  },
+});
 
-const defaultProps = {
-  onReceiveToken: () => {},
-};
-
-export default class SocialLoginButton extends React.Component {
-  static propTypes = propTypes;
-  static defaultProps = defaultProps;
-
-  constructor(props) {
-    super(props);
-    autoBind(this);
-  }
-
-  login() {
-    const { network } = this.props;
-
+const SocialLoginButton = ({ network, material, onReceiveToken, classes }) => {
+  const login = () => {
     const popup = window.open(url[network]);
     const listener = ({ key, newValue }) => {
       if (key === 'socialLogin') {
-        this.props.onReceiveToken(network, newValue);
+        onReceiveToken(network, newValue);
         window.removeEventListener('storage', listener);
         popup.close();
       }
     };
 
     window.addEventListener('storage', listener);
-  }
+  };
 
-  render() {
-    const { network } = this.props;
-    return (
-      <Button color={network} onClick={this.login} fluid>
-        <Icon name={icon[network]} /> {capitalize(network)}
-      </Button>
-    );
-  }
-}
+  return material ? (
+    <Button className={classes.facebook} onClick={login} fullWidth variant="raised">
+      Entrar com facebook
+    </Button>
+  ) : (
+    <SButton color={network} onClick={login} fluid>
+      <SIcon name={icon[network]} /> {capitalize(network)}
+    </SButton>
+  );
+};
 
+SocialLoginButton.propTypes = {
+  onReceiveToken: PropTypes.func,
+  network: PropTypes.string,
+  material: PropTypes.bool,
+  classes: PropTypes.object,
+};
+
+export default withStyles(styles)(SocialLoginButton);

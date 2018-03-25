@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import device from 'device';
 
 export default class DeviceInfoProvider extends React.Component {
@@ -13,7 +14,7 @@ export default class DeviceInfoProvider extends React.Component {
 
 DeviceInfoProvider.propTypes = {
   userAgent: PropTypes.string.isRequired,
-  children: React.PropTypes.oneOfType([
+  children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),

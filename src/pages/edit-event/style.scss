@@ -1,0 +1,12 @@
+@import '../../scss/variables';
+
+.EditEventPage {
+  margin-top: $topbar-height;
+  padding: $spacer*3 0;
+
+  &-title {
+    padding-left: $spacer*3;
+    max-width: $spacer*80;
+    margin: 0 auto !important;
+  }
+}

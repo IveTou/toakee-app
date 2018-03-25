@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Link, Element } from 'react-scroll';
 import { Container, Grid, Header, List, Menu } from 'semantic-ui-react';

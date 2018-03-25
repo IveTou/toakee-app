@@ -1,12 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import {
-  deepOrange700,
-  deepOrange500,
-  blue500,
-} from 'material-ui/styles/colors';
+import { MuiThemeProvider } from 'material-ui';
 
 import ProtectedRoute from '~/src/routes/protected';
 
@@ -27,27 +22,22 @@ import Login from '~/src/components/auth-wrapper/login';
 import SignUp from '~/src/components/auth-wrapper/sign-up';
 import Scroller from '~/src/components/scroller';
 import Snackbar from '~/src/components/snackbar';
+import AuthModal from '~/src/components/auth-modal';
 
 import ViewerProvider from '~/src/components/viewer-provider';
 import DeviceInfoProvider from '~/src/components/device-info-provider';
 
 import { userIsLogged, userIsAdmin } from '~/src/auth';
 
-const theme = getMuiTheme({
-  palette: {
-    primary1Color: deepOrange500,
-    primary2Color: deepOrange700,
-    accent1Color: blue500,
-    pickerHeaderColor: blue500,
-  },
-});
+import { theme } from '~/src/mui/theme';
 
 const App = ({ userAgent }) => (
-  <MuiThemeProvider muiTheme={theme}>
+  <MuiThemeProvider theme={theme}>
     <ViewerProvider>
       <DeviceInfoProvider userAgent={userAgent || window.navigator.userAgent}>
         <Scroller />
         <Snackbar />
+        <AuthModal />
         <Switch>
           <ProtectedRoute
             auth={userIsLogged}

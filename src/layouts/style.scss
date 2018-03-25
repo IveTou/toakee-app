@@ -1,7 +1,10 @@
 @import 'node_modules/include-media/dist/_include-media.scss';
+@import '../scss/colors';
 @import '../scss/variables';
 
 .DefaultLayout {
+  background-color: $gray50;
+
   main {
     padding-top: $topbar-height;
     min-height: 100vh;
