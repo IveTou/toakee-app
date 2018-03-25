@@ -38,6 +38,7 @@ const AttendButton = ({ attendance, toggle, discountLists = [] }) => (
 AttendButton.propTypes = {
   attendance: PropTypes.object,
   toggle: PropTypes.func,
+  discountLists: PropTypes.arrayOf(PropTypes.object),
 };
 
 const injectData = graphql(query, {
