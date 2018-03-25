@@ -10,6 +10,7 @@ export const withIndexStyle = withStyles(theme => ({
   submit: {
     textAlign: 'right',
     paddingRight: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 2,
   }
 }));
 
