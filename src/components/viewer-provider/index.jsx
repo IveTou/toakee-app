@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 
 import query from './graphql';
@@ -18,7 +19,7 @@ export class ViewerProvider extends React.Component {
 ViewerProvider.propTypes = {
   viewer: PropTypes.object,
   loading: PropTypes.bool,
-  children: React.PropTypes.oneOfType([
+  children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),

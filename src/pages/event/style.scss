@@ -138,10 +138,6 @@
         margin: $spacer 0;
       }
 
-      &-social {
-        margin-top: $spacer*2;
-      }
-
       &:before {
         content: '';
         position: absolute;
@@ -162,6 +158,13 @@
     }
 
     &-body {
+      padding: $spacer*2;
+      padding-left: 0;
+
+      &-social {
+        margin-bottom: $spacer*2;
+      }
+
       &-title {
         color: $orange;
         font-size: 18px;
@@ -173,8 +176,6 @@
       }
 
       &-description {
-        padding: $spacer*2 0;
-        margin: $spacer*2;
         text-align: justify;
         white-space: pre-wrap;
       }

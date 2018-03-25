@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import autoBind from 'react-autobind';
 import { Card, Divider, Form, Button } from 'semantic-ui-react';
@@ -39,8 +40,8 @@ export default class EventGuestListEditNewItem extends React.Component {
           ? entranceDeadline.add(1, 'days').toDate()
           : entranceDeadline.toDate(),
         socialIntegrations: socialIntegration
-         ? [{ network: 'INSTAGRAM', mediaUrl: socialIntegration }]
-         : [],
+          ? [{ network: 'INSTAGRAM', mediaUrl: socialIntegration }]
+          : [],
       });
 
       this.setState(initialState(start));

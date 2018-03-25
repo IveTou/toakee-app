@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { pick } from 'lodash';
 
 export const withViewer = (Component) => {
@@ -23,3 +24,4 @@ export const withInfo = (componentOrInfo, info) => (
     ? infoHoc(componentOrInfo, info)
     : Component => infoHoc(Component, componentOrInfo)
 );
+

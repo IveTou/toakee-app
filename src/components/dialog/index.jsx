@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Modal } from 'semantic-ui-react';
 
@@ -53,8 +54,8 @@ Dialog.propTypes = {
   close: PropTypes.func,
   mode: PropTypes.string,
   allProps: PropTypes.shape({
-    confirmTrigger: PropTypes.obj,
-    cancelTrigger: PropTypes.obj,
+    confirmTrigger: PropTypes.object,
+    cancelTrigger: PropTypes.object,
     onConfirm: PropTypes.func,
   }),
 };

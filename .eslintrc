@@ -1,37 +1,43 @@
 {
-  "extends": "airbnb",
+  "extends": [
+    "airbnb",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:jsx-control-statements/recommended"
+  ],
   "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+    },
+  },
   "plugins": [
     "jsx-control-statements"
   ],
-  "ecmaFeatures": {
-    "jsx": true,
-    "modules": true,
-    "arrowFunctions":true,
-    "destructuring": true
-  },
   "globals": {
-    "location": true,
-    "document": true,
-    "localStorage": true,
-    "window": true,
     "FB": true
   },
   "rules": {
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "react/jsx-no-undef": [2, { "allowGlobals": true }],
+    "import/no-unresolved": [2, { "ignore": ["^[~|.]"] }],
     "import/no-named-as-default": 0,
-    "import/no-unresolved": [2, { "ignore": ["^[~]"] }],
     "import/prefer-default-export": 0,
     "import/extensions": 0,
     "react/forbid-prop-types": 0,
     "react/require-default-props": 0,
     "no-console": [2, { "allow": ["warn", "error"] }],
     "no-underscore-dangle": 0,
-    "no-unused-vars": [2, { "argsIgnorePattern": "^_$", "varsIgnorePattern": "^_$" }],
+    "no-unused-vars": [2, { "argsIgnorePattern": "^_+$", "varsIgnorePattern": "^_+$" }],
     "global-require": 0,
     "class-methods-use-this": 0,
     "jsx-a11y/label-has-for": 0,
-    "jsx-a11y/img-has-alt": 0,
-    "jsx-a11y/no-static-element-interactions": 0,
+    "jsx-a11y/no-noninteractive-element-interactions": 0,
+    "jsx-a11y/alt-text": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/anchor-is-valid": ["error", {
+      "components": [],
+    }],
   },
   "settings": {
     "import/resolver": {
@@ -41,8 +47,10 @@
     }
   },
   "env": {
-    "jsx-control-statements/jsx-control-statements": true
-
+    "jsx-control-statements/jsx-control-statements": true,
+    "node": true,
+    "browser": true,
+    "es6": true
   }
 }
 

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import autoBind from 'react-autobind';
@@ -19,6 +20,11 @@ if (process.env.BROWSER) {
 
 const propTypes = {
   router: PropTypes.object,
+  signUp: PropTypes.func,
+  alert: PropTypes.func,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
 };
 
 const defaultProps = {
@@ -26,7 +32,8 @@ const defaultProps = {
 };
 
 export class SignUp extends React.Component {
-  defaultProps: defaultProps;
+  static propTypes = propTypes;
+  static defaultProps = defaultProps;
 
   constructor(props: propTypes) {
     super(props);

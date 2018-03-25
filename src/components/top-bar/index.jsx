@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { withApollo } from 'react-apollo';
 import autoBind from 'react-autobind';
 import { once } from 'lodash';

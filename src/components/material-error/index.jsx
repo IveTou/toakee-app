@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 if (process.env.BROWSER) {
@@ -10,9 +11,11 @@ const MaterialError = ({ error, center }) => {
     'MaterialError--center': center,
   });
 
-  return error
-    ? <div className={classes}>{error}</div>
-    : null;
+  return (
+    <If condition={!!error}>
+      <div className={classes}>{error}</div>
+    </If>
+  );
 };
 
 MaterialError.propTypes = {

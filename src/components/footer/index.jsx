@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Grid, Segment, Divider, Button, Image, Form, Icon, Popup } from 'semantic-ui-react';
 import FacebookProvider, { Page } from 'react-facebook';
@@ -94,6 +94,7 @@ class Footer extends React.Component {
   }
 
   render() {
+    const { viewer = {} } = this.props;
     const {
       name,
       email,
@@ -227,7 +228,7 @@ class Footer extends React.Component {
           <Link className="Footer-link terms" to="/termos-de-uso">
             <span>Termos de Uso</span>
           </Link>
-          <If condition={!this.props.viewer.id}>
+          <If condition={!viewer.id}>
             <Link className="Footer-link signup" to="/cadastrar">
               <span>Cadastre-se</span>
             </Link>
