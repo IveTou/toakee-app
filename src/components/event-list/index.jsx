@@ -86,7 +86,6 @@ EventList.propTypes = {
   title: PropTypes.string,
   loadMore: PropTypes.func,
   viewer: PropTypes.object,
-  discountLists: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default graphql(query, {
