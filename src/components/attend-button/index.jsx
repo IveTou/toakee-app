@@ -7,16 +7,32 @@ import { withAuth } from '~/src/components/auth-modal/hoc';
 
 import query, { registerAttendance, unregisterAttendance } from './graphql';
 
-const AttendButton = ({ attendance, toggle }) => (
-  <Button
-    onClick={toggle}
-    color={!attendance ? 'primary' : 'default'}
-    variant="raised"
-    style={{ margin: 8 }}
-  >
-    Vou
-    <Icon style={{ marginLeft: 8 }}>thumb_up</Icon>
-  </Button>
+const AttendButton = ({ attendance, toggle, discountLists = [] }) => (
+  <Button.Group color="green" basic={!attendance} size="small">
+    <Choose>
+      <When condition={discountLists.length && !attendance}>
+        <Dropdown text='Vou' button icon="checkmark" className="icon">
+          <Dropdown.Menu>
+            <Dropdown.Header content='Selecione uma lista de desconto' />
+            <For each="discountList" of={discountLists}>
+              <Dropdown.Item onClick={() => toggle(discountList.id)}>
+                {discountList.name}
+              </Dropdown.Item>
+            </For>
+            <Dropdown.Item onClick={toggle}>Não colocar nome em lista</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+      </When>
+      <Otherwise>
+        <Button
+          icon="checkmark"
+          onClick={toggle}
+          basic={!attendance}
+          content="Vou"
+        />
+      </Otherwise>
+    </Choose>
+  </Button.Group>
 );
 
 AttendButton.propTypes = {
@@ -26,7 +42,7 @@ AttendButton.propTypes = {
 
 const injectData = graphql(query, {
   options: ({ eventId }) => ({ variables: { eventId } }),
-  props: ({ data: { attendance } }) => ({ attendance }),
+  props: ({ data: { attendance, discountLists } }) => ({ attendance, discountLists }),
 });
 
 const options = { refetchQueries: ['Attendance'] };
@@ -35,17 +51,15 @@ const injectRegisterAttendance = graphql(registerAttendance, {
   options,
   props: ({ mutate, ownProps: { attendance, eventId, requireLogin } }) => ({
     [attendance ? '_' : 'toggle']: (
-      requireLogin(() => mutate({ variables: { eventId } }))
+      requireLogin((_, discountListId) => mutate({ variables: { eventId, discountListId } }))
     )
   }),
 });
 
 const injectUnregisterAttendance = graphql(unregisterAttendance, {
   options,
-  props: ({ mutate, ownProps: { attendance, eventId, requireLogin } }) => ({
-    [attendance ? 'toggle' : '_']: (
-      requireLogin(() => mutate({ variables: { eventId } }))
-    ),
+  props: ({ mutate, ownProps: { attendance, eventId } }) => ({
+    [attendance ? 'toggle' : '_']: () => mutate({ variables: { eventId } }),
   }),
 });
 

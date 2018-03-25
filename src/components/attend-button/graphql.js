@@ -5,12 +5,16 @@ export default gql`
     attendance(eventId: $eventId) {
       id
     }
+    discountLists(eventId: $eventId) {
+      id
+      name
+    }
   }
 `;
 
 export const registerAttendance = gql`
-  mutation RegisterAttendance($eventId: String!) {
-    registerAttendance(eventId: $eventId) {
+  mutation RegisterAttendance($eventId: String!, $discountListId: String) {
+    registerAttendance(eventId: $eventId, discountListId: $discountListId) {
       id
     }
   }
