@@ -56,6 +56,13 @@ const EditEventPage = ({
         return xorBy(categories, mapping(event[key]), 'title').length
           ? { ...obj, [key]: categories }
           : obj;
+      } else if (key === 'discountLists') {
+        const mapping = dls => dls.map(dl => pick(dl, ['id', 'name', 'registrationDeadline']));
+        const comparator = dl => `${dl.name}|${dl.registrationDeadline}`;
+        const discountLists = mapping(value);
+        return xorBy(discountLists, mapping(event[key]), comparator).length
+          ? { ...obj, [key]: discountLists }
+          : obj;
       }
       return isEqual(event[key], value) ? obj : { ...obj, [key]: value };
     }, {});

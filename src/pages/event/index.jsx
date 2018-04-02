@@ -324,4 +324,3 @@ export default compose(
   injectSetEventStatusMutation,
   withInfo(['viewer', 'deviceInfo']),
 )(EventPage);
-

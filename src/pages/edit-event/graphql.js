@@ -12,6 +12,7 @@ export default gql`
       price
       prices { description, value }
       categories { id, title },
+      discountLists { id, name, registrationDeadline },
       directions
       place { id, name, coordinates, address, city { name } }
       status
@@ -32,6 +33,7 @@ export const updateEventMutation = gql`
       price
       prices { description, value }
       categories { id, title },
+      discountLists { id, name, registrationDeadline },
       directions
       place { id, name, coordinates, address, city { name } }
       status
@@ -40,4 +42,3 @@ export const updateEventMutation = gql`
     }
   }
 `;
-

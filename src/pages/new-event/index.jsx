@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
-import { pick } from 'lodash';
+import { pick, trim, filter } from 'lodash';
 import { Typography } from 'material-ui';
 
 import { showSnackbar } from '~/src/ducks/snackbar';
@@ -26,7 +26,7 @@ const NewEventPage = ({
   createEvent,
 }) => {
   const handleSubmit = async (form) => {
-    const { flyer, categories, prices, place } = form;
+    const { flyer, categories, prices, discountLists, place } = form;
     const { url: flyerUrl } = await CloudinaryApi.uploadFlyer(flyer);
 
     const { data } = await createEvent({
@@ -34,6 +34,7 @@ const NewEventPage = ({
       flyer: flyerUrl,
       categories: categories.map(({ id, title }) => (id ? { id } : { title })),
       status: isAdmin ? 'ACTIVE' : 'PENDING',
+      discountLists: filter(discountLists.map(dl => ({ ...dl, name: trim(dl.name) })), 'name'),
       prices: (prices.length === 1 && prices[0].value)
         ? [{ value: prices[0].value }]
         : prices.filter(p => p.description && p.value),
