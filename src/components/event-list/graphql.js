@@ -45,6 +45,9 @@ export const query = gql`
         status
 
         place { id, name, address }
+        discountLists {
+          id
+        }
       }
     }
   }

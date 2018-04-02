@@ -9,13 +9,21 @@ if (process.env.BROWSER) {
   require('./style.scss');
 }
 
-const renderLabel = (status, start, end) => {
+const renderLabel = (status, start, end, discountLists) => {
   if (status === 'PENDING' || status === 'REPROVED') {
     return {
       content: status === 'PENDING' ? 'Pendente de aprovação' : 'Reprovado',
       color: status === 'PENDING' ? 'blue' : 'red',
       ribbon: true,
     };
+  }
+
+  if (discountLists.length) {
+    return {
+      content: 'Lista de desconto',
+      color: 'green',
+      ribbon: true,
+    }
   }
 
   const now = moment();
@@ -34,7 +42,7 @@ const renderLabel = (status, start, end) => {
 };
 
 const EventCard = ({ event }) => {
-  const { id, title, place, flyer, start, end, status } = event;
+  const { id, title, place, flyer, start, end, status, discountLists } = event;
   const startMoment = moment(start);
 
   return (
@@ -43,7 +51,7 @@ const EventCard = ({ event }) => {
         <If condition={flyer}>
           <Image
             className="EventCard-background"
-            label={renderLabel(status, startMoment, moment(end))}
+            label={renderLabel(status, startMoment, moment(end), discountLists)}
             alt={`flyer do ${title}`}
             src={flyer}
           />
