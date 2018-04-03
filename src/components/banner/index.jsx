@@ -43,7 +43,7 @@ const Banner = ({ classes, content = defaultContent }) => {
             </Typography>
           </If>
           <If condition={place && time}>
-            <Calendar className={classes.calendar} monthVariant="title" dayVariant="display1" />
+            <Calendar className={classes.calendar} />
             <div className={classes.timePlace}>
               <div>
                 <Icon className={classes.icon}>place</Icon>

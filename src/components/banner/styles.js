@@ -1,13 +1,13 @@
 import { withStyles } from 'material-ui';
 
+const calendarBorder= '2px solid rgba(255, 255, 255,.26)';
+
 export const withIndexStyle = withStyles(theme => ({
   wrapper: {
     maxWidth: theme.spacing.unit * 100,
-    [theme.breakpoints.up('md')]: {
-      backgroundColor: theme.palette.primary.light,
-      width: '80%',
-      height: theme.spacing.unit * 50,
-    },
+    backgroundColor: theme.palette.primary.light,
+    width: '80%',
+    height: theme.spacing.unit * 50,
     [theme.breakpoints.down('sm')]: {
       backgroundColor: theme.palette.secondary.main,
       width: '100%',
@@ -24,7 +24,6 @@ export const withIndexStyle = withStyles(theme => ({
   overlay: {
     height: '100%',
     width: theme.spacing.unit * 34,
-    position: 'relative',
     backgroundColor: theme.palette.action.disabled,
     color: theme.palette.grey[50],
     padding: theme.spacing.unit * 2,
@@ -40,9 +39,7 @@ export const withIndexStyle = withStyles(theme => ({
     overflow: 'hidden',
     whiteSpace: 'normal',
     maxHeight: theme.spacing.unit * 20,
-    [theme.breakpoints.up('md')]: {
-      fontSize: theme.typography.headline.fontSize,
-    },
+    fontSize: theme.typography.headline.fontSize,
     [theme.breakpoints.down('sm')]: {
       fontSize: theme.typography.title.fontSize,
     },
@@ -51,7 +48,7 @@ export const withIndexStyle = withStyles(theme => ({
     float: 'left',
     marginRight: theme.spacing.unit,
     paddingRight: theme.spacing.unit,
-    borderRight: '2px solid rgba(255, 255, 255,.26)',
+    borderRight: calendarBorder,
   },
   timePlace: {
     paddingTop: theme.spacing.unit,

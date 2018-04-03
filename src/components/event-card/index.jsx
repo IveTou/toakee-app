@@ -46,7 +46,7 @@ const EventCard = ({ event, className, classes }) => {
             {title}
           </Typography>
           <div className={classes.cardContentInfo}>
-            <Calendar date={startMoment} />
+            <Calendar date={startMoment} small />
             <Typography
               className={classes.cardContentInfoDetails}
               variant="body1"
@@ -58,7 +58,7 @@ const EventCard = ({ event, className, classes }) => {
               </div>
               <div>
                 <Icon className={classes.cardContentInfoDetailsIcon}>schedule</Icon>
-                <span> {startMoment.format('HH:mm')}</span>
+                {startMoment.format(' HH:mm')}
               </div>
             </Typography>
           </div>

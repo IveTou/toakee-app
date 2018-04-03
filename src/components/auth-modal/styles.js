@@ -22,7 +22,7 @@ export const withIndexStyle = withStyles(theme => ({
   },
   headerTitle: {
     paddingTop: theme.spacing.unit * 3,
-    color: theme.typography.display1.color,
+    color: theme.palette.text.secondary,
   },
 }));
 
