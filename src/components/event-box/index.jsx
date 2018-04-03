@@ -22,6 +22,12 @@ const EventBox = () => (
       strict
       forceFetch
     />
+    <EventList
+      title="Eventos com fotos"
+      has="photos"
+      sort={{ start: -1, slug: 1 }}
+      forceFetch
+    />
     <For each="category" of={Object.keys(homeCategories)}>
       <EventList
         key={category}

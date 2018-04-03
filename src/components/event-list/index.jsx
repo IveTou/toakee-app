@@ -112,7 +112,9 @@ EventList.propTypes = {
 };
 
 const injectQuery = graphql(query, {
-  options: ({ start, end, categoryIds, strict, forceFetch, limit, status = 'ACTIVE' }) => ({
+  options: ({
+    start, end, categoryIds, strict, forceFetch, has, sort, limit, status = 'ACTIVE',
+  }) => ({
     variables: {
       start,
       end,
@@ -121,28 +123,27 @@ const injectQuery = graphql(query, {
       limit,
       strict,
       status,
+      has,
+      sort,
       skipList: !forceFetch,
       skipCount: false,
     },
   }),
-  props: ({ data: { viewer, fetchMore }, ownProps: { categoryIds, start: _start } }) => ({
+  props: ({
+    data: { viewer, fetchMore },
+    ownProps: { categoryIds, start, sort, has },
+  }) => ({
     viewer,
     loadMore: () => {
       const { events = [] } = viewer;
-      const eventStart = events.length && new Date(events[events.length - 1].start);
-      const start = (eventStart && _start.isBefore(eventStart))
-        ? eventStart
-        : _start;
 
-      const skip = events.length && events
-        .filter(e => eventStart.getTime() === new Date(e.start).getTime())
-        .length;
+      const skip = events.length;
       const strict = !!events.length;
       const skipCount = true;
       const skipList = false;
 
       return fetchMore({
-        variables: { start, categoryIds, skip, strict, skipCount, skipList },
+        variables: { start, categoryIds, sort, has, skip, strict, skipCount, skipList },
         updateQuery: (previousResult, { fetchMoreResult }) => (
           !fetchMoreResult
             ? previousResult
