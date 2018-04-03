@@ -129,9 +129,10 @@ export class EventPage extends React.Component {
     const mappedPrice = price ? [{ value: price }] : prices;
     const isMobile = !this.props.deviceInfo.is('desktop');
     const startMoment = moment(start);
-    const coordinates = place && place.coordinates
-      ? { lat: place.coordinates[1], lng: place.coordinates[0] }
-      : undefined;
+    const coordinates =
+      place
+      && place.coordinates
+      && { lat: place.coordinates[1], lng: place.coordinates[0] };
 
     declare var index;
     declare var priceItem;
@@ -148,12 +149,7 @@ export class EventPage extends React.Component {
               alt={flyerAlt}
             />
             <CardContent>
-              <Calendar
-                className={classes.calendar}
-                date={startMoment}
-                monthVariant="title"
-                dayVariant="display1"
-              />
+              <Calendar className={classes.calendar} date={startMoment} />
               <Typography className={classes.title} variant="display1" component="h1">
                 {title}
               </Typography>

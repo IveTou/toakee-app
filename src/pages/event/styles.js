@@ -2,12 +2,10 @@ import { withStyles } from 'material-ui';
 
 export const withIndexStyle = withStyles(theme => ({
   root: {
-    [theme.breakpoints.up('md')]: {
-      margin: '0 auto',
-      paddingTop: theme.spacing.unit * 2,
-      marginBottom: theme.spacing.unit * 10,
-      maxWidth: theme.spacing.unit * 140,
-    },
+    margin: '0 auto',
+    paddingTop: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 10,
+    maxWidth: theme.spacing.unit * 140,
     [theme.breakpoints.down('sm')]: {
       paddingTop: 0,
     },
@@ -19,9 +17,7 @@ export const withIndexStyle = withStyles(theme => ({
     },
   },
   media: {
-    [theme.breakpoints.up('md')]: {
-      height: theme.spacing.unit * 40,
-    },
+    height: theme.spacing.unit * 40,
     [theme.breakpoints.down('sm')]: {
       height: theme.spacing.unit * 30,
     },

@@ -4,9 +4,7 @@ export const withIndexStyle = withStyles(theme => ({
   root: {
     color: theme.palette.grey[600],
     backgroundColor: theme.palette.grey[50],
-    [theme.breakpoints.up('md')]: {
-      padding: theme.spacing.unit * 7,
-    },
+    padding: theme.spacing.unit * 7,
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing.unit * 10,
     },
