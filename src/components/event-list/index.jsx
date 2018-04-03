@@ -47,11 +47,9 @@ class EventList extends React.Component {
   }
 
   render() {
-    const { classes, title, viewer = {}, vertical, excludedEventId } = this.props;
-    const { eventCount } = viewer;
+    const { classes, title, viewer = {}, vertical } = this.props;
+    const { eventCount, events = [] } = viewer;
 
-    const events = viewer.events ? viewer.events.filter(e => e.id !== excludedEventId) : [];
-    const eventTrueCount = events.length;
     const listClasses = classNames(classes.list, vertical && classes.listVertical);
 
     const node = this._listDOM || {};
@@ -66,8 +64,8 @@ class EventList extends React.Component {
 
     return !!eventCount && (
       <div>
-        <If condition={eventTrueCount && title}>
-          <Typography className={classes.title} variant="title">{title} ({eventTrueCount})</Typography>
+        <If condition={eventCount && title}>
+          <Typography className={classes.title} variant="title">{title} ({eventCount})</Typography>
         </If>
         <div className={classes.listWrapper}>
           <If condition={!vertical}>
@@ -106,14 +104,13 @@ EventList.propTypes = {
   title: PropTypes.string,
   loadMore: PropTypes.func,
   vertical: PropTypes.bool,
-  excludedEventId: PropTypes.string,
   viewer: PropTypes.object,
   classes: PropTypes.object,
 };
 
 const injectQuery = graphql(query, {
   options: ({
-    start, end, categoryIds, strict, forceFetch, has, sort, limit, status = 'ACTIVE',
+    start, end, categoryIds, strict, forceFetch, has, sort, limit, relatedTo, status = 'ACTIVE',
   }) => ({
     variables: {
       start,
@@ -124,6 +121,7 @@ const injectQuery = graphql(query, {
       strict,
       status,
       has,
+      relatedTo,
       sort,
       skipList: !forceFetch,
       skipCount: false,
@@ -131,7 +129,7 @@ const injectQuery = graphql(query, {
   }),
   props: ({
     data: { viewer, fetchMore },
-    ownProps: { categoryIds, start, sort, has },
+    ownProps: { categoryIds, start, sort, has, relatedTo },
   }) => ({
     viewer,
     loadMore: () => {
@@ -143,7 +141,7 @@ const injectQuery = graphql(query, {
       const skipList = false;
 
       return fetchMore({
-        variables: { start, categoryIds, sort, has, skip, strict, skipCount, skipList },
+        variables: { start, categoryIds, sort, has, relatedTo, skip, strict, skipCount, skipList },
         updateQuery: (previousResult, { fetchMoreResult }) => (
           !fetchMoreResult
             ? previousResult

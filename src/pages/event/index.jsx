@@ -313,9 +313,8 @@ export class EventPage extends React.Component {
               <EventList
                 title="Eventos Relacionados"
                 vertical={!isMobile}
-                excludedEventId={id}
-                start={moment().startOf('day')}
-                end={moment().endOf('day')}
+                relatedTo={id}
+                start={moment()}
                 categoryIds={map(categories, 'id')}
                 limit={5}
               />
