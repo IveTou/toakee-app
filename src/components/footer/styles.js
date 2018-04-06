@@ -24,6 +24,7 @@ export const withIndexStyle = withStyles(theme => ({
   },
   listItem: {
     justifyContent: 'center',
+    cursor: 'pointer',
   },
   iconRow: {
     display: 'flex',
