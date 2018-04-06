@@ -50,7 +50,7 @@ export class EventPage extends React.Component {
   }
 
   componentWillReceiveProps({ viewer }) {
-    TrackingAPI.viewerSafeTrack(viewer, 'Event Page View');
+    TrackingAPI.viewerSafeTrack(viewer, 'EventPage.Viewed');
   }
 
   toggleGallery(event, expanded) {
@@ -81,7 +81,7 @@ export class EventPage extends React.Component {
       href: location.href,
     }, (res) => {
       if (res && !res.error_message) {
-        TrackingAPI.viewerSafeTrack(this.props.viewer, 'Share Event Trigger');
+        TrackingAPI.viewerSafeTrack(this.props.viewer, 'ShareTrigger.Clicked');
       }
     });
   }

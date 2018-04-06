@@ -8,6 +8,7 @@ import { Grid, List, ListItem, Typography } from 'material-ui';
 
 import { openAuthModal } from '~/src/ducks/auth-modal';
 import { withInfo } from '~/src/hocs';
+import { withAuth } from '~/src/components/auth-modal/hoc';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 
 import  { Facebook, Instagram, Linkedin } from './social-icons';
@@ -19,19 +20,28 @@ export class Footer extends React.Component {
     autoBind(this);
   }
 
-  newEvent() {
-    const { viewer, auth } = this.props;
-    const pid = (viewer && viewer.id) || null;
-    const logged = !!pid;
-
-    TrackingAPI.track({ name: 'New Event Trigger', logged, pid });
-    logged ? this.props.history.push('/evento/novo') : auth();
-  }
-
   render() {
-    const { auth, classes, viewer = {} } = this.props;
+    const { auth, classes, viewer = {}, requireLogin } = this.props;
     const pid = (viewer && viewer.id) || null;
     const logged = !!pid;
+
+    const signUp = () => {
+      TrackingAPI.track({ name: 'SignUpTrigger.Clicked', pid: 'Guest' });
+      requireLogin(() => {
+        TrackingAPI.track({ name: 'User.Signed', pid });
+        window.redirect = '/';
+      }, 'signUp')();
+    }
+
+    const newEvent = () => {
+      TrackingAPI.track({ name: 'EventTrigger.Clicked', logged, pid });
+      logged
+        ? this.props.history.push('/evento/novo')
+        : requireLogin(() => {
+            TrackingAPI.track({ name: 'User.Logged', pid });
+            window.redirect = '/';
+          })();
+    }
 
     return (
       <footer className={classes.root}>
@@ -51,14 +61,14 @@ export class Footer extends React.Component {
               Serviços
             </Typography>
             <List dense>
-              <ListItem className={classes.listItem} component="a" onClick={this.newEvent}>
+              <ListItem className={classes.listItem} component="a" onClick={newEvent}>
                 Crie seu evento
               </ListItem>
               <If condition={!logged}>
                 <ListItem
                   className={classes.listItem}
                   component="a"
-                  onClick={() => auth('signUp')}
+                  onClick={signUp}
                 >
                   Cadastre-se
                 </ListItem>
@@ -107,24 +117,14 @@ export class Footer extends React.Component {
 
 Footer.propTypes = {
   viewer: PropTypes.object,
-  auth: PropTypes.func,
+  requireLogin: PropTypes.func,
   classes: PropTypes.object,
   history: PropTypes.object,
 };
 
-const injectStore = connect(
-  ({ authModal }) => authModal.toJS(),
-  dispatch => ({
-    auth: (mode) => {
-      dispatch(openAuthModal(_, mode));
-      mode == 'signUp' && TrackingAPI.track({ name: 'Landing SignUp Trigger', pid: 'Guest' });
-    }
-  }),
-);
-
 export default compose(
-  injectStore,
   withRouter,
+  withAuth,
   withInfo(['viewer']),
   withIndexStyle,
 )(Footer);
