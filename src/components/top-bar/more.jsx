@@ -10,10 +10,10 @@ const TopBarMore = ({ viewer, anchor, setAnchor, login, signUp, logout, newEvent
         <Icon>more_vert</Icon>
       </IconButton>
       <Menu open={!!anchor} anchorEl={anchor} onClose={() => setAnchor(null)}>
-        <MenuItem onClick={newEvent()}>Criar Evento</MenuItem>
+        <MenuItem onClick={newEvent}>Criar Evento</MenuItem>
         <Choose>
           <When condition={viewer.id}>
-            <MenuItem onClick={logout()}>Sair</MenuItem>
+            <MenuItem onClick={logout}>Sair</MenuItem>
           </When>
           <Otherwise>
             <MenuItem onClick={signUp}>Cadastrar</MenuItem>

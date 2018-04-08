@@ -113,8 +113,8 @@ export class TopBar extends React.Component {
                 viewer={viewer}
                 login={login}
                 signUp={signUp}
-                logout={() => this.logout}
-                newEvent={() => newEvent}
+                logout={this.logout}
+                newEvent={newEvent}
               />
             </Otherwise>
           </Choose>
