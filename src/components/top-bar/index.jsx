@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withApollo } from 'react-apollo';
-import { connect } from 'react-redux';
 import autoBind from 'react-autobind';
 import { once } from 'lodash';
 import { withRouter } from 'react-router';
@@ -10,7 +9,6 @@ import { compose } from 'recompose';
 
 import { withInfo } from '~/src/hocs';
 import { withAuth } from '~/src/components/auth-modal/hoc';
-import { openAuthModal } from '~/src/ducks/auth-modal';
 import { logout } from '~/src/utils/session';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import Logo from '~/src/components/logo';
@@ -72,9 +70,9 @@ export class TopBar extends React.Component {
       logged
         ? this.props.history.push('/evento/novo')
         : requireLogin(() => {
-            TrackingAPI.track({ name: 'User.Logged', pid });
-            window.redirect = '/';
-          })();
+          TrackingAPI.track({ name: 'User.Logged', pid });
+          window.redirect = '/';
+        })();
     }
 
     return (

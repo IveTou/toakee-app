@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import autoBind from 'react-autobind';
 import { compose } from 'recompose';
 import { Grid, List, ListItem, Typography } from 'material-ui';
 
-import { openAuthModal } from '~/src/ducks/auth-modal';
 import { withInfo } from '~/src/hocs';
 import { withAuth } from '~/src/components/auth-modal/hoc';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
@@ -21,7 +19,7 @@ export class Footer extends React.Component {
   }
 
   render() {
-    const { auth, classes, viewer = {}, requireLogin } = this.props;
+    const { classes, viewer = {}, requireLogin } = this.props;
     const pid = (viewer && viewer.id) || null;
     const logged = !!pid;
 
@@ -38,9 +36,9 @@ export class Footer extends React.Component {
       logged
         ? this.props.history.push('/evento/novo')
         : requireLogin(() => {
-            TrackingAPI.track({ name: 'User.Logged', pid });
-            window.redirect = '/';
-          })();
+          TrackingAPI.track({ name: 'User.Logged', pid });
+          window.redirect = '/';
+        })();
     }
 
     return (

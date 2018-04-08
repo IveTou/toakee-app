@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { capitalize } from 'lodash';
 import { Button, withStyles } from 'material-ui';
 
 import config from '~/src/config';
@@ -24,11 +23,6 @@ const url = {
   instagram: `https://api.instagram.com/oauth/authorize?${query(INSTAGRAM_APP_ID)}`,
 };
 
-const icon = {
-  facebook: 'facebook f',
-  instagram: 'instagram',
-};
-
 const styles = theme => ({
   facebook: {
     backgroundColor: '#3B5998',
@@ -39,7 +33,7 @@ const styles = theme => ({
   },
 });
 
-const SocialLoginButton = ({ network, material, onReceiveToken, classes }) => {
+const SocialLoginButton = ({ network, onReceiveToken, classes }) => {
   const login = () => {
     const popup = window.open(url[network]);
     const listener = ({ key, newValue }) => {
@@ -63,7 +57,6 @@ const SocialLoginButton = ({ network, material, onReceiveToken, classes }) => {
 SocialLoginButton.propTypes = {
   onReceiveToken: PropTypes.func,
   network: PropTypes.string,
-  material: PropTypes.bool,
   classes: PropTypes.object,
 };
 

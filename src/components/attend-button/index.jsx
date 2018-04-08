@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Manager, Target, Popper } from 'react-popper';
 import { compose, withState } from 'recompose';
 import { graphql } from 'react-apollo';
 import {  Button, Divider, Icon, Menu, MenuItem } from 'material-ui';
