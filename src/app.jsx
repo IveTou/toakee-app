@@ -13,6 +13,7 @@ import EventFeed from '~/src/pages/event-feed';
 import SearchPage from '~/src/pages/search';
 import Dashboard from '~/src/pages/dashboard';
 import UseTerms from '~/src/pages/use-terms';
+import Privacy from '~/src/pages/privacy';
 import About from '~/src/pages/about';
 import EventModeration from '~/src/pages/event-moderation';
 
@@ -60,6 +61,7 @@ const App = ({ userAgent }) => (
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/termos-de-uso" component={UseTerms} />
           <Route path="/quem-somos" component={About} />
+          <Route path="/privacidade" component={Privacy} />
         </Switch>
       </DefaultLayout>
     </ContextProvider>
