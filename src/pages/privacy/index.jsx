@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from 'material-ui';
+import autoBind from 'react-autobind';
 
 import intro from './intro.js';
 import information from './information.js';
@@ -12,98 +13,83 @@ import changes from './changes.js';
 
 import { withIndexStyle } from './styles';
 
-const Privacy = ({ classes }) => {
-  declare var introItem;
-  declare var informationItem;
-  declare var useItem;
-  declare var sharingItem;
-  declare var choicesItem;
-  declare var contactItem;
-  declare var changesItem;
+const sections = [
+  {
+    'title': 'Políticas de Privacidade',
+    'content': intro,
+    'topic': false,
+  },
+  {
+    'title': '1. Informações que coletamos',
+    'content': information,
+    'topic': true,
+  },
+  {
+    'title': '2. Como nós usamos suas informações',
+    'content': use,
+    'topic': true,
+  },
+  {
+    'title': '3. Compartilhamento de suas informações',
+    'content': sharing,
+    'topic': true,
+  },
+  {
+    'title': '4. Suas escolhas sobre suas informações',
+    'content': choices,
+    'topic': true,
+  },
+  {
+    'title': '5. Como entrar em contato conosco',
+    'content': contact,
+    'topic': true,
+  },
+  {
+    'title': '6. Alterações em nossa política de privacidade',
+    'content': changes,
+    'topic': true,
+  },
+];
 
-  return (
-    <div className={classes.root}>
-      <Typography variant="display1" gutterBottom>Políticas de Privacidade</Typography>
-      <Typography variant="subheading" align="justify" component="ul" className={classes.list}>
-        <For each="introItem" of={intro} index="index">
-          <li
-            key={index}
-            className={classes.listItem}
-            dangerouslySetInnerHTML={{ __html: introItem }}
-          />
-        </For>
-      </Typography>
+export class Privacy extends React.Component {
+  constructor(props) {
+    super(props);
+    autoBind(this);
+  }
 
-      <Typography variant="title" gutterBottom>1. Informações que coletamos</Typography>
-      <Typography variant="subheading" align="justify" component="ul" className={classes.list}>
-        <For each="informationItem" of={information} index="index">
-          <li
-            key={index}
-            className={classes.listItem}
-            dangerouslySetInnerHTML={{ __html: informationItem }}
-          />
-        </For>
-      </Typography>
+  renderSection(title, content, topic, key) {
+    const { classes } = this.props;
+    declare var item;
 
-      <Typography variant="title" gutterBottom>2. Como nós usamos suas informações</Typography>
-      <Typography variant="subheading" align="justify" component="ul" className={classes.list}>
-        <For each="useItem" of={use} index="index">
-          <li
-            key={index}
-            className={classes.listItem}
-            dangerouslySetInnerHTML={{ __html: useItem }}
-          />
-        </For>
-      </Typography>
+    return (
+      <div key={key}>
+        <Typography variant={topic ? 'headline' : 'display1'} gutterBottom>{title}</Typography>
+        <Typography variant="subheading" align="justify" component="ul" className={classes.list}>
+          <For each="item" of={content} index="index">
+            <li
+              key={index}
+              className={classes.listItem}
+              dangerouslySetInnerHTML={{ __html: item }}
+            />
+          </For>
+        </Typography>
+      </div>
+    );
+  }
 
-      <Typography variant="title" gutterBottom>3. Compartilhamento de suas informações</Typography>
-      <Typography variant="subheading" align="justify" component="ul" className={classes.list}>
-        <For each="sharingItem" of={sharing} index="index">
-          <li
-            key={index}
-            className={classes.listItem}
-            dangerouslySetInnerHTML={{ __html: sharingItem }}
-          />
-        </For>
-      </Typography>
+  render() {
+    const { classes } = this.props;
+    declare var sectionItem;
 
-      <Typography variant="title" gutterBottom>4. Suas escolhas sobre suas informações</Typography>
-      <Typography variant="subheading" align="justify" component="ul" className={classes.list}>
-        <For each="choicesItem" of={choices} index="index">
-          <li
-            key={index}
-            className={classes.listItem}
-            dangerouslySetInnerHTML={{ __html: choicesItem }}
-          />
+    return (
+      <div className={classes.root}>
+        <For each="sectionItem" of={sections} index="index">
+          {this.renderSection(sectionItem.title, sectionItem.content, sectionItem.topic, index)}
         </For>
-      </Typography>
-
-      <Typography variant="title" gutterBottom>5. Como entrar em contato conosco</Typography>
-      <Typography variant="subheading" align="justify" component="ul" className={classes.list}>
-        <For each="contactItem" of={contact} index="index">
-          <li
-            key={index}
-            className={classes.listItem}
-            dangerouslySetInnerHTML={{ __html: contactItem }}
-          />
-        </For>
-      </Typography>
-
-      <Typography variant="title" gutterBottom>
-        6. Alterações em nossa política de privacidade
-      </Typography>
-      <Typography variant="subheading" align="justify" component="ul" className={classes.list}>
-        <For each="changesItem" of={changes} index="index">
-          <li
-            key={index}
-            className={classes.listItem}
-            dangerouslySetInnerHTML={{ __html: changesItem }}
-          />
-        </For>
-      </Typography>
-    </div>
-  );
-};
+      </div>
+    );
+  }
+}
 
 Privacy.propTypes = {
   classes: PropTypes.object,
