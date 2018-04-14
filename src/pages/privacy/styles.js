@@ -12,6 +12,7 @@ export const withIndexStyle = withStyles(theme => ({
     listStyleType: 'none',
     margin: 0,
     padding: 0,
+    paddingBottom: theme.spacing.unit * 2,
   },
   listItem: {
     paddingTop: theme.spacing.unit,
