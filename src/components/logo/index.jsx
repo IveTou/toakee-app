@@ -7,12 +7,12 @@ import config from '~/src/config';
 
 import { withIndexStyle } from './styles';
 
-const Logo = ({ classes, size, small }) => {
-  const imgSrc = small
+const Logo = ({ classes, size, compact }) => {
+  const imgSrc = compact
     ? `${config.ASSETS_BASE_URI}/core/site/logo-x64.png`
     : `${config.ASSETS_BASE_URI}/core/site/logo.png`;
-  const rootClasses = classNames(classes.root, small && classes.rootSmall);
-  const imageClasses = classNames(classes.image, small && classes.imageSmall);
+  const rootClasses = classNames(classes.root, compact && classes.rootCompact);
+  const imageClasses = classNames(classes.image,compact && classes.imageCompact);
 
   return(
     <Link className={rootClasses} to="/">
@@ -22,7 +22,7 @@ const Logo = ({ classes, size, small }) => {
 };
 
 Logo.propTypes = {
-  small: PropTypes.bool.isRequired,
+  compact: PropTypes.bool,
   classes: PropTypes.object,
   size: PropTypes.number,
 };

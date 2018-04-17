@@ -8,11 +8,6 @@ export const withIndexStyle = withStyles(theme => ({
     backgroundColor: theme.palette.primary.light,
     width: '80%',
     height: theme.spacing.unit * 50,
-    [theme.breakpoints.down('sm')]: {
-      backgroundColor: theme.palette.secondary.main,
-      width: '100%',
-      height: theme.spacing.unit * 30,
-    },
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
@@ -20,6 +15,11 @@ export const withIndexStyle = withStyles(theme => ({
     position: 'relative',
     margin: '0 auto',
     display: 'table',
+    [theme.breakpoints.down('sm')]: {
+      backgroundColor: theme.palette.secondary.main,
+      width: '100%',
+      height: theme.spacing.unit * 30,
+    },
   },
   overlay: {
     height: '100%',

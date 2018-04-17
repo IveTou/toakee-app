@@ -6,7 +6,7 @@ export const withIndexStyle = withStyles(theme => ({
     marginRight: theme.spacing.unit * 3,
     marginLeft: theme.spacing.unit * 2,
   },
-  rootSmall: {
+  rootCompact: {
     marginTop: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     marginLeft: theme.spacing.unit,
@@ -14,7 +14,7 @@ export const withIndexStyle = withStyles(theme => ({
   image: {
     width: theme.spacing.unit * 20,
   },
-  imageSmall: {
+  imageCompact: {
     width: theme.spacing.unit * 5,
   },
 }));

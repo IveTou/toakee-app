@@ -45,7 +45,7 @@ export class TopBar extends React.Component {
   }
 
   render() {
-    const { classes, viewer = {}, onToggle, small, requireLogin } = this.props;
+    const { classes, viewer = {}, onToggle, mobile, requireLogin } = this.props;
     const pid = (viewer && viewer.id) || null;
     const logged = !!pid;
 
@@ -79,14 +79,14 @@ export class TopBar extends React.Component {
       <AppBar className={classes.root}>
         <Toolbar className={classes.toolbar}>
           <IconButton onClick={onToggle}><Icon>menu</Icon></IconButton>
-          <Logo small={small} />
+          <Logo compact={mobile} />
 
           <div className={classes.searchWrapper}>
             <SearchBar onSearch={this.onSearch} />
           </div>
 
           <Choose>
-            <When condition={!small}>
+            <When condition={!mobile}>
               <div>
                 <Button
                   className={classes.publishButton}
@@ -129,7 +129,7 @@ TopBar.propTypes = {
   viewer: PropTypes.object,
   history: PropTypes.object,
   client: PropTypes.object,
-  small: PropTypes.bool,
+  mobile: PropTypes.bool,
   onToggle: PropTypes.func,
   requireLogin: PropTypes.func,
 };

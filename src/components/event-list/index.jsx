@@ -16,6 +16,8 @@ import EventListArrow from './arrow';
 import { query } from './graphql';
 import { withIndexStyle } from './styles';
 
+const FEED_LIMIT = 10;
+
 class EventList extends React.Component {
   constructor(props) {
     super(props);
@@ -84,7 +86,7 @@ class EventList extends React.Component {
             <For each="event" index="idx" of={events}>
               <div key={idx}>
                 <EventCard event={event} />
-                <If condition={vertical && events.length> 1}><Divider light /></If>
+                <If condition={vertical && events.length > 1}><Divider light /></If>
               </div>
             </For>
             <If condition={this.state.hasMore && (!vertical || !events.length)}>
@@ -117,7 +119,7 @@ const injectQuery = graphql(query, {
       end,
       skip: 0,
       categoryIds,
-      limit,
+      limit: FEED_LIMIT,
       strict,
       status,
       has,

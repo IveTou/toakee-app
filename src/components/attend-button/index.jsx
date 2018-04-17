@@ -1,30 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose, withState } from 'recompose';
+import { compose, withState, withHandlers } from 'recompose';
 import { graphql } from 'react-apollo';
-import {  Button, Divider, Icon, Menu, MenuItem } from 'material-ui';
+import { Button, Divider, Icon, Menu, MenuItem } from 'material-ui';
 import { withAuth } from '~/src/components/auth-modal/hoc';
 
 import query, { registerAttendance, unregisterAttendance } from './graphql';
+import { withIndexStyle } from './styles';
 
-const AttendButton = ({ attendance, toggle, discountLists = [], anchor, setAnchor }) => {
-  const menuItemClick = (discountListId) => {
-    setAnchor(null);
-    discountListId ? toggle(discountListId) : toggle();
-  }
+const AttendButton = ({
+  attendance,
+  toggle,
+  discountLists = [],
+  anchor,
+  setAnchor,
+  classes,
+  menuClose,
+  menuItemClick,
+  buttonClick,
+}) => {
 
   return(
     <div>
       <Button
-        onClick={(discountLists.length && !attendance) ? e => setAnchor(e.target) : toggle}
+        onClick={e => buttonClick(e)}
         color={attendance ? 'primary' : 'default'}
         variant="raised"
-        style={{ margin: 8 }}
+        className={classes.button}
       >
         Vou
-        <Icon style={{ marginLeft: 8 }}>thumb_up</Icon>
+        <Icon className={classes.icon}>thumb_up</Icon>
       </Button>
-      <Menu open={!!anchor} anchorEl={anchor} onClose={() => setAnchor(null)}>
+      <Menu open={!!anchor} anchorEl={anchor} onClose={menuClose}>
         <MenuItem disabled>Selecione uma lista de desconto</MenuItem>
         <Divider light />
         <For each="discountList" of={discountLists}>
@@ -32,13 +39,14 @@ const AttendButton = ({ attendance, toggle, discountLists = [], anchor, setAncho
             {discountList.name}
           </MenuItem>
         </For>
-        <MenuItem onClick={() => menuItemClick()}>Não colocar nome em lista</MenuItem>
+        <MenuItem onClick={() => menuItemClick(null)}>Não colocar nome em lista</MenuItem>
       </Menu>
     </div>
   );
 }
 
 AttendButton.propTypes = {
+  classes: PropTypes.object,
   attendance: PropTypes.object,
   toggle: PropTypes.func,
   discountLists: PropTypes.arrayOf(PropTypes.object),
@@ -71,10 +79,23 @@ const injectUnregisterAttendance = graphql(unregisterAttendance, {
 
 const injectState = withState('anchor', 'setAnchor', null);
 
+const injectHandlers = withHandlers({
+  menuClose: ({ setAnchor }) => () => setAnchor(null),
+  menuItemClick: ({ toggle, setAnchor }) => discountListId => {
+    setAnchor(null)
+    toggle(discountListId)
+  },
+  buttonClick: ({ setAnchor, discountLists, attendance, toggle}) => e => {
+    (discountLists.length && !attendance) ? setAnchor(e.target) : toggle()
+  }
+});
+
 export default compose(
   withAuth,
   injectData,
   injectState,
   injectRegisterAttendance,
   injectUnregisterAttendance,
+  injectHandlers,
+  withIndexStyle,
 )(AttendButton);

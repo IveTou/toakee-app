@@ -42,7 +42,7 @@ const AuthModal = ({
       <Fade in={open}>
         <Paper classes={{ root: classes.root }}>
           <div className={classes.header}>
-            <Logo small size={72} />
+            <Logo compact size={72} />
             <Typography variant="headline" className={classes.headerTitle}>{headerTitle}</Typography>
           </div>
           <Choose>

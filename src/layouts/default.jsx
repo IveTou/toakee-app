@@ -30,13 +30,13 @@ export class DefaultLayout extends React.Component {
       title = 'Descubra o que fazer em Salvador',
     } = this.props;
     const { navOpen } = this.state;
-    const small = !this.props.deviceInfo.is('desktop');
+    const isMobile = !this.props.deviceInfo.is('desktop');
 
     return (
       <div className={classes.root}>
         <ReactTitle title={`Toakee - ${title}`} />
-        <TopBar onToggle={this.toggleNav} small={small} />
-        <SideNav mobile={small} open={navOpen} onToggle={this.toggleNav} />
+        <TopBar onToggle={this.toggleNav} mobile={isMobile} />
+        <SideNav mobile={isMobile} open={navOpen} onToggle={this.toggleNav} />
         <main className={classes.main}>
           {children}
           <If condition={!hideFooter}>
