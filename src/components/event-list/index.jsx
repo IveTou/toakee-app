@@ -114,14 +114,14 @@ EventList.propTypes = {
 
 const injectQuery = graphql(query, {
   options: ({
-    start, end, categoryIds, strict, forceFetch, has, sort, limit, relatedTo, status = 'ACTIVE',
+    start, end, categoryIds, strict, forceFetch, has, sort, limit = FEED_LIMIT, relatedTo, status = 'ACTIVE',
   }) => ({
     variables: {
       start,
       end,
       skip: 0,
       categoryIds,
-      limit: FEED_LIMIT,
+      limit,
       strict,
       status,
       has,

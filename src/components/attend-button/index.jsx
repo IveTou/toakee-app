@@ -10,10 +10,8 @@ import { withIndexStyle } from './styles';
 
 const AttendButton = ({
   attendance,
-  toggle,
   discountLists = [],
   anchor,
-  setAnchor,
   classes,
   menuClose,
   menuItemClick,
@@ -48,10 +46,11 @@ const AttendButton = ({
 AttendButton.propTypes = {
   classes: PropTypes.object,
   attendance: PropTypes.object,
-  toggle: PropTypes.func,
   discountLists: PropTypes.arrayOf(PropTypes.object),
   anchor: PropTypes.object,
-  setAnchor: PropTypes.func,
+  menuClose: PropTypes.func,
+  menuItemClick: PropTypes.func,
+  buttonClick: PropTypes.func,
 };
 
 const injectData = graphql(query, {

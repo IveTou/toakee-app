@@ -23,11 +23,11 @@ const Section = ({ title, titleVariant, content, key, classes }) => {
   );
 }
 
-Section.proptypes = {
+Section.propTypes = {
   classes: PropTypes.object,
   title: PropTypes.string,
+  titleVariant: PropTypes.string,
   content: PropTypes.object,
-  topic: PropTypes.bool,
   key: PropTypes.string,
 };
 
