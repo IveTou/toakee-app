@@ -16,7 +16,7 @@ import EventListArrow from './arrow';
 import { query } from './graphql';
 import { withIndexStyle } from './styles';
 
-const FEED_LIMIT = 10;
+const FEED_LIMIT = 5;
 
 class EventList extends React.Component {
   constructor(props) {
@@ -67,7 +67,9 @@ class EventList extends React.Component {
     return !!eventCount && (
       <div>
         <If condition={eventCount && title}>
-          <Typography className={classes.title} variant="title">{title} ({eventCount})</Typography>
+          <Typography className={classes.title} variant="title">
+            {title} ({vertical ? events.length : eventCount})
+          </Typography>
         </If>
         <div className={classes.listWrapper}>
           <If condition={!vertical}>
