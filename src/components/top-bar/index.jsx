@@ -60,7 +60,7 @@ export class TopBar extends React.Component {
     const signUp = () => {
       TrackingAPI.track({ name: 'SignUpTrigger.Clicked', pid: 'Guest' });
       requireLogin(() => {
-        TrackingAPI.track({ name: 'User.Signed', pid });
+        TrackingAPI.track({ name: 'User.SignedUp', pid });
         window.redirect = '/';
       }, 'signUp')();
     }
@@ -71,7 +71,7 @@ export class TopBar extends React.Component {
         ? this.props.history.push('/evento/novo')
         : requireLogin(() => {
           TrackingAPI.track({ name: 'User.Logged', pid });
-          window.redirect = '/';
+          this.props.history.push('/evento/novo');
         })();
     }
 
