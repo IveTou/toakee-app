@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography } from 'material-ui';
-import autoBind from 'react-autobind';
 
 import Section from './section';
 
