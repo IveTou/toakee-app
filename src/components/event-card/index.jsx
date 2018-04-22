@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { upperFirst } from 'lodash';
+import { upperFirst, get } from 'lodash';
 import moment from 'moment';
 import { Card, Image, Icon } from 'semantic-ui-react';
 
@@ -18,7 +18,7 @@ const renderLabel = (status, start, end, discountLists) => {
     };
   }
 
-  if (discountLists.length) {
+  if (get(discountLists, 'length')) {
     return {
       content: 'Lista de desconto',
       color: 'green',
