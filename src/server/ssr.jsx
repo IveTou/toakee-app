@@ -17,7 +17,6 @@ import ReactDOMServer from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import { pick } from 'lodash';
 import moment from 'moment-timezone';
 import htmlToText from 'html-to-text';
 
