@@ -34,6 +34,7 @@ const styles = theme => ({
     paddingBottom: theme.spacing.unit * 4,
     marginRight: theme.spacing.unit * 2,
     alignSelf: 'flex-end',
+    color: theme.palette.text.secondary,
   },
 });
 

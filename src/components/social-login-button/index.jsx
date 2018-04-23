@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { capitalize } from 'lodash';
-import { Button as SButton, Icon as SIcon } from 'semantic-ui-react';
 import { Button, withStyles } from 'material-ui';
 
 import config from '~/src/config';
@@ -25,11 +23,6 @@ const url = {
   instagram: `https://api.instagram.com/oauth/authorize?${query(INSTAGRAM_APP_ID)}`,
 };
 
-const icon = {
-  facebook: 'facebook f',
-  instagram: 'instagram',
-};
-
 const styles = theme => ({
   facebook: {
     backgroundColor: '#3B5998',
@@ -40,7 +33,7 @@ const styles = theme => ({
   },
 });
 
-const SocialLoginButton = ({ network, material, onReceiveToken, classes }) => {
+const SocialLoginButton = ({ network, onReceiveToken, classes }) => {
   const login = () => {
     const popup = window.open(url[network]);
     const listener = ({ key, newValue }) => {
@@ -54,21 +47,16 @@ const SocialLoginButton = ({ network, material, onReceiveToken, classes }) => {
     window.addEventListener('storage', listener);
   };
 
-  return material ? (
+  return (
     <Button className={classes.facebook} onClick={login} fullWidth variant="raised">
       Entrar com facebook
     </Button>
-  ) : (
-    <SButton color={network} onClick={login} fluid>
-      <SIcon name={icon[network]} /> {capitalize(network)}
-    </SButton>
   );
 };
 
 SocialLoginButton.propTypes = {
   onReceiveToken: PropTypes.func,
   network: PropTypes.string,
-  material: PropTypes.bool,
   classes: PropTypes.object,
 };
 

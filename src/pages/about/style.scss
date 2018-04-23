@@ -4,8 +4,8 @@
 
 .About {
   &.column {
-    margin: $topbar-height 0 0 !important;
     width: 100%;
+    margin: 0 !important;
   }
 
   &-banner {
@@ -37,6 +37,7 @@
 
   &-description {
     text-align: justify;
+    margin-top: $spacer*3;
 
     &.column {
       padding: $spacer*2 $spacer*5 !important;
@@ -57,11 +58,6 @@
 
 @include media("<tablet") {
   .About {
-    &.column {
-      margin: 0 !important;
-      width: auto;
-    }
-
     &-banner {
       padding: $spacer*3 $spacer*2 !important;
       width: 100% !important;

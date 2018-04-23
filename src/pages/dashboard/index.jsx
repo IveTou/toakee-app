@@ -1,8 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import DefaultLayout from '~/src/layouts/default';
-
 import DashboardMenu from './menu';
 import DashboardContent from './content';
 
@@ -11,12 +9,10 @@ if (process.env.BROWSER) {
 }
 
 const Dashboard = () => (
-  <DefaultLayout hideFooter>
-    <div className="Dashboard">
-      <Route path="/dashboard/:id?" component={DashboardMenu} />
-      <DashboardContent />
-    </div>
-  </DefaultLayout>
+  <div className="Dashboard">
+    <Route path="/dashboard/:id?" component={DashboardMenu} />
+    <DashboardContent />
+  </div>
 );
 
 export default Dashboard;

@@ -4,23 +4,27 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
 import config from '~/src/config';
-import { withInfo } from '~/src/hocs';
 
-if (process.env.BROWSER) {
-  require('./style.scss');
-}
+import { withIndexStyle } from './styles';
 
-const Logo = ({ deviceInfo }) => {
-  const imgSrc = deviceInfo.is('desktop')
-    ? `${config.ASSETS_BASE_URI}/core/site/logo.png`
-    : `${config.ASSETS_BASE_URI}/core/site/logo-x64.png`;
-  const classes = classNames('Logo', { 'Logo--small': !deviceInfo.is('desktop') });
+const Logo = ({ classes, size, compact }) => {
+  const imgSrc = compact
+    ? `${config.ASSETS_BASE_URI}/core/site/logo-x64.png`
+    : `${config.ASSETS_BASE_URI}/core/site/logo.png`;
+  const rootClasses = classNames(classes.root, compact && classes.rootCompact);
+  const imageClasses = classNames(classes.image,compact && classes.imageCompact);
 
-  return <Link to="/"><img className={classes} alt="toakee logo" src={imgSrc} /></Link>;
+  return(
+    <Link className={rootClasses} to="/">
+      <img className={imageClasses} alt="toakee logo" src={imgSrc} style={{ width: size }} />
+    </Link>
+  );
 };
 
 Logo.propTypes = {
-  deviceInfo: PropTypes.object.isRequired,
+  compact: PropTypes.bool,
+  classes: PropTypes.object,
+  size: PropTypes.number,
 };
 
-export default withInfo(Logo, ['deviceInfo']);
+export default withIndexStyle(Logo);

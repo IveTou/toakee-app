@@ -1,58 +1,78 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { GoogleMap, Marker, withGoogleMap, withScriptjs } from 'react-google-maps';
 import { SearchBox } from 'react-google-maps/lib/components/places/SearchBox';
 
 import config from '~/src/config';
 
-if (process.env.BROWSER) {
-  require('./style.scss');
-}
+import { withIndexStyle } from './styles';
 
 const defaultCoordinates = { lat: -12.9722, lng: -38.5014 };
 const googleMapURL = `https://maps.googleapis.com/maps/api/js?key=${config.GOOGLE_MAPS_API_KEY}&libraries=places`;
 
 const Map = withScriptjs(withGoogleMap((props) => {
   declare var google;
+  const {
+    center,
+    onCenterChange,
+    getMap,
+    withMarker,
+    markerPosition,
+    centerMarker,
+    searchBox,
+    onPlacesChange,
+    classes,
+    getSearchBox,
+  } = props;
 
   return (
     <GoogleMap
       defaultZoom={14}
-      center={props.center || defaultCoordinates}
-      onCenterChanged={props.onCenterChange}
-      ref={props.getMap}
+      center={center || defaultCoordinates}
+      onCenterChanged={onCenterChange}
+      ref={getMap}
     >
-      <If condition={props.withMarker}>
-        <Marker position={props.markerPosition || defaultCoordinates} />
+      <If condition={withMarker}>
+        <Marker position={markerPosition || defaultCoordinates} />
       </If>
 
-
-      <If condition={props.centerMarker}>
-        <div className="CenterMarker" />
+      <If condition={centerMarker}>
+        <div className={classes.centerMarker} />
       </If>
 
-      <If condition={props.searchBox}>
+      <If condition={searchBox}>
         <SearchBox
           controlPosition={google.maps.ControlPosition.TOP_LEFT}
-          onPlacesChanged={props.onPlacesChange}
-          ref={props.getSearchBox}
+          onPlacesChanged={onPlacesChange}
+          ref={getSearchBox}
         >
-          <input className="SearchBox" />
+          <input className={classes.searchBox} />
         </SearchBox>
       </If>
     </GoogleMap>
   );
 }));
 
-const Wrapper = props => (
-  <div className="Map">
-    <Map
-      googleMapURL={googleMapURL}
-      loadingElement={<div className="Map-loading" />}
-      containerElement={<div className="Map-container" />}
-      mapElement={<div className="Map-element" />}
-      {...props}
-    />
-  </div>
-);
+const Wrapper = props => {
+  const rootClasses = classNames(props.classes.root, props.mini && props.classes.mini);
+  return (
+    <div className={rootClasses}>
+      <Map
+        googleMapURL={googleMapURL}
+        loadingElement={<div className={rootClasses} />}
+        containerElement={<div className={rootClasses} />}
+        mapElement={<div className={rootClasses} />}
+        classes={props.classes}
+        {...props}
+      />
+    </div>
+  );
+}
 
-export default Wrapper;
+Wrapper.propTypes = {
+  classes: PropTypes.object,
+  mini: PropTypes.bool,
+};
+
+export default withIndexStyle(Wrapper);

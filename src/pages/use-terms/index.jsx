@@ -1,12 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { Link, Element } from 'react-scroll';
-import { Container, Grid, Header, List, Menu } from 'semantic-ui-react';
+import { Container, Grid, Header, List } from 'semantic-ui-react';
 import autoBind from 'react-autobind';
 import classNames from 'classnames';
 
-import DefaultLayout from '~/src/layouts/default';
 import { withInfo } from '~/src/hocs';
 
 import intro from './intro.js';
@@ -38,12 +36,7 @@ const sections = [
 class UseTerms extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { activeItem: 'Introdução' };
     autoBind(this);
-  }
-
-  handleItemClick(e, { name }) {
-    this.setState({ activeItem: name });
   }
 
   renderList(section) {
@@ -52,68 +45,39 @@ class UseTerms extends React.Component {
   }
 
   render() {
-    const { activeItem } = this.state;
-
     return (
-      <DefaultLayout>
-        <div className="UseTerms">
-          <Grid columns={2} relaxed>
-            <If condition={!this.props.deviceInfo.is('desktop')}>
-              <Element name="intro" className="element intro">
-                <Header as="h1">Toakee - Termos de Uso</Header>
-                <List>{this.renderList(intro)}</List>
-              </Element>
-            </If>
-            <Grid.Column className="UseTerms-menu">
-              <Menu pointing secondary vertical color="orange">
-                <For each="clause" of={sections}>
-                  <Link key={clause.to} to={clause.to} smooth offset={-100} duration={500}>
-                    <Menu.Item
-                      name={clause.name}
-                      active={activeItem === clause.name}
-                      onClick={this.handleItemClick}
+      <div className="UseTerms">
+        <Grid relaxed>
+          <Grid.Column className="UseTerms-text">
+            <Container text>
+              <For each="clause" of={sections}>
+                <Element key={clause.to} name={clause.to} className="element">
+                  <Header
+                    className="UseTerms-text-header"
+                    as={clause.to === 'intro' ? 'h1' : 'h2'}
+                  >
+                    {clause.name}
+                    <Link
+                      className={
+                        classNames('UseTerms-text-header', { top: clause.to !== 'intro' })
+                      }
+                      to="intro"
+                      smooth
+                      offset={-100}
+                      duration={500}
                     />
-                  </Link>
-                </For>
-              </Menu>
-            </Grid.Column>
-            <Grid.Column className="UseTerms-text">
-              <Container text>
-                <For each="clause" of={sections}>
-                  <If condition={clause.to !== 'intro' || this.props.deviceInfo.is('desktop')}>
-                    <Element key={clause.to} name={clause.to} className="element">
-                      <Header
-                        className="UseTerms-text-header"
-                        as={clause.to === 'intro' ? 'h1' : 'h2'}
-                      >
-                        {clause.name}
-                        <Link
-                          className={
-                            classNames('UseTerms-text-header', { top: clause.to !== 'intro' })
-                          }
-                          to="intro"
-                          smooth
-                          offset={-100}
-                          duration={500}
-                        />
-                      </Header>
-                      <List as={clause.to === 'intro' ? '' : 'ol'}>
-                        {this.renderList(clause.content)}
-                      </List>
-                    </Element>
-                  </If>
-                </For>
-              </Container>
-            </Grid.Column>
-          </Grid>
-        </div>
-      </DefaultLayout>
+                  </Header>
+                  <List as={clause.to === 'intro' ? '' : 'ol'}>
+                    {this.renderList(clause.content)}
+                  </List>
+                </Element>
+              </For>
+            </Container>
+          </Grid.Column>
+        </Grid>
+      </div>
     );
   }
 }
-
-UseTerms.propTypes = {
-  deviceInfo: PropTypes.object,
-};
 
 export default withInfo(UseTerms, ['deviceInfo']);
