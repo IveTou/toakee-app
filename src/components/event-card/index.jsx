@@ -3,24 +3,16 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { upperFirst } from 'lodash';
 import moment from 'moment';
-import { Card, Image, Icon } from 'semantic-ui-react';
+import { Card, CardContent, Typography, Icon } from 'material-ui';
 
-if (process.env.BROWSER) {
-  require('./style.scss');
-}
+import Calendar from '~/src/components/calendar';
 
-const renderLabel = (status, start, end) => {
-  if (status === 'PENDING' || status === 'REPROVED') {
-    return {
-      content: status === 'PENDING' ? 'Pendente de aprovação' : 'Reprovado',
-      color: status === 'PENDING' ? 'blue' : 'red',
-      ribbon: true,
-    };
-  }
+import Ribbon from '~/src/components/ribbon';
+import { withIndexStyle } from './styles';
 
+const renderLabel = (start, end) => {
   const now = moment();
-
-  if (end.isBefore(now) || start.isAfter(moment().add(4, 'hours'))) {
+  if (end.isBefore(now) || start.isAfter(moment().add(2, 'hours'))) {
     return null;
   }
 
@@ -28,49 +20,57 @@ const renderLabel = (status, start, end) => {
     content: start.isSameOrBefore(now) && end.isSameOrAfter(now)
       ? 'Acontecendo agora'
       : upperFirst(start.fromNow()),
-    color: 'orange',
-    ribbon: true,
   };
 };
 
-const EventCard = ({ event }) => {
-  const { id, title, place, flyer, start, end, status } = event;
+const EventCard = ({ event, className, classes }) => {
+  const { id, title, place, flyer, start, end } = event;
   const startMoment = moment(start);
+  const ribbon = renderLabel(startMoment, moment(end));
 
   return (
-    <Link className="EventCard" to={{ pathname: `/evento/${id}`, state: { event } }}>
-      <Card>
-        <If condition={flyer}>
-          <Image
-            className="EventCard-background"
-            label={renderLabel(status, startMoment, moment(end))}
-            alt={`flyer do ${title}`}
-            src={flyer}
+    <Link className={className} to={{ pathname: `/evento/${id}`, state: { event } }}>
+      <Card className={classes.card}>
+        <div className={classes.cardMedia}>
+          <div
+            className={classes.cardImage}
+            alt={title}
+            style={{ backgroundImage: `url("${flyer}")` }}
           />
-        </If>
-        <Card.Content className="EventCard-main">
-          <Card.Header><span title={title}>{title}</span></Card.Header>
-        </Card.Content>
-        <Card.Content className="EventCard-details" extra>
-          <div className="EventCard-details-calendar">
-            <div className="EventCard-details-calendar-month">
-              {startMoment.format('MMM')}
-            </div>
-            <div className="EventCard-details-calendar-day">
-              {startMoment.format('DD')}
-            </div>
+          <If condition={ribbon}>
+            <Ribbon color={ribbon.color}>{ribbon.content}</Ribbon>
+          </If>
+        </div>
+        <CardContent className={classes.cardContent}>
+          <Typography variant="subheading" className={classes.cardContentHeader}>
+            {title}
+          </Typography>
+          <div className={classes.cardContentInfo}>
+            <Calendar date={startMoment} small />
+            <Typography
+              className={classes.cardContentInfoDetails}
+              variant="body1"
+              component="div"
+            >
+              <div>
+                <Icon className={classes.cardContentInfoDetailsIcon}>place</Icon>
+                <span> {place.name}</span>
+              </div>
+              <div>
+                <Icon className={classes.cardContentInfoDetailsIcon}>schedule</Icon>
+                {startMoment.format(' HH:mm')}
+              </div>
+            </Typography>
           </div>
-          <div className="EventCard-details-timeAndPlace">
-            <div><Icon name="marker" />{place.name}</div>
-            <div><Icon name="clock" />{startMoment.format('HH')}h</div>
-          </div>
-        </Card.Content>
+        </CardContent>
       </Card>
     </Link>
   );
 };
 
 EventCard.propTypes = {
+  classes: PropTypes.object,
+  className: PropTypes.string,
   event: PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
@@ -80,4 +80,4 @@ EventCard.propTypes = {
   }),
 };
 
-export default EventCard;
+export default withIndexStyle(EventCard);

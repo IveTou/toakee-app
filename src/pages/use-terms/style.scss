@@ -2,35 +2,15 @@
 @import '../../scss/colors';
 @import '../../scss/variables';
 
-
 .UseTerms {
-  margin: $topbar-height + $spacer*4 $spacer*4;
+  margin: 0  $spacer*4;
+  padding: $spacer*4 0 $spacer*10;
 
   .element.intro {
     text-align: justify;
   }
 
-  &-menu {
-    max-width: 20%;
-
-    .ui.menu {
-      position: sticky;
-      top: $topbar-height + $spacer*4;
-      margin-bottom: $spacer*5;
-
-      .item {
-        line-height: normal;
-      }
-    }
-
-    .vertical.menu {
-      width: 100% !important;
-    }
-  }
-
   &-text {
-    width: 80% !important;
-
     &.column {
       .text {
         padding: 0 $spacer;
@@ -46,22 +26,8 @@
 
 @include media("<tablet") {
   .UseTerms {
-    margin: $topbar-height + $spacer*4 0;
-
     .element.intro {
       padding: $spacer $spacer*4;
-    }
-
-    &-menu {
-      max-width: 100%;
-
-      .ui.menu {
-        position: static;
-      }
-
-      .vertical.menu {
-        font-size: medium;
-      }
     }
 
     &-text {
@@ -69,12 +35,6 @@
         text-align: initial;
         font-size: larger !important;
         cursor: pointer;
-
-        .top:after {
-          padding-left: $spacer;
-          content: 'topo\261D';
-          color: $gray300;
-        }
       }
     }
 

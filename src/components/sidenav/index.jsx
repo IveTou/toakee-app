@@ -51,7 +51,7 @@ export class SideNav extends React.Component {
                 </Typography>
               </When>
               <Otherwise>
-                <Logo small={false} />
+                <Logo />
               </Otherwise>
             </Choose>
           </div>

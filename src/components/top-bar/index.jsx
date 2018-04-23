@@ -4,25 +4,19 @@ import { withApollo } from 'react-apollo';
 import autoBind from 'react-autobind';
 import { once } from 'lodash';
 import { withRouter } from 'react-router';
-import {
-  Avatar,
-  Toolbar,
-  ToolbarGroup,
-  IconButton,
-  IconMenu,
-  RaisedButton,
-  FlatButton,
-  MenuItem,
-} from 'material-ui';
-import { NavigationMenu, NavigationMoreVert, ActionAccountCircle } from 'material-ui/svg-icons';
-import SearchBar from 'material-ui-search-bar';
+import { AppBar, Toolbar, Icon, IconButton, Button } from 'material-ui';
+import { compose } from 'recompose';
+
+import { withInfo } from '~/src/hocs';
+import { withAuth } from '~/src/components/auth-modal/hoc';
 import { logout } from '~/src/utils/session';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import Logo from '~/src/components/logo';
+import SearchBar from '~/src/components/search-bar';
 
-if (process.env.BROWSER) {
-  require('./style.scss');
-}
+import TopBarAvatar from './avatar';
+import TopBarMore from './more';
+import { withIndexStyle } from './styles';
 
 const trackPageView = once((viewer, pid) => TrackingAPI.viewerSafeTrack(viewer, pid));
 
@@ -30,19 +24,14 @@ export class TopBar extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
-    this.state = { searchText: '' };
   }
 
   componentWillReceiveProps({ viewer }) {
     trackPageView(viewer, 'Page View');
   }
 
-  onSearch() {
-    this.props.history.push(`/search?q=${this.state.searchText}`);
-  }
-
-  onChange(searchText) {
-    this.setState({ searchText });
+  onSearch(value) {
+    this.props.history.push(`/search?q=${value}`);
   }
 
   logout() {
@@ -51,121 +40,104 @@ export class TopBar extends React.Component {
     this.props.history.push('/');
   }
 
-  login() {
-    TrackingAPI.track({ name: 'Landing Login Trigger', pid: 'Guest' });
-    this.props.history.push('/login');
-  }
-
-  signUp() {
-    TrackingAPI.track({ name: 'Landing SignUp Trigger', pid: 'Guest' });
-    this.props.history.push('/cadastrar');
-  }
-
   dashboard() {
     this.props.history.push('/dashboard');
   }
 
-  newEvent() {
-    const { viewer } = this.props;
+  render() {
+    const { classes, viewer = {}, onToggle, mobile, requireLogin } = this.props;
     const pid = (viewer && viewer.id) || null;
     const logged = !!pid;
 
-    TrackingAPI.track({ name: 'New Event Trigger', logged, pid });
-    this.props.history.push('/evento/novo');
-  }
-
-  renderAvatar() {
-    const { viewer } = this.props;
-
-    if (viewer && viewer.id) {
-      return viewer.photo
-        ? <Avatar className="TopBar-avatar" src={viewer.photo} />
-        : <Avatar className="TopBar-avatar">{viewer.firstName[0]}</Avatar>;
+    const login = () => {
+      TrackingAPI.track({ name: 'LoginTrigger.Clicked', pid: 'Guest' });
+      requireLogin(() => {
+        TrackingAPI.track({ name: 'User.Logged', pid });
+        window.redirect = '/';
+      })();
     }
 
-    return <ActionAccountCircle />;
-  }
+    const signUp = () => {
+      TrackingAPI.track({ name: 'SignUpTrigger.Clicked', pid: 'Guest' });
+      requireLogin(() => {
+        TrackingAPI.track({ name: 'User.SignedUp', pid });
+        window.redirect = '/';
+      }, 'signUp')();
+    }
 
-  render() {
-    const { viewer = {}, onToggle, small } = this.props;
+    const newEvent = () => {
+      TrackingAPI.track({ name: 'EventTrigger.Clicked', logged, pid });
+      logged
+        ? this.props.history.push('/evento/novo')
+        : requireLogin(() => {
+          TrackingAPI.track({ name: 'User.Logged', pid });
+          this.props.history.push('/evento/novo');
+        })();
+    }
 
     return (
-      <Toolbar className="TopBar">
-        <ToolbarGroup className="TopBar-nav" firstChild>
-          <IconButton
-            className="TopBar-nav-button"
-            onClick={onToggle}
-          >
-            <NavigationMenu />
-          </IconButton>
-          <Logo small={small} />
-        </ToolbarGroup>
-        <ToolbarGroup className="TopBar-search">
-          <SearchBar
-            onChange={this.onChange}
-            onRequestSearch={this.onSearch}
-            hintText="Pesquisar no site"
-          />
-        </ToolbarGroup>
-        <ToolbarGroup className="TopBar-menu" lastChild>
+      <AppBar className={classes.root}>
+        <Toolbar className={classes.toolbar}>
+          <IconButton onClick={onToggle}><Icon>menu</Icon></IconButton>
+          <Logo compact={mobile} />
+
+          <div className={classes.searchWrapper}>
+            <SearchBar onSearch={this.onSearch} />
+          </div>
+
           <Choose>
-            <When condition={!!viewer.id}>
-              <IconMenu
-                iconButtonElement={<IconButton>{this.renderAvatar()}</IconButton>}
-                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-              >
-                <MenuItem onClick={this.dashboard}>Meus eventos</MenuItem>
-                <MenuItem onClick={this.newEvent}>Publicar Evento</MenuItem>
-                <MenuItem onClick={this.logout}>Sair</MenuItem>
-              </IconMenu>
+            <When condition={!mobile}>
+              <div>
+                <Button
+                  className={classes.publishButton}
+                  variant="raised"
+                  color="primary"
+                  onClick={newEvent}
+                >
+                  Publicar
+                </Button>
+                <If condition={!viewer.id}>
+                  <Button onClick={signUp}>Cadastrar</Button>
+                  <Button onClick={login}>Entrar</Button>
+                </If>
+              </div>
+
+              <TopBarAvatar
+                viewer={viewer}
+                logout={() => this.logout}
+                dashboard={() => this.dashboard}
+              />
             </When>
             <Otherwise>
-              <Choose>
-                <When condition={!small}>
-                  <RaisedButton
-                    className="TopBar-menu-button"
-                    label="Publicar Evento"
-                    onClick={this.newEvent}
-                    primary
-                  />
-                  <FlatButton
-                    className="TopBar-menu-button"
-                    label="Cadastrar"
-                    onClick={this.signUp}
-                  />
-                  <FlatButton
-                    className="TopBar-menu-button"
-                    label="Entrar"
-                    onClick={this.login}
-                  />
-                </When>
-                <Otherwise>
-                  <IconMenu
-                    iconButtonElement={<IconButton><NavigationMoreVert /></IconButton>}
-                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                    targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-                  >
-                    <MenuItem onClick={this.newEvent}>Publicar Evento</MenuItem>
-                    <MenuItem onClick={this.signUp}>Cadastrar</MenuItem>
-                    <MenuItem onClick={this.login}>Entrar</MenuItem>
-                  </IconMenu>
-                </Otherwise>
-              </Choose>
+              <TopBarMore
+                viewer={viewer}
+                login={login}
+                signUp={signUp}
+                logout={this.logout}
+                newEvent={newEvent}
+              />
             </Otherwise>
           </Choose>
-        </ToolbarGroup>
-      </Toolbar>
+        </Toolbar>
+      </AppBar>
     );
   }
 }
 
 TopBar.propTypes = {
+  classes: PropTypes.object,
   viewer: PropTypes.object,
   history: PropTypes.object,
   client: PropTypes.object,
-  small: PropTypes.bool,
+  mobile: PropTypes.bool,
   onToggle: PropTypes.func,
+  requireLogin: PropTypes.func,
 };
 
-export default withApollo(withRouter(TopBar));
+export default compose(
+  withApollo,
+  withRouter,
+  withAuth,
+  withInfo(['viewer']),
+  withIndexStyle,
+)(TopBar);

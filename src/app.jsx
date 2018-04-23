@@ -4,27 +4,23 @@ import { Route, Switch } from 'react-router-dom';
 import { MuiThemeProvider } from 'material-ui';
 
 import ProtectedRoute from '~/src/routes/protected';
+import DefaultLayout from '~/src/layouts/default';
 
 import NewEventPage from '~/src/pages/new-event';
 import EditEventPage from '~/src/pages/edit-event';
 import EventPage from '~/src/pages/event';
-import EventPhotos from '~/src/pages/event-photos';
 import EventFeed from '~/src/pages/event-feed';
 import SearchPage from '~/src/pages/search';
-import Landing from '~/src/pages/landing';
 import Dashboard from '~/src/pages/dashboard';
 import UseTerms from '~/src/pages/use-terms';
+import Privacy from '~/src/pages/privacy';
 import About from '~/src/pages/about';
 import EventModeration from '~/src/pages/event-moderation';
 
-import Login from '~/src/components/auth-wrapper/login';
-import SignUp from '~/src/components/auth-wrapper/sign-up';
+import ContextProvider from '~/src/components/context-provider';
 import Scroller from '~/src/components/scroller';
 import Snackbar from '~/src/components/snackbar';
 import AuthModal from '~/src/components/auth-modal';
-
-import ViewerProvider from '~/src/components/viewer-provider';
-import DeviceInfoProvider from '~/src/components/device-info-provider';
 
 import { userIsLogged, userIsAdmin } from '~/src/auth';
 
@@ -32,19 +28,12 @@ import { theme } from '~/src/mui/theme';
 
 const App = ({ userAgent }) => (
   <MuiThemeProvider theme={theme}>
-    <ViewerProvider>
-      <DeviceInfoProvider userAgent={userAgent || window.navigator.userAgent}>
-        <Scroller />
-        <Snackbar />
-        <AuthModal />
+    <ContextProvider userAgent={userAgent || window.navigator.userAgent}>
+      <Scroller />
+      <Snackbar />
+      <AuthModal />
+      <DefaultLayout>
         <Switch>
-          <ProtectedRoute
-            auth={userIsLogged}
-            component={EventFeed}
-            path="/"
-            redirectTo="/landing"
-            exact
-          />
           <ProtectedRoute
             auth={userIsAdmin}
             component={EventModeration}
@@ -66,18 +55,16 @@ const App = ({ userAgent }) => (
             redirectTo="/login"
             exact
           />
-          <Route path="/landing" component={Landing} />
-          <Route path="/login" component={Login} />
-          <Route path="/cadastrar" component={SignUp} />
+          <Route path="/" exact component={EventFeed} />
           <Route path="/search" component={SearchPage} />
           <Route path="/evento/:id" exact component={EventPage} />
-          <Route path="/evento/:id/fotos" component={EventPhotos} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/termos-de-uso" component={UseTerms} />
           <Route path="/quem-somos" component={About} />
+          <Route path="/privacidade" component={Privacy} />
         </Switch>
-      </DeviceInfoProvider>
-    </ViewerProvider>
+      </DefaultLayout>
+    </ContextProvider>
   </MuiThemeProvider>
 );
 

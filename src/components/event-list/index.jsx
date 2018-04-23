@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { graphql } from 'react-apollo';
 import autoBind from 'react-autobind';
 import VisibilitySensor from 'react-visibility-sensor';
 import { range } from 'lodash';
+import { compose } from 'recompose';
+import { Divider, Typography } from 'material-ui';
 
 import { ease } from '~/src/utils/animation';
 import EventCard from '~/src/components/event-card';
@@ -11,12 +14,9 @@ import EventCardPlaceholder from '~/src/components/event-card/placeholder';
 
 import EventListArrow from './arrow';
 import { query } from './graphql';
+import { withIndexStyle } from './styles';
 
-if (process.env.BROWSER) {
-  require('./style.scss');
-}
-
-const FEED_LIMIT = 10;
+const FEED_LIMIT = 5;
 
 class EventList extends React.Component {
   constructor(props) {
@@ -49,33 +49,55 @@ class EventList extends React.Component {
   }
 
   render() {
-    const { title, viewer = {} } = this.props;
-    const { events = [], eventCount } = viewer;
+    const { classes, title, viewer = {}, vertical } = this.props;
+    const { eventCount, events = [] } = viewer;
+
+    const listClasses = classNames(classes.list, vertical && classes.listVertical);
 
     const node = this._listDOM || {};
     const hideLeftArrow = !node.scrollLeft;
     const hideRightArrow =
-      node.scrollLeft + node.offsetWidth >= node.scrollWidth
-      && !this.state.hasMore;
+      (node.scrollLeft + node.offsetWidth) >= node.scrollWidth && !this.state.hasMore;
 
     declare var event;
     declare var placeholder;
     declare var idx;
+
+
     return !!eventCount && (
-      <div className="EventList">
-        <div className="EventList-title">{title} ({eventCount})</div>
-        <div className="EventList-list" ref={(dom) => { this._listDOM = dom; }}>
-          <EventListArrow direction="left" onClick={() => this.scroll(-1)} hide={hideLeftArrow} />
-          <EventListArrow direction="right" onClick={() => this.scroll(1)} hide={hideRightArrow} />
-          <For each="event" index="idx" of={events}>
-            <EventCard key={idx} event={event} />
-          </For>
-          <If condition={this.state.hasMore}>
-            <VisibilitySensor onChange={isVisible => (isVisible && this.fetchEvents())} />
-            <For each="placeholder" of={range(Math.min(5, eventCount - events.length))}>
-              <EventCardPlaceholder key={placeholder} />
-            </For>
+      <div>
+        <If condition={eventCount && title}>
+          <Typography className={classes.title} variant="title">
+            {title} ({vertical ? events.length : eventCount})
+          </Typography>
+        </If>
+        <div className={classes.listWrapper}>
+          <If condition={!vertical}>
+            <EventListArrow
+              direction="left"
+              onClick={() => this.scroll(-1)}
+              hide={hideLeftArrow}
+            />
+            <EventListArrow
+              direction="right"
+              onClick={() => this.scroll(1)}
+              hide={hideRightArrow}
+            />
           </If>
+          <div ref={(dom) => { this._listDOM = dom; }} className={listClasses}>
+            <For each="event" index="idx" of={events}>
+              <div key={idx}>
+                <EventCard event={event} />
+                <If condition={vertical && events.length > 1}><Divider light /></If>
+              </div>
+            </For>
+            <If condition={this.state.hasMore && (!vertical || !events.length)}>
+              <VisibilitySensor onChange={isVisible => (isVisible && this.fetchEvents())} />
+              <For each="placeholder" of={range(Math.min(5, eventCount - events.length))}>
+                <EventCardPlaceholder key={placeholder} />
+              </For>
+            </If>
+          </div>
         </div>
       </div>
     );
@@ -85,22 +107,25 @@ class EventList extends React.Component {
 EventList.propTypes = {
   title: PropTypes.string,
   loadMore: PropTypes.func,
+  vertical: PropTypes.bool,
   viewer: PropTypes.object,
+  classes: PropTypes.object,
 };
 
-export default graphql(query, {
+const injectQuery = graphql(query, {
   options: ({
-    start, end, categoryIds, strict, forceFetch, has, sort, status = 'ACTIVE',
+    start, end, categoryIds, strict, forceFetch, has, sort, limit = FEED_LIMIT, relatedTo, status = 'ACTIVE',
   }) => ({
     variables: {
       start,
       end,
       skip: 0,
       categoryIds,
-      limit: FEED_LIMIT,
+      limit,
       strict,
       status,
       has,
+      relatedTo,
       sort,
       skipList: !forceFetch,
       skipCount: false,
@@ -108,7 +133,7 @@ export default graphql(query, {
   }),
   props: ({
     data: { viewer, fetchMore },
-    ownProps: { categoryIds, start, sort, has },
+    ownProps: { categoryIds, start, sort, has, relatedTo },
   }) => ({
     viewer,
     loadMore: () => {
@@ -120,7 +145,7 @@ export default graphql(query, {
       const skipList = false;
 
       return fetchMore({
-        variables: { start, categoryIds, sort, has, skip, strict, skipCount, skipList },
+        variables: { start, categoryIds, sort, has, relatedTo, skip, strict, skipCount, skipList },
         updateQuery: (previousResult, { fetchMoreResult }) => (
           !fetchMoreResult
             ? previousResult
@@ -137,4 +162,9 @@ export default graphql(query, {
       });
     },
   }),
-})(EventList);
+});
+
+export default compose(
+  injectQuery,
+  withIndexStyle,
+)(EventList);

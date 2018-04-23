@@ -5,7 +5,10 @@ $topbar-height: $spacer*9;
 $snackbar-top: $topbar-height+$spacer;
 
 $snackbar-zindex: 11;
-$topbar-zindex: 101;
+$sidenav-zindex: 101;
+$topbar-zindex: 201;
 
 $flyer-width-mobile: $spacer*32;
 $flyer-height-mobile: $spacer*18;
+
+$bezier-curve: cubic-bezier(0.23, 1, 0.32, 1);
