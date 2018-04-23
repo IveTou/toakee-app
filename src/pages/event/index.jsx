@@ -124,6 +124,7 @@ export class EventPage extends React.Component {
       photos = [],
       creator = {},
       categories = [],
+      status,
     } = event || {};
     const flyerAlt = `Flyer do ${title || 'evento'}`;
     const mappedPrice = price ? [{ value: price }] : prices;
@@ -237,16 +238,18 @@ export class EventPage extends React.Component {
                       </When>
                       <Otherwise>
                         <ListItem className={classes.lisItem}>
-                          <AttendButton className={classes.listButton} eventId={id} />
-                          <Button
-                            className={classes.listButton}
-                            onClick={this.fbShare}
-                            variant="raised"
-                            color="default"
-                          >
-                            Compartilhar
-                            <Icon className={classes.rightIcon}>share</Icon>
-                          </Button>
+                          <If condition={status == 'ACTIVE'}>
+                            <AttendButton className={classes.listButton} eventId={id} />
+                            <Button
+                              className={classes.listButton}
+                              onClick={this.fbShare}
+                              variant="raised"
+                              color="default"
+                            >
+                              Compartilhar
+                              <Icon className={classes.rightIcon}>share</Icon>
+                            </Button>
+                          </If>
                           <If condition={creator.id === viewer.id}>
                             <Button
                               variant="raised"
