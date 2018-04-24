@@ -19,7 +19,7 @@ export class DefaultLayout extends React.Component {
     this.state = { navOpen: props.deviceInfo.is('desktop') };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     fbInit(() => {});
   }
 
