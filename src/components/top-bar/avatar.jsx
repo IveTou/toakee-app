@@ -10,7 +10,6 @@ const TopBarAvatar = ({ viewer, anchor, setAnchor, logout, dashboard }) => {
         <Avatar>{viewer.firstName[0]}</Avatar>
       </IconButton>
       <Menu open={!!anchor} anchorEl={anchor} onClose={() => setAnchor(null)}>
-        <MenuItem onClick={dashboard()}>Meus Eventos</MenuItem>
         <MenuItem onClick={logout()}>Sair</MenuItem>
       </Menu>
     </If>
