@@ -105,7 +105,6 @@ export class TopBar extends React.Component {
               <TopBarAvatar
                 viewer={viewer}
                 logout={() => this.logout}
-                dashboard={() => this.dashboard}
               />
             </When>
             <Otherwise>
