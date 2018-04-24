@@ -25,7 +25,6 @@ const Banner = ({ classes, content = defaultContent }) => {
         <div className={classes.overlay} >
           <Typography
             className={classes.title}
-            variant="display1"
             color="inherit"
             paragraph
             gutterBottom

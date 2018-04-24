@@ -7,7 +7,7 @@ export const withIndexStyle = withStyles(theme => ({
     maxWidth: theme.spacing.unit * 100,
     backgroundColor: theme.palette.primary.light,
     width: '80%',
-    height: theme.spacing.unit * 50,
+    height: theme.spacing.unit * 40,
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
@@ -18,7 +18,7 @@ export const withIndexStyle = withStyles(theme => ({
     [theme.breakpoints.down('sm')]: {
       backgroundColor: theme.palette.secondary.main,
       width: '100%',
-      height: theme.spacing.unit * 30,
+      height: theme.spacing.unit * 20,
     },
   },
   overlay: {
@@ -34,14 +34,18 @@ export const withIndexStyle = withStyles(theme => ({
     overflow: 'hidden',
     whiteSpace: 'normal',
     maxHeight: theme.spacing.unit * 20,
+    fontSize: theme.typography.display1.fontSize,
+    [theme.breakpoints.down('sm')]: {
+      fontSize: theme.typography.headline.fontSize,
+    },
   },
   description: {
     overflow: 'hidden',
     whiteSpace: 'normal',
     maxHeight: theme.spacing.unit * 20,
-    fontSize: theme.typography.headline.fontSize,
+    fontSize: theme.typography.title.fontSize,
     [theme.breakpoints.down('sm')]: {
-      fontSize: theme.typography.title.fontSize,
+      fontSize: theme.typography.subheading.fontSize,
     },
   },
   calendar: {

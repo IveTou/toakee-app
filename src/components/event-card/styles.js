@@ -61,6 +61,7 @@ export const withPlaceholderStyle = withStyles(theme => ({
   card: {
     margin: theme.spacing.unit,
     marginRight: 0,
+    marginTop: theme.spacing.unit * 2,
     width: theme.spacing.unit * cardWidth,
     height: theme.spacing.unit * cardHeight,
   },
