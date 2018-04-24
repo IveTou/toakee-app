@@ -1,23 +1,22 @@
 import React from 'react';
-import { Card, Dimmer, Image, Loader } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import { CircularProgress } from 'material-ui';
 
-const EventCardPlaceholder = () => (
-  <div className="EventCardPlaceholder">
-    <Dimmer inverted active><Loader content="Carregando" /></Dimmer>
-    <Card>
-      <Image className="EventCardPlaceholder-background" />
-      <Card.Content className="EventCard-main">
-        <Card.Header>Lorem ipsum</Card.Header>
-      </Card.Content>
-      <Card.Content className="EventCardPlaceholder-details" extra>
-        <div className="EventCardPlaceholder-details-calendar">
-          <div className="EventCardPlaceholder-details-calendar-month">Lor</div>
-          <div className="EventCardPlaceholder-details-calendar-day">0</div>
-        </div>
-        <div className="EventCardPlaceholder-details-timeAndPlace" />
-      </Card.Content>
-    </Card>
+import { withPlaceholderStyle } from './styles';
+
+const EventCardPlaceholder = ({ className, classes }) => (
+  <div className={className}>
+    <div className={classes.card}>
+      <div className={classes.cardMedia}>
+        <CircularProgress size={40} />
+      </div>
+    </div>
   </div>
 );
 
-export default EventCardPlaceholder;
+EventCardPlaceholder.propTypes = {
+  className: PropTypes.string,
+  classes: PropTypes.object,
+};
+
+export default withPlaceholderStyle(EventCardPlaceholder);

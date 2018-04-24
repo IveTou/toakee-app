@@ -1,51 +1,60 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql, compose } from 'react-apollo';
-import { Icon, Card, Image, Grid, Button } from 'semantic-ui-react';
 import Lightbox from 'react-images';
-import classNames from 'classnames';
-import autoBind from 'react-autobind';
-import { Link } from 'react-router-dom';
+import { map } from 'lodash';
+import moment from 'moment';
+import {
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+  Divider,
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  Icon,
+  Grid,
+  GridList,
+  GridListTile,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListSubheader,
+  Paper,
+  Typography,
+} from 'material-ui';
 
+import autoBind from 'react-autobind';
+
+import EventList from '~/src/components/event-list';
+import Calendar from '~/src/components/calendar';
+import Wrapper from '~/src/components/map';
 import AttendButton from '~/src/components/attend-button';
-import DefaultLayout from '~/src/layouts/default';
-import { fullDateFormat, timeFormat, dateFormat } from '~/src/utils/moment';
+import { fullDateFormat, timeFormat } from '~/src/utils/moment';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import { withInfo } from '~/src/hocs';
 
 import query, { setEventStatusMutation } from './graphql';
-
-if (process.env.BROWSER) {
-  require('./style.scss');
-}
+import { withIndexStyle } from './styles';
 
 export class EventPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       lightboxIsOpen: false,
-      galleryIsVisible: false,
       currentImage: 0,
-      loadGallery: false,
+      galleryIsOpen: false,
     };
     autoBind(this);
   }
 
   componentWillReceiveProps({ viewer }) {
-    TrackingAPI.viewerSafeTrack(viewer, 'Event Page View');
+    TrackingAPI.viewerSafeTrack(viewer, 'EventPage.Viewed');
   }
 
-  toggleGallery() {
-    if (!this.props.deviceInfo.is('desktop')) {
-      this.props.history.push(`/evento/${this.props.event.id}/fotos`);
-    } else {
-      const { galleryIsVisible } = this.state;
-
-      this.setState({
-        loadGallery: true,
-        galleryIsVisible: !galleryIsVisible,
-      }, () => { window.scrollTo(0, 0); });
-    }
+  toggleGallery(event, expanded) {
+    this.setState({ galleryIsOpen: expanded });
   }
 
   handleClickPrev() {
@@ -72,7 +81,7 @@ export class EventPage extends React.Component {
       href: location.href,
     }, (res) => {
       if (res && !res.error_message) {
-        TrackingAPI.viewerSafeTrack(this.props.viewer, 'Share Event Trigger');
+        TrackingAPI.viewerSafeTrack(this.props.viewer, 'ShareTrigger.Clicked');
       }
     });
   }
@@ -81,16 +90,17 @@ export class EventPage extends React.Component {
     const { setStatus, event } = this.props;
     const { status: eventStatus } = event || {};
     const buttonProps = [
-      { label: 'Esconder', color: 'blue', status: 'PENDING' },
-      { label: 'Reprovar', color: 'red', status: 'REPROVED' },
-      { label: 'Aprovar', color: 'green', status: 'ACTIVE' },
+      { label: 'Aprovar', status: 'ACTIVE' },
+      { label: 'Reprovar', status: 'REPROVED' },
+      { label: 'Esconder', status: 'PENDING' },
     ];
 
-    return buttonProps.map(({ label, color, status }) => (
+    return buttonProps.map(({ label, status }) => (
       <Button
+        variant="raised"
         key={label}
-        color={color}
-        basic={status !== eventStatus}
+        disabled={status === eventStatus}
+        className={this.props.classes.listButton}
         onClick={() => setStatus(status)}
       >
         {label}
@@ -100,8 +110,8 @@ export class EventPage extends React.Component {
 
   render() {
     const { event: preEvent } = this.props.location.state || {};
-    const { galleryIsVisible, loadGallery } = this.state;
-    const { viewer = {}, event = preEvent } = this.props;
+    const { galleryIsOpen } = this.state;
+    const { viewer = {}, event = preEvent, classes } = this.props;
     const {
       id,
       title,
@@ -113,170 +123,204 @@ export class EventPage extends React.Component {
       prices = [],
       photos = [],
       creator = {},
+      categories = [],
       status,
     } = event || {};
     const flyerAlt = `Flyer do ${title || 'evento'}`;
-    const mappedPrice = price || prices.length === 1
-      ? price || prices[0].value
-      : prices.map(p => `${p.description}: ${p.value}`).join(' | ');
+    const mappedPrice = price ? [{ value: price }] : prices;
+    const isMobile = !this.props.deviceInfo.is('desktop');
+    const startMoment = moment(start);
+    const coordinates =
+      place
+      && place.coordinates
+      && { lat: place.coordinates[1], lng: place.coordinates[0] };
 
-    const classes = classNames('EventPage', { 'EventPage--viewGallery': galleryIsVisible });
-
-    declare var image;
     declare var index;
+    declare var priceItem;
+    declare var photosItem;
 
     return (
-      <DefaultLayout title={title}>
-        <Grid columns={2} className={classes}>
-          <Grid.Column className="EventPage-gallery" mobile={16} tablet={8} computer={8}>
-            <Lightbox
-              images={photos.map(({ src }) => ({ src }))}
-              isOpen={this.state.lightboxIsOpen}
-              onClickPrev={this.handleClickPrev}
-              onClickNext={this.handleClickNext}
-              onClose={this.closeLightBox}
-              currentImage={this.state.currentImage}
+      <Grid container className={classes.root} spacing={0}>
+        <Grid item xs={12} sm={12} md={9}>
+          <Card className={classes.card}>
+            <CardMedia
+              className={classes.media}
+              image={flyer}
+              title={title}
+              alt={flyerAlt}
             />
-            <If condition={loadGallery}>
-              <Image.Group size="small">
-                <For each="image" of={photos} index="index">
-                  <img
-                    className="ui image"
-                    style={{ backgroundImage: `url(${image.thumb})` }}
-                    onClick={() => this.openPhoto(index)}
-                  />
-                </For>
-              </Image.Group>
-            </If>
-          </Grid.Column>
-
-
-          <Grid.Column className="EventPage-details" mobile={16} tablet={8} computer={8}>
-            <If condition={status === 'PENDING'}>
-              <p className="EventPage-details-disclaimer">
-                Este evento ainda encontra-se pendente, favor aguardar moderação.
-              </p>
-            </If>
-            <div
-              itemScope
-              itemType="http://schema.org/Event"
-              itemRef="_startDate2 _image7 _description8 _offers9"
-              className="EventPage-details-header"
-            >
-              <h1 itemProp="name" className="EventPage-details-header-title">
+            <CardContent>
+              <Calendar className={classes.calendar} date={startMoment} />
+              <Typography className={classes.title} variant="display1" component="h1">
                 {title}
-                <If condition={creator.id === viewer.id}>
-                  <Link to={`/evento/${id}/editar`}><Icon name="pencil" color="orange" /></Link>
-                </If>
-              </h1>
-              <span
-                itemProp="location"
-                itemScope
-                itemType="http://schema.org/Place"
-                itemRef="_address5"
-              >
-                <If condition={place}>
-                  <div itemProp="name" className="EventPage-details-header-place">
-                    {place.name}
-                  </div>
-                </If>
-              </span>
-            </div>
+              </Typography>
 
-            <div className="EventPage-details-info">
-              <If condition={start}>
-                <div className="EventPage-details-info-item">
-                  <Icon name="calendar" />
-                  <span>
-                    <meta id="_startDate2" itemProp="startDate" content={dateFormat(start)} />
-                    {fullDateFormat(start)}
-                  </span>
-                </div>
-                <div className="EventPage-details-info-item">
-                  <Icon name="clock" />
-                  <span>{timeFormat(start)}</span>
-                </div>
-              </If>
-              <If condition={place && place.address}>
-                <div
-                  id="_address5"
-                  itemProp="address"
-                  itemScope
-                  itemType="http://schema.org/PostalAddress"
-                  className="EventPage-details-info-item"
-                >
-                  <Icon name="marker" />
-                  <span itemProp="streetAddress">{place.address}</span>
-                </div>
-              </If>
-              <If condition={mappedPrice}>
-                <div
-                  id="_offers9"
-                  itemProp="offers"
-                  itemScope
-                  itemType="http://schema.org/Offer"
-                  className="EventPage-details-info-item"
-                >
-                  <Icon name="dollar" />
-                  <span itemProp="price">{mappedPrice}</span>
-                </div>
-              </If>
-            </div>
-
-            <div className="EventPage-details-body">
-              <div className="EventPage-details-body-social">
-                <Button
-                  onClick={this.fbShare}
-                  color="facebook"
-                  size="small"
-                  content="Compartilhar"
-                  icon="share"
-                />
-                <AttendButton eventId={id} />
-              </div>
-              <div className="EventPage-details-body-description">
-                <div className="EventPage-details-body-title">Descrição</div>
-                <div
-                  id="_description8"
-                  itemProp="description"
-                  className="EventPage-details-body-content"
-                  dangerouslySetInnerHTML={{ __html: description }}
-                />
-              </div>
-            </div>
-          </Grid.Column>
-
-          <Grid.Column className="EventPage-flyer" mobile={16} tablet={8} computer={8}>
-            <div
-              className="EventPage-flyer-bg"
-              style={{ backgroundImage: `url(${flyer})` }}
-            />
-            <Card>
-              <If condition={flyer}>
-                <Image
-                  id="_image7"
-                  itemProp="image"
-                  alt={flyerAlt}
-                  className="EventPage-flyer-img"
-                  src={flyer}
-                />
-              </If>
-              <If condition={viewer.isAdmin}>
-                <Button.Group>{this.renderModerationButtons()}</Button.Group>
-              </If>
               <If condition={photos.length}>
-                <Button
-                  onClick={this.toggleGallery}
-                  size="large"
-                  color="orange"
-                >
-                  Ver {galleryIsVisible ? 'detalhes' : 'fotos'}
-                </Button>
+                <Lightbox
+                  images={photos.map(({ src }) => ({ src }))}
+                  isOpen={this.state.lightboxIsOpen}
+                  onClickPrev={this.handleClickPrev}
+                  onClickNext={this.handleClickNext}
+                  onClose={this.closeLightBox}
+                  currentImage={this.state.currentImage}
+                />
+                <ExpansionPanel className={classes.galleryRoot} onChange={this.toggleGallery}>
+                  <ExpansionPanelSummary
+                    className={classes.galleryTitle}
+                    expandIcon={<Icon style={{ color: "white" }}>expand_more</Icon>}
+                  >
+                    <If condition={!galleryIsOpen}>
+                      <Typography variant="title" color="inherit">
+                        Clique e veja como foi!
+                      </Typography>
+                    </If>
+                    <If condition={galleryIsOpen}>
+                      <Typography variant="title" color="inherit">Galeria de Fotos</Typography>
+                    </If>
+                  </ExpansionPanelSummary>
+                  <If condition={galleryIsOpen}>
+                    <div className={classes.gridList}>
+                      <GridList cellHeight={144} style={{ height: 336 }} cols={3}>
+                        <For each="photosItem" of={photos} index="index">
+                          <GridListTile key={index} cols={1}>
+                            <img src={photosItem.thumb} onClick={() => this.openPhoto(index)} />
+                          </GridListTile>
+                        </For>
+                      </GridList>
+                    </div>
+                  </If>
+                </ExpansionPanel>
               </If>
-            </Card>
-          </Grid.Column>
+              <Divider light />
+              <Grid container spacing={8}>
+                <Grid item xs={12} sm={9} style={{ paddingTop: 8 }}>
+                  <List dense>
+                    <If condition={place && place.address}>
+                      <ListItem className={classes.listItem}>
+                        <ListItemIcon>
+                          <Icon>place</Icon>
+                        </ListItemIcon>
+                        <ListItemText
+                          disableTypography
+                          className={classes.listItemText}
+                          primary={place.address}
+                        />
+                      </ListItem>
+                    </If>
+                    <If condition={start}>
+                      <ListItem className={classes.listItem}>
+                        <ListItemIcon>
+                          <Icon>event</Icon>
+                        </ListItemIcon>
+                        <ListItemText
+                          disableTypography
+                          className={classes.listItemText}
+                          primary={fullDateFormat(start)}
+                        />
+                      </ListItem>
+                      <ListItem className={classes.listItem}>
+                        <ListItemIcon>
+                          <Icon>schedule</Icon>
+                        </ListItemIcon>
+                        <ListItemText
+                          disableTypography
+                          className={classes.listItemText}
+                          primary={timeFormat(start)}
+                        />
+                      </ListItem>
+                    </If>
+                    <Choose>
+                      <When condition={viewer.isAdmin}>
+                        <ListSubheader className={classes.listSubheader} component="div">
+                          Moderação
+                        </ListSubheader>
+                        <ListItem>{this.renderModerationButtons()}</ListItem>
+                      </When>
+                      <Otherwise>
+                        <ListItem className={classes.lisItem}>
+                          <If condition={status == 'ACTIVE'}>
+                            <AttendButton className={classes.listButton} eventId={id} />
+                            <Button
+                              className={classes.listButton}
+                              onClick={this.fbShare}
+                              variant="raised"
+                              color="default"
+                            >
+                              Compartilhar
+                              <Icon className={classes.rightIcon}>share</Icon>
+                            </Button>
+                          </If>
+                          <If condition={creator.id === viewer.id}>
+                            <Button
+                              variant="raised"
+                              color="default"
+                              className={classes.listButton}
+                              href={`/evento/${id}/editar`}
+                            >
+                              Editar
+                              <Icon className={classes.rightIcon}>mode_edit</Icon>
+                            </Button>
+                          </If>
+                        </ListItem>
+                      </Otherwise>
+                    </Choose>
+                  </List>
+                </Grid>
+
+                <Grid className={classes.mapGrid} item xs={12} sm={3}>
+                  <Paper elevation={1}>
+                    <Wrapper mini center={coordinates} centerMarker />
+                  </Paper>
+                </Grid>
+              </Grid>
+            </CardContent>
+            <Divider light />
+            <CardContent>
+              <Grid container spacing={8}>
+                <Grid item sm={12} md={6} style={{ width: '100%' }}>
+                  <GridList cellHeight="auto">
+                    <For each="priceItem" of={mappedPrice}>
+                      <GridListTile
+                        key={`${priceItem.description}${priceItem.value}`}
+                      >
+                        <ListItemText
+                          style={{ paddingLeft: 16 }}
+                          primary={priceItem.description || 'Entrada'}
+                          secondary={priceItem.value ? `R$ ${priceItem.value}` : ''}
+                        />
+                      </GridListTile>
+                    </For>
+                  </GridList>
+                </Grid>
+                <Grid item sm={12} md={6} />
+              </Grid>
+            </CardContent>
+            <Divider light />
+            <CardContent style={{ paddingRight: 32, paddingLeft: 32 }}>
+              <Typography variant="body2" style={{ paddingBottom: 8 }}>
+                Descrição
+              </Typography>
+              <Typography align="inherit" component="div">
+                <div dangerouslySetInnerHTML={{ __html: description }} />
+              </Typography>
+            </CardContent>
+          </Card>
         </Grid>
-      </DefaultLayout>
+        <If condition={categories.length}>
+          <Grid item xs={12} sm={12} md={3}>
+            <Card className={classes.eventsCard}>
+              <EventList
+                title="Eventos Relacionados"
+                vertical={!isMobile}
+                relatedTo={id}
+                start={moment()}
+                categoryIds={map(categories, 'id')}
+                limit={5}
+              />
+            </Card>
+          </Grid>
+        </If>
+      </Grid>
     );
   }
 }
@@ -284,10 +328,10 @@ export class EventPage extends React.Component {
 EventPage.propTypes = {
   event: PropTypes.object,
   viewer: PropTypes.object,
-  history: PropTypes.object,
   setStatus: PropTypes.func,
   deviceInfo: PropTypes.object,
   location: PropTypes.object,
+  classes: PropTypes.object,
 };
 
 const injectSetEventStatusMutation = graphql(setEventStatusMutation, {
@@ -322,5 +366,6 @@ const injectData = graphql(query, {
 export default compose(
   injectData,
   injectSetEventStatusMutation,
+  withIndexStyle,
   withInfo(['viewer', 'deviceInfo']),
 )(EventPage);
