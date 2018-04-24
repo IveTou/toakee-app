@@ -8,6 +8,7 @@ import { withInfo } from '~/src/hocs';
 import TopBar from '~/src/components/top-bar';
 import Footer from '~/src/components/footer';
 import SideNav from '~/src/components/sidenav';
+import { fbInit } from '~/src/utils/facebook';
 
 import { withDefaultStyle } from './styles';
 
@@ -15,6 +16,7 @@ export class DefaultLayout extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
+    fbInit(() => {});
     this.state = { navOpen: props.deviceInfo.is('desktop') };
   }
 
