@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import EventBox from '~/src/components/event-box';
 import Banner from '~/src/components/banner';
@@ -15,5 +16,9 @@ const EventFeed = ({ classes }) => (
     </div>
   </div>
 );
+
+EventFeed.propTypes = {
+  classes: PropTypes.object,
+};
 
 export default withIndexStyle(EventFeed);

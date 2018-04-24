@@ -49,7 +49,7 @@ class EventList extends React.Component {
   }
 
   render() {
-    const { classes, title, viewer = {}, vertical } = this.props;
+    const { classes, title, viewer = {}, vertical, counter } = this.props;
     const { eventCount, events = [] } = viewer;
 
     const listClasses = classNames(classes.list, vertical && classes.listVertical);
@@ -68,7 +68,8 @@ class EventList extends React.Component {
       <div>
         <If condition={eventCount && title}>
           <Typography className={classes.title} variant="title">
-            {title} ({vertical ? events.length : eventCount})
+            {title}
+            <If condition={counter}> ({vertical ? events.length : eventCount})</If>
           </Typography>
         </If>
         <div className={classes.listWrapper}>
@@ -110,6 +111,7 @@ EventList.propTypes = {
   vertical: PropTypes.bool,
   viewer: PropTypes.object,
   classes: PropTypes.object,
+  counter: PropTypes.bool,
 };
 
 const injectQuery = graphql(query, {
