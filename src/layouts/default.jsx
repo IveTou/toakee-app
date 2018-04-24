@@ -16,8 +16,11 @@ export class DefaultLayout extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
-    fbInit(() => {});
     this.state = { navOpen: props.deviceInfo.is('desktop') };
+  }
+
+  componentWillMount() {
+    fbInit(() => {});
   }
 
   toggleNav() {
