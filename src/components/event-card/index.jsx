@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { upperFirst, get } from 'lodash';
 import moment from 'moment';
 import { Card, CardContent, Typography, Icon } from 'material-ui';
+import { deepOrange, green } from 'material-ui/colors';
 
 import Calendar from '~/src/components/calendar';
 import Ribbon from '~/src/components/ribbon';
@@ -21,7 +22,7 @@ const renderLabel = (status, start, end, discountLists) => {
   if (get(discountLists, 'length')) {
     return {
       content: 'Lista de desconto',
-      color: 'green',
+      color: green[500],
     }
   }
 
@@ -35,7 +36,7 @@ const renderLabel = (status, start, end, discountLists) => {
     content: start.isSameOrBefore(now) && end.isSameOrAfter(now)
       ? 'Acontecendo agora'
       : upperFirst(start.fromNow()),
-    color: 'orange',
+    color: deepOrange[500],
   };
 };
 
