@@ -250,7 +250,7 @@ export class EventPage extends React.Component {
                               <Icon className={classes.rightIcon}>share</Icon>
                             </Button>
                           </If>
-                          <If condition={creator.id === viewer.id}>
+                          <If condition={viewer.isAdmin || creator.id === viewer.id}>
                             <Button
                               variant="raised"
                               color="default"
