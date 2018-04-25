@@ -18,7 +18,6 @@ import About from '~/src/pages/about';
 import EventModeration from '~/src/pages/event-moderation';
 
 import ContextProvider from '~/src/components/context-provider';
-import Scroller from '~/src/components/scroller';
 import Snackbar from '~/src/components/snackbar';
 import AuthModal from '~/src/components/auth-modal';
 
@@ -29,7 +28,6 @@ import { theme } from '~/src/mui/theme';
 const App = ({ userAgent }) => (
   <MuiThemeProvider theme={theme}>
     <ContextProvider userAgent={userAgent || window.navigator.userAgent}>
-      <Scroller />
       <Snackbar />
       <AuthModal />
       <DefaultLayout>
