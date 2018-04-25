@@ -15,11 +15,11 @@ import { withIndexStyle } from './styles';
 const categories = [
   { title: 'Arte e Cultura', icon: 'color_lens', color: 'red' },
   { title: 'Baladas', icon: 'whatshot', color: 'purple' },
-  { title: 'Cursos', icon: 'local_library', color: 'blue' },
-  { title: 'Esportes', icon: 'pool', color: 'green' },
+  { title: 'Eventos com Lista', icon: 'loyalty', color: 'green' },
   { title: 'Shows', icon: 'local_activity', color: 'amber' },
   { title: 'Bares e Restaurantes', icon: 'local_bar', color: 'orange' },
-  { title: 'Promoções', icon: 'loyalty', color: 'blueGrey' },
+  { title: 'Esportes', icon: 'pool', color: 'blueGrey' },
+  { title: 'Cursos', icon: 'local_library', color: 'blue' },
 ];
 
 export class SideNav extends React.Component {

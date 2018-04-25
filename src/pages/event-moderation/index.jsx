@@ -19,6 +19,7 @@ const EventModeration = () => (
           status="PENDING"
           start={moment().startOf('hour')}
           forceFetch
+          counter
         />
       </div>
     </div>

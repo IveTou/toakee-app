@@ -1,21 +1,24 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import EventBox from '~/src/components/event-box';
 import Banner from '~/src/components/banner';
 
-if (process.env.BROWSER) {
-  require('./style.scss');
-}
+import { withIndexStyle } from './styles';
 
-const EventFeed = () => (
-  <div className="EventFeed">
-    <div className="EventFeed-banner">
+const EventFeed = ({ classes }) => (
+  <div>
+    <div className={classes.banner}>
       <Banner />
     </div>
-    <div className="EventFeed-lists">
+    <div className={classes.list}>
       <EventBox />
     </div>
   </div>
 );
 
-export default EventFeed;
+EventFeed.propTypes = {
+  classes: PropTypes.object,
+};
+
+export default withIndexStyle(EventFeed);
