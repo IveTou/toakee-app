@@ -29,18 +29,22 @@ export const withIndexStyle = withStyles(theme => ({
   calendar: {
     float: 'left',
     marginRight: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
+    paddingRight: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing.unit,
     borderRight: '1px solid rgba(0, 0, 0,.13)',
     color: theme.typography.display1.color,
   },
-  chipList:{
-    paddingLeft: theme.spacing.unit,
-  },
-  chipItem: {
+  chip: {
+    color: theme.palette.grey[50],
+    backgroundColor: theme.palette.grey[500],
     margin: theme.spacing.unit,
   },
   listItem: {
     paddingBottom: 0,
+    paddingLeft: theme.spacing.unit,
+  },
+  listItemIcon: {
+    marginRight: 0,
   },
   listSubheader: {
     paddingTop: theme.spacing.unit * 2,
@@ -57,13 +61,15 @@ export const withIndexStyle = withStyles(theme => ({
   },
   mapGrid: {
     minWidth: theme.spacing.unit * 17,
-    marginTop: theme.spacing.unit,
+    margin: theme.spacing.unit,
   },
   eventsCard: {
     paddingRight: theme.spacing.unit,
     paddingLeft: theme.spacing.unit,
     [theme.breakpoints.down('sm')]: {
       paddingBottom: theme.spacing.unit * 4,
+      paddingRight: theme.spacing.unit * 3,
+      paddingLeft: theme.spacing.unit * 3,
     },
   },
   gridList: {
@@ -93,4 +99,3 @@ export const withIndexStyle = withStyles(theme => ({
     color: theme.palette.common.white,
   },
 }));
-

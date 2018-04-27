@@ -196,7 +196,7 @@ export class EventPage extends React.Component {
               <Divider light />
               <div className={classes.chipList}>
                 <For each="category" of={categories} index="index">
-                  <Chip label={category.title} className={classes.chipItem} />
+                  <Chip label={category.title} className={classes.chip} key={index} />
                 </For>
               </div>
               <Grid container spacing={8}>
@@ -204,7 +204,7 @@ export class EventPage extends React.Component {
                   <List dense>
                     <If condition={place && place.address}>
                       <ListItem className={classes.listItem}>
-                        <ListItemIcon>
+                        <ListItemIcon className={classes.listItemIcon}>
                           <Icon>place</Icon>
                         </ListItemIcon>
                         <ListItemText
@@ -216,7 +216,7 @@ export class EventPage extends React.Component {
                     </If>
                     <If condition={start}>
                       <ListItem className={classes.listItem}>
-                        <ListItemIcon>
+                        <ListItemIcon className={classes.listItemIcon}>
                           <Icon>event</Icon>
                         </ListItemIcon>
                         <ListItemText
@@ -226,7 +226,7 @@ export class EventPage extends React.Component {
                         />
                       </ListItem>
                       <ListItem className={classes.listItem}>
-                        <ListItemIcon>
+                        <ListItemIcon className={classes.listItemIcon}>
                           <Icon>schedule</Icon>
                         </ListItemIcon>
                         <ListItemText
@@ -244,9 +244,9 @@ export class EventPage extends React.Component {
                         <ListItem>{this.renderModerationButtons()}</ListItem>
                       </When>
                       <Otherwise>
-                        <ListItem className={classes.lisItem}>
+                        <ListItem className={classes.listItem}>
                           <If condition={status == 'ACTIVE'}>
-                            <AttendButton className={classes.listButton} eventId={id} />
+                            <AttendButton eventId={id} />
                             <Button
                               className={classes.listButton}
                               onClick={this.fbShare}
@@ -274,15 +274,15 @@ export class EventPage extends React.Component {
                   </List>
                 </Grid>
 
-                <Grid className={classes.mapGrid} item xs={12} sm={3}>
-                  <Paper elevation={1}>
+                <Grid item xs={12} sm={3}>
+                  <Paper className={classes.mapGrid} elevation={1}>
                     <Wrapper mini center={coordinates} centerMarker />
                   </Paper>
                 </Grid>
               </Grid>
             </CardContent>
             <Divider light />
-            <CardContent>
+            <CardContent style={{ paddingRight: 8, paddingLeft: 8 }}>
               <Grid container spacing={8}>
                 <Grid item sm={12} md={6} style={{ width: '100%' }}>
                   <GridList cellHeight="auto">
@@ -303,7 +303,7 @@ export class EventPage extends React.Component {
               </Grid>
             </CardContent>
             <Divider light />
-            <CardContent style={{ paddingRight: 32, paddingLeft: 32 }}>
+            <CardContent style={{ paddingRight: 24, paddingLeft: 24 }}>
               <Typography variant="body2" style={{ paddingBottom: 8 }}>
                 Descrição
               </Typography>
