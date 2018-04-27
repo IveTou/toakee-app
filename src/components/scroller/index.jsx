@@ -19,7 +19,7 @@ Scroller.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
-  location: PropTypes.string,
+  location: PropTypes.object,
 };
 
 export default withRouter(Scroller);
