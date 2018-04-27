@@ -8,6 +8,7 @@ import { withInfo } from '~/src/hocs';
 import TopBar from '~/src/components/top-bar';
 import Footer from '~/src/components/footer';
 import SideNav from '~/src/components/sidenav';
+import Scroller from '~/src/components/scroller';
 import { fbInit } from '~/src/utils/facebook';
 
 import { withDefaultStyle } from './styles';
@@ -43,7 +44,7 @@ export class DefaultLayout extends React.Component {
         <TopBar onToggle={this.toggleNav} mobile={isMobile} />
         <SideNav mobile={isMobile} open={navOpen} onToggle={this.toggleNav} />
         <main className={classes.main}>
-          {children}
+          <Scroller>{children}</Scroller>
           <If condition={!hideFooter}>
             <Footer />
           </If>
