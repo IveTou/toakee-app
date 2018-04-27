@@ -9,6 +9,7 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Chip,
   Divider,
   ExpansionPanel,
   ExpansionPanelSummary,
@@ -138,6 +139,7 @@ export class EventPage extends React.Component {
     declare var index;
     declare var priceItem;
     declare var photosItem;
+    declare var category;
 
     return (
       <Grid container className={classes.root} spacing={0}>
@@ -192,6 +194,11 @@ export class EventPage extends React.Component {
                 </ExpansionPanel>
               </If>
               <Divider light />
+              <div className={classes.chipList}>
+                <For each="category" of={categories} index="index">
+                  <Chip label={category.title} className={classes.chipItem} />
+                </For>
+              </div>
               <Grid container spacing={8}>
                 <Grid item xs={12} sm={9} style={{ paddingTop: 8 }}>
                   <List dense>

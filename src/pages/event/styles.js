@@ -33,6 +33,12 @@ export const withIndexStyle = withStyles(theme => ({
     borderRight: '1px solid rgba(0, 0, 0,.13)',
     color: theme.typography.display1.color,
   },
+  chipList:{
+    paddingLeft: theme.spacing.unit,
+  },
+  chipItem: {
+    margin: theme.spacing.unit,
+  },
   listItem: {
     paddingBottom: 0,
   },
