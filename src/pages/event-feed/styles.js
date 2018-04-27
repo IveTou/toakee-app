@@ -9,6 +9,6 @@ export const withIndexStyle = withStyles(theme => ({
     },
   },
   list: {
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing.unit,
   },
 }));

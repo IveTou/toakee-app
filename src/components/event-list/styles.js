@@ -5,6 +5,9 @@ export const withIndexStyle = withStyles(theme => ({
     paddingLeft: theme.spacing.unit,
     paddingBottom: theme.spacing.unit,
     paddingTop: theme.spacing.unit * 2,
+    [theme.breakpoints.down('sm')]: {
+      paddingLeft: theme.spacing.unit * 2,
+    }
   },
   list: {
     display: 'flex',
