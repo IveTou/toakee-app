@@ -92,8 +92,9 @@ export class EventPage extends React.Component {
   placeProfile() {
     const { event: preEvent } = this.props.location.state || {};
     const { event = preEvent, history } = this.props;
+    const { place } = event || {};
 
-    history.push({ pathname: `/local/${event.id}`, state: { event } });
+    history.push({ pathname: `/local/${place.id}`, state: { place } });
   }
 
   renderModerationButtons() {

@@ -9,6 +9,7 @@ import DefaultLayout from '~/src/layouts/default';
 import NewEventPage from '~/src/pages/new-event';
 import EditEventPage from '~/src/pages/edit-event';
 import EventPage from '~/src/pages/event';
+import VenuePage from '~/src/pages/venue';
 import EventFeed from '~/src/pages/event-feed';
 import SearchPage from '~/src/pages/search';
 import Dashboard from '~/src/pages/dashboard';
@@ -56,6 +57,7 @@ const App = ({ userAgent }) => (
           <Route path="/" exact component={EventFeed} />
           <Route path="/search" component={SearchPage} />
           <Route path="/evento/:id" exact component={EventPage} />
+          <Route path="/local/:id" exact component={VenuePage} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/termos-de-uso" component={UseTerms} />
           <Route path="/quem-somos" component={About} />
