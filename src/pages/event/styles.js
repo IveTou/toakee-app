@@ -48,6 +48,7 @@ export const withIndexStyle = withStyles(theme => ({
   },
   listSubheader: {
     paddingTop: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing.unit,
   },
   listItemText: {
     color: theme.typography.display1.color,

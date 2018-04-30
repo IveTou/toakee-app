@@ -236,41 +236,39 @@ export class EventPage extends React.Component {
                         />
                       </ListItem>
                     </If>
-                    <Choose>
-                      <When condition={viewer.isAdmin}>
-                        <ListSubheader className={classes.listSubheader} component="div">
-                          Moderação
-                        </ListSubheader>
-                        <ListItem>{this.renderModerationButtons()}</ListItem>
-                      </When>
-                      <Otherwise>
-                        <ListItem className={classes.listItem}>
-                          <If condition={status == 'ACTIVE'}>
-                            <AttendButton eventId={id} />
-                            <Button
-                              className={classes.listButton}
-                              onClick={this.fbShare}
-                              variant="raised"
-                              color="default"
-                            >
-                              Compartilhar
-                              <Icon className={classes.rightIcon}>share</Icon>
-                            </Button>
-                          </If>
-                          <If condition={viewer.isAdmin || creator.id === viewer.id}>
-                            <Button
-                              variant="raised"
-                              color="default"
-                              className={classes.listButton}
-                              href={`/evento/${id}/editar`}
-                            >
-                              Editar
-                              <Icon className={classes.rightIcon}>mode_edit</Icon>
-                            </Button>
-                          </If>
-                        </ListItem>
-                      </Otherwise>
-                    </Choose>
+                    <If condition={viewer.isAdmin}>
+                      <ListSubheader className={classes.listSubheader} component="div">
+                        Moderação
+                      </ListSubheader>
+                      <ListItem className={classes.listItem}>
+                        {this.renderModerationButtons()}
+                      </ListItem>
+                    </If>
+                    <ListItem className={classes.listItem}>
+                      <If condition={!viewer.isAdmin && status == 'ACTIVE'}>
+                        <AttendButton eventId={id} />
+                        <Button
+                          className={classes.listButton}
+                          onClick={this.fbShare}
+                          variant="raised"
+                          color="default"
+                        >
+                          Compartilhar
+                          <Icon className={classes.rightIcon}>share</Icon>
+                        </Button>
+                      </If>
+                      <If condition={viewer.isAdmin || creator.id === viewer.id}>
+                        <Button
+                          variant="raised"
+                          color="default"
+                          className={classes.listButton}
+                          href={`/evento/${id}/editar`}
+                        >
+                          Editar
+                          <Icon className={classes.rightIcon}>mode_edit</Icon>
+                        </Button>
+                      </If>
+                    </ListItem>
                   </List>
                 </Grid>
 
