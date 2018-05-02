@@ -61,7 +61,7 @@ export class VenuePage extends React.Component {
 
   render() {
     const { place: prePlace } = this.props.location.state || {};
-    const { place = prePlace } = this.props;
+    const { place = prePlace, classes } = this.props;
     const {
       id,
       name,
@@ -71,13 +71,25 @@ export class VenuePage extends React.Component {
     } = place || {};
 
     return (
-      <Grid container spacing={0}>
+      <Grid container className={classes.root} spacing={0}>
+        <Grid item xs={12} sm={12} md={9}>
+          <Card className={classes.card} >
+            <CardMedia  className={classes.media}>
+              <Paper className={classes.avatar}/>
+            </CardMedia>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={12} md={3}>
+          <Card className={classes.eventsCard}>
+          </Card>
+        </Grid>
       </Grid>
     );
   }
 }
 
 VenuePage.propTypes = {
+  classes: PropTypes.object,
   place: PropTypes.object,
   viewer: PropTypes.object,
   setStatus: PropTypes.func,
@@ -88,5 +100,6 @@ VenuePage.propTypes = {
 
 export default compose(
   withRouter,
+  withIndexStyle,
   withInfo(['viewer', 'deviceInfo']),
 )(VenuePage);

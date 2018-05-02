@@ -51,7 +51,7 @@ export const withIndexStyle = withStyles(theme => ({
     backgroundColor: theme.palette.secondary.light,
   },
   listItemPlaceButton: {
-    fontWeight: 400,
+    fontWeight: theme.typography.fontWeightRegular,
     width: '50%',
   },
   listItemIcon: {

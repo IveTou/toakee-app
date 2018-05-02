@@ -216,8 +216,8 @@ export class EventPage extends React.Component {
                       <If condition={place.name}>
                         <ListItem className={classes.listItemPlace}>
                           <Choose>
-                            <When condition={place.logo}>
-                              <Avatar alt={`perfil ${place.name}`} src={place.logo} />
+                            <When condition={place.avatar}>
+                              <Avatar alt={`perfil ${place.name}`} src={place.avatar} />
                             </When>
                             <Otherwise>
                               <Avatar
@@ -229,7 +229,6 @@ export class EventPage extends React.Component {
                             </Otherwise>
                           </Choose>
                           <ListItemText
-                            disableTypography
                             className={classes.listItemText}
                             primary={place.name}
                           />
