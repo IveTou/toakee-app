@@ -245,29 +245,35 @@ export class EventPage extends React.Component {
                       </ListItem>
                     </If>
                     <ListItem className={classes.listItem}>
-                      <If condition={!viewer.isAdmin && status == 'ACTIVE'}>
-                        <AttendButton eventId={id} />
-                        <Button
-                          className={classes.listButton}
-                          onClick={this.fbShare}
-                          variant="raised"
-                          color="default"
-                        >
-                          Compartilhar
-                          <Icon className={classes.rightIcon}>share</Icon>
-                        </Button>
-                      </If>
-                      <If condition={viewer.isAdmin || creator.id === viewer.id}>
-                        <Button
-                          variant="raised"
-                          color="default"
-                          className={classes.listButton}
-                          href={`/evento/${id}/editar`}
-                        >
-                          Editar
-                          <Icon className={classes.rightIcon}>mode_edit</Icon>
-                        </Button>
-                      </If>
+                      <Choose>
+                        <When condition={status == 'ACTIVE'}>
+                          <If condition={!viewer.isAdmin}>
+                            <AttendButton eventId={id} />
+                            <Button
+                              className={classes.listButton}
+                              onClick={this.fbShare}
+                              variant="raised"
+                              color="default"
+                            >
+                              Compartilhar
+                              <Icon className={classes.rightIcon}>share</Icon>
+                            </Button>
+                          </If>
+                        </When>
+                        <Otherwise>
+                          <If condition={viewer.isAdmin || creator.id === viewer.id}>
+                            <Button
+                              variant="raised"
+                              color="default"
+                              className={classes.listButton}
+                              href={`/evento/${id}/editar`}
+                            >
+                              Editar
+                              <Icon className={classes.rightIcon}>mode_edit</Icon>
+                            </Button>
+                          </If>
+                        </Otherwise>
+                      </Choose>
                     </ListItem>
                   </List>
                 </Grid>
