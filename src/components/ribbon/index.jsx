@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import classNames from 'classnames';
 import { upperFirst, get } from 'lodash';
 import { Paper, Typography } from 'material-ui';
 import { deepOrange, green } from 'material-ui/colors';
@@ -36,13 +37,18 @@ const renderRibbonContent = (status, start, end, discountLists) => {
   };
 };
 
-const Ribbon = ({ classes, status, start, end, discountLists }) => {
+const Ribbon = ({ classes, mini, status, start, end, discountLists }) => {
   const ribbon = renderRibbonContent(status, start, end, discountLists);
+  const rootClasses = { paper: classNames(classes.root, mini && classes.mini) };
 
   return(
     <If condition={ribbon}>
-      <Paper className={classes.root} elevation={4} style={{ backgroundColor: `${ribbon.color}` }}>
-        <Typography className={classes.caption} variant="caption" color="inherit">
+      <Paper
+        className={rootClasses}
+        elevation={4}
+        style={{ backgroundColor: `${ribbon.color}` }}
+      >
+        <Typography className={classes.caption} color="inherit">
           {ribbon.content}
         </Typography>
       </Paper>
@@ -56,6 +62,7 @@ Ribbon.propTypes = {
   start: PropTypes.object,
   end: PropTypes.object,
   discountLists: PropTypes.array,
+  mini: PropTypes.bool,
 };
 
 export default withIndexStyle(Ribbon);

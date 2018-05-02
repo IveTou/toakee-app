@@ -32,6 +32,7 @@ import EventList from '~/src/components/event-list';
 import Calendar from '~/src/components/calendar';
 import Wrapper from '~/src/components/map';
 import AttendButton from '~/src/components/attend-button';
+import Ribbon from '~/src/components/ribbon';
 import { fullDateFormat, timeFormat } from '~/src/utils/moment';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import { withInfo } from '~/src/hocs';
@@ -119,8 +120,10 @@ export class EventPage extends React.Component {
       description,
       place,
       start,
+      end,
       flyer,
       price,
+      discountLists,
       prices = [],
       photos = [],
       creator = {},
@@ -150,7 +153,14 @@ export class EventPage extends React.Component {
               image={flyer}
               title={title}
               alt={flyerAlt}
-            />
+            >
+              <Ribbon
+                status={status}
+                start={startMoment}
+                end={moment(end)}
+                discountLists={discountLists}
+              />
+            </CardMedia>
             <CardContent>
               <Calendar className={classes.calendar} date={startMoment} />
               <Typography className={classes.title} variant="display1" component="h1">

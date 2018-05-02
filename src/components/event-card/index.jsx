@@ -23,6 +23,7 @@ const EventCard = ({ event, className, classes }) => {
             style={{ backgroundImage: `url("${flyer}")` }}
           />
           <Ribbon
+            mini
             status={status}
             start={startMoment}
             end={moment(end)}
