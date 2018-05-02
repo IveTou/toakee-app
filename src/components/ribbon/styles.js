@@ -1,6 +1,6 @@
 import { withStyles } from 'material-ui';
 
-export const withRibbonStyle = withStyles(theme => ({
+export const withIndexStyle = withStyles(theme => ({
   root: {
     position: 'absolute',
     top: theme.spacing.unit * 2,

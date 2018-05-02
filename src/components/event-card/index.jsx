@@ -1,49 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { upperFirst, get } from 'lodash';
 import moment from 'moment';
 import { Card, CardContent, Typography, Icon } from 'material-ui';
-import { deepOrange, green } from 'material-ui/colors';
 
 import Calendar from '~/src/components/calendar';
 import Ribbon from '~/src/components/ribbon';
 
 import { withIndexStyle } from './styles';
 
-const renderLabel = (status, start, end, discountLists) => {
-  if (status === 'PENDING' || status === 'REPROVED') {
-    return {
-      content: status === 'PENDING' ? 'Pendente de aprovação' : 'Reprovado',
-      color: status === 'PENDING' ? 'blue' : 'red',
-    };
-  }
-
-  if (get(discountLists, 'length')) {
-    return {
-      content: 'Lista de desconto',
-      color: green[500],
-    }
-  }
-
-  const now = moment();
-
-  if (end.isBefore(now) || start.isAfter(moment().add(4, 'hours'))) {
-    return null;
-  }
-
-  return {
-    content: start.isSameOrBefore(now) && end.isSameOrAfter(now)
-      ? 'Acontecendo agora'
-      : upperFirst(start.fromNow()),
-    color: deepOrange[500],
-  };
-};
-
 const EventCard = ({ event, className, classes }) => {
   const { id, title, place, flyer, start, end, status, discountLists } = event;
   const startMoment = moment(start);
-  const ribbon = renderLabel(status, startMoment, moment(end), discountLists);
 
   return (
     <Link className={className} to={{ pathname: `/evento/${id}`, state: { event } }}>
@@ -54,9 +22,12 @@ const EventCard = ({ event, className, classes }) => {
             alt={`flyer do ${title}`}
             style={{ backgroundImage: `url("${flyer}")` }}
           />
-          <If condition={ribbon}>
-            <Ribbon color={ribbon.color}>{ribbon.content}</Ribbon>
-          </If>
+          <Ribbon
+            status={status}
+            start={startMoment}
+            end={moment(end)}
+            discountLists={discountLists}
+          />
         </div>
         <CardContent className={classes.cardContent}>
           <Typography variant="subheading" className={classes.cardContentHeader}>
