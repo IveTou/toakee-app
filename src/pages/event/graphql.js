@@ -18,6 +18,7 @@ export default gql`
       status
       photos { src, thumb }
       creator { id }
+      discountLists { id },
     }
   }
 `;
