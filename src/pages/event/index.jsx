@@ -32,6 +32,7 @@ import EventList from '~/src/components/event-list';
 import Calendar from '~/src/components/calendar';
 import Wrapper from '~/src/components/map';
 import AttendButton from '~/src/components/attend-button';
+import Ribbon from '~/src/components/ribbon';
 import { fullDateFormat, timeFormat } from '~/src/utils/moment';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import { withInfo } from '~/src/hocs';
@@ -119,8 +120,10 @@ export class EventPage extends React.Component {
       description,
       place,
       start,
+      end,
       flyer,
       price,
+      discountLists,
       prices = [],
       photos = [],
       creator = {},
@@ -150,7 +153,14 @@ export class EventPage extends React.Component {
               image={flyer}
               title={title}
               alt={flyerAlt}
-            />
+            >
+              <Ribbon
+                status={status}
+                start={startMoment}
+                end={moment(end)}
+                discountLists={discountLists}
+              />
+            </CardMedia>
             <CardContent>
               <Calendar className={classes.calendar} date={startMoment} />
               <Typography className={classes.title} variant="display1" component="h1">
@@ -245,29 +255,35 @@ export class EventPage extends React.Component {
                       </ListItem>
                     </If>
                     <ListItem className={classes.listItem}>
-                      <If condition={!viewer.isAdmin && status == 'ACTIVE'}>
-                        <AttendButton eventId={id} />
-                        <Button
-                          className={classes.listButton}
-                          onClick={this.fbShare}
-                          variant="raised"
-                          color="default"
-                        >
-                          Compartilhar
-                          <Icon className={classes.rightIcon}>share</Icon>
-                        </Button>
-                      </If>
-                      <If condition={viewer.isAdmin || creator.id === viewer.id}>
-                        <Button
-                          variant="raised"
-                          color="default"
-                          className={classes.listButton}
-                          href={`/evento/${id}/editar`}
-                        >
-                          Editar
-                          <Icon className={classes.rightIcon}>mode_edit</Icon>
-                        </Button>
-                      </If>
+                      <Choose>
+                        <When condition={status == 'ACTIVE'}>
+                          <If condition={!viewer.isAdmin}>
+                            <AttendButton eventId={id} />
+                            <Button
+                              className={classes.listButton}
+                              onClick={this.fbShare}
+                              variant="raised"
+                              color="default"
+                            >
+                              Compartilhar
+                              <Icon className={classes.rightIcon}>share</Icon>
+                            </Button>
+                          </If>
+                        </When>
+                        <Otherwise>
+                          <If condition={viewer.isAdmin || creator.id === viewer.id}>
+                            <Button
+                              variant="raised"
+                              color="default"
+                              className={classes.listButton}
+                              href={`/evento/${id}/editar`}
+                            >
+                              Editar
+                              <Icon className={classes.rightIcon}>mode_edit</Icon>
+                            </Button>
+                          </If>
+                        </Otherwise>
+                      </Choose>
                     </ListItem>
                   </List>
                 </Grid>
