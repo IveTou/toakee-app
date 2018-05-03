@@ -123,7 +123,7 @@ export class EventPage extends React.Component {
       end,
       flyer,
       price,
-      discountLists,
+      discountLists = [],
       prices = [],
       photos = [],
       creator = {},

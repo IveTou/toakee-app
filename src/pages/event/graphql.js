@@ -9,6 +9,7 @@ export default gql`
       start
       end
       description
+      discountLists
       price
       prices { description, value }
       categories { id, title },
