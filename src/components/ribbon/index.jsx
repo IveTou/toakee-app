@@ -39,7 +39,8 @@ const renderRibbonContent = (status, start, end, discountLists) => {
 
 const Ribbon = ({ classes, mini, status, start, end, discountLists }) => {
   const ribbon = renderRibbonContent(status, start, end, discountLists);
-  const rootClasses = { paper: classNames(classes.root, mini && classes.mini) };
+  const rootClasses = classNames(classes.root, mini && classes.mini);
+  const captionClasses = classNames(mini ? classes.captionMini : classes.caption);
 
   return(
     <If condition={ribbon}>
@@ -48,7 +49,7 @@ const Ribbon = ({ classes, mini, status, start, end, discountLists }) => {
         elevation={4}
         style={{ backgroundColor: `${ribbon.color}` }}
       >
-        <Typography className={classes.caption} color="inherit">
+        <Typography className={captionClasses}  variant="caption" color="inherit">
           {ribbon.content}
         </Typography>
       </Paper>
