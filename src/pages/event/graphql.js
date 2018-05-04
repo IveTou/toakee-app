@@ -9,7 +9,7 @@ export default gql`
       start
       end
       description
-      discountLists
+      discountLists { id }
       price
       prices { description, value }
       categories { id, title },
@@ -18,7 +18,6 @@ export default gql`
       status
       photos { src, thumb }
       creator { id }
-      discountLists { id },
     }
   }
 `;
