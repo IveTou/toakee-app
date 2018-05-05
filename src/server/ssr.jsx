@@ -3,18 +3,20 @@ import 'ignore-styles';
 
 import React from 'react';
 import { MuiThemeProvider } from 'material-ui';
+import ApolloClient from 'apollo-client';
 import {
-  ApolloClient,
-  createNetworkInterface,
   ApolloProvider,
   getDataFromTree,
 } from 'react-apollo';
+import { InMemoryCache } from 'apollo-cache-inmemory'
+import { ApolloLink } from 'apollo-link';
+import { createHttpLink } from 'apollo-link-http';
 import { StaticRouter } from 'react-router';
 import { JssProvider, SheetsRegistry } from 'react-jss'
 import ReactDOMServer from 'react-dom/server';
+import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import { pick } from 'lodash';
 import moment from 'moment-timezone';
 import htmlToText from 'html-to-text';
 
@@ -51,39 +53,43 @@ const getMetaTags = (obj, url) => {
     };
 };
 
+
 export const exposeSSRRoutes = (app, assets) => {
   app.get('*', (req, res) => {
     const { token } = req.cookies;
     const headers = token ? { authorization: `Bearer ${token}` } : {};
 
-    const client = new ApolloClient({
-      ssrMode: true,
-      networkInterface: createNetworkInterface({
-        uri: config.GRAPHQL_URI,
-        opts: { headers },
-      }),
-    });
+    const link = new ApolloLink((operation, forward) => {
+      operation.setContext({ headers });
+      return forward(operation);
+    }).concat(createHttpLink({ uri: config.GRAPHQL_URI }));
 
+    const client = new ApolloClient({
+      cache: new InMemoryCache(),
+      ssrMode: true,
+      link,
+    });
     const sheets = new SheetsRegistry();
 
     const apolloApp = (
       <ApolloProvider client={client} store={reduxStore}>
-        <StaticRouter location={req.url} context={{}}>
-          <JssProvider registry={sheets}>
-            <MuiThemeProvider theme={theme}>
-              <App userAgent={req.headers['user-agent']} />
-            </MuiThemeProvider>
-          </JssProvider>
-        </StaticRouter>
+        <Provider store={reduxStore}>
+          <StaticRouter location={req.url} context={{}}>
+            <JssProvider registry={sheets}>
+              <MuiThemeProvider theme={theme}>
+                <App userAgent={req.headers['user-agent']} />
+              </MuiThemeProvider>
+            </JssProvider>
+          </StaticRouter>
+        </Provider>
       </ApolloProvider>
     );
 
     getDataFromTree(apolloApp).then(() => {
-      client.initStore();
       const content = ReactDOMServer.renderToStaticMarkup(apolloApp);
       const apolloContent = <div id="app" dangerouslySetInnerHTML={{ __html: content }} />;
-      const initialState = pick(client.store.getState(), 'apollo.data');
-      const ogMetaTags = getMetaTags(initialState.apollo.data, `${req.headers.host}${req.url}`);
+      const initialState = client.cache.extract();
+      const ogMetaTags = getMetaTags(initialState, `${req.headers.host}${req.url}`);
 
       res.render('index.html', {
         assets,
@@ -95,4 +101,3 @@ export const exposeSSRRoutes = (app, assets) => {
     });
   });
 };
-

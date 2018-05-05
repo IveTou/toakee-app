@@ -5,6 +5,7 @@ import { createBrowserHistory } from 'history';
 
 import { Router } from 'react-router-dom';
 import { ApolloProvider } from 'react-apollo';
+import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
@@ -28,11 +29,13 @@ const createStoreWithMiddleware = applyMiddleware(
 const reduxStore = createStoreWithMiddleware(rootReducer);
 
 const app = (
-  <ApolloProvider store={reduxStore} client={apolloClient}>
-    <Router history={createBrowserHistory()}>
-      <App />
-    </Router>
-  </ApolloProvider>
+  <Provider store={reduxStore}>
+    <ApolloProvider store={reduxStore} client={apolloClient}>
+      <Router history={createBrowserHistory()}>
+        <App />
+      </Router>
+    </ApolloProvider>
+  </Provider>
 );
 
 render(app, document.getElementById('app'), () => {

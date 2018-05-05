@@ -1,24 +1,19 @@
 @import './colors';
 @import "~slick-carousel/slick/slick.css";
 
-html, body #app {
-  height: 100%;
+html, body, #app {
+  width: 100%;
   font-size: 16px !important;
 }
 
+#app {
+  z-index: 1;
+  overflow: hidden;
+}
+
 body {
-  height: 100%;
   margin: 0;
   line-height: normal !important;
-}
-
-* {
-  min-width: 0;
-  min-height: 0;
-}
-
-button.slick-arrow {
-  display: none !important;
 }
 
 .icon.link {

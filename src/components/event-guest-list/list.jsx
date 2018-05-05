@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { chain } from 'lodash';
+import { flow, sortBy, filter as _filter } from 'lodash/fp';
 
 import EventGuestListItem from './item';
 
@@ -13,10 +13,10 @@ const EventGuestListList = ({ toggleAttendanceStatus, invitations = [], filter }
     'i',
   );
 
-  const list = chain(invitations)
-    .filter(({ normalizedName }) => normalizedName.match(filterRegex))
-    .sortBy([({ normalizedName: n }) => n.match(filterRegex).index, 'normalizedName'])
-    .value();
+  const list = flow(
+    _filter(({ normalizedName }) => normalizedName.match(filterRegex)),
+    sortBy([({ normalizedName: n }) => n.match(filterRegex).index, 'normalizedName'])
+  )(invitations);
 
   return (
     <div className="EventGuestListList">

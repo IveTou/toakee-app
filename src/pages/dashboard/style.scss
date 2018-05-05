@@ -32,6 +32,11 @@
   &-events {
     height: calc(100% - #{$spacer*11});
     overflow-y: auto;
+
+    &-spinner {
+      text-align: center;
+      margin: $spacer auto;
+    }
   }
 
   .DashboardMenuItem {

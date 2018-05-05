@@ -13,6 +13,7 @@ import EventFormSection from './section';
 import EventFormMain from './main';
 import EventFormPlace from './place';
 import EventFormPrices from './prices';
+import EventFormDiscountLists from './discount-lists';
 import EventFormDescription from './description';
 
 import { withIndexStyle } from './styles';
@@ -22,13 +23,18 @@ const sections = [
   { title: '1. Principal', component: EventFormMain },
   { title: '2. Local', component: EventFormPlace },
   { title: '3. Preços', component: EventFormPrices },
-  { title: '4. Descrição e Categorias', component: EventFormDescription },
+  { title: '4. Listas de desconto', component: EventFormDiscountLists },
+  { title: '5. Descrição e Categorias', component: EventFormDescription },
 ];
 
 const initialValues = (event) => {
   const {
-    start, end, flyer,
-    prices = [{}], categories = [],
+    start,
+    end,
+    flyer,
+    prices = [{}],
+    categories = [],
+    discountLists = [],
     ...eventProps
   } = event || {};
 
@@ -38,6 +44,7 @@ const initialValues = (event) => {
     description: '',
     categories: omitTypenames(categories),
     prices: omitTypenames(prices),
+    discountLists: omitTypenames(discountLists),
     flyer: flyer ? { url: flyer } : {},
     start: start ? moment(start) : null,
     end: end ? moment(end) : null,

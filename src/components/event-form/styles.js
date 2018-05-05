@@ -114,3 +114,14 @@ export const withPricesStyle = withStyles(theme => ({
     marginLeft: theme.spacing.unit,
   },
 }));
+
+export const withDiscountListsStyle = withStyles(theme => ({
+  discountList: {
+    display: 'flex',
+    padding: theme.spacing.unit,
+    paddingRight: theme.spacing.unit * 2,
+  },
+  addButton: {
+    marginLeft: theme.spacing.unit,
+  },
+}));

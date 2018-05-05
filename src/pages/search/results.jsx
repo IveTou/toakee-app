@@ -9,9 +9,9 @@ import { query } from './graphql';
 
 declare var event;
 
-const SearchPageResults = ({ q, loading, nextEvents, previousEvents }) => (
+const SearchPageResults = ({ loading, nextEvents, previousEvents }) => (
   <div className="SearchPageResults">
-    <h3 className="SearchPageResults-title">Termo buscado: {q}</h3>
+    <h3 className="SearchPageResults-title">Resultados</h3>
     <Choose>
       <When condition={!loading && nextEvents && nextEvents.length}>
         <Card.Group>
@@ -42,7 +42,6 @@ const SearchPageResults = ({ q, loading, nextEvents, previousEvents }) => (
 );
 
 SearchPageResults.propTypes = {
-  q: PropTypes.string,
   loading: PropTypes.bool,
   nextEvents: PropTypes.array,
   previousEvents: PropTypes.array,

@@ -1,7 +1,6 @@
 import express from 'express';
 import nunjucks from 'nunjucks';
 import bodyParser from 'body-parser';
-import sendgrid from 'sendgrid';
 import fs from 'fs';
 import GooglePlaces from 'node-googleplaces';
 import cookieParser from 'cookie-parser';
@@ -11,7 +10,7 @@ import MixpanelClient from './clients/mixpanel';
 import config from './config';
 import { exposeSSRRoutes } from './ssr';
 
-const { PORT, SUPPORT_EMAIL, SENDGRID_API_KEY, GOOGLE_PLACES_KEY } = config;
+const { PORT, GOOGLE_PLACES_KEY } = config;
 const devMode = process.env.NODE_ENV !== 'production';
 
 const app = express();
@@ -44,31 +43,6 @@ const placesApi = new GooglePlaces(GOOGLE_PLACES_KEY);
 app.get('/gapi/predict', (req, res) => {
   const { input } = req.query;
   placesApi.queryAutocomplete({ input }, (_, { body }) => res.json(body));
-});
-
-const helper = sendgrid.mail;
-const sg = sendgrid(SENDGRID_API_KEY);
-
-app.post('/send-email', (req, res) => {
-  const { from, name, message, subscribe } = req.body;
-
-  const mailBody = subscribe ?
-    `<h2>Inscrever-se</h2><p>${message}</p>` :
-    `<h2>Não Inscrever-se</h2><p>${message}</p>`;
-
-  const fromEmail = new helper.Email(from, name);
-  const toEmail = new helper.Email(SUPPORT_EMAIL);
-  const subject = 'Customer Contact';
-  const content = new helper.Content('text/html', mailBody);
-  const mail = new helper.Mail(fromEmail, subject, toEmail, content);
-
-  const request = sg.emptyRequest({
-    method: 'POST',
-    path: '/v3/mail/send',
-    body: mail.toJSON(),
-  });
-
-  sg.API(request, (_, { statusCode }) => res.json({ ok: statusCode === '202' }));
 });
 
 app.post('/events/track', (req, res) => {

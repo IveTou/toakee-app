@@ -9,9 +9,9 @@ export const withAuth = compose(
   connect(
     () => ({}),
     (dispatch, { viewer }) => ({
-      requireLogin: fn => (...args) => userIsLogged(viewer)
+      requireLogin: (fn, mode) => (...args) => userIsLogged(viewer)
         ? fn(viewer, ...args)
-        : dispatch(openAuthModal((viewer) => fn(viewer, ...args))),
+        : dispatch(openAuthModal((viewer) => fn(viewer, ...args), mode)),
     }),
   ),
 );

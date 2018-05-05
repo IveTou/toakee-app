@@ -10,6 +10,7 @@ export const query = gql`
     $strict: Boolean,
     $status: EventStatus,
     $has: String,
+    $relatedTo: String,
     $sort: JSON,
     $skipList: Boolean,
     $skipCount: Boolean!
@@ -23,6 +24,7 @@ export const query = gql`
         categoryIds: $categoryIds,
         status: $status,
         has: $has,
+        relatedTo: $relatedTo,
       ) @skip(if: $skipCount)
 
       events(
@@ -34,6 +36,7 @@ export const query = gql`
         strict: $strict,
         status: $status,
         has: $has,
+        relatedTo: $relatedTo,
         sort: $sort,
         forceEmpty: $skipList,
       ) {
@@ -45,6 +48,9 @@ export const query = gql`
         status
 
         place { id, name, address }
+        discountLists {
+          id
+        }
       }
     }
   }

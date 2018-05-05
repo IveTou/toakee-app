@@ -7,7 +7,6 @@ import { Typography } from 'material-ui';
 
 import { showSnackbar } from '~/src/ducks/snackbar';
 import { withViewer } from '~/src/hocs';
-import DefaultLayout from '~/src/layouts/default';
 import CloudinaryApi from '~/src/toakee-core/apis/cloudinary.js';
 
 import EventForm from '~/src/components/event-form';
@@ -56,6 +55,13 @@ const EditEventPage = ({
         return xorBy(categories, mapping(event[key]), 'title').length
           ? { ...obj, [key]: categories }
           : obj;
+      } else if (key === 'discountLists') {
+        const mapping = dls => dls.map(dl => pick(dl, ['id', 'name', 'registrationDeadline']));
+        const comparator = dl => `${dl.name}|${dl.registrationDeadline}`;
+        const discountLists = mapping(value);
+        return xorBy(discountLists, mapping(event[key]), comparator).length
+          ? { ...obj, [key]: discountLists }
+          : obj;
       }
       return isEqual(event[key], value) ? obj : { ...obj, [key]: value };
     }, {});
@@ -69,12 +75,10 @@ const EditEventPage = ({
   };
 
   return (
-    <DefaultLayout>
-      <div className="EditEventPage">
-        <Typography className="EditEventPage-title" variant="title">Editar Evento</Typography>
-        <EventForm onSubmit={handleSubmit} onError={alertError} event={event} />
-      </div>
-    </DefaultLayout>
+    <div className="EditEventPage">
+      <Typography className="EditEventPage-title" variant="title">Editar Evento</Typography>
+      <EventForm onSubmit={handleSubmit} onError={alertError} event={event} />
+    </div>
   );
 };
 
