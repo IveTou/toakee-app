@@ -44,7 +44,8 @@ export class DefaultLayout extends React.Component {
         <TopBar onToggle={this.toggleNav} mobile={isMobile} />
         <SideNav mobile={isMobile} open={navOpen} onToggle={this.toggleNav} />
         <main className={classes.main}>
-          <Scroller>{children}</Scroller>
+          <Scroller />
+          {children}
           <If condition={!hideFooter}>
             <Footer />
           </If>
