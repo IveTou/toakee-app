@@ -1,11 +1,10 @@
-import React from 'react';
-import { set }from 'lodash';
+import { set } from 'lodash';
 
-export class Scroller extends React.Component {
-  render() {
+const Scroller = () => {
+  if(global.document) {
     set(document.querySelector('main'), 'scrollTop', 0);
-    return null;
   }
+  return null;
 }
 
 export default Scroller;
