@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+
 import { withViewer } from '~/src/hocs';
+
+import LayoutRoute from './layout';
 
 const renderOrRedirect = (Component, componentProps, shouldRender, redirectTo) => (
   <Choose>
@@ -15,7 +18,7 @@ const renderOrRedirect = (Component, componentProps, shouldRender, redirectTo) =
 );
 
 const ProtectedRoute = ({ auth, redirectTo, component, viewer = {}, ...rest }) => (
-  <Route
+  <LayoutRoute
     {...rest}
     render={props => renderOrRedirect(component, props, auth(viewer), redirectTo)}
   />
