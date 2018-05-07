@@ -1,7 +1,9 @@
-import { set }from 'lodash';
+import { set } from 'lodash';
 
 const Scroller = () => {
-  set(document.querySelector('main'), 'scrollTop', 0);
+  if(global.document) {
+    set(document.querySelector('main'), 'scrollTop', 0);
+  }
   return null;
 }
 
