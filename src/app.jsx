@@ -6,6 +6,7 @@ import { MuiThemeProvider } from 'material-ui';
 import ProtectedRoute from '~/src/routes/protected';
 import LayoutRoute from '~/src/routes/layout';
 
+import Scroller from '~/src/components/scroller';
 import NewEventPage from '~/src/pages/new-event';
 import EditEventPage from '~/src/pages/edit-event';
 import EventPage from '~/src/pages/event';
@@ -28,6 +29,7 @@ import { theme } from '~/src/mui/theme';
 const App = ({ userAgent }) => (
   <MuiThemeProvider theme={theme}>
     <ContextProvider userAgent={userAgent || window.navigator.userAgent}>
+      <Scroller />
       <Snackbar />
       <AuthModal />
       <Switch>
