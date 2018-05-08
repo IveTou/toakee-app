@@ -15,6 +15,7 @@ export const withDefaultStyle = withStyles(theme => ({
     flexGrow: 1,
     height: `calc(100% - ${topbarMobileHeight}px)`,
     marginTop: topbarMobileHeight,
+
     [theme.breakpoints.up('sm')]: {
       height: `calc(100% - ${topbarHeight}px)`,
       marginTop: topbarHeight,

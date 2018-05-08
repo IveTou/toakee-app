@@ -24,4 +24,3 @@ export const withInfo = (componentOrInfo, info) => (
     ? infoHoc(componentOrInfo, info)
     : Component => infoHoc(Component, componentOrInfo)
 );
-

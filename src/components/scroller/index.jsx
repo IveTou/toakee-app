@@ -1,25 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
+import { set } from 'lodash';
 
-class Scroller extends React.Component {
-  componentDidUpdate(prevProps) {
-    if(this.props.location !== prevProps.location) {
-      window.scrollTo(0, 0);
-    }
+const Scroller = () => {
+  if(global.document) {
+    set(document.querySelector('main'), 'scrollTop', 0);
   }
-
-  render() {
-    return this.props.children;
-  }
+  return null;
 }
 
-Scroller.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
-  location: PropTypes.object,
-};
-
-export default withRouter(Scroller);
+export default Scroller;
