@@ -214,7 +214,7 @@ export class EventPage extends React.Component {
                 </ExpansionPanel>
               </If>
               <Divider light />
-              <div className={classes.chipList}>
+              <div>
                 <For each="category" of={categories} index="index">
                   <Chip label={category.title} className={classes.chip} key={index} />
                 </For>

@@ -61,27 +61,81 @@ export class VenuePage extends React.Component {
 
   render() {
     const { place: prePlace } = this.props.location.state || {};
-    const { place = prePlace, classes } = this.props;
+    const { viewer = {}, place = prePlace, classes } = this.props;
     const {
       id,
       name,
-      coordinates,
       address,
       city,
+      avatar,
+      description,
+      contact = {},
+      coordinates = [],
+      categories = [],
+      photos = [],
     } = place || {};
+    const backgroundAlt = `Imagem de Fundo do ${name}`;
+    const coordinatesObj = coordinates && { lat: place.coordinates[1], lng: place.coordinates[0] };
+
+    declare var category;
 
     return (
       <Grid container className={classes.root} spacing={0}>
         <Grid item xs={12} sm={12} md={9}>
           <Card className={classes.card} >
-            <CardMedia  className={classes.media}>
-              <Paper className={classes.avatar}/>
+            <CardMedia  className={classes.media} image="" title={name} alt={backgroundAlt}>
+              <Paper className={classes.avatar} />
+              <Typography className={classes.title} variant="display1" component="h1">
+                {name}
+              </Typography>
             </CardMedia>
+            <CardContent>
+              <div>
+                <For each="category" of={categories} index="index">
+                  <Chip label={category.title} className={classes.chip} key={index} />
+                </For>
+              </div>
+              <Grid container spacing={8}>
+                <Grid item xs={12} sm={9} style={{ paddingTop: 8 }}>
+                  <List dense>
+                    <If condition={address}>
+                      <ListItem className={classes.listItem}>
+                        <ListItemIcon className={classes.listItemIcon}>
+                          <Icon>place</Icon>
+                        </ListItemIcon>
+                        <ListItemText
+                          disableTypography
+                          className={classes.listItemText}
+                          primary={address}
+                        />
+                      </ListItem>
+                    </If>
+                    <If condition={viewer.isAdmin}>
+                      <ListItem className={classes.listItem}>
+                        <Button
+                          variant="raised"
+                          color="default"
+                          className={classes.listButton}
+                          href={`/evento/${id}/editar`}
+                        >
+                          Editar
+                          <Icon className={classes.rightIcon}>mode_edit</Icon>
+                        </Button>
+                      </ListItem>
+                    </If>
+                  </List>
+                </Grid>
+                <Grid item xs={12} sm={3}>
+                  <Paper className={classes.mapGrid} elevation={1}>
+                    <Wrapper mini center={coordinatesObj} centerMarker />
+                  </Paper>
+                </Grid>
+              </Grid>
+            </CardContent>
           </Card>
         </Grid>
         <Grid item xs={12} sm={12} md={3}>
-          <Card className={classes.eventsCard}>
-          </Card>
+          <Card className={classes.eventsCard} />
         </Grid>
       </Grid>
     );
