@@ -33,6 +33,7 @@ import Wrapper from '~/src/components/map';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import { withInfo } from '~/src/hocs';
 
+import query from './graphql';
 import { withIndexStyle } from './styles';
 
 export class PlacePage extends React.Component {
@@ -75,11 +76,10 @@ export class PlacePage extends React.Component {
       photos = [],
     } = place || {};
     const backgroundAlt = `Imagem de Fundo do ${name}`;
-    const coordinatesObj = coordinates && { lat: place.coordinates[1], lng: place.coordinates[0] };
+    const coordinatesObj = coordinates && { lat: coordinates[1], lng: coordinates[0] };
 
     declare var category;
 
-    console.log(city);
 
     return (
       <Grid container className={classes.root} spacing={0}>
@@ -148,14 +148,19 @@ PlacePage.propTypes = {
   classes: PropTypes.object,
   place: PropTypes.object,
   viewer: PropTypes.object,
-  setStatus: PropTypes.func,
   deviceInfo: PropTypes.object,
   location: PropTypes.object,
   history: PropTypes.object,
 };
 
+const injectData = graphql(query, {
+  options: ({ match }) => ({ variables: { id: match.params.id } }),
+  props: ({ data: { place }, ownProps: { location } }) => ({ place, location }),
+});
+
 export default compose(
   withRouter,
+  injectData,
   withIndexStyle,
   withInfo(['viewer', 'deviceInfo']),
 )(PlacePage);

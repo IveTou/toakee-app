@@ -7,15 +7,6 @@ export default gql`
       name
       coordinates
       address
-      city { name }
-    }
-  }
-`;
-
-export const setPlaceStatusMutation = gql`
-  mutation SetPlaceStatus($eventId: String!, $status: EventStatus) {
-    updateEvent(eventId: $eventId, patch: { status: $status }) {
-      status
     }
   }
 `;
