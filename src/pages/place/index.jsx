@@ -35,14 +35,14 @@ import { withInfo } from '~/src/hocs';
 
 import { withIndexStyle } from './styles';
 
-export class VenuePage extends React.Component {
+export class PlacePage extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
   }
 
   componentWillReceiveProps({ viewer }) {
-    TrackingAPI.viewerSafeTrack(viewer, 'VenuePage.Viewed');
+    TrackingAPI.viewerSafeTrack(viewer, 'PlacePage.Viewed');
   }
 
   fbShare() {
@@ -78,6 +78,8 @@ export class VenuePage extends React.Component {
     const coordinatesObj = coordinates && { lat: place.coordinates[1], lng: place.coordinates[0] };
 
     declare var category;
+
+    console.log(city);
 
     return (
       <Grid container className={classes.root} spacing={0}>
@@ -142,7 +144,7 @@ export class VenuePage extends React.Component {
   }
 }
 
-VenuePage.propTypes = {
+PlacePage.propTypes = {
   classes: PropTypes.object,
   place: PropTypes.object,
   viewer: PropTypes.object,
@@ -156,4 +158,4 @@ export default compose(
   withRouter,
   withIndexStyle,
   withInfo(['viewer', 'deviceInfo']),
-)(VenuePage);
+)(PlacePage);
