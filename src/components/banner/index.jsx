@@ -4,13 +4,14 @@ import { Link } from 'react-router-dom';
 import { Icon, Typography } from 'material-ui';
 
 import Calendar from '~/src/components/calendar';
+import {ASSETS_BASE_URI, ASSETS_BANNERS_PATH } from '~/src/config';
 import { withIndexStyle } from './styles';
 
 const defaultContent = {
   visible: true,
-  title: 'O Toakee está esperando por você.',
-  description: 'Divulgue seus eventos no melhor guia de eventos em Salvador!',
-  flyer: 'http://res.cloudinary.com/toakeeassets/image/upload/s--l-ikx678--/v1505264577/core/site/signup-bg-2.jpg',
+  title: 'ESCAPE: Subversão',
+  description: 'Toda quarta de maio, 19:30, Teatro SESI Rio Vermelho. Também estamos na Campus Party #2!',
+  flyer: `${ASSETS_BASE_URI}/${ASSETS_BANNERS_PATH}/escape.jpg`,
   url: '/',
   place: '',
   time: '',
