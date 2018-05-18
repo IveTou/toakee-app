@@ -6,15 +6,12 @@ import { Formik } from 'formik';
 import { Button } from 'material-ui';
 
 import FormField from '~/src/components/form-field';
-import SocialLoginButton from '~/src/components/social-login-button';
-import { sessionSocialLogin } from '~/src/utils/session';
 import { loginMutation, socialLoginMutation } from './graphql';
 import { loginSchema } from './validation';
 import { withLoginStyle } from './styles';
 
 const AuthModalLogin = ({
   onSubmitLogin,
-  onSubmitSocialLogin,
   onGraphqlError,
   onLogin,
   onGoToSignUp,
@@ -23,12 +20,6 @@ const AuthModalLogin = ({
   const handleLoginSubmit = (values) =>
     onSubmitLogin(values)
       .then(({ data }) => onLogin(data.login))
-      .catch(onGraphqlError);
-
-  const handleSocialLoginSubmit = (socialToken) =>
-    onSubmitSocialLogin(socialToken)
-      .then(({ data }) => onLogin(data.socialLogin))
-      .then(() => sessionSocialLogin('facebook', socialToken))
       .catch(onGraphqlError);
 
   return (
@@ -68,11 +59,6 @@ const AuthModalLogin = ({
           >
             Entrar
           </Button>
-          <SocialLoginButton
-            onReceiveToken={handleSocialLoginSubmit}
-            network="facebook"
-            material
-          />
           <Button
             className={classes.formGoToSignUpButton}
             color="primary"
@@ -89,7 +75,6 @@ const AuthModalLogin = ({
 
 AuthModalLogin.propTypes = {
   onSubmitLogin: PropTypes.func,
-  onSubmitSocialLogin: PropTypes.func,
   onGraphqlError: PropTypes.func,
   onLogin: PropTypes.func,
   onGoToSignUp: PropTypes.func,
