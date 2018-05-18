@@ -32,7 +32,7 @@ const username = Yup.string()
   .min(USERNAME_MIN_LEN, min)
   .max(USERNAME_MAX_LEN, max)
   .matches(
-    /^[a-z][a-z0-9]/,
+    /^[a-zA-Z][a-zA-Z0-9]+$/,
     'O usuário não pode conter caracteres especiais, nem começar com número',
   );
 
