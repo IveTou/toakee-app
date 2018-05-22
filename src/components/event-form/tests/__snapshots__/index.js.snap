@@ -1,0 +1,164 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EventForm render should properly render all form sections 1`] = `
+<form
+  className="root-class"
+  onSubmit={[MockFunction]}
+>
+  <WithStyles(EventFormSection)
+    Section={[Function]}
+    expanded={false}
+    form={
+      Object {
+        "formProp": "extra form prop",
+      }
+    }
+    key="0"
+    onToggle={[Function]}
+    title="1. Principal"
+  />
+  <WithStyles(EventFormSection)
+    Section={[Function]}
+    expanded={true}
+    form={
+      Object {
+        "formProp": "extra form prop",
+      }
+    }
+    key="1"
+    onToggle={[Function]}
+    title="2. Local"
+  />
+  <WithStyles(EventFormSection)
+    Section={[Function]}
+    expanded={true}
+    form={
+      Object {
+        "formProp": "extra form prop",
+      }
+    }
+    key="2"
+    onToggle={[Function]}
+    title="3. Preços"
+  />
+  <WithStyles(EventFormSection)
+    Section={[Function]}
+    expanded={false}
+    form={
+      Object {
+        "formProp": "extra form prop",
+      }
+    }
+    key="3"
+    onToggle={[Function]}
+    title="4. Listas de desconto"
+  />
+  <WithStyles(EventFormSection)
+    Section={[Function]}
+    expanded={false}
+    form={
+      Object {
+        "formProp": "extra form prop",
+      }
+    }
+    key="4"
+    onToggle={[Function]}
+    title="5. Descrição e Categorias"
+  />
+  <div
+    className="submit-class"
+  >
+    <WithStyles(Button)
+      color="primary"
+      disabled={false}
+      type="submit"
+      variant="raised"
+    >
+      Salvar
+    </WithStyles(Button)>
+  </div>
+</form>
+`;
+
+exports[`EventForm should properly render empty form 1`] = `
+<Formik
+  enableReinitialize={false}
+  initialValues={
+    Object {
+      "categories": Array [],
+      "description": "",
+      "discountLists": Array [],
+      "end": null,
+      "flyer": Object {},
+      "place": Object {},
+      "prices": Array [
+        Object {},
+      ],
+      "start": null,
+      "title": "",
+    }
+  }
+  isInitialValid={false}
+  onSubmit={[Function]}
+  render={[Function]}
+  validate={[Function]}
+  validateOnBlur={true}
+  validateOnChange={false}
+/>
+`;
+
+exports[`EventForm should properly render form with an event 1`] = `
+<Formik
+  enableReinitialize={false}
+  initialValues={
+    Object {
+      "categories": Array [
+        Object {
+          "id": "cid 1",
+        },
+        Object {
+          "id": "cid 2",
+        },
+        Object {
+          "id": "cid 3",
+        },
+      ],
+      "description": "Event description",
+      "discountLists": Array [
+        Object {
+          "id": "dlid 1",
+        },
+        Object {
+          "id": "dlid 2",
+        },
+        Object {
+          "id": "dlid 3",
+        },
+      ],
+      "end": "2018-01-01T03:00:00.000Z",
+      "flyer": Object {
+        "url": "imgs.com/flyer.png",
+      },
+      "place": Object {
+        "id": "pid 1",
+      },
+      "prices": Array [
+        Object {
+          "price": 10,
+        },
+        Object {
+          "price": 20,
+        },
+      ],
+      "start": "2017-12-31T22:00:00.000Z",
+      "title": "Event title",
+    }
+  }
+  isInitialValid={false}
+  onSubmit={[Function]}
+  render={[Function]}
+  validate={[Function]}
+  validateOnBlur={true}
+  validateOnChange={false}
+/>
+`;

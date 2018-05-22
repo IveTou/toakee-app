@@ -6,7 +6,6 @@ import { setDefaults, required } from '~/src/utils/validation';
 const IMAGE_MAX_SIZE = 3145728;
 const TITLE_MAX_LEN = 40;
 
-
 setDefaults();
 
 export const schema = Yup.object().shape({

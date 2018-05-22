@@ -1,3 +1,4 @@
+import 'fetch-everywhere';
 import ApolloClient from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
 import { createHttpLink } from 'apollo-link-http';

@@ -27,7 +27,7 @@ const sections = [
   { title: '5. Descrição e Categorias', component: EventFormDescription },
 ];
 
-const initialValues = (event) => {
+export const initialValues = (event) => {
   const {
     start,
     end,
@@ -67,8 +67,7 @@ export const EventForm = ({
     }
     onSubmit={(values, { setSubmitting }) => {
       onSubmit(values)
-        .then(() => setSubmitting(false))
-        .catch(onGraphqlError);
+        .then(() => setSubmitting(false), onGraphqlError);
     }}
     render={({ handleSubmit, isSubmitting, ...form }) => (
       <form className={classes.root} onSubmit={handleSubmit}>

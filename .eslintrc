@@ -3,16 +3,18 @@
     "airbnb",
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:jsx-control-statements/recommended"
+    "plugin:jsx-control-statements/recommended",
+    "plugin:jest/recommended"
   ],
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
-      "jsx": true,
-    },
+      "jsx": true
+    }
   },
   "plugins": [
-    "jsx-control-statements"
+    "jsx-control-statements",
+    "jest"
   ],
   "globals": {
     "FB": true
@@ -24,6 +26,9 @@
     "import/no-named-as-default": 0,
     "import/prefer-default-export": 0,
     "import/extensions": 0,
+    "import/no-extraneous-dependencies": ["error", {
+      "devDependencies": ["**/tests/*", "**/test/*"]
+    }],
     "react/forbid-prop-types": 0,
     "react/require-default-props": 0,
     "no-unused-expressions": [2, {"allowTernary": true}],
@@ -37,21 +42,21 @@
     "jsx-a11y/alt-text": 0,
     "jsx-a11y/click-events-have-key-events": 0,
     "jsx-a11y/anchor-is-valid": ["error", {
-      "components": [],
-    }],
+      "components": []
+    }]
   },
   "settings": {
     "import/resolver": {
       "babel-root-import": {
-        "extensions": ['.js', '.jsx']
+        "extensions": [".js", ".jsx"]
       }
     }
   },
   "env": {
+    "jest/globals": true,
     "jsx-control-statements/jsx-control-statements": true,
     "node": true,
     "browser": true,
     "es6": true
   }
 }
-
