@@ -15,7 +15,8 @@ import { withIndexStyle } from './styles';
 const categories = [
   { title: 'Arte e Cultura', icon: 'color_lens', color: 'red' },
   { title: 'Baladas', icon: 'whatshot', color: 'purple' },
-  { title: 'Eventos com Lista', icon: 'loyalty', color: 'green' },
+  { title: 'Listas de Desconto', icon: 'loyalty', color: 'green' },
+  { title: 'Eventos com Fotos', icon: 'photo_camera', color: 'pink' },
   { title: 'Shows', icon: 'local_activity', color: 'amber' },
   { title: 'Bares e Restaurantes', icon: 'local_bar', color: 'orange' },
   { title: 'Esportes', icon: 'pool', color: 'blueGrey' },

@@ -1,7 +1,7 @@
 import { withStyles } from 'material-ui';
 import { topbarHeight } from '~/src/components/top-bar/styles';
 import {
-  red, deepPurple, lightBlue, green, amber, deepOrange, blueGrey,
+  red, deepPurple, lightBlue, green, amber, deepOrange, blueGrey, pink,
 } from 'material-ui/colors';
 
 const sideNavWidth = 280;
@@ -60,4 +60,5 @@ export const withIndexStyle = withStyles(theme => ({
   amber: { color: amber[500] },
   orange: { color: deepOrange[500] },
   blueGrey: { color: blueGrey[500] },
+  pink: { color: pink[500] },
 }));

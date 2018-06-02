@@ -44,8 +44,11 @@ const categories = {
     '5a1713f3d3126500041d5569', '5a21c45049cc5000044a9737', '5a21c45049cc5000044a9738',
     '5a239f3d984a8300042a8cfa', '5a440183c5ed740004f2335d',
   ],
-  'Eventos com Lista': [
+  'Listas de Desconto': [
     '5a35f5de5a0c850004760084', '5adf6ac03a3137000434d39c',
+  ],
+  'Eventos com Fotos': [
+    '5b12c8f1bc521000047a3c89',
   ],
   'Promoções': [
     '5a239f3d984a8300042a8cfa', '5a239304984a8300042a8cd4', '5a35f5de5a0c850004760084',
