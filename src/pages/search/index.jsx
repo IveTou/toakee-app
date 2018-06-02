@@ -48,7 +48,7 @@ const categories = {
     '5a35f5de5a0c850004760084', '5adf6ac03a3137000434d39c',
   ],
   'Eventos com Fotos': [
-    '5a35f5de5a0c850004760084', '5adf6ac03a3137000434d39c',
+    '5b12c8f1bc521000047a3c89',
   ],
   'Promoções': [
     '5a239f3d984a8300042a8cfa', '5a239304984a8300042a8cd4', '5a35f5de5a0c850004760084',
