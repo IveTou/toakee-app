@@ -1,38 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import { Card } from 'semantic-ui-react';
+import { Typography } from 'material-ui';
 
 import EventCard from '~/src/components/event-card';
 
+import { withIndexStyle } from './styles';
 import { query } from './graphql';
 
 declare var event;
 
-const SearchPageResults = ({ loading, nextEvents, previousEvents }) => (
-  <div className="SearchPageResults">
-    <h3 className="SearchPageResults-title">Resultados</h3>
+const SearchPageResults = ({ title, loading, nextEvents, previousEvents, classes }) => (
+  <div className={classes.root}>
+    <Typography variant="headline" color="inherit" gutterBottom>
+      {title || `Resultados`}
+    </Typography>
     <Choose>
       <When condition={!loading && nextEvents && nextEvents.length}>
-        <Card.Group>
+        <Card.Group className={classes.eventBox}>
           <For each="event" of={nextEvents}>
             <EventCard key={event.id} event={event} />
           </For>
         </Card.Group>
       </When>
       <When condition={!loading}>
-        <div className="SearchPageResults-notFound">
-          <div className="SearchPageResults-notFound-shrug">¯\_(ツ)_/¯</div>
-          <div className="SearchPageResults-notFound-separator" />
-          <div className="SearchPageResults-notFound-text">
+        <div className={classes.notFound}>
+          <Typography className={classes.shrug} variant="display1" color="primary">
+            ¯\_(ツ)_/¯
+          </Typography>
+          <Typography className={classes.message} variant="title">
             Não encontramos eventos que ainda vão acontecer com esse nome.
-          </div>
+          </Typography>
         </div>
       </When>
     </Choose>
     <If condition={previousEvents && previousEvents.length}>
-      <h3 className="SearchPageResults-title">Eventos anteriores</h3>
-      <Card.Group>
+      <Typography variant="headline" color="inherit" gutterBottom>Eventos anteriores</Typography>
+      <Card.Group className={classes.eventBox}>
         <For each="event" of={previousEvents}>
           <EventCard key={event.id} event={event} />
         </For>
@@ -42,12 +47,14 @@ const SearchPageResults = ({ loading, nextEvents, previousEvents }) => (
 );
 
 SearchPageResults.propTypes = {
+  title: PropTypes.string,
   loading: PropTypes.bool,
   nextEvents: PropTypes.array,
   previousEvents: PropTypes.array,
+  classes: PropTypes.object,
 };
 
-export default graphql(query, {
+const injectData = graphql(query, {
   options: ({ q, start, end }) => ({
     variables: { query: q || '', start, end },
   }),
@@ -56,4 +63,9 @@ export default graphql(query, {
     previousEvents,
     loading,
   }),
-})(SearchPageResults);
+});
+
+export default compose(
+  injectData,
+  withIndexStyle,
+)(SearchPageResults);
