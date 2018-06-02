@@ -181,18 +181,15 @@ export class EventPage extends React.Component {
                     className={classes.galleryTitle}
                     expandIcon={<Icon style={{ color: "white" }}>expand_more</Icon>}
                   >
-                    <If condition={!galleryIsOpen}>
-                      <Typography variant="title" color="inherit">
-                        Clique e veja como foi!
-                      </Typography>
-                    </If>
-                    <If condition={galleryIsOpen}>
-                      <Typography variant="title" color="inherit">Galeria de Fotos</Typography>
-                    </If>
+                    <Typography variant="title" color="inherit">Galeria de Fotos</Typography>
                   </ExpansionPanelSummary>
                   <If condition={galleryIsOpen}>
-                    <div className={classes.gridList}>
-                      <GridList cellHeight={144} style={{ height: 336 }} cols={3}>
+                    <div className={classes.gridWrapper}>
+                      <GridList
+                        className={classes.gridList}
+                        cellHeight={144}
+                        cols={3}
+                      >
                         <For each="photosItem" of={photos} index="index">
                           <GridListTile key={index} cols={1}>
                             <img src={photosItem.thumb} onClick={() => this.openPhoto(index)} />

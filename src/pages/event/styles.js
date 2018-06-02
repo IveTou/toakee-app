@@ -71,13 +71,20 @@ export const withIndexStyle = withStyles(theme => ({
       paddingBottom: theme.spacing.unit * 4,
     },
   },
-  gridList: {
+  gridWrapper: {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
     overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing.unit * 2,
+  },
+  gridList: {
+    height: theme.spacing.unit * 42,
+    [theme.breakpoints.down('sm')]: {
+      height: theme.spacing.unit * 21,
+      flexWrap: 'nowrap',
+    },
   },
   gridListTitle: {
     marginTop: 24,
