@@ -6,11 +6,6 @@ import { join } from 'lodash';
 
 import SearchPageResults from './results';
 
-if (process.env.BROWSER) {
-  require('./style.scss');
-}
-
-
 const categories = {
   'Arte e Cultura': [
     '5869c086fdec825a1649f3bf', '5869c086fdec825a1649f3c5', '5907e89cb65971000fbffb10',
@@ -63,8 +58,8 @@ const SearchPage = ({ location: { search } }) => {
   const query = categoryIds ? join(categoryIds, ' ') : q;
 
   return (
-    <div className="SearchPage">
-      <SearchPageResults start={moment().startOf('day')} q={query} />
+    <div>
+      <SearchPageResults start={moment().startOf('day')} q={query} title={categoryIds && q} />
     </div>
   );
 };
