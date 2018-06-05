@@ -1,17 +1,18 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import moment from 'moment';
 
-import DashboardMenu from './menu';
-import DashboardContent from './content';
-
-if (process.env.BROWSER) {
-  require('./style.scss');
-}
+import EventList from '~/src/components/event-list';
 
 const Dashboard = () => (
-  <div className="Dashboard">
-    <Route path="/dashboard/:id?" component={DashboardMenu} />
-    <DashboardContent />
+  <div>
+    <EventList
+      title="Eventos futuros"
+      start={moment().add(1, 'day').startOf('day')}
+      vertical={false}
+      strict
+      counter
+    />
   </div>
 );
 

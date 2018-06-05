@@ -41,7 +41,7 @@ export class TopBar extends React.Component {
   }
 
   dashboard() {
-    this.props.history.push('/dashboard');
+    this.props.history.push('/meus-eventos');
   }
 
   render() {
@@ -105,6 +105,7 @@ export class TopBar extends React.Component {
               <TopBarAvatar
                 viewer={viewer}
                 logout={() => this.logout}
+                dashboard={() => this.dashboard}
               />
             </When>
             <Otherwise>
