@@ -63,7 +63,6 @@ class EventList extends React.Component {
     declare var placeholder;
     declare var idx;
 
-
     return !!eventCount && (
       <div>
         <If condition={eventCount && title}>
