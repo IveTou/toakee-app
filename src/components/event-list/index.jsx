@@ -49,7 +49,7 @@ class EventList extends React.Component {
   }
 
   render() {
-    const { classes, title, viewer = {}, vertical, counter } = this.props;
+    const { classes, title, viewer = {}, vertical, counter, getCount } = this.props;
     const { eventCount, events = [] } = viewer;
 
     const listClasses = classNames(classes.list, vertical && classes.listVertical);
@@ -63,9 +63,8 @@ class EventList extends React.Component {
     declare var placeholder;
     declare var idx;
 
-
     return !!eventCount && (
-      <div>
+      <div onClick={() => getCount(eventCount)}>
         <If condition={eventCount && title}>
           <Typography className={classes.title} variant="title">
             {title}
@@ -108,6 +107,7 @@ class EventList extends React.Component {
 EventList.propTypes = {
   title: PropTypes.string,
   loadMore: PropTypes.func,
+  getCount: PropTypes.func,
   vertical: PropTypes.bool,
   viewer: PropTypes.object,
   classes: PropTypes.object,
