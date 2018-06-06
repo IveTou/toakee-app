@@ -1,9 +1,13 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  query Dashboard($id: String) {
-    profile(id: $id) {
+  query Dashboard($start: Date) {
+    viewer {
       id
+
+      events(start: $start, onlyMine: true) {
+        id
+      }
     }
   }
 `;
