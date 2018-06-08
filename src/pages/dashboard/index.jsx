@@ -75,9 +75,20 @@ export class Dashboard extends React.Component {
               action={this.handleEventClick}
             />
             <div className={classes.stageMenu}>
-              <Zoom in={!menuIsOpen}>
-                <StageMenu event={selectedEvent}/>
-              </Zoom>
+              <Choose>
+                <When condition={menuIsOpen}>
+                  <Zoom in={menuIsOpen}>
+                    <div>
+                      <StageMenu event={selectedEvent} />
+                    </div>
+                  </Zoom>
+                </When>
+                <Otherwise>
+                  <Typography variant="display1" gutterBottom>
+                    Clique em um evento acima para gerenciar.
+                  </Typography>
+                </Otherwise>
+              </Choose>
             </div>
           </div>
         </Otherwise>

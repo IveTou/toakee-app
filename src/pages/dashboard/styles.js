@@ -1,5 +1,8 @@
 import { withStyles } from 'material-ui';
 
+const maxStageMenuWidth = 150;
+const minStageMenuHeight= 20;
+
 export const withIndexStyle = withStyles(theme => ({
   root: {
     display: 'table',
@@ -8,7 +11,7 @@ export const withIndexStyle = withStyles(theme => ({
     paddingLeft: theme.spacing.unit * 3,
     paddingRight: theme.spacing.unit * 3,
     [theme.breakpoints.up('sm')]: {
-      height: '40vh',
+      minHeight: '40vh',
     },
   },
   rootStage: {
@@ -20,11 +23,14 @@ export const withIndexStyle = withStyles(theme => ({
       paddingRight: theme.spacing.unit,
     },
     [theme.breakpoints.up('sm')]: {
-      height: '40vh',
+      minHeight: '40vh',
     },
   },
   stageMenu: {
-    padding: theme.spacing.unit * 3,
+    margin: `${theme.spacing.unit * 2}px auto`,
+    display: 'table',
+    maxWidth: theme.spacing.unit * maxStageMenuWidth,
+    minHeight: theme.spacing.unit * minStageMenuHeight,
   },
   publishButton: {
     marginTop: theme.spacing.unit * 2,
@@ -33,5 +39,12 @@ export const withIndexStyle = withStyles(theme => ({
   },
   caption: {
     color: theme.typography.display4.color,
+  }
+}));
+
+export const withStageMenuStyle = withStyles(theme => ({
+  root: {
+    padding: theme.spacing.unit * 3,
+    paddingBottom: theme.spacing.unit * 3,
   }
 }));

@@ -7,7 +7,7 @@ const Calendar = ({ date, small, gutters }) => {
   const dayVariant = small ? 'title' : 'display1';
 
   return(
-    <div style={ gutters && { paddingTop: 8, paddingRight: 8 }}>
+    <div style={gutters && { paddingTop: 8, paddingRight: 8 }}>
       <If condition={date}>
         <Typography style={{ textTransform: 'uppercase' }} variant={monthVariant} color="inherit">
           {date.format('MMM')}
@@ -23,7 +23,7 @@ const Calendar = ({ date, small, gutters }) => {
 Calendar.propTypes = {
   date: PropTypes.object,
   small: PropTypes.bool,
-  gutterTop: PropTypes.bool,
+  gutters: PropTypes.bool,
 };
 
 export default Calendar;

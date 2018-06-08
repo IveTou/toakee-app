@@ -2,17 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Icon, Paper } from 'material-ui';
 
-import { withIndexStyle } from './styles';
+import { withStageMenuStyle } from './styles';
 
-const StageMenu = ({ event }) => {
-  console.log(event);
+const StageMenu = ({ event, classes }) => {
   return(
-    <Paper elevation={4}>asdasd</Paper>
+    <Paper elevation={4} className={classes.root}>asdasd</Paper>
   );
 }
 
 StageMenu.propTypes = {
   event: PropTypes.object,
+  classes: PropTypes.object,
 };
 
-export default StageMenu;
+export default withStageMenuStyle(StageMenu);

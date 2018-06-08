@@ -39,9 +39,9 @@ const EventCard = ({ button, event, classes, onClick }) => {
           <If condition={button}>
             <Calendar date={startMoment} small gutters />
           </If>
-            <Typography variant="subheading" className={classes.cardContentHeader}>
-              {title}
-            </Typography>
+          <Typography variant="subheading" className={classes.cardContentHeader}>
+            {title}
+          </Typography>
           <If condition={!button}>
             <div className={classes.cardContentInfo}>
               <Calendar date={startMoment} small />
