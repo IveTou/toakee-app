@@ -2,7 +2,8 @@ import { withStyles } from 'material-ui';
 
 export const withIndexStyle = withStyles(theme => ({
   root: {
-    justifyContent: 'center',
+    display: 'table',
+    textAlign: 'center',
     margin: `${theme.spacing.unit * 10}px auto`,
     paddingLeft: theme.spacing.unit * 3,
     paddingRight: theme.spacing.unit * 3,
@@ -11,7 +12,6 @@ export const withIndexStyle = withStyles(theme => ({
     },
   },
   rootStage: {
-    justifyContent: 'center',
     margin: `${theme.spacing.unit * 4}px auto`,
     paddingLeft: theme.spacing.unit * 3,
     paddingRight: theme.spacing.unit * 3,
@@ -22,6 +22,9 @@ export const withIndexStyle = withStyles(theme => ({
     [theme.breakpoints.up('sm')]: {
       height: '40vh',
     },
+  },
+  stageMenu: {
+    padding: theme.spacing.unit * 3,
   },
   publishButton: {
     marginTop: theme.spacing.unit * 2,

@@ -2,6 +2,7 @@ import { withStyles } from 'material-ui';
 
 const cardWidth = 30;
 const cardHeight = 27;
+const cardButtonHeight = 21;
 
 export const withIndexStyle = withStyles(theme => ({
   card: {
@@ -9,7 +10,6 @@ export const withIndexStyle = withStyles(theme => ({
     height: theme.spacing.unit * cardHeight,
     flex: '0 0 auto',
     margin: theme.spacing.unit,
-    marginRight: 0,
     marginTop: theme.spacing.unit * 2,
     overflow: 'hidden',
     whiteSpace: 'nowrap',
@@ -19,6 +19,7 @@ export const withIndexStyle = withStyles(theme => ({
       transform: 'scale(1.2)',
     }
   },
+  buttonCard: { height: theme.spacing.unit * cardButtonHeight },
   cardMedia: {
     position: 'relative',
     overflow: 'hidden',

@@ -4,13 +4,14 @@ import autoBind from 'react-autobind';
 import moment from 'moment';
 import { withRouter } from 'react-router';
 import { graphql, compose } from 'react-apollo';
-import { Button, Typography } from 'material-ui';
+import { Button, Typography, Zoom } from 'material-ui';
 
 import EventList from '~/src/components/event-list';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
 import { withInfo } from '~/src/hocs';
 import { withAuth } from '~/src/components/auth-modal/hoc';
 
+import StageMenu from './stageMenu';
 import query from './graphql';
 import { withIndexStyle } from './styles';
 
@@ -18,11 +19,17 @@ export class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
+    this.state = { menuIsOpen: false, selectedEvent: {} };
+  }
+
+  handleEventClick(event) {
+    this.setState({ menuIsOpen: true, selectedEvent: event });
   }
 
   render() {
     const { viewer = {}, classes, requireLogin } = this.props;
     const { events } = viewer;
+    const { menuIsOpen, selectedEvent } = this.state;
     const pid = (viewer && viewer.id) || null;
     const logged = !!pid;
 
@@ -65,7 +72,13 @@ export class Dashboard extends React.Component {
               strict
               counter
               asButtons
+              action={this.handleEventClick}
             />
+            <div className={classes.stageMenu}>
+              <Zoom in={!menuIsOpen}>
+                <StageMenu event={selectedEvent}/>
+              </Zoom>
+            </div>
           </div>
         </Otherwise>
       </Choose>
