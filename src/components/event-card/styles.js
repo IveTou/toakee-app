@@ -32,8 +32,13 @@ export const withIndexStyle = withStyles(theme => ({
     backgroundPosition: 'center',
     transition: 'transform .3s ease-in-out',
   },
-  cardContent: {
+  cardLinkContent: {
     padding: 0,
+  },
+  cardButtonContent: {
+    padding: 0,
+    display: "inline-flex",
+    float: 'left',
   },
   cardContentHeader: {
     padding: [theme.spacing.unit / 2, 0].join('px '),

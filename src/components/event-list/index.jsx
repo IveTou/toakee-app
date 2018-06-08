@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { graphql } from 'react-apollo';
 import autoBind from 'react-autobind';
 import VisibilitySensor from 'react-visibility-sensor';
+import { Link } from 'react-router-dom';
 import { range } from 'lodash';
 import { compose } from 'recompose';
 import { Divider, Typography } from 'material-ui';
@@ -49,7 +50,7 @@ class EventList extends React.Component {
   }
 
   render() {
-    const { classes, title, viewer = {}, vertical, counter } = this.props;
+    const { classes, title, viewer = {}, vertical, counter, asButtons } = this.props;
     const { eventCount, events = [] } = viewer;
 
     const listClasses = classNames(classes.list, vertical && classes.listVertical);
@@ -87,7 +88,7 @@ class EventList extends React.Component {
           <div ref={(dom) => { this._listDOM = dom; }} className={listClasses}>
             <For each="event" index="idx" of={events}>
               <div key={idx}>
-                <EventCard event={event} />
+                <EventCard event={event} button={asButtons} />
                 <If condition={vertical && events.length > 1}><Divider light /></If>
               </div>
             </For>
@@ -111,6 +112,7 @@ EventList.propTypes = {
   viewer: PropTypes.object,
   classes: PropTypes.object,
   counter: PropTypes.bool,
+  asButtons: PropTypes.bool,
 };
 
 const injectQuery = graphql(query, {

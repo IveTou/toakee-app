@@ -37,9 +37,9 @@ export class Dashboard extends React.Component {
     }
 
     return (
-      <div className={classes.root}>
-        <Choose>
-          <When condition={events && !events.length}>
+      <Choose>
+        <When condition={events && !events.length}>
+          <div className={classes.root}>
             <Typography variant="headline" gutterBottom>
               Ainda não há eventos criados no seu perfil
             </Typography>
@@ -54,18 +54,21 @@ export class Dashboard extends React.Component {
             >
               Criar Evento
             </Button>
-          </When>
-          <Otherwise>
+          </div>
+        </When>
+        <Otherwise>
+          <div className={classes.rootStage}>
             <EventList
               title="Eventos futuros"
               start={moment().add(1, 'day').startOf('day')}
               vertical={false}
               strict
               counter
+              asButtons
             />
-          </Otherwise>
-        </Choose>
-      </div>
+          </div>
+        </Otherwise>
+      </Choose>
     );
   }
 }
