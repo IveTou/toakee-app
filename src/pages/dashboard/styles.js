@@ -1,7 +1,7 @@
 import { withStyles } from 'material-ui';
 
 const maxStageMenuWidth = 150;
-const minStageMenuHeight= 20;
+const menuStageHeight = 50;
 
 export const withIndexStyle = withStyles(theme => ({
   root: {
@@ -19,6 +19,7 @@ export const withIndexStyle = withStyles(theme => ({
     paddingLeft: theme.spacing.unit * 3,
     paddingRight: theme.spacing.unit * 3,
     [theme.breakpoints.down('sm')]: {
+      marginTop: 0,
       paddingLeft: theme.spacing.unit,
       paddingRight: theme.spacing.unit,
     },
@@ -28,9 +29,9 @@ export const withIndexStyle = withStyles(theme => ({
   },
   stageMenu: {
     margin: `${theme.spacing.unit * 2}px auto`,
+    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2,
     display: 'table',
-    maxWidth: theme.spacing.unit * maxStageMenuWidth,
-    minHeight: theme.spacing.unit * minStageMenuHeight,
   },
   publishButton: {
     marginTop: theme.spacing.unit * 2,
@@ -39,12 +40,55 @@ export const withIndexStyle = withStyles(theme => ({
   },
   caption: {
     color: theme.typography.display4.color,
-  }
+  },
 }));
 
 export const withStageMenuStyle = withStyles(theme => ({
   root: {
-    padding: theme.spacing.unit * 3,
-    paddingBottom: theme.spacing.unit * 3,
-  }
+    flexGrow: 1,
+    maxWidth: theme.spacing.unit * maxStageMenuWidth,
+    height: theme.spacing.unit* menuStageHeight,
+  },
+  flyer: {
+    width: theme.spacing.unit * 30,
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    }
+  },
+  flyerImage: {
+    height: '100%',
+    width: '100%',
+    backgroundSize: 'cover',
+    backgroundColor: theme.palette.grey[200],
+    color: theme.palette.common.white,
+    backgroundPosition: 'center',
+    position: 'relative',
+    display: 'inline-block',
+    '&:after': {
+      content: 'open-quote',
+      position: 'absolute',
+      display: 'block',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      boxShadow: 'inset -48px 0 16px -32px',
+    },
+  },
+  menu: {
+    width: theme.spacing.unit * 80,
+    padding: theme.spacing.unit * 2,
+    paddingLeft: 0,
+  },
+  title: {
+    marginBottom: theme.spacing.unit * 2,
+  },
+  calendar: {
+    float: 'left',
+    marginRight: theme.spacing.unit,
+    paddingRight: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing.unit,
+    borderRight: '1px solid rgba(0, 0, 0,.13)',
+    color: theme.typography.display1.color,
+  },
 }));

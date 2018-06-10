@@ -84,7 +84,7 @@ export class Dashboard extends React.Component {
                   </Zoom>
                 </When>
                 <Otherwise>
-                  <Typography variant="display1" gutterBottom>
+                  <Typography variant="display1" gutterBottom style={{ textAlign: 'center' }}>
                     Clique em um evento acima para gerenciar.
                   </Typography>
                 </Otherwise>

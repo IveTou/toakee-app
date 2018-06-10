@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from 'material-ui';
 
-const Calendar = ({ date, small, gutters }) => {
+const Calendar = ({ className, date, small, gutters }) => {
   const monthVariant =  small ? 'caption': 'title';
   const dayVariant = small ? 'title' : 'display1';
 
   return(
-    <div style={gutters && { paddingTop: 8, paddingRight: 8 }}>
+    <div className={className} style={gutters && { paddingTop: 8, paddingRight: 8 }}>
       <If condition={date}>
         <Typography style={{ textTransform: 'uppercase' }} variant={monthVariant} color="inherit">
           {date.format('MMM')}
@@ -21,6 +21,7 @@ const Calendar = ({ date, small, gutters }) => {
 }
 
 Calendar.propTypes = {
+  className: PropTypes.string,
   date: PropTypes.object,
   small: PropTypes.bool,
   gutters: PropTypes.bool,
