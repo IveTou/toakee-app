@@ -5,7 +5,7 @@ const cardHeight = 27;
 const cardButtonHeight = 21;
 
 export const withIndexStyle = withStyles(theme => ({
-  card: {
+  linkRoot: {
     width: theme.spacing.unit * cardWidth,
     height: theme.spacing.unit * cardHeight,
     flex: '0 0 auto',
@@ -17,9 +17,14 @@ export const withIndexStyle = withStyles(theme => ({
     background: 'none',
     '&:hover $cardImage': {
       transform: 'scale(1.2)',
-    }
+    },
   },
-  buttonCard: { height: theme.spacing.unit * cardButtonHeight },
+  buttonRoot: {
+    height: theme.spacing.unit * cardButtonHeight,
+    '& $cardContent': {
+      display: "inline-flex",
+    },
+  },
   cardMedia: {
     position: 'relative',
     overflow: 'hidden',
@@ -33,13 +38,8 @@ export const withIndexStyle = withStyles(theme => ({
     backgroundPosition: 'center',
     transition: 'transform .3s ease-in-out',
   },
-  cardLinkContent: {
+  cardContent: {
     padding: 0,
-  },
-  cardButtonContent: {
-    padding: 0,
-    display: "inline-flex",
-    float: 'left',
   },
   cardContentHeader: {
     padding: [theme.spacing.unit / 2, 0].join('px '),
@@ -60,6 +60,10 @@ export const withIndexStyle = withStyles(theme => ({
   cardContentInfoDetailsIcon: {
     fontSize: theme.typography.subheading.fontSize,
     verticalAlign: 'text-bottom',
+  },
+  calendar: {
+    paddingTop: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
   },
 }));
 

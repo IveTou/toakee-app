@@ -49,7 +49,7 @@ class EventList extends React.Component {
   }
 
   render() {
-    const { classes, title, viewer = {}, vertical, counter, asButtons, action } = this.props;
+    const { classes, title, viewer = {}, vertical, counter, asButtons, onEventClicked } = this.props;
     const { eventCount, events = [] } = viewer;
 
     const listClasses = classNames(classes.list, vertical && classes.listVertical);
@@ -87,7 +87,12 @@ class EventList extends React.Component {
           <div ref={(dom) => { this._listDOM = dom; }} className={listClasses}>
             <For each="event" index="idx" of={events}>
               <div key={idx}>
-                <EventCard event={event} button={asButtons} onClick={action} />
+                <EventCard
+                  event={event}
+                  asButton={asButtons}
+                  onClick={() => asButtons && onEventClicked(event)}
+                  to={{ pathname: `/evento/${event.id}` }}
+                />
                 <If condition={vertical && events.length > 1}><Divider light /></If>
               </div>
             </For>
@@ -112,7 +117,7 @@ EventList.propTypes = {
   classes: PropTypes.object,
   counter: PropTypes.bool,
   asButtons: PropTypes.bool,
-  action: PropTypes.func,
+  onEventClicked: PropTypes.func,
 };
 
 const injectQuery = graphql(query, {

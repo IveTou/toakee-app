@@ -40,7 +40,7 @@ export class TopBar extends React.Component {
     this.props.history.push('/');
   }
 
-  dashboard() {
+  openDashboard() {
     this.props.history.push('/meus-eventos');
   }
 
@@ -65,14 +65,12 @@ export class TopBar extends React.Component {
       }, 'signUp')();
     }
 
-    const newEvent = () => {
+    const createEvent = () => {
       TrackingAPI.track({ name: 'EventTrigger.Clicked', logged, pid });
-      logged
-        ? this.props.history.push('/evento/novo')
-        : requireLogin(() => {
-          TrackingAPI.track({ name: 'User.Logged', pid });
-          this.props.history.push('/evento/novo');
-        })();
+      requireLogin(() => {
+        TrackingAPI.track({ name: 'User.Logged', pid });
+        this.props.history.push('/evento/novo');
+      })();
     }
 
     return (
@@ -92,7 +90,7 @@ export class TopBar extends React.Component {
                   className={classes.publishButton}
                   variant="raised"
                   color="primary"
-                  onClick={newEvent}
+                  onClick={createEvent}
                 >
                   Publicar
                 </Button>
@@ -105,7 +103,7 @@ export class TopBar extends React.Component {
               <TopBarAvatar
                 viewer={viewer}
                 logout={() => this.logout}
-                dashboard={() => this.dashboard}
+                manage={() => this.openDashboard}
               />
             </When>
             <Otherwise>
@@ -114,7 +112,7 @@ export class TopBar extends React.Component {
                 login={login}
                 signUp={signUp}
                 logout={this.logout}
-                newEvent={newEvent}
+                createEvent={createEvent}
               />
             </Otherwise>
           </Choose>

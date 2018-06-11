@@ -4,7 +4,7 @@ import autoBind from 'react-autobind';
 import moment from 'moment';
 import { withRouter } from 'react-router';
 import { graphql, compose } from 'react-apollo';
-import { Button, Typography, Zoom } from 'material-ui';
+import { Avatar, Button, Icon, Typography, Zoom } from 'material-ui';
 
 import EventList from '~/src/components/event-list';
 import TrackingAPI from '~/src/toakee-core/apis/tracking';
@@ -19,34 +19,35 @@ export class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
-    this.state = { menuIsOpen: false, selectedEvent: {} };
+    this.state = { selectedEvent: null };
   }
 
-  handleEventClick(event) {
-    this.setState({ menuIsOpen: true, selectedEvent: event });
+  handleEventClick(selectedEvent) {
+    this.setState({ selectedEvent });
   }
 
   render() {
     const { viewer = {}, classes, requireLogin } = this.props;
-    const { events } = viewer;
-    const { menuIsOpen, selectedEvent } = this.state;
+    const { eventCount } = viewer;
+    const { selectedEvent } = this.state;
     const pid = (viewer && viewer.id) || null;
     const logged = !!pid;
 
-    const newEvent = () => {
+    const createEvent = () => {
       TrackingAPI.track({ name: 'EventTrigger.Clicked', logged, pid });
-      logged
-        ? this.props.history.push('/evento/novo')
-        : requireLogin(() => {
-          TrackingAPI.track({ name: 'User.Logged', pid });
-          this.props.history.push('/evento/novo');
-        })();
+      requireLogin(() => {
+        TrackingAPI.track({ name: 'User.Logged', pid });
+        this.props.history.push('/evento/novo');
+      })();
     }
 
     return (
       <Choose>
-        <When condition={events && !events.length}>
+        <When condition={!eventCount}>
           <div className={classes.root}>
+            <Avatar className={classes.avatar}>
+              <Icon className={classes.icon}>event</Icon>
+            </Avatar>
             <Typography variant="headline" gutterBottom>
               Ainda não há eventos criados no seu perfil
             </Typography>
@@ -57,7 +58,7 @@ export class Dashboard extends React.Component {
               className={classes.publishButton}
               variant="raised"
               color="primary"
-              onClick={newEvent}
+              onClick={createEvent}
             >
               Criar Evento
             </Button>
@@ -68,23 +69,29 @@ export class Dashboard extends React.Component {
             <EventList
               title="Eventos futuros"
               start={moment().add(1, 'day').startOf('day')}
-              vertical={false}
               strict
               counter
               asButtons
-              action={this.handleEventClick}
+              onEventClicked={this.handleEventClick}
             />
             <div className={classes.stageMenu}>
               <Choose>
-                <When condition={menuIsOpen}>
-                  <Zoom in={menuIsOpen}>
+                <When condition={!!selectedEvent}>
+                  <Zoom in={!!selectedEvent}>
                     <div>
                       <StageMenu event={selectedEvent} />
                     </div>
                   </Zoom>
                 </When>
                 <Otherwise>
-                  <Typography variant="display1" gutterBottom style={{ textAlign: 'center' }}>
+                  <Avatar className={classes.avatar}>
+                    <Icon className={classes.icon}>touch_app</Icon>
+                  </Avatar>
+                  <Typography
+                    className={classes.messageCentered}
+                    variant="display1"
+                    gutterBottom
+                  >
                     Clique em um evento acima para gerenciar.
                   </Typography>
                 </Otherwise>

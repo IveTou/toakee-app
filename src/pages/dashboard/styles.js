@@ -1,6 +1,8 @@
 import { withStyles } from 'material-ui';
+import { deepOrange, green, lightBlue } from 'material-ui/colors';
 
 const maxStageMenuWidth = 150;
+const minStageMenuWidth = 89;
 const menuStageHeight = 48;
 
 export const withIndexStyle = withStyles(theme => ({
@@ -11,7 +13,7 @@ export const withIndexStyle = withStyles(theme => ({
     paddingLeft: theme.spacing.unit * 3,
     paddingRight: theme.spacing.unit * 3,
     [theme.breakpoints.up('sm')]: {
-      minHeight: '40vh',
+      minHeight: '100%',
     },
   },
   rootStage: {
@@ -24,7 +26,7 @@ export const withIndexStyle = withStyles(theme => ({
       paddingRight: theme.spacing.unit,
     },
     [theme.breakpoints.up('sm')]: {
-      minHeight: '40vh',
+      minHeight: '100%',
     },
   },
   stageMenu: {
@@ -32,6 +34,16 @@ export const withIndexStyle = withStyles(theme => ({
     paddingLeft: theme.spacing.unit * 2,
     paddingRight: theme.spacing.unit * 2,
     display: 'table',
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: theme.spacing.unit * 12,
+    },
+  },
+  avatar: {
+    height: theme.spacing.unit * 10,
+    width: theme.spacing.unit * 10,
+    margin: `${theme.spacing.unit * 2}px auto`,
+    color: theme.palette.common.white,
+    backgroundColor: deepOrange[100],
   },
   publishButton: {
     marginTop: theme.spacing.unit * 2,
@@ -41,16 +53,24 @@ export const withIndexStyle = withStyles(theme => ({
   caption: {
     color: theme.typography.display4.color,
   },
+  messageCentered: {
+    textAlign: 'center',
+  },
+  icon: {
+    fontSize: theme.spacing.unit * 7,
+  },
 }));
 
 export const withStageMenuStyle = withStyles(theme => ({
   root: {
     flexGrow: 1,
     maxWidth: theme.spacing.unit * maxStageMenuWidth,
-    height: theme.spacing.unit* menuStageHeight,
+    height: theme.spacing.unit * menuStageHeight,
+    [theme.breakpoints.up('md')]: {
+      minWidth: theme.spacing.unit * minStageMenuWidth,
+    },
   },
   flyer: {
-    width: theme.spacing.unit * 30,
     [theme.breakpoints.down('sm')]: {
       display: 'none',
     }
@@ -76,9 +96,9 @@ export const withStageMenuStyle = withStyles(theme => ({
     },
   },
   menu: {
-    width: theme.spacing.unit * 80,
     padding: theme.spacing.unit * 2,
     paddingLeft: 0,
+    width: '100%',
   },
   title: {
     marginBottom: theme.spacing.unit * 3,
@@ -88,8 +108,9 @@ export const withStageMenuStyle = withStyles(theme => ({
   calendar: {
     float: 'left',
     marginRight: theme.spacing.unit,
-    paddingRight: theme.spacing.unit * 2,
-    paddingLeft: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+    paddingTop: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit * 2,
     borderRight: '1px solid rgba(0, 0, 0,.13)',
     color: theme.typography.display1.color,
   },
@@ -101,6 +122,7 @@ export const withStageMenuStyle = withStyles(theme => ({
   },
   icon: {
     padding: theme.spacing.unit * 2,
+    fontSize: theme.spacing.unit * 4,
     color: theme.palette.common.white,
   },
   listItem: {
@@ -124,5 +146,11 @@ export const withStageMenuStyle = withStyles(theme => ({
   },
   rightIcon: {
     marginLeft: theme.spacing.unit,
+  },
+  green: {
+    backgroundColor: green[500],
+  },
+  lightBlue: {
+    backgroundColor: lightBlue[500],
   },
 }));

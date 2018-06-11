@@ -10,16 +10,14 @@ import Ribbon from '~/src/components/ribbon';
 
 import { withIndexStyle } from './styles';
 
-const EventCard = ({ button, event, classes, onClick }) => {
-  const { id, title, place, flyer, start, end, status, discountLists } = event;
+const EventCard = ({ asButton, event, classes, onClick, to }) => {
+  const { title, place, flyer, start, end, status, discountLists } = event;
   const startMoment = moment(start);
-  const Component = button ? Button : Link;
-  const rootClasses = classNames(classes.card, button && classes.buttonCard);
-
-  const handleClick = () => onClick(event);
+  const Component = asButton ? Button : Link;
+  const rootClasses = classNames(classes.linkRoot, asButton && classes.buttonRoot);
 
   return (
-    <Component to={{ pathname: `/evento/${id}`, state: { event } }} onClick={handleClick} >
+    <Component to={to} onClick={onClick} >
       <Card className={rootClasses}>
         <div className={classes.cardMedia}>
           <div
@@ -35,14 +33,14 @@ const EventCard = ({ button, event, classes, onClick }) => {
             discountLists={discountLists}
           />
         </div>
-        <CardContent className={button ? classes.cardButtonContent : classes.cardLinkContent}>
-          <If condition={button}>
-            <Calendar date={startMoment} small gutters />
+        <CardContent className={classes.cardContent}>
+          <If condition={asButton}>
+            <Calendar className={asButton && classes.calendar} date={startMoment} small />
           </If>
           <Typography variant="subheading" className={classes.cardContentHeader}>
             {title}
           </Typography>
-          <If condition={!button}>
+          <If condition={!asButton}>
             <div className={classes.cardContentInfo}>
               <Calendar date={startMoment} small />
               <Typography
@@ -68,11 +66,11 @@ const EventCard = ({ button, event, classes, onClick }) => {
 };
 
 EventCard.propTypes = {
-  button: PropTypes.bool,
+  asButton: PropTypes.bool,
   classes: PropTypes.object,
+  to: PropTypes.object,
   onClick: PropTypes.func,
   event: PropTypes.shape({
-    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     place: PropTypes.object,
     start: PropTypes.string,

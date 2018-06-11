@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import moment from 'moment';
 import { Button, Grid, Icon, List, ListItem, Paper, Typography } from 'material-ui';
-import { green, lightBlue } from 'material-ui/colors';
 
 import Calendar from '~/src/components/calendar';
 
@@ -14,23 +14,23 @@ const StageMenu = ({ event, classes }) => {
 
   return(
     <Paper elevation={4} className={classes.root}>
-      <Grid container spacing={0} style={{ height: '100%' }}>
-        <Grid className={classes.flyer} item xs={4}>
+      <Grid container spacing={0} >
+        <Grid className={classes.flyer} item md={4}>
           <div
             className={classes.flyerImage}
             alt={`flyer do ${title}`}
             style={{ backgroundImage: `url("${flyer}")` }}
           />
         </Grid>
-        <Grid className={classes.menu} item xs={8}>
+        <Grid className={classes.menu} item md={8} sm={12}>
           <Calendar className={classes.calendar} date={startMoment} />
           <Typography className={classes.title} variant="display1" component="h1">
             {title}
           </Typography>
           <List>
             <ListItem className={classes.listItem}>
-              <Paper className={classes.iconCanvas} style={{ backgroundColor: lightBlue[500] }}>
-                <Icon className={classes.icon} style={{ fontSize: 36 }}>accessibility_new</Icon>
+              <Paper className={classNames(classes.iconCanvas, classes['lightBlue'])} >
+                <Icon className={classes.icon}>accessibility_new</Icon>
               </Paper>
               <div className={classes.itemInfo}>
                 <div>
@@ -45,8 +45,8 @@ const StageMenu = ({ event, classes }) => {
               </div>
             </ListItem>
             <ListItem className={classes.listItem}>
-              <Paper className={classes.iconCanvas} style={{ backgroundColor: green[500] }}>
-                <Icon className={classes.icon} style={{ fontSize: 36 }}>loyalty</Icon>
+              <Paper className={classNames(classes.iconCanvas, classes['green'])} >
+                <Icon className={classes.icon}>loyalty</Icon>
               </Paper>
               <div className={classes.itemInfo}>
                 <div>
@@ -62,7 +62,7 @@ const StageMenu = ({ event, classes }) => {
             </ListItem>
             <ListItem
               className={classes.listItem}
-              style={{ marginTop: 24, justifyContent: 'flex-end' }}
+              style={{ marginTop: 16, justifyContent: 'flex-end' }}
             >
               <Button
                 variant="raised"
