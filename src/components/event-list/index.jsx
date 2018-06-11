@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { graphql } from 'react-apollo';
 import autoBind from 'react-autobind';
 import VisibilitySensor from 'react-visibility-sensor';
-import { Link } from 'react-router-dom';
 import { range } from 'lodash';
 import { compose } from 'recompose';
 import { Divider, Typography } from 'material-ui';
@@ -88,7 +87,7 @@ class EventList extends React.Component {
           <div ref={(dom) => { this._listDOM = dom; }} className={listClasses}>
             <For each="event" index="idx" of={events}>
               <div key={idx}>
-                <EventCard event={event} button={asButtons} onClick={action}/>
+                <EventCard event={event} button={asButtons} onClick={action} />
                 <If condition={vertical && events.length > 1}><Divider light /></If>
               </div>
             </For>

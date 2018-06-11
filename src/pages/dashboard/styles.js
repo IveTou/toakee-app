@@ -1,7 +1,7 @@
 import { withStyles } from 'material-ui';
 
 const maxStageMenuWidth = 150;
-const menuStageHeight = 50;
+const menuStageHeight = 48;
 
 export const withIndexStyle = withStyles(theme => ({
   root: {
@@ -81,7 +81,9 @@ export const withStageMenuStyle = withStyles(theme => ({
     paddingLeft: 0,
   },
   title: {
-    marginBottom: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 3,
+    height: theme.spacing.unit * 9,
+    overflow: 'hidden',
   },
   calendar: {
     float: 'left',
@@ -90,5 +92,37 @@ export const withStageMenuStyle = withStyles(theme => ({
     paddingLeft: theme.spacing.unit,
     borderRight: '1px solid rgba(0, 0, 0,.13)',
     color: theme.typography.display1.color,
+  },
+  iconCanvas: {
+    position: 'absolute',
+    top: theme.spacing.unit / -2,
+    marginRight: theme.spacing.unit * 3,
+    zIndex: theme.zIndex.mobileStepper,
+  },
+  icon: {
+    padding: theme.spacing.unit * 2,
+    color: theme.palette.common.white,
+  },
+  listItem: {
+    paddingTop: 0,
+    paddingBottom: theme.spacing.unit,
+  },
+  itemInfo: {
+    backgroundColor: theme.palette.grey[200],
+    position: 'relative',
+    width: '100%',
+    padding: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit * 12,
+    display: 'inline-flex',
+    justifyContent: 'space-between',
+  },
+  itemInfoTitle: {
+    color: theme.typography.caption.color,
+  },
+  button: {
+    margin: theme.spacing.unit,
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
   },
 }));

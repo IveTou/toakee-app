@@ -99,8 +99,6 @@ export class Dashboard extends React.Component {
 
 Dashboard.propTypes = {
   viewer: PropTypes.object,
-  deviceInfo: PropTypes.object,
-  location: PropTypes.object,
   history: PropTypes.object,
   classes: PropTypes.object,
   requireLogin: PropTypes.func,
@@ -108,7 +106,7 @@ Dashboard.propTypes = {
 
 const injectData = graphql(query, {
   options: () => ({ variables: { start: moment().startOf('day') } }),
-  props: ({ data: { viewer }, ownProps: { location } }) => ({ viewer, location }),
+  props: ({ data: { viewer } }) => ({ viewer }),
 });
 
 export default compose(
