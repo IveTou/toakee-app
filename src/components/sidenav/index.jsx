@@ -63,6 +63,10 @@ export class SideNav extends React.Component {
               <ListItemIcon><Icon>home</Icon></ListItemIcon>
               <ListItemText primary="Início" />
             </ListItem>
+            <ListItem button component={Link} to="/meus-eventos">
+              <ListItemIcon><Icon>event</Icon></ListItemIcon>
+              <ListItemText primary="Meus eventos" />
+            </ListItem>
             <Divider />
             <ListSubheader className={open ? undefined : classes.categoryHeaderMini}>
               Categorias

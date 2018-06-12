@@ -17,6 +17,7 @@ import Privacy from '~/src/pages/privacy';
 import About from '~/src/pages/about';
 import EventModeration from '~/src/pages/event-moderation';
 import PendingGuests from '~/src/pages/pending-guests';
+import Dashboard from '~/src/pages/dashboard';
 
 import ContextProvider from '~/src/components/context-provider';
 import Snackbar from '~/src/components/snackbar';
@@ -62,6 +63,7 @@ const App = ({ userAgent }) => (
         />
         <LayoutRoute path="/" exact component={EventFeed} />
         <LayoutRoute path="/search" component={SearchPage} />
+        <LayoutRoute path="/meus-eventos" component={Dashboard} />
         <LayoutRoute path="/evento/:id" exact component={EventPage} />
         <LayoutRoute path="/termos-de-uso" component={UseTerms} />
         <LayoutRoute path="/quem-somos" component={About} />

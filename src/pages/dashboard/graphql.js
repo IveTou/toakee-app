@@ -1,15 +1,10 @@
 import gql from 'graphql-tag';
 
-export const dashboardMenuQuery = gql`
-  query DashboardMenu($start: Date, $skip: Int) {
+export default gql`
+  query Dashboard($start: Date) {
     viewer {
       id
-
-      events(start: $start, onlyMine: true, skip: $skip) {
-        id,
-        title,
-        flyer,
-      }
+      eventCount(start: $start)
     }
   }
 `;

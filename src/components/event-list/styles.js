@@ -29,7 +29,7 @@ export const withIndexStyle = withStyles(theme => ({
 export const withArrowStyle = withStyles(theme => ({
   root: {
     position: 'absolute',
-    top: theme.spacing.unit * 5,
+    top: theme.spacing.unit * 7,
     zIndex: 1,
     [theme.breakpoints.down('sm')]: {
       display: 'none',

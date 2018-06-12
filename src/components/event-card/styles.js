@@ -2,14 +2,14 @@ import { withStyles } from 'material-ui';
 
 const cardWidth = 30;
 const cardHeight = 27;
+const cardButtonHeight = 21;
 
 export const withIndexStyle = withStyles(theme => ({
-  card: {
+  linkRoot: {
     width: theme.spacing.unit * cardWidth,
     height: theme.spacing.unit * cardHeight,
     flex: '0 0 auto',
     margin: theme.spacing.unit,
-    marginRight: 0,
     marginTop: theme.spacing.unit * 2,
     overflow: 'hidden',
     whiteSpace: 'nowrap',
@@ -17,7 +17,13 @@ export const withIndexStyle = withStyles(theme => ({
     background: 'none',
     '&:hover $cardImage': {
       transform: 'scale(1.2)',
-    }
+    },
+  },
+  buttonRoot: {
+    height: theme.spacing.unit * cardButtonHeight,
+    '& $cardContent': {
+      display: "inline-flex",
+    },
   },
   cardMedia: {
     position: 'relative',
@@ -54,6 +60,10 @@ export const withIndexStyle = withStyles(theme => ({
   cardContentInfoDetailsIcon: {
     fontSize: theme.typography.subheading.fontSize,
     verticalAlign: 'text-bottom',
+  },
+  calendar: {
+    paddingTop: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
   },
 }));
 
