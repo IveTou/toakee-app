@@ -41,7 +41,18 @@ export const withIndexStyle = withStyles(theme => ({
   },
   listItem: {
     paddingBottom: 0,
+    paddingLeft: theme.spacing.unit * 2,
+  },
+  listItemPlace: {
+    paddingBottom: theme.spacing.unit,
     paddingLeft: theme.spacing.unit,
+  },
+  listItemPlaceAvatar: {
+    backgroundColor: theme.palette.secondary.light,
+  },
+  listItemPlaceButton: {
+    fontWeight: theme.typography.fontWeightRegular,
+    width: '50%',
   },
   listItemIcon: {
     marginRight: 0,

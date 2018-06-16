@@ -10,6 +10,7 @@ import Scroller from '~/src/components/scroller';
 import NewEventPage from '~/src/pages/new-event';
 import EditEventPage from '~/src/pages/edit-event';
 import EventPage from '~/src/pages/event';
+import PlacePage from '~/src/pages/place';
 import EventFeed from '~/src/pages/event-feed';
 import SearchPage from '~/src/pages/search';
 import UseTerms from '~/src/pages/use-terms';
@@ -63,6 +64,7 @@ const App = ({ userAgent }) => (
         <LayoutRoute path="/" exact component={EventFeed} />
         <LayoutRoute path="/search" component={SearchPage} />
         <LayoutRoute path="/evento/:id" exact component={EventPage} />
+        <LayoutRoute path="/local/:id" exact component={PlacePage} />
         <LayoutRoute path="/termos-de-uso" component={UseTerms} />
         <LayoutRoute path="/quem-somos" component={About} />
         <LayoutRoute path="/privacidade" component={Privacy} />

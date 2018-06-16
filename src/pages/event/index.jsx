@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 import { graphql, compose } from 'react-apollo';
 import Lightbox from 'react-images';
 import { map } from 'lodash';
 import moment from 'moment';
 import {
+  Avatar,
   Button,
   Card,
   CardContent,
@@ -86,6 +88,14 @@ export class EventPage extends React.Component {
         TrackingAPI.viewerSafeTrack(this.props.viewer, 'ShareTrigger.Clicked');
       }
     });
+  }
+
+  placeProfile() {
+    const { event: preEvent } = this.props.location.state || {};
+    const { event = preEvent, history } = this.props;
+    const { place } = event || {};
+
+    history.push({ pathname: `/local/${place.id}`, state: { place } });
   }
 
   renderModerationButtons() {
@@ -201,7 +211,7 @@ export class EventPage extends React.Component {
                 </ExpansionPanel>
               </If>
               <Divider light />
-              <div className={classes.chipList}>
+              <div>
                 <For each="category" of={categories} index="index">
                   <Chip label={category.title} className={classes.chip} key={index} />
                 </For>
@@ -209,17 +219,47 @@ export class EventPage extends React.Component {
               <Grid container spacing={8}>
                 <Grid item xs={12} sm={9} style={{ paddingTop: 8 }}>
                   <List dense>
-                    <If condition={place && place.address}>
-                      <ListItem className={classes.listItem}>
-                        <ListItemIcon className={classes.listItemIcon}>
-                          <Icon>place</Icon>
-                        </ListItemIcon>
-                        <ListItemText
-                          disableTypography
-                          className={classes.listItemText}
-                          primary={place.address}
-                        />
-                      </ListItem>
+                    <If condition={place}>
+                      <If condition={place.name}>
+                        <ListItem className={classes.listItemPlace}>
+                          <Choose>
+                            <When condition={place.avatar}>
+                              <Avatar alt={`perfil ${place.name}`} src={place.avatar} />
+                            </When>
+                            <Otherwise>
+                              <Avatar
+                                className={classes.listItemPlaceAvatar}
+                                alt={`perfil ${place.name}`}
+                              >
+                                {place.name[0]}
+                              </Avatar>
+                            </Otherwise>
+                          </Choose>
+                          <ListItemText
+                            className={classes.listItemText}
+                            primary={place.name}
+                          />
+                          <Button
+                            className={classes.listItemPlaceButton}
+                            color="secondary"
+                            onClick={this.placeProfile}
+                          >
+                            ver perfil
+                          </Button>
+                        </ListItem>
+                      </If>
+                      <If condition={place.address}>
+                        <ListItem className={classes.listItem}>
+                          <ListItemIcon className={classes.listItemIcon}>
+                            <Icon>place</Icon>
+                          </ListItemIcon>
+                          <ListItemText
+                            disableTypography
+                            className={classes.listItemText}
+                            primary={place.address}
+                          />
+                        </ListItem>
+                      </If>
                     </If>
                     <If condition={start}>
                       <ListItem className={classes.listItem}>
@@ -350,6 +390,7 @@ EventPage.propTypes = {
   deviceInfo: PropTypes.object,
   location: PropTypes.object,
   classes: PropTypes.object,
+  history: PropTypes.object,
 };
 
 const injectSetEventStatusMutation = graphql(setEventStatusMutation, {
@@ -382,6 +423,7 @@ const injectData = graphql(query, {
 });
 
 export default compose(
+  withRouter,
   injectData,
   injectSetEventStatusMutation,
   withIndexStyle,
